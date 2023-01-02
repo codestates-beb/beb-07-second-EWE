@@ -1,0 +1,87 @@
+name: deployReactApp
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - dev
+    paths:
+      - client/src/**
+
+# https://github.blog/changelog/2021-04-20-github-actions-control-permissions-for-github_token/
+permissions:
+  contents: read
+
+jobs:
+  react:
+    name: react build & deploy
+    runs-on: ubuntu-20.04
+    defaults:
+      run:
+        working-directory: ./client
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      # npm cache : https://github.com/actions/cache/blob/main/examples.md#node---npm
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
+      - uses: actions/cache@v3
+        id: npm-cache
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      # npm 패키지 설치
+      - name: install npm dependencies
+        run: npm i
+
+      # 리액트 빌드
+      - name: build react
+        run: CI='' npm run build
+
+      # aws user 연결
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_ID }}
+          aws-region: ap-northeast-2
+
+      # react 빌드한 /build를 s3로 업로드
+      - name: Upload /build to S3
+        env:
+          BUCKET_NAME: ${{ secrets.AWS_S3_BUCKET_NAME}}
+        run: |
+          aws s3 sync \
+            ./build s3://$BUCKET_NAME
+      # # 업로드한 s3 파일을 각 CDN 캐시 무효화하여 리프레시 하기
+      # - name: CloudFront Invalidation
+      #   env:
+      #     CLOUD_FRONT_ID: ${{ secrets.AWS_CLOUDFRONT_ID}}
+      #   run: |
+      #     aws cloudfront create-invalidation \
+      #       --distribution-id $CLOUD_FRONT_ID --paths "/*"
+
+      # # 참고 : https://fe-developers.kakaoent.com/2022/220106-github-actions/
+      # - name: Slack notification
+      #   if: ${{ always() }}
+      #   env:
+      #     SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+      #   run: |
+      #     if [ "${{ job.status }}" = "success" ]; then
+      #       EMOTICON="✅"
+      #     else
+      #       EMOTICON="⛔"
+      #     fi
+
+      #     MSG="{ \"text\":\">${EMOTICON} workflow (<https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}|${GITHUB_WORKFLOW}>) in <https://github.com/${GITHUB_REPOSITORY}|${GITHUB_REPOSITORY}>\n><https://github.com/${GITHUB_REPOSITORY}/commit/${GITHUB_SHA}/checks|${GITHUB_JOB}> job ${{ inputs.status }}, branch=\`${GITHUB_REF#refs/heads/}\`\"}"
+
+      #     curl -X POST -H 'Content-type: application/json' --data "${MSG}" "${SLACK_WEBHOOK}"
