@@ -7,7 +7,7 @@ const Post = ({posts}) => {
                     <div className="user_img">
                         <i className='fas fa-user '></i>
                     </div>
-                    <div className="post_title"key={posts.id}>{posts.title}</div>
+                    <div className="post_title"key={posts.id}><h3>{posts.title}</h3></div>
                     <div className="post_num"key={posts.id}>{posts.id}</div>
                 </div> 
                 <div className='user2'>
