@@ -1,8 +1,6 @@
 {
-	"name":"chicken",
-	"description":"Fried chicken is a dish consisting of chicken pieces that have been coated with seasoned flour or batter and pan-fried, deep fried, pressure fried, or air fried. ",
-	"image":"chicken.jpg",
-	"attributes":[
-		{"trait_type":"category","value":"korean"}
-	]
+  "name": "chicken",
+  "description": "Fried chicken is a dish consisting of chicken pieces that have been coated with seasoned flour or batter and pan-fried, deep fried, pressure fried, or air fried. ",
+  "image": "chicken.jpg",
+  "attributes": [{ "trait_type": "category", "value": "western" }]
 }
