@@ -1,4 +1,5 @@
-const dotnev = require('dotenv').config();
+require('dotenv').config();
+
 const { MNEMONIC, PK, GOERLIURI } = process.env;
 const HDWalletProvider = require('@truffle/hdwallet-provider');
 /**
