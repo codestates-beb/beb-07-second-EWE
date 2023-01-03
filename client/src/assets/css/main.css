@@ -17,7 +17,7 @@
     --onSecondary-color: #A3BB98;
     --Secondary-Container-color: #asdf323;
     --onSecondary-Container-color: #asdf323;
-    --gray-dark-color: #434749;
+    --gray-dark-color: #6b6b6b;
     --gray-light-color: #C3C7C9; 
 
     /* Size */
@@ -32,9 +32,9 @@
 
 }
 
-.hide {
+/* .hide {
     display: none;
-}
+} */
 
 .write{
     font-size: 120px;
@@ -61,6 +61,9 @@
 .category{
     height: 70px;
     width: 100%;
+    color: var(--onPrimary-color);
+    background-color: var(--onSecondary-color);
+
 
 }
 .post_list{

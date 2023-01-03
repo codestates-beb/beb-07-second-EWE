@@ -37,10 +37,21 @@
 .post_title{
     font-size: var(--font-large);
 }
-.creator{}
-.view{}
-.post_num{}
-.createdAt{}
+.creator{
+    color: var(--gray-dark-color);
+
+}
+.view{
+    color: var(--gray-dark-color);
+
+}
+.post_num{
+    color: var(--gray-dark-color);
+
+}
+.createdAt{
+    color: var(--gray-dark-color);
+}
 .image{
     width: 100%;
     height:auto; 
