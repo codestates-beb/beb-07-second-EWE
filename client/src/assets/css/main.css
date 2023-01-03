@@ -59,11 +59,24 @@
     filter: brightness(0.6);
 }
 .category{
+    display: flex;
     height: 70px;
     width: 100%;
-    color: var(--onPrimary-color);
-    background-color: var(--onSecondary-color);
+    font-size: var(--font-large);
+    color: var(--black-color);
+    background-color: var(--Secondary-color);
+    justify-content: space-around;
+    align-items: baseline;
 
+}
+.category h2{
+    color: var(--onPrimary-color);
+    transform:scale(1.0) ;
+    transition: 0.2s;
+}
+.category h2:hover{
+    color: var(--Primary-color);
+    transform:scale(1.2) ;
 
 }
 .post_list{
@@ -79,5 +92,4 @@
     justify-content: space-between;
     align-items: baseline;
     overflow: hidden;
- 
 }

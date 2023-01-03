@@ -53,14 +53,18 @@
     color: var(--gray-dark-color);
 }
 .image{
-    width: 100%;
-    height:auto; 
-    align-items: center;
+    position: relative;
+    padding-top: 110%;  /* 1:1 ratio */
+    overflow: hidden;
 
 }
 .image img{
-    border-radius: 20px;
-    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    max-width: 100%;
     height: auto;
 }
 .contents{}
