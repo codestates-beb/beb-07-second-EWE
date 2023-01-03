@@ -20,7 +20,7 @@ const Header = () => {
                     <a href="/">Login</a>
                 </div>
                 <div className="signUp">
-                    <a href="/">SignUp</a>
+                    <a href="/signup">SignUp</a>
                 </div>
                 <div>
                     <i className='fas fa-user '></i>

@@ -60,7 +60,7 @@ header{
 }
 .logo a i {
     margin: 20px;
-    color: var(--Primary-color);
+    color: var(--onPrimary-color);
 
 }
 .fa-user{

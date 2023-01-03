@@ -1,6 +1,6 @@
 import '../assets/css/main.css'
 import Footer from '../components/Footer'
-import Post from '../components/Post';
+import PostList from '../components/PostList';
 const MainPage = () => {
     return(
         <div>
@@ -10,7 +10,7 @@ const MainPage = () => {
             </a>
             <div className='category'></div>
             <div className='post_list'>
-                <Post/>
+                <PostList/>
             </div>
             <Footer/>
         </div>

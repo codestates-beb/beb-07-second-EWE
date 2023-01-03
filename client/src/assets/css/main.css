@@ -43,16 +43,17 @@
 
 }
 .post_button{
+    background-color: var(--black-color);
     background-image: url(https://cdn.imweb.me/upload/S2017101359e025984d346/7c5de9abb3b3d.jpg);
     padding: 7%;
     text-align: center;
     align-items: center;
-    color: var(--black-color);
+    color: var(--white-color);
     filter: brightness(1);
     transition: 0.5s;
 }
 .post_button:hover{
-    font-size: 190px;
+    font-size: 125px;
     color: var(--white-color);
     transform: scale(1.01);
     filter: brightness(0.6);
@@ -63,6 +64,17 @@
 
 }
 .post_list{
+    padding: 2% 1% 10% 1%;
     height: 1600px;
     background-color: var(--Secondary-color);
+}
+.post_wrapper{
+    padding: 1% 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(30%, 1fr) );
+    margin: 0;
+    justify-content: space-between;
+    align-items: baseline;
+    overflow: hidden;
+ 
 }
