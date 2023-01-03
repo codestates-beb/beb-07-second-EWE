@@ -8,9 +8,15 @@ const MainPage = () => {
                 <div className='post_button'>POST</div>
                 
             </a>
-            <div className='category'></div>
+            <div className='category'>
+                <i className="fa-solid fa-turkey"></i>
+                <i className="fa-solid fa-bowl-chopsticks-noodles"></i>
+            </div>
             <div className='post_list'>
                 <PostList/>
+            </div>
+            <div className='pagination'>
+
             </div>
             <Footer/>
         </div>

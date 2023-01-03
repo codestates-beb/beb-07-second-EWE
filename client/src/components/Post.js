@@ -2,7 +2,7 @@ import '../assets/css/post.css'
 import Chicken from '../assets/image/chicken.jpeg'
 const Post = () => {
     return(
-        <div className="post_container">
+        <a href='/' className="post_container">
             <div>
                 <div className='user1'>
                     <div className="user_img">
@@ -13,7 +13,10 @@ const Post = () => {
                 </div> 
                 <div className='user2'>
                     <div className="creator">user1</div>
-                    <div className="view">123123views</div>
+                    <div className="view">
+                    <i className='fas fa-eye'></i>
+                    123123
+                    </div>
                     <div className="createdAt">2023-01-03</div>
                 </div>
             </div>
@@ -23,7 +26,7 @@ const Post = () => {
 
             <div className="comments">
             </div>
-        </div>
+        </a>
     );
 }
 export default Post;
