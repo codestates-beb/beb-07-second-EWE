@@ -26,6 +26,7 @@ router.get('/users/:userId/nfts', (req, res, next) => {
   const result = nfts.filter((elem) => elem.owner.toString() === userId);
   return res.status(200).json(result);
 });
+
 router.get('/users/:userId/posts', (req, res, next) => {
   const imgUrlPrefix = `http://${req.headers.host}/images/`;
   const { userId } = req.params;
