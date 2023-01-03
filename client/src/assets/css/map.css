@@ -33,6 +33,7 @@ ul {
 }
 
 .map-search .map-searchbar {
+    background-color: var(--Secondary-color);
     width: 70%;
     border-right: 0px;
     border-top-left-radius: 0.5rem;
@@ -41,6 +42,7 @@ ul {
 
 .map-searchbar-wrap button{
     width: 30%;
+    display: inline-block;
     border-left: 0px;
     font-weight: 700;
 }

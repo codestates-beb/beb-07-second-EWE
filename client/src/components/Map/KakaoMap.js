@@ -14,7 +14,7 @@ import useMap from "../../hooks/useMap";
 
 const {kakao} = window;
 
-const KakaoMap = ()=>{
+const KakaoMap = ({locationName, submitLocation, resetLocation})=>{
     const map = useMap();
     const search = usePlaces();
 
@@ -41,22 +41,47 @@ const KakaoMap = ()=>{
         if(e.key === "Enter") searchRequest();
     }
 
+    const resetPlaces= ()=>{
+        setPlaces(null);
+    }
+
+    const resetBtnHandler = ()=>{
+        resetLocation();
+    }
+
     return (
         <div className="map-wrap">
             <div className="map-search">
                 <div className="map-searchbar-wrap">
+                    {locationName ? 
+                    <>
+                    <input className="map-searchbar" 
+                        value={locationName} 
+                        size="15"
+                        disabled={true}
+                    /> 
+                    <button onClick={resetBtnHandler}>다시찾기</button> 
+                    </>
+                    :
+                    <>
                     <input className="map-searchbar" 
                         value={keyword} 
                         onChange={(e)=>{setKeyword(e.target.value)}} 
                         onKeyUp={searchEnterHandler}
-                        size="15" 
-                        placeholder="장소명을 입력해주세요."/> 
+                        size="15"
+                        placeholder="장소명을 입력해주세요."
+                    /> 
                     <button onClick={searchBtnHandler}>검색하기</button> 
+                    </>
+                    }
                 </div>
                 {places?
-                    <>
-                    <PlaceList places={places} map={map}/>
-                    </> 
+                    <PlaceList 
+                        places={places} 
+                        map={map} 
+                        submitLocation={submitLocation}
+                        resetPlaces={resetPlaces}
+                    />
                     : <></>
                 }
             </div>

@@ -1,0 +1,65 @@
+.container {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.post_image_wrapper, .kakaomap_wrapper, .post_title_wrapper{
+    margin-bottom: 0.5rem;
+}
+
+/* 작성글 제목 */
+.post_title_wrapper{
+    
+}
+
+.post_title_wrapper .title_input{
+    width: 100%;
+    padding: 0.5rem;
+    border:none;
+    border-bottom: 1px solid #ebebeb;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+/* 작성글 지도 */
+.kakaomap_wrapper {
+    
+}
+
+/* 작성글 내용*/
+.post_content_wrapper .content_textarea{
+    width: 100%;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    font-size: 1rem;
+    resize: none;
+}
+
+/* 작성글 버튼 */
+
+.write_wrapper .btn_group{
+    display: flex;
+}
+
+.write_wrapper .btn_group button{
+    padding: 1rem;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.write_wrapper .btn_group button:hover{
+    cursor:pointer;
+}
+
+.write_wrapper .btn_group .btn_submit{
+    border-top-right-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    background-color: var(--Primary-color);
+}
+
+.write_wrapper .btn_group .btn_cancel{
+    border-top-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+    background-color: var(--Secondary-color);
+}
