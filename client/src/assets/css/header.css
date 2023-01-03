@@ -1,0 +1,75 @@
+header{
+    background-color: var(--Secondary-color);
+    display: flex;
+    height: 72;
+    text-align: center;
+    align-items: center;
+    justify-content: space-between;
+}
+.CI{
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: space-between;
+
+}
+.CI .bigName{
+    margin-right: 5px;
+    font-size: var(--font-large);
+    font-weight: bold;
+    color: var(--black-color);
+
+}
+.CI .smallName{
+    font-size: var(--font-small);
+    color: var(--black-color);
+
+
+}
+.userMenu{
+    margin: 10px 20px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: space-between;
+}
+.userMenu a{
+    margin-right: 25px;
+}
+.userTeb{
+    padding: 10px 0;
+    top: 72px;
+    right: 2px;
+    position: absolute;
+    display: grid;
+    height: 250px;
+    width: 100px;
+    border: 2px solid var(--Secondary-color);
+    border-radius: 10px;
+    background-color: var(--Secondary-color);
+    align-items: center;
+}
+.userTeb a{
+    margin: 0px;
+    padding: 5px 0;
+    height: 20px;
+
+}
+.logo a{ 
+    height: 72px;
+}
+.logo a i {
+    margin: 20px;
+    color: var(--Primary-color);
+
+}
+.fa-user{
+    margin: 0 15px;
+    padding: 10px;
+    border: 2px solid var(--white-color);
+    border-radius: 30px;
+    color: var(--white-color);
+}
+a{
+    color: var(--black);
+}

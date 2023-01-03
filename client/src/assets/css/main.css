@@ -35,3 +35,34 @@
 .hide {
     display: none;
 }
+
+.write{
+    font-size: 120px;
+    height: 300px;
+    width: 100%;
+
+}
+.post_button{
+    background-image: url(https://cdn.imweb.me/upload/S2017101359e025984d346/7c5de9abb3b3d.jpg);
+    padding: 7%;
+    text-align: center;
+    align-items: center;
+    color: var(--black-color);
+    filter: brightness(1);
+    transition: 0.5s;
+}
+.post_button:hover{
+    font-size: 190px;
+    color: var(--white-color);
+    transform: scale(1.01);
+    filter: brightness(0.6);
+}
+.category{
+    height: 70px;
+    width: 100%;
+
+}
+.post_list{
+    height: 1600px;
+    background-color: var(--Secondary-color);
+}
