@@ -1,0 +1,77 @@
+* {
+    box-sizing: border-box;
+}
+
+ul {
+    margin : 0;
+    padding: 0;
+}
+
+/* 검색창 */
+.map-wrap {
+    width: 600px;
+}
+
+.map-search {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 0.5rem;
+}
+
+.map-searchbar-wrap{
+    border: 1px solid #ebebeb;
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.map-search .map-searchbar, .map-searchbar-wrap button {
+    padding: 0.5rem 0.5rem;
+    border: none;
+    font-size: 1rem;
+    flex-shrink: 1;
+}
+
+.map-search .map-searchbar {
+    width: 70%;
+    border-right: 0px;
+    border-top-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+}
+
+.map-searchbar-wrap button{
+    width: 30%;
+    border-left: 0px;
+    font-weight: 700;
+}
+
+.map-searchbar-wrap button:hover{
+    cursor: pointer;
+}
+
+/* 검색 결과 리스트 */
+.place-list {
+    z-index:10;
+    border: 1px solid #ebebeb;
+    border-radius: 0.5rem;
+    margin-top : 0.5rem;
+    overflow: hidden;
+}
+
+.place-list .place-list-item{
+    padding: 0.4rem 1rem;
+    border-bottom: solid 1px #ebebeb;
+}
+
+.place-list .place-list-item:last-child{
+    border-bottom: none;
+}
+
+.place-list .place-list-item:hover{
+    cursor: pointer;
+    background-color: #ebebeb;
+}
+
+.place-list .place-list-item .address{
+    margin-left: 1rem;
+}
