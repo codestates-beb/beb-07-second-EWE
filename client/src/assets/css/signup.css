@@ -1,0 +1,231 @@
+.signUpPage{
+        height: 900px;
+        margin: 0;
+        width: 100%;
+        justify-content:center;
+        display: flex;
+        align-items: center;
+        text-align: center;
+    
+}
+
+.loginImg{
+    display: block;
+    margin: 30px;
+    width: 100%;
+    height: 100%;
+    max-width: 380px;
+    min-height: 300px;
+    border-radius: 10%;
+}
+.loginImgIn{
+ padding: 0;
+ margin: 0;
+ border-radius: 50px;   
+ max-width: 290px;
+}
+.create_account{
+    height: flex;
+    margin: 30px;
+    min-height: 540px;
+    min-width: 300px;
+    border: 1px solid var(--onPrimary-color) ;
+    padding: 20px 30px;
+    border-radius: 50px;
+    width: 300px;
+    display: block;
+    text-align: left;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--white-color) ;
+    opacity: inherit;
+}
+
+.create_account h1{
+    margin: 5px 0 0 0;
+    color: var(--Primary-color);
+}
+
+.residence, .residence>h5 {
+    margin: 10px 0;
+    display: flex;
+    justify-content:left;
+    align-items: center;
+
+}
+select{
+    margin-left: 10px;
+    border: none;
+    width: 95px;
+    height: 20px;
+}
+.sign_up_method{
+    width: 100%;
+    display: flex;
+    justify-content:left;
+    text-align: left;
+    align-items:initial;
+}
+.sign_up_method a h3{
+    margin-left: 0;
+    margin-right: 20px;
+    display: block;
+    justify-content: left;
+}
+.Email{
+    color: var(--onPrimary-color);
+}
+.mobile_number{
+    color: var(--gray-light-color);
+}
+.email, .pw{
+    height: auto;
+}
+.pw_requires{
+    width: 180px;
+    padding: 0px;
+    border: 1px solid var(--onPrimary-color);
+    border-radius: 5%;
+    text-align: left;   
+    align-items: center;
+}
+.pw_requires .fa-circle-check i{ 
+    margin: 0 5px;
+    color: var(--onPrimary-color);
+}
+.pw_requires .fa-circle i{ 
+    margin: 0 5px;
+    color: var(--onSecondary-color);
+}
+.requires{
+    display: flex;
+    text-align: left;   
+    align-items: center;
+} 
+.requires h6{
+    margin: 5px;
+} 
+
+
+.failure_message h6{
+    margin-top: 0;
+    color: var( --onSecondary-color);
+}
+input:focus{
+    border: 1px solid var(--onPrimary-color);
+    border-color: var(--onPrimary-color);
+} 
+.terms_of_use{
+    display: flex;
+    text-align: left;
+    align-items: center;
+    justify-content:left; 
+}
+.terms_of_use a h6{
+    color: var(--onPrimary-color);
+}
+
+.sign_up_with{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: space-around;
+
+}
+.sign_up_with button i{
+    margin-left: 10px;
+}
+
+.sign_up_button{
+    width: 100%;
+    height: 40px;
+    border-radius: 10px;
+    color: var(--white-color);
+    background-color: var(--onPrimary-color) ;
+}
+.sign_up_button:hover{
+    background-color: var(--Primary-color) ;
+
+
+}
+button{
+    display: flex;
+    width: 100%;
+    background-color: rgba(240, 248, 255, 0.164);
+    border-color:rgba(255, 228, 196, 0);
+    padding: 5px;
+    align-items: center;
+    text-align: center;
+    justify-content: space-around;
+
+
+}
+.buttons{
+    
+    width: 100%;
+    align-items: center;
+    text-align: center;
+}
+#username, #pw{
+    width: 100%; 
+    height: 30px;
+    border: none;
+    margin-bottom: 10px;
+    margin-bottom: 10px;
+}
+.residence h5{
+    margin: 30px 0px 5px 0px;
+}
+.sign_up_method h3{
+    text-align: center;
+    align-items: center;
+    margin: 10px;
+}
+.google, .apple{
+    margin: 0;
+    padding: 0;
+    width: 120px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    border: 1px solid var(--gray-light-color);
+    border-radius: 10px;
+    justify-content: space-around;
+}
+
+.fa-apple, .fa-google{
+    font-size: 25px;    
+    color: var(--gray-light-color);
+
+}
+.google:hover, .apple:hover{
+   border: 1px solid var(--onPrimary-color) ;
+   border-radius: 10px;
+    }
+.login_button{
+    margin: 0 0 8px;
+    padding: 6px 0;
+    width: 100%;
+    border-radius: 10px;
+}
+.login_button:hover{
+    background-color: var(--onPrimary-color) ;
+    color: var(--white-color);
+}
+.login h3{
+
+    color: var(--Primary-color);
+}
+
+.login h6{
+    margin-top: 30px;
+    margin-bottom: 5px;
+    color: var(--gray-dark-color);
+}
+.fa-circle-check{
+    color:var(--onPrimary-color)
+}
+.fa-circle{
+    color: var( --onSecondary-color);
+} 
