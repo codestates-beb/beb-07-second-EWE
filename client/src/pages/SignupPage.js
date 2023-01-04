@@ -10,7 +10,7 @@ const SignupPage = () => {
     
     function pwFormatLength(value){
         return 8 <= value.length && value.length <= 32;
-    }
+    } 
     
     function pwFormatLeastNum(value){
         if(value.match(/[0-9]/g)){
