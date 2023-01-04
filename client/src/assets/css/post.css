@@ -1,20 +1,20 @@
 
 .post_container{
-    margin: 2% auto;
+    margin: 5% auto;
     padding: 10px;
     display: block;
-    border: 1px solid var(--white-color);
-    border-radius: 10px;
-    width: 90%;
-    height: 500px;
+    border: 3px solid var(--white-color);
+    border-radius: 20px;
+    width: 95%;
+    height: 95%;
     background-color: var(--Secondary-color);
     justify-content: space-between;
     align-items: baseline;
-    overflow: hidden;
     transition: 0.2s;
 }
 .post_container:hover{
-    transform: scale(1.02);
+    border-radius: 50px;
+    transform: scale(1.1);
     background-color: var(--white-color);
     opacity: 0.9;
 }
@@ -36,6 +36,7 @@
 }
 .post_title h3{
     margin: 0;
+    color: var(--black-color);
 }
 .post_title{
     font-size: var(--font-large);
@@ -57,8 +58,7 @@
 }
 .image{
     position: relative;
-    padding-top: 110%;  /* 1:1 ratio */
-    overflow: hidden;
+    padding-top: 100%;  /* 1:1 ratio */
 
 }
 .image img{
