@@ -10,6 +10,7 @@ const MainPage = () => {
         getPosts()
         .then((result)=>{
             setPosts(result)
+            
         })
     },[])
 

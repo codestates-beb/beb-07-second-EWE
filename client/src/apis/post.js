@@ -10,16 +10,13 @@ export const getPosts = async()=>{
     const posts = await axios.get(getPostsURL)
     .then(res=>res.data)
     .catch(console.log);
-
     return posts;
 }
 
 export const getPostOne = async (id)=>{
     const requestURL = getPostOneURL + id;
-
     const post = await axios.get(requestURL)
     .then(res=>res.data)
     .catch(console.log);
-
     return post
 }
