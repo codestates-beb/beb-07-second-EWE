@@ -1,14 +1,12 @@
-
-h1, p {
-    margin: 0;
-}
-
-
 .detail_wrapper {
-    width: 700px;
+    width: 400px;
 }
 
 /* 헤더 */
+
+.detail_wrapper .detail_section{
+    display: flex;
+}
 
 .detail_wrapper .detail_header{
     display: flex;
@@ -37,7 +35,26 @@ h1, p {
     text-align: right;
 }
 
-/* user profile */
+.detail_wrapper .detail_header .detail_title_wrapper p, 
+.detail_wrapper .detail_header .detail_data_wrapper
+{
+    color: var(--gray-dark-color);
+}
+
+.detail_wrapper .detail_header .detail_title_wrapper h1 {
+    width: 100px;
+    height: 40px;
+    font-size: 1rem;
+    overflow: hidden;
+}
+
+.detail_wrapper .detail_header .detail_title_wrapper p * {
+    margin-right: 0.5rem;
+}
+
+
+
+/* 유저 프로필 */
 
 .detail_wrapper .detail_profile_wrapper .profile_frame{
     position: relative;
@@ -67,6 +84,7 @@ h1, p {
 .swiper_image_wrapper{
     position:relative;
     width: 100%;
+    height: 400px;
     overflow: hidden;
 }
 
@@ -76,4 +94,14 @@ h1, p {
 }
 
 .swiper_image_wrapper img{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    height:100%;
+}
+
+/* 상세내용 */
+.detail_wrapper .detail_content_wrapper {
+    
 }
