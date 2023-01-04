@@ -45,9 +45,10 @@
 
 }
 .post_button{
+    
     background-color: var(--black-color);
     background-image: url(https://cdn.imweb.me/upload/S2017101359e025984d346/7c5de9abb3b3d.jpg);
-    padding: 4%;
+    padding: 4% 30%;
     text-align: center;
     align-items: center;
     color: var(--white-color);
@@ -96,4 +97,32 @@
     margin: 0;
     justify-content: space-between;
     align-items: baseline;
+}
+.footer{
+    align-items: flex-start;
+    margin: 1%;
+    display: flex;
+}
+.footer .CI{
+    margin: 1% 1% 0 0;
+
+}
+.team{
+    margin: 1%;
+    width: 20%;
+}
+.mail{
+    margin: 1% 0;
+    width: 25%;
+
+}
+.blogs{
+    margin: 1%;
+    width: 30%;
+
+}
+.github_repo{
+    margin: 1% 0;
+    width: 25%;
+
 }

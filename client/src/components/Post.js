@@ -1,5 +1,17 @@
 import '../assets/css/post.css'
 const Post = ({posts}) => {
+    const viewCount = (views) =>{
+        if(views<=1000){
+            return views + 'view'
+        }
+        else if(views>1000){ 
+            return Math.floor(views/1000)+ 'K view'
+        }
+
+        else if(views>10000){ 
+            return Math.floor(views/10000) +'M view'
+        }
+    }
     return(
         <a href='/' className="post_container">
             <div>
@@ -7,19 +19,19 @@ const Post = ({posts}) => {
                     <div className="user_img">
                         <i className='fas fa-user '></i>
                     </div>
-                    <div className="post_title"key={posts.id}><h3>{posts.title}</h3></div>
-                    <div className="post_num"key={posts.id}>{posts.id}</div>
+                    <div className="post_title"><h6>{posts.title}</h6></div>
+                    <div className="post_num">{posts.id}</div>
                 </div> 
                 <div className='user2'>
-                    <div className="creator"key={posts.id}>{posts.creator}</div>
-                    <div className="view"key={posts.id}>
-                        views{posts.views}
+                    <div className="creator">{posts.creator}</div>
+                    <div className="view">
+                        {viewCount(posts.views)}
                     </div>
-                    <div className="createdAt" key={posts.id}>{posts.created_at}</div>
+                    <div className="createdAt" >{posts.created_at.slice(0,10)}</div>
                 </div>
             </div>
-            <div className="image" key={posts.id}>
-                <img src = {posts.images} key={posts.id} alt="food"></img>
+            <div className="image" >
+                <img src = {posts.images}  alt="food"></img>
             </div>
 
             <div className="comments">
