@@ -3,7 +3,7 @@ import {useState} from "react";
 
 const {kakao} = window
 
-const PlaceListItem = ({place, map})=>{
+const PlaceListItem = ({place, map, submitLocation, resetPlaces})=>{
     const [placeId, setPlaceId] = useState(place.id);
     const position = new kakao.maps.LatLng(place.y, place.x);
     const marker = new kakao.maps.Marker({position});
@@ -15,7 +15,8 @@ const PlaceListItem = ({place, map})=>{
     }
 
     const itemClickHandler = ()=>{
-        console.log(place);
+        submitLocation(place.place_name, placeId);
+        resetPlaces();
     }
 
     return (

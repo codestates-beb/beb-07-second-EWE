@@ -6,8 +6,13 @@ const Sequelize = require('sequelize');
 const process = require('process');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/../config/config.json')[env];
+const config = require(__dirname + '/../config/config.js')[env];
 const db = {};
+
+const users = require('./users');
+const nfts = require('./nfts');
+const posts = require('./posts');
+const images = require('./images');
 
 let sequelize;
 if (config.use_env_variable) {
@@ -34,5 +39,20 @@ Object.keys(db).forEach(modelName => {
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
+
+db.users = users;
+db.nfts = nfts;
+db.posts = posts;
+db.images = images;
+
+users.init(sequelize);
+nfts.init(sequelize);
+posts.init(sequelize);
+images.init(sequelize);
+
+users.associate(db);
+nfts.associate(db);
+posts.associate(db);
+images.associate(db);
 
 module.exports = db;
