@@ -45,6 +45,10 @@ const KakaoMap = ({locationName, submitLocation, resetLocation})=>{
         setPlaces(null);
     }
 
+    const resetKeyword= ()=>{
+        setKeyword=("");
+    }
+
     const resetBtnHandler = ()=>{
         resetLocation();
     }
@@ -84,7 +88,7 @@ const KakaoMap = ({locationName, submitLocation, resetLocation})=>{
                     />
                     : <></>
                 }
-            </div>
+            </div> 
             <div id="map" style={{
                 width:"600px",
                 height:"400px",
