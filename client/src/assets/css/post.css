@@ -15,9 +15,17 @@
 .post_container:hover{
     border-radius: 20px;
     transform: scale(1.1);
+    border: 1px solid var(--Primary-color);
+
     background-color: var(--white-color);
     opacity: 0.9;
 }
+.post_container:hover .fa-user{
+    border: 3px solid var(--Primary-color);
+    border-radius: 30px;
+    color: var(--Primary-color);
+}
+
 .user1{
     display: flex;
     justify-content: space-between;

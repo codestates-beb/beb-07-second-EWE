@@ -1,6 +1,7 @@
 // modules
 import React from 'react';
 import {Route, Routes, BrowserRouter} from "react-router-dom"
+import { useState, useEffect } from 'react'
 
 // css
 import './App.css';
@@ -15,18 +16,37 @@ import MyPage from './pages/MyPage';
 import SignupPage from './pages/SignupPage';
 import WritePage from './pages/WritePage';
 import PostDetailPage from './pages/PostDetailPage';
-
+import {getUser} from './apis/user'
+import {getPosts} from './apis/post'
 
 const App =()=> {
+  const [posts, setPosts] = useState([])
+  const [user, setUser] = useState([])
+
+  useEffect(()=>{
+      getPosts()
+      .then((result)=>{
+          setPosts(result)
+
+      })
+  },[])
+  const userId = 2;
+  useEffect(()=>{
+      getUser(userId)
+      .then((result)=>{
+          setUser(result)
+      })
+  },[])
   return (
     <BrowserRouter>
-      <Header/>
+      <Header user = {user}/>
       <Routes>
-        <Route path='/' element={<MainPage/>}/>
+        <Route path='/' element={<MainPage posts={posts}/>}/>
         <Route path='/market' element={<MarketPage/>}/>
-        <Route path='/mypage' element={<MyPage/>}/>
+        <Route path='/mypage'  element={<MyPage 
+        posts={posts} user = {user}/>}/>
         <Route path='/signup' element={<SignupPage/>}/>
-        <Route path='/write' element={<WritePage/>}/>
+        <Route path='/write' element={<WritePage user = {user}/>}/>
         <Route path='/postdetail' element={<PostDetailPage/>}/>
       </Routes>
     </BrowserRouter>
