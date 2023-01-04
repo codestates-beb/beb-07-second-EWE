@@ -1,0 +1,107 @@
+.detail_wrapper {
+    width: 400px;
+}
+
+/* 헤더 */
+
+.detail_wrapper .detail_section{
+    display: flex;
+}
+
+.detail_wrapper .detail_header{
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #cbcbcb;
+    margin-bottom: 1rem;
+}
+
+.detail_wrapper .detail_header .header_section{
+    display: flex;
+}
+
+.detail_wrapper .detail_header .detail_title_wrapper, .detail_wrapper .detail_header .detail_data_wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+}
+
+.detail_wrapper .detail_header .detail_title_wrapper{
+    margin-left: 1rem;
+}
+
+.detail_wrapper .detail_header .detail_data_wrapper{
+    text-align: right;
+}
+
+.detail_wrapper .detail_header .detail_title_wrapper p, 
+.detail_wrapper .detail_header .detail_data_wrapper
+{
+    color: var(--gray-dark-color);
+}
+
+.detail_wrapper .detail_header .detail_title_wrapper h1 {
+    width: 100px;
+    height: 40px;
+    font-size: 1rem;
+    overflow: hidden;
+}
+
+.detail_wrapper .detail_header .detail_title_wrapper p * {
+    margin-right: 0.5rem;
+}
+
+
+
+/* 유저 프로필 */
+
+.detail_wrapper .detail_profile_wrapper .profile_frame{
+    position: relative;
+    border-radius: 100%;
+    width: 5rem;
+    height: 5rem;
+    overflow:hidden;
+}
+
+.detail_wrapper .detail_profile_wrapper .profile_frame img{
+    position: absolute;
+    width:100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* 이미지 슬라이드 */
+.detail_wrapper .detail_image_wrapper{
+    margin-bottom: 1rem;
+}
+
+.detail_wrapper .detail_image_wrapper .swiper{
+    height:400px;
+}
+
+.swiper_image_wrapper{
+    position:relative;
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+}
+
+.swiper_slide {
+    width: 100%;
+    overflow: hidden;
+}
+
+.swiper_image_wrapper img{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    height:100%;
+}
+
+/* 상세내용 */
+.detail_wrapper .detail_content_wrapper {
+    
+}
