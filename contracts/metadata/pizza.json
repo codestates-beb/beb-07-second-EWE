@@ -1,0 +1,8 @@
+{
+	"name":"pizza",
+	"description":"A large circle of flat bread baked with cheese, tomatoes, and sometimes meat and vegetables spread on top.",
+	"image":"pizza.jpg",
+	"attributes":[
+		{"trait_type":"category","value":"western"}
+	]
+}
