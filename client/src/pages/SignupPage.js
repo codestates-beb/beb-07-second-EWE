@@ -1,5 +1,6 @@
 import { useState} from 'react'
 import '../assets/css/signup.css'
+
 const SignupPage = () => {
     const [isEmail, setIsEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -54,8 +55,8 @@ const SignupPage = () => {
         </div>
         <div className="user_info">
             <div className="sign_up_method">
-                <a href="/" className="Email"><h3>Email</h3></a>
-                <a href="/" className="mobile_number"><h3>Mobile number</h3></a>
+                <a href="#" className="Email"><h3>Email</h3></a>
+                <a href="#" className="mobile_number"><h3>Mobile number</h3></a>
             </div>
             <div className="email">
                 <input type="text" placeholder="Email" id="username" onChange={e=>
@@ -134,8 +135,6 @@ const SignupPage = () => {
             </div>
         </div>
     </div>
-    <script src="signUp.js"></script>
-    <link rel="stylesheet" href="style.css"/>
 </div>
     );
 }

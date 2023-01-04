@@ -6,11 +6,11 @@ import {getPosts} from '../apis/post'
 const MainPage = () => {
     const [posts, setPosts] = useState([])
 
-
     useEffect(()=>{
         getPosts()
         .then((result)=>{
             setPosts(result)
+            
         })
     },[])
 

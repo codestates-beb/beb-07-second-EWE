@@ -1,8 +1,0 @@
-{
-	"name":"tteokbokki",
-	"description":"Tteokbokki , or simmered rice cake, is a popular Korean food made from small-sized garae-tteok (long, white, cylinder-shaped rice cakes) called tteokmyeon or commonly tteokbokki-tteok.",
-	"image":"tteokbokki.jpg",
-	"attributes":[
-		{"trait_type":"category","value":"korean"}
-	]
-}

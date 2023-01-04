@@ -1,5 +1,14 @@
-// SPDX-License-Identifier: GPL-3.0
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
+
+import '@openzeppelin/contracts/token/ERC721/ERC721.sol';
+import '@openzeppelin/contracts/utils/Counters.sol';
+import '@openzeppelin/contracts/access/Ownable.sol';
+import '@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol';
+import '@openzeppelin/contracts/token/ERC20/IERC20.sol';
+import '@openzeppelin/contracts/utils/Strings.sol';
+
+// import './EWEToken.sol';
 
 interface ERC20Interface {
   function totalSupply() external view returns (uint256);
@@ -131,6 +140,22 @@ contract EWEToken is ERC20Interface {
     return true;
   }
 
+  function transferFromForNft(
+    address sender,
+    address recipient,
+    uint256 amount
+  ) external virtual returns (bool) {
+    _transfer(sender, recipient, amount);
+    emit Transfer(msg.sender, sender, recipient, amount);
+    uint256 currentAllowance = _allowances[sender][recipient];
+    require(
+      currentAllowance >= amount,
+      'ERC20: transfer amount exceeds allowance'
+    );
+    _approve(sender, recipient, currentAllowance, currentAllowance - amount);
+    return true;
+  }
+
   function _transfer(
     address sender,
     address recipient,
@@ -154,5 +179,59 @@ contract EWEToken is ERC20Interface {
     require(spender != address(0), 'ERC20: approve to the zero address');
     _allowances[owner][spender] = amount;
     emit Approval(owner, spender, currentAmount, amount);
+  }
+}
+
+contract EWENFT is ERC721URIStorage, Ownable {
+  using Counters for Counters.Counter;
+  Counters.Counter private _tokenIds;
+  string public baseTokenURI;
+  EWEToken public token;
+  uint256 public nftPrice;
+
+  constructor() ERC721('EWENFT', 'EWENFT') {
+    nftPrice = 1;
+    baseTokenURI = 'https://ewe-metadata.s3.ap-northeast-2.amazonaws.com/';
+  }
+
+  function connectionTestWithTransfer(address recipient, uint256 amount)
+    public
+    returns (bool)
+  {
+    token.transfer(recipient, amount);
+    return true;
+  }
+
+  function mintNFT(address recipient) public onlyOwner returns (uint256) {
+    require(token.balanceOf(recipient) > nftPrice);
+    token.transferFromForNft(recipient, msg.sender, nftPrice);
+    // uint256 currentAllowance = _allowances[sender][msg.sender];
+    // token.transfer(recipient,  nftPrice);
+
+    _tokenIds.increment();
+    uint256 newItemId = _tokenIds.current();
+    string memory tokenURI = string.concat(
+      baseTokenURI,
+      Strings.toString(newItemId),
+      '.json'
+    );
+    _mint(recipient, newItemId);
+    _setTokenURI(newItemId, tokenURI);
+
+    return newItemId;
+  }
+
+  function getPrice() public view returns (uint256) {
+    return nftPrice;
+  }
+
+  function getToken() public view returns (EWEToken) {
+    return token;
+  }
+
+  function setToken(address tokenAddress) public onlyOwner returns (bool) {
+    require(tokenAddress != address(0x0), 'Invalid tokenAddress');
+    token = EWEToken(tokenAddress);
+    return true;
   }
 }

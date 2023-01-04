@@ -1,0 +1,6 @@
+{
+  "name": "noodles",
+  "description": "Noodles are a type of food made from unleavened dough which is either rolled flat and cut, stretched, or extruded, into long strips or strings.",
+  "image": "https://ewe-metadata.s3.ap-northeast-2.amazonaws.com/5.jpeg",
+  "attributes": [{ "trait_type": "category", "value": "chinese" }]
+}

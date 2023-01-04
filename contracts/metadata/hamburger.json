@@ -1,8 +1,0 @@
-{
-	"name":"hamburger",
-	"description":"A hamburger, or simply burger, is a food consisting of fillings—usually a patty of ground meat, typically beef—placed inside a sliced bun or bread roll.",
-	"image":"hamburger.jpg",
-	"attributes":[
-		{"trait_type":"category","value":"western"}
-	]
-}
