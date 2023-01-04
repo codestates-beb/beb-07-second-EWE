@@ -11,6 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      users.hasMany(models.nfts, { foreignKey: 'user_id', sourceKey: 'id' });
+      users.hasMany(models.posts, { foreignKey: 'user_id', sourceKey: 'id' });
     }
   }
   users.init({
@@ -18,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.STRING,
     wallet_account: DataTypes.CHAR,
     eth: DataTypes.INTEGER,
-    login_provider: DataTypes.ENUM,
+    login_provider: DataTypes.ENUM('local', 'naver', 'google', 'kakao'),
     nickname: DataTypes.STRING,
     erc20: DataTypes.INTEGER,
     wallet_pk: DataTypes.CHAR
