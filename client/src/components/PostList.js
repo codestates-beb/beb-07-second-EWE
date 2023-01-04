@@ -5,8 +5,22 @@ const PostList = ({posts}) => {
         <div className='post_wrapper'>
             {  
                 posts.map((posts)=>{
-                    return <Post key={posts.id} posts={posts}/>
-
+                    return (<Post key={posts.id} posts={posts}/>)
+                })
+            }
+            {  
+                posts.map((posts)=>{
+                    return (<Post key={posts.id} posts={posts}/>)
+                })
+            }
+            {  
+                posts.map((posts)=>{
+                    return (<Post key={posts.id} posts={posts}/>)
+                })
+            }
+            {  
+                posts.map((posts)=>{
+                    return (<Post key={posts.id} posts={posts}/>)
                 })
             }
         </div>
