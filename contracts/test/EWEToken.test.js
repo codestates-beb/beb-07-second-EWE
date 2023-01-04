@@ -9,10 +9,10 @@ contract('EWEToken', (accounts) => {
   const name = 'EWEToken';
   const symbol = 'EWE';
   const decimals = 18;
-  const totalSupply = '1000000';
+  const totalSupply = '100000000000000000000000000';
 
   beforeEach(async () => {
-    token = await EWEToken.new({
+    token = await EWEToken.new(name, symbol, {
       from: accounts[0],
     });
   });
@@ -44,10 +44,10 @@ contract('EWEToken', (accounts) => {
     const afterBalance0 = await token.balanceOf.call(accounts[0]);
     const afterBalance1 = await token.balanceOf.call(accounts[1]);
 
-    assert.strictEqual(beforeBalance.toString(), totalSupply);
+    assert.strictEqual(beforeBalance.toString(), totalSupply.toString());
     assert.strictEqual(
       afterBalance0.toString(),
-      (totalSupply - 1000).toString(),
+      (BigInt(totalSupply) - BigInt(1000)).toString(),
     );
     assert.strictEqual(afterBalance1.toString(), '1000');
   });
@@ -80,7 +80,7 @@ contract('EWEToken', (accounts) => {
     const approveResult = await token.approve(accounts[1], val, {
       from: accounts[0],
     });
-    console.log(approveResult.receipt);
+    // console.log(approveResult.receipt);
 
     const allowanceVal = await token.allowance(accounts[0], accounts[1]);
     assert.strictEqual(allowanceVal.toString(), val.toString());
@@ -95,7 +95,7 @@ contract('EWEToken', (accounts) => {
     assert.strictEqual(account2Balance.toString(), val.toString());
     assert.strictEqual(
       account0Balance.toString(),
-      (account0BalanceInitial - val).toString(),
+      (BigInt(account0BalanceInitial) - BigInt(val)).toString(),
     );
   });
 
