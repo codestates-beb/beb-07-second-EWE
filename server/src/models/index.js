@@ -40,19 +40,19 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-db.users = users;
-db.nfts = nfts;
-db.posts = posts;
-db.images = images;
+// db.users = users;
+// db.nfts = nfts;
+// db.posts = posts;
+// db.images = images;
 
-users.init(sequelize);
-nfts.init(sequelize);
-posts.init(sequelize);
-images.init(sequelize);
+// users.init(sequelize);
+// nfts.init(sequelize);
+// posts.init(sequelize);
+// images.init(sequelize);
 
-users.associate(db);
-nfts.associate(db);
-posts.associate(db);
-images.associate(db);
+// users.associate(db);
+// nfts.associate(db);
+// posts.associate(db);
+// images.associate(db);
 
 module.exports = db;

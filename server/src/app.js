@@ -9,6 +9,7 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const routes = require('./routes');
 const testRouter = require('./routes/testRouter');
+const userRouter = require('./routes/userRouter');
 const logger = require('./logger');
 const { sequelize } = require('./models');
 
@@ -49,7 +50,7 @@ app.use(
 );
 
 app.use('/test', testRouter);
-app.use('/', routes);
+app.use('/user', userRouter);
 
 app.use((req, res, next) => {
   const err = new Error(`${req.method} ${req.url} There is no Router`);
