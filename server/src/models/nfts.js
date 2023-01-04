@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      nfts.belongsTo(models.users, { foreignKey: 'user_id', sourceKey: 'id' })
     }
   }
   nfts.init({

@@ -4,7 +4,7 @@
     padding: 10px;
     display: block;
     border: 3px solid var(--white-color);
-    border-radius: 20px;
+    border-radius: 10px;
     width: 95%;
     height: 95%;
     background-color: var(--Secondary-color);
@@ -13,7 +13,7 @@
     transition: 0.2s;
 }
 .post_container:hover{
-    border-radius: 50px;
+    border-radius: 20px;
     transform: scale(1.1);
     background-color: var(--white-color);
     opacity: 0.9;
