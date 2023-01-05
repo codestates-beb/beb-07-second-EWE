@@ -16,20 +16,21 @@ import MyPage from './pages/MyPage';
 import SignupPage from './pages/SignupPage';
 import WritePage from './pages/WritePage';
 import PostDetailPage from './pages/PostDetailPage';
-import {getUser} from './apis/user'
-import {getPosts} from './apis/post'
+import {getUser, getUserv2} from './apis/user'
+import {getPosts, getPostsv2} from './apis/post'
 
 const App =()=> {
   const [posts, setPosts] = useState([])
   const [user, setUser] = useState([])
 
   useEffect(()=>{
-      getPosts()
+    getPostsv2()
       .then((result)=>{
           setPosts(result)
 
       })
   },[])
+
   const userId = 2;
   useEffect(()=>{
       getUser(userId)

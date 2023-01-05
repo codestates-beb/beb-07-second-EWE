@@ -117,16 +117,11 @@ const SignupPage = () => {
                 <div className="sign_up_with">
                     <button>
                         <div className="google">
-                            <i className="fa-brands fa-google"></i>
-                            <h3>Google</h3>
+                            <h1 className="fa-google">N</h1>
+                            <h3>Naver</h3>
                         </div>
                     </button>
-                    <button>
-                        <div className="apple">
-                            <i className="fa-brands fa-apple"></i>
-                            <h3>Apple</h3>
-                        </div>
-                    </button>
+
                 </div>
                 <div className="login">
                     <h6>Already have an account?</h6>

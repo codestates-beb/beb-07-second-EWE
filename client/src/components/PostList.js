@@ -1,27 +1,13 @@
 import Post from './Post'
-const PostList = ({posts}) => {
+const PostList = ({posts, offset, limit}) => {
     return(
         <div className='post_wrapper'>
             {  
-                posts.map((posts)=>{
+                posts.slice(offset, offset + limit).map((posts)=>{
                     return (<Post key={posts.id} posts={posts}/>)
                 })
             }
-            {  
-                posts.map((posts)=>{
-                    return (<Post key={posts.id} posts={posts}/>)
-                })
-            }
-            {  
-                posts.map((posts)=>{
-                    return (<Post key={posts.id} posts={posts}/>)
-                })
-            }
-            {  
-                posts.map((posts)=>{
-                    return (<Post key={posts.id} posts={posts}/>)
-                })
-            }
+
         </div>
     );
 }

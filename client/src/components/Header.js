@@ -31,7 +31,7 @@ const Header = ({user}) => {
                         <div className="userTab">
                             <h3>{user.nickname}</h3>
                             <a href="/mypage">My Page</a>
-                            <a href="/">Mint</a>
+                            <a href="/market">NFT Market</a>
                             <a href="/">ETH Faucet</a>
                             <a href="/">Log Out</a>
                             <a href="/">Secession</a>
