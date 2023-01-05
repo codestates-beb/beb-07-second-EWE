@@ -1,5 +1,7 @@
 // modules
 import {useState, useEffect} from "react";
+import {useParams} from "react-router-dom";
+import {Navigation} from "swiper";
 import {Swiper, SwiperSlide} from "swiper/react";
 
 // apis
@@ -16,10 +18,11 @@ function convertDate(date){
 
 const PostDetailPage = () => {
     const [post, setPost] = useState("");
+    const {postId} = useParams()
 
     useEffect(()=>{
         (async()=>{
-            const result = await getPostOnev2(1);
+            const result = await getPostOnev2(postId);
             setPost(result[0]);
             console.log(result);
         })();
@@ -55,6 +58,8 @@ const PostDetailPage = () => {
                     </div>
                     <div className="detail_image_wrapper">
                         <Swiper
+                            modules={[Navigation]}
+                            navigation
                             slidesPerView={1}
                         >
                             {post.images.map((image)=>{
