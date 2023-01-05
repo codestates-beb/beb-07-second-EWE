@@ -103,7 +103,7 @@ header{
     color: var(--onPrimary-color);
 
 }
-.fa-user{
+.fa-user, .fa-utensils{
     margin: 0 15px;
     padding: 10px;
     border: 3px solid var(--white-color);
@@ -116,7 +116,7 @@ header{
 
 }
 
-.fa-user:hover{
+.fa-user:hover, .fa-utensils:hover{
     border: 3px solid var(--Primary-color);
     border-radius: 30px;
     color: var(--Primary-color);

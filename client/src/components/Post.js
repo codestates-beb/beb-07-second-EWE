@@ -17,7 +17,7 @@ const Post = ({posts}) => {
             <div>
                 <div className='user1'>
                     <div className="user_img">
-                        <i className='fas fa-user '></i>
+                        <i className='fas fa-utensils '></i>
                     </div>
                     <div className="post_title"><h6>{posts.title}</h6></div>
                     <div className="post_num">#{posts.id}</div>

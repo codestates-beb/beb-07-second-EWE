@@ -1,5 +1,6 @@
 import Post from './Post'
-const PostList = ({posts, offset, limit}) => {
+const PostList = ({posts,offset,limit }) => {
+
     return(
         <div className='post_wrapper'>
             {  

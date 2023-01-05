@@ -1,21 +1,14 @@
-// import { useState } from 'react';
-import Post from '../components/Post'
+import { useState } from 'react';
+import PostList from '../components/PostList';
+import NFTList from '../components/NFTList';
 import '../assets/css/mypage.css'
 import Footer from '../components/Footer'
-const MyPage = ({user, posts}) => {
-    // const [isFiltered, setIsFiltered] = useState('')
-    // const [filteredPost, setFilteredPost] = useState([])
-    // const handleFilterPost=(e)=>{
-    //     if(e.target.value === ''){
-    //         setIsFiltered(false)
-    //     }else{
-    //         const filtered = posts.filter(
-    //             (post)=>post.creator===user.nickname
-    //         ) 
-    //         setIsFiltered(true)
-    //         setFilteredPost(filtered)
-    //     }
-    // }
+const MyPage = ({user, posts, nfts}) => {
+
+    const[limit, setLimit] = useState(10);
+    const[page, setPage] = useState(1);
+    const offset = (page - 1) * limit
+    let numPages = Math.ceil(posts.length/limit)
     const handleCopyClipBoard = async (text) => {
         try {
             await navigator.clipboard.writeText(text);
@@ -69,23 +62,94 @@ const MyPage = ({user, posts}) => {
                     </div>
                 </div>
             </div>
-            <div className='post_wrapper'>
-            <h1 className='my_assets'>My NFTs</h1>
+            {
+                <div className='pagination'>
+                <h1 className='my_assets'>My NFTs</h1>
+
+                <select 
+                    type = 'number'
+                    value={limit}
+                    onChange={({target: {value}})=> setLimit(Number(value))}>
+                    {/* <option value='5'>5</option> */}
+                    <option value='10'>10</option>
+                    {/* <option value='15'>15</option>
+                    <option value='30'>30</option>
+                    <option value='100'>100</option> */}
+                </select>
+                <button onClick={()=> setPage( page - 1 )} disabled = {page === 1}>
+                    <i className='fas fa-up-long'></i>
+                </button>
+                    {Array(numPages)
+                    .fill()
+                    .map((_,i) => (
+                        <button
+                        className='pagination_num'
+                        key = {i + 1}
+                        onClick={()=>setPage( i + 1 )}
+                        aria-current = {page === i + 1 ? "page" : null}
+                        >
+                        { i + 1 }
+                        </button>
+                        ))
+                    }
+                    <button onClick={()=> setPage( page + 1 )} disabled = {page === numPages}>
+                    <i className='fas fa-down-long'></i>
+                    </button>
+                </div>
+
+            }
             {  
-                posts.map((posts)=>{
-                    return (<Post key={posts.id} posts={posts}/>)
-                })
-            }</div>
-            
+                <PostList 
+                key={posts.id} 
+                posts={posts}
+                offset ={offset}
+                limit={limit}                
+                />
+                
+            }
             </div>
             <div className='mypage'>
-            <div className='post_wrapper'>
-            <h1 className='my_assets'>My Posts</h1>
+            {
+                <div className='pagination'>
+                <select 
+                    type = 'number'
+                    value={limit}
+                    onChange={({target: {value}})=> setLimit(Number(value))}>
+                    <option value='5'>5</option>
+                    <option value='10'>10</option>
+                    <option value='15'>15</option>
+                    <option value='30'>30</option>
+                    <option value='100'>100</option>
+                </select>
+                <button onClick={()=> setPage( page - 1 )} disabled = {page === 1}>
+                    <i className='fas fa-left-long'></i>
+                </button>
+                    {Array(numPages)
+                    .fill()
+                    .map((_,i) => (
+                        <button
+                        className='pagination_num'
+                        key = {i + 1}
+                        onClick={()=>setPage( i + 1 )}
+                        aria-current = {page !== i + 1 ? "page" : null}
+                        >
+                        { i + 1 }
+                        </button>
+                        ))
+                    }
+                    <button onClick={()=> setPage( page + 1 )}      disabled = {page === numPages}>
+                    <i className='fas fa-right-long'></i>
+                    </button>
+                </div>
+
+            }
             {  
-                posts.map((posts)=>{
-                    return (<Post key={posts.id} posts={posts}/>)
-                })
-            }</div>
+                <NFTList
+            limit={limit}
+            offset={offset}
+            nfts={nfts}
+                />
+            }
             </div>
             <Footer/>
         </div>
