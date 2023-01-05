@@ -2,47 +2,47 @@ import NFTList from '../components/NFTList'
 import { useState } from 'react';
 import '../assets/css/market.css'
 const MarketPage = ({nfts}) => {
-    const[limit, setLimit] = useState(10);
-    const[page, setPage] = useState(1);
-    const offset = (page - 1) * limit
-    let numPages = Math.ceil(nfts.length/limit)
+    const[nftLimit, setNftLimit] = useState(10);
+    const[nftPage, setNftPage] = useState(1);
+    const nftOffset = (nftPage - 1) * nftLimit
+    let numNftPages = Math.ceil(nfts.length/nftLimit)
 
 
     return(
         <div className='market'>
             <NFTList
-            limit={limit}
-            offset={offset}
+            nftLimit={nftLimit}
+            nftOffset={nftOffset}
             nfts={nfts}
             />
             <div className='pagination'>
                 <select 
                     type = 'number'
-                    value={limit}
-                    onChange={({target: {value}})=> setLimit(Number(value))}>
+                    value={nftLimit}
+                    onChange={({target: {value}})=> setNftLimit(Number(value))}>
                     <option value='5'>5</option>
                     <option value='10'>10</option>
                     <option value='15'>15</option>
                     <option value='30'>30</option>
                     <option value='100'>100</option>
                 </select>
-                <button onClick={()=> setPage( page - 1 )} disabled = {page === 1}>
+                <button onClick={()=> setNftPage( nftPage - 1 )} disabled = {nftPage === 1}>
                     <i className='fas fa-left-long'></i>
                 </button>
-                    {Array(numPages)
+                    {Array(numNftPages)
                     .fill()
                     .map((_,i) => (
                         <button
                         className='pagination_num'
                         key = {i + 1}
-                        onClick={()=>setPage( i + 1 )}
-                        aria-current = {page !== i + 1 ? "page" : null}
+                        onClick={()=>setNftPage( i + 1 )}
+                        aria-current = {nftPage !== i + 1 ? "page" : null}
                         >
                         { i + 1 }
                         </button>
                         ))
                     }
-                    <button onClick={()=> setPage( page + 1 )}      disabled = {page === numPages}>
+                    <button onClick={()=> setNftPage( nftPage + 1 )}      disabled = {nftPage === numNftPages}>
                     <i className='fas fa-right-long'></i>
                     </button>
                 </div>

@@ -4,10 +4,10 @@ import PostList from '../components/PostList'
 import { useState } from 'react';
 
 const MainPage = ({posts}) => {
-    const[limit, setLimit] = useState(10);
-    const[page, setPage] = useState(1);
-    const offset = (page - 1) * limit
-    let numPages = Math.ceil(posts.length/limit)
+    const[postLimit, setPostLimit] = useState(10);
+    const[postPage, setPostPage] = useState(1);
+    const postOffset = (postPage - 1) * postLimit
+    let numPages = Math.ceil(posts.length/postLimit)
 
     return(
         <div className='main'>
@@ -21,24 +21,27 @@ const MainPage = ({posts}) => {
             <a href='/'><h2>Chinese</h2></a>
             </div>
             <div className='post_list'>
+            <div className='post_head'>
+                <h2>Posts</h2>
+            </div>
                 <PostList 
                 key={posts.id} 
                 posts={posts}
-                offset ={offset}
-                limit={limit}                
+                postOffset ={postOffset}
+                postLimit={postLimit}                
                 />
                 <div className='pagination'>
                 <select 
                     type = 'number'
-                    value={limit}
-                    onChange={({target: {value}})=> setLimit(Number(value))}>
+                    value={postLimit}
+                    onChange={({target: {value}})=> setPostLimit(Number(value))}>
                     <option value='5'>5</option>
                     <option value='10'>10</option>
                     <option value='15'>15</option>
                     <option value='30'>30</option>
                     <option value='100'>100</option>
                 </select>
-                <button onClick={()=> setPage( page - 1 )} disabled = {page === 1}>
+                <button onClick={()=> setPostPage( postPage - 1 )} disabled = {postPage === 1}>
                     <i className='fas fa-left-long'></i>
                 </button>
                     {Array(numPages)
@@ -47,14 +50,14 @@ const MainPage = ({posts}) => {
                         <button
                         className='pagination_num'
                         key = {i + 1}
-                        onClick={()=>setPage( i + 1 )}
-                        aria-current = {page !== i + 1 ? "page" : null}
+                        onClick={()=>setPostPage( i + 1 )}
+                        aria-current = {postPage !== i + 1 ? "page" : null}
                         >
                         { i + 1 }
                         </button>
                         ))
                     }
-                    <button onClick={()=> setPage( page + 1 )} disabled = {page === numPages}>
+                    <button onClick={()=> setPostPage( postPage + 1 )} disabled = {postPage === numPages}>
                     <i className='fas fa-right-long'></i>
                     </button>
                 </div>

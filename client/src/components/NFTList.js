@@ -1,10 +1,10 @@
 import NFT from './NFT'
-const NFTList = ({nfts,offset,limit }) => {
+const NFTList = ({nfts,nftOffset,nftLimit }) => {
 
     return(
         <div className='post_wrapper'>
             {  
-                nfts.slice(offset, offset + limit).map((nfts)=>{
+                nfts.slice(nftOffset, nftOffset + nftLimit).map((nfts)=>{
                     return (<NFT key={nfts.id} nfts={nfts}/>)
                 })
             }

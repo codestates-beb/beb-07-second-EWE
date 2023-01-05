@@ -1,3 +1,20 @@
 .market{
     background-color: var(--Secondary-color);
+    height: 100%;
+}
+.market .pagination {
+    margin: auto;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    border-radius: 20px;
+    transition: 0.5s;
+    background-color: var(--white-color);
+
+}
+
+.market .pagination :hover{
+    background-color: var(--white-color);
+    border-radius: 20px;
 }

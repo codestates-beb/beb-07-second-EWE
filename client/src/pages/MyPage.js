@@ -5,10 +5,16 @@ import '../assets/css/mypage.css'
 import Footer from '../components/Footer'
 const MyPage = ({user, posts, nfts}) => {
 
-    const[limit, setLimit] = useState(10);
-    const[page, setPage] = useState(1);
-    const offset = (page - 1) * limit
-    let numPages = Math.ceil(posts.length/limit)
+    const[postLimit, setPostLimit] = useState(10);
+    const[postPage, setPostPage] = useState(1);
+    const postOffset = (postPage - 1) * postLimit
+    let numPostPages = Math.ceil(posts.length/postLimit)
+
+    const[nftLimit, setNftLimit] = useState(10);
+    const[nftPage, setNftPage] = useState(1);
+    const nftOffset = (nftPage - 1) * nftLimit
+    let numNftPages = Math.ceil(nfts.length/nftLimit)
+
     const handleCopyClipBoard = async (text) => {
         try {
             await navigator.clipboard.writeText(text);
@@ -64,35 +70,35 @@ const MyPage = ({user, posts, nfts}) => {
             </div>
             {
                 <div className='pagination'>
-                <h1 className='my_assets'>My NFTs</h1>
+                <h1 className='my_assets'>My Posts</h1>
 
                 <select 
                     type = 'number'
-                    value={limit}
-                    onChange={({target: {value}})=> setLimit(Number(value))}>
+                    value={postLimit}
+                    onChange={({target: {value}})=> setPostLimit(Number(value))}>
                     {/* <option value='5'>5</option> */}
                     <option value='10'>10</option>
                     {/* <option value='15'>15</option>
                     <option value='30'>30</option>
                     <option value='100'>100</option> */}
                 </select>
-                <button onClick={()=> setPage( page - 1 )} disabled = {page === 1}>
+                <button onClick={()=> setPostPage( postPage - 1 )} disabled = {postPage === 1}>
                     <i className='fas fa-up-long'></i>
                 </button>
-                    {Array(numPages)
+                    {Array(numPostPages)
                     .fill()
                     .map((_,i) => (
                         <button
                         className='pagination_num'
                         key = {i + 1}
-                        onClick={()=>setPage( i + 1 )}
-                        aria-current = {page === i + 1 ? "page" : null}
+                        onClick={()=>setPostPage( i + 1 )}
+                        aria-current = {postPage === i + 1 ? "page" : null}
                         >
                         { i + 1 }
                         </button>
                         ))
                     }
-                    <button onClick={()=> setPage( page + 1 )} disabled = {page === numPages}>
+                    <button onClick={()=> setPostPage( postPage + 1 )} disabled = {postPage === numPostPages}>
                     <i className='fas fa-down-long'></i>
                     </button>
                 </div>
@@ -102,8 +108,8 @@ const MyPage = ({user, posts, nfts}) => {
                 <PostList 
                 key={posts.id} 
                 posts={posts}
-                offset ={offset}
-                limit={limit}                
+                postOffset ={postOffset}
+                postLimit={postLimit}                
                 />
                 
             }
@@ -111,42 +117,43 @@ const MyPage = ({user, posts, nfts}) => {
             <div className='mypage'>
             {
                 <div className='pagination'>
+                <h1 className='my_assets'>My NFTs</h1>
                 <select 
                     type = 'number'
-                    value={limit}
-                    onChange={({target: {value}})=> setLimit(Number(value))}>
-                    <option value='5'>5</option>
+                    value={nftLimit}
+                    onChange={({target: {value}})=> setNftLimit(Number(value))}>
+                    {/* <option value='5'>5</option> */}
                     <option value='10'>10</option>
-                    <option value='15'>15</option>
+                    {/* <option value='15'>15</option>
                     <option value='30'>30</option>
-                    <option value='100'>100</option>
+                    <option value='100'>100</option> */}
                 </select>
-                <button onClick={()=> setPage( page - 1 )} disabled = {page === 1}>
-                    <i className='fas fa-left-long'></i>
+                <button onClick={()=> setNftPage( nftPage - 1 )} disabled = {nftPage === 1}>
+                    <i className='fas fa-up-long'></i>
                 </button>
-                    {Array(numPages)
+                    {Array(numNftPages)
                     .fill()
                     .map((_,i) => (
                         <button
                         className='pagination_num'
                         key = {i + 1}
-                        onClick={()=>setPage( i + 1 )}
-                        aria-current = {page !== i + 1 ? "page" : null}
+                        onClick={()=>setNftPage( i + 1 )}
+                        aria-current = {nftPage !== i + 1 ? "page" : null}
                         >
                         { i + 1 }
                         </button>
                         ))
                     }
-                    <button onClick={()=> setPage( page + 1 )}      disabled = {page === numPages}>
-                    <i className='fas fa-right-long'></i>
+                    <button onClick={()=> setNftPage( nftPage + 1 )}      disabled = {nftPage === numNftPages}>
+                    <i className='fas fa-down-long'></i>
                     </button>
                 </div>
 
             }
             {  
                 <NFTList
-            limit={limit}
-            offset={offset}
+            nftLimit={nftLimit}
+            nftOffset={nftOffset}
             nfts={nfts}
                 />
             }
