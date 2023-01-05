@@ -7,8 +7,8 @@ const morgan = require('morgan');
 const ejs = require('ejs');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
-const routes = require('./routes');
 const testRouter = require('./routes/testRouter');
+const testRouterV2 = require('./routes/testRouterV2');
 const userRouter = require('./routes/userRouter');
 const nftRouter = require('./routes/nftRouter');
 const postRouter = require('./routes/postRouter');
@@ -52,6 +52,7 @@ app.use(
 );
 
 app.use('/test', testRouter);
+app.use('/testv2', testRouterV2);
 app.use('/users', userRouter);
 app.use('/nfts', nftRouter);
 app.use('/posts', postRouter);

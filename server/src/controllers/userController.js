@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 const { users, nfts, posts, images } = require('../models');
 
 module.exports = {
@@ -83,33 +84,29 @@ module.exports = {
   },
 
   join: async (req, res) => {
-    // 소셜로그인에 따른 추가 작업 필요
-    // console.log(req.body);
-    // const {
-    //   email,
-    //   password,
-    //   wallet_account,
-    //   eth,
-    //   login_provider,
-    //   nickname,
-    //   erc20,
-    //   wallet_pk
-    // } = req.body;
-    // try {
-    //   const result = await users.create({
-    //     email,
-    //     password,
-    //     wallet_account,
-    //     eth,
-    //     login_provider,
-    //     nickname,
-    //     erc20,
-    //     wallet_pk,
-    //   });
-    //   return res.status(200).json(result);
-    // } catch (err) {
-    //   return res.status(500).send({ data: null, message: 'server error' });
-    // }
+    console.log(req.body);
+    const { email, password, nickname } = req.body;
+    if (!email || !password || !nickname) {
+      return res
+        .status(400)
+        .json({ message: 'input all required values', data: null });
+    }
+    // call web3 to create account info
+    try {
+      const result = await users.create({
+        email,
+        password,
+        wallet_account,
+        eth: 0,
+        login_provider,
+        nickname,
+        erc20: 0,
+        wallet_pk,
+      });
+      return res.status(200).json(result);
+    } catch (err) {
+      return res.status(500).send({ data: null, message: 'server error' });
+    }
   },
 
   login: async (req, res) => {
