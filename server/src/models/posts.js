@@ -19,7 +19,8 @@ module.exports = (sequelize, DataTypes) => {
     location: DataTypes.STRING,
     content: DataTypes.TEXT,
     views: DataTypes.INTEGER,
-    likes: DataTypes.INTEGER
+    likes: DataTypes.INTEGER,
+    store_name: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'posts',
