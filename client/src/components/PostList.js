@@ -1,6 +1,5 @@
 import Post from './Post'
 const PostList = ({posts}) => {
-    console.log(posts)
     return(
         <div className='post_wrapper'>
             {  
