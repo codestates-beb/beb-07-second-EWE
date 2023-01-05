@@ -10,6 +10,8 @@ const cookieParser = require('cookie-parser');
 const routes = require('./routes');
 const testRouter = require('./routes/testRouter');
 const userRouter = require('./routes/userRouter');
+const nftRouter = require('./routes/nftRouter');
+const postRouter = require('./routes/postRouter');
 const logger = require('./logger');
 const { sequelize } = require('./models');
 
@@ -50,7 +52,9 @@ app.use(
 );
 
 app.use('/test', testRouter);
-app.use('/user', userRouter);
+app.use('/users', userRouter);
+app.use('/nfts', nftRouter);
+app.use('/posts', postRouter);
 
 app.use((req, res, next) => {
   const err = new Error(`${req.method} ${req.url} There is no Router`);

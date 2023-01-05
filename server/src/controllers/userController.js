@@ -54,7 +54,8 @@ module.exports = {
     }
   },
 
-  getPosts: async (req, res) => {
+  getPostsByUserId: async (req, res) => {
+    // 사진 관련해서 수정 필요
     // const imgUrlPrefix = `http://${req.headers.host}/images/`;
     // console.log(imgUrlPrefix);
     const { userId } = req.params;
@@ -74,7 +75,7 @@ module.exports = {
           .status(400)
           .send({ data: null, message: 'No updated posts or invalid user' });
       }
-      return res.status(200).json(userPosts);
+      return res.status(200).json({ data: userPosts });
     } catch (err) {
       console.log(err);
       return res.status(500).send({ data: null, message: 'server error' });
