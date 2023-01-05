@@ -18,15 +18,22 @@ import WritePage from './pages/WritePage';
 import PostDetailPage from './pages/PostDetailPage';
 import {getUser, getUserv2} from './apis/user'
 import {getPosts, getPostsv2} from './apis/post'
-
+import {getNfts, getNftsv2} from './apis/nft'
 const App =()=> {
   const [posts, setPosts] = useState([])
   const [user, setUser] = useState([])
-
+  const [nfts, setNfts] = useState([])
   useEffect(()=>{
     getPostsv2()
       .then((result)=>{
           setPosts(result)
+
+      })
+  },[])
+  useEffect(()=>{
+    getNftsv2()
+      .then((result)=>{
+          setNfts(result)
 
       })
   },[])
@@ -43,9 +50,11 @@ const App =()=> {
       <Header user = {user}/>
       <Routes>
         <Route path='/' element={<MainPage posts={posts}/>}/>
-        <Route path='/market' element={<MarketPage/>}/>
+        <Route path='/market' element={<MarketPage
+          nfts={nfts}
+        />}/>
         <Route path='/mypage'  element={<MyPage 
-        posts={posts} user = {user}/>}/>
+        posts={posts} nfts={nfts} user = {user}/>}/>
         <Route path='/signup' element={<SignupPage/>}/>
         <Route path='/write' element={<WritePage user = {user}/>}/>
         <Route path='/post/:postId' element={<PostDetailPage/>}/>
