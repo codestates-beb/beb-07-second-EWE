@@ -1,15 +1,15 @@
 // modules
 import {useState, useEffect} from "react";
-import { getPostOne } from "../apis/post";
+import {useParams} from "react-router-dom";
+import {Navigation} from "swiper";
 import {Swiper, SwiperSlide} from "swiper/react";
 
 // apis
-
+import { getPostOnev2 } from "../apis/post";
 
 // css
 import "../assets/css/postdetail.css";
 import "swiper/css";
-import axios from "axios";
 
 function convertDate(date){
     const parsingDate = new Date(date).toLocaleString();
@@ -18,21 +18,15 @@ function convertDate(date){
 
 const PostDetailPage = () => {
     const [post, setPost] = useState("");
+    const {postId} = useParams()
 
     useEffect(()=>{
         (async()=>{
-            const result = await getPostOne(1);
-            setPost(result);
-
-            const location = await axios.get("https://map.kakao.com/?itemId=1914659693")
-            .then(result=>result)
-            .catch(error=>error);
-
-            console.log(location);
+            const result = await getPostOnev2(postId);
+            setPost(result[0]);
+            console.log(result);
         })();
     }, []);
-
-    console.log(post);
 
     return(
         <div className="container">
@@ -64,29 +58,27 @@ const PostDetailPage = () => {
                     </div>
                     <div className="detail_image_wrapper">
                         <Swiper
+                            modules={[Navigation]}
+                            navigation
                             slidesPerView={1}
                         >
-                            <SwiperSlide>
-                                <div className="swiper_image_wrapper">
-                                    <img src={post.images}/>
-                                </div>
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <div className="swiper_image_wrapper">
-                                    <img src={post.images}/>
-                                </div>
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <div className="swiper_image_wrapper">
-                                    <img src={post.images}/>
-                                </div>
-                            </SwiperSlide>                        
+                            {post.images.map((image)=>{
+                                return(
+                                    <SwiperSlide>
+                                        <div className="swiper_image_wrapper">
+                                            <img src={image.uri}/>
+                                        </div>
+                                    </SwiperSlide>
+                                )})
+                            }
                         </Swiper>
                     </div>
                     <div className="detail_content_wrapper">
                         <p>{post.content}</p>
                     </div>
-                    
+                    <div className="btn-group">
+                        <button className="btn">목록</button>
+                    </div>
                 </div>
             </div>
             :<></>

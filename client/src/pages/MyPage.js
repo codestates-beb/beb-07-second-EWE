@@ -1,21 +1,21 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 import Post from '../components/Post'
 import '../assets/css/mypage.css'
 import Footer from '../components/Footer'
 const MyPage = ({user, posts}) => {
-    const [isFiltered, setIsFiltered] = useState('')
-    const [filteredPost, setFilteredPost] = useState([])
-    const handleFilterPost=(e)=>{
-        if(e.target.value === ''){
-            setIsFiltered(false)
-        }else{
-            const filtered = posts.filter(
-                (post)=>post.creator===user.nickname
-            ) 
-            setIsFiltered(true)
-            setFilteredPost(filtered)
-        }
-    }
+    // const [isFiltered, setIsFiltered] = useState('')
+    // const [filteredPost, setFilteredPost] = useState([])
+    // const handleFilterPost=(e)=>{
+    //     if(e.target.value === ''){
+    //         setIsFiltered(false)
+    //     }else{
+    //         const filtered = posts.filter(
+    //             (post)=>post.creator===user.nickname
+    //         ) 
+    //         setIsFiltered(true)
+    //         setFilteredPost(filtered)
+    //     }
+    // }
     const handleCopyClipBoard = async (text) => {
         try {
             await navigator.clipboard.writeText(text);
@@ -25,7 +25,7 @@ const MyPage = ({user, posts}) => {
 
     return(
         <div>
-                    <a href='/write' className='write'>
+            <a href='/write' className='write'>
                 <div className='post_button'>POST</div>
             </a>
             <div className='mypage'>

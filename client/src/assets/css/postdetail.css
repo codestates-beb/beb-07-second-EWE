@@ -1,5 +1,5 @@
 .detail_wrapper {
-    width: 400px;
+    width: 600px;
 }
 
 /* 헤더 */
@@ -52,8 +52,6 @@
     margin-right: 0.5rem;
 }
 
-
-
 /* 유저 프로필 */
 
 .detail_wrapper .detail_profile_wrapper .profile_frame{
@@ -82,6 +80,7 @@
 }
 
 .swiper_image_wrapper{
+    background-color: #000;
     position:relative;
     width: 100%;
     height: 400px;
