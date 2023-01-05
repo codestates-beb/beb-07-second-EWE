@@ -1,7 +1,7 @@
 const Web3 = require('web3');
 const TokenABI = require('./ABIs/EWEToken');
 const NFTABI = require('./ABIs/EWENFT');
-require('dotenv').config({ path: '../../.env' }); // TODO: remove later
+// require('dotenv').config({ path: '../../.env' }); // TODO: remove later
 
 const { WEB3NETWORK, NFTCA, TokenCA, ADMIN_PK } = process.env;
 const web3Endpoint = 'http://localhost:7545';

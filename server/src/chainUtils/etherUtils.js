@@ -8,7 +8,7 @@ const getEtherBalance = async (account) => {
 };
 
 // default faucet value = 0.01ETH
-const sendEther = async (recipient, value = '10000000000000000') => {
+const useEtherFaucet = async (recipient, value = '10000000000000000') => {
   try {
     await web3Http.eth.sendTransaction({
       from: ADMIN_ADDRESS,
@@ -22,4 +22,4 @@ const sendEther = async (recipient, value = '10000000000000000') => {
   }
 };
 
-module.exports = { getEtherBalance, sendEther };
+module.exports = { getEtherBalance, useEtherFaucet };
