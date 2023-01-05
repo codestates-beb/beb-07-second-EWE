@@ -1,0 +1,6 @@
+{
+  "name": "samgyeop-sal",
+  "description": "Directly translated from Korean, samgyeop-sal (삼겹살) means three layer flesh, referring to striations of lean meat and fat in the pork belly that appear as three layers when cut.",
+  "image": "https://ewe-metadata.s3.ap-northeast-2.amazonaws.com/7.jpeg",
+  "attributes": [{ "trait_type": "category", "value": "korean" }]
+}

@@ -1,24 +1,12 @@
-import { useState, useEffect } from 'react'
 import '../assets/css/main.css'
 import Footer from '../components/Footer'
 import PostList from '../components/PostList'
-import {getPosts} from '../apis/post'
-const MainPage = () => {
-    const [posts, setPosts] = useState([])
-
-    useEffect(()=>{
-        getPosts()
-        .then((result)=>{
-            setPosts(result)
-            
-        })
-    },[])
+const MainPage = ({posts}) => {
 
     return(
         <div>
-            <a href='/writepage' className='write'>
+            <a href='/write' className='write'>
                 <div className='post_button'>POST</div>
-                
             </a>
             <div className='category'>
             <a href='/'><h2>Korean</h2></a>
@@ -30,7 +18,6 @@ const MainPage = () => {
                 <PostList key={posts.id} posts={posts}/>
             </div>
             <div className='pagination'>
-
             </div>
             <Footer/>
         </div>

@@ -1,0 +1,6 @@
+{
+  "name": "sandwich",
+  "description": "A sandwich is a food typically consisting of vegetables, sliced cheese or meat, placed on or between slices of bread, or more generally any dish wherein bread serves as a container or wrapper for another food type.",
+  "image": "https://ewe-metadata.s3.ap-northeast-2.amazonaws.com/8.jpeg",
+  "attributes": [{ "trait_type": "category", "value": "western" }]
+}
