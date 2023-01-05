@@ -3,9 +3,6 @@ import {useState, useEffect} from "react";
 import { getPostOne } from "../apis/post";
 import {Swiper, SwiperSlide} from "swiper/react";
 
-// apis
-
-
 // css
 import "../assets/css/postdetail.css";
 import "swiper/css";
@@ -86,7 +83,9 @@ const PostDetailPage = () => {
                     <div className="detail_content_wrapper">
                         <p>{post.content}</p>
                     </div>
-                    
+                    <div className="btn-group">
+                        <button className="btn">목록</button>
+                    </div>
                 </div>
             </div>
             :<></>
