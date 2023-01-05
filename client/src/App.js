@@ -48,7 +48,7 @@ const App =()=> {
         posts={posts} user = {user}/>}/>
         <Route path='/signup' element={<SignupPage/>}/>
         <Route path='/write' element={<WritePage user = {user}/>}/>
-        <Route path='/postdetail' element={<PostDetailPage/>}/>
+        <Route path='/post/:postId' element={<PostDetailPage/>}/>
       </Routes>
     </BrowserRouter>
   );
