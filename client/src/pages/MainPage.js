@@ -16,9 +16,10 @@ const MainPage = ({posts}) => {
             </a>
             <div className='category'>
             <a href='/'><h2>Korean</h2></a>
-            <a href='/'><h2>Western</h2></a>
-            <a href='/'><h2>Japanese</h2></a>
             <a href='/'><h2>Chinese</h2></a>
+            <a href='/'><h2>Japanese</h2></a>
+            <a href='/'><h2>Western</h2></a>
+
             </div>
             <div className='post_list'>
             <div className='post_head'>

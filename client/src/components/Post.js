@@ -13,7 +13,7 @@ const Post = ({posts}) => {
         }
     }
     return(
-        <a href='/postdetail' className="asset_container">
+        <a href={'/post/'+ posts.id }className="asset_container">
             <div>
                 <div className='user1'>
                     <div className="user_img">
