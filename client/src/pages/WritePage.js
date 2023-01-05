@@ -9,6 +9,7 @@ import GoogleMap from "../components/Map/GoogleMap";
 
 //css
 import "../assets/css/write.css";
+import "swiper/css"
 
 const WritePage = () => {
     const [title, setTitle] = useState("");
@@ -69,7 +70,8 @@ const WritePage = () => {
                     </div>
                     :
                     <div className="image_input_wrapper">
-                        <label className="image_input_helper" for="image_input">
+                        <label className="image_input_helper" htmlFor="image_input">
+                            <i className="fas fa-image image_icon"/>
                             클릭해서 이미지를 업로드하세요.
                             <input
                                 id="image_input"
