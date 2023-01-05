@@ -30,7 +30,7 @@ export const getPostsv2 = async()=>{
     return posts;
 }
 
-export const getPostOnev2 = async()=>{
+export const getPostOnev2 = async(id)=>{
     const requestURL = getPostOneURLv2 + id;
     const posts = await axios.get(requestURL)
     .then(res=>res.data)
