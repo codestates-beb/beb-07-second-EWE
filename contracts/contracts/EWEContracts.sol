@@ -221,6 +221,11 @@ contract EWENFT is ERC721URIStorage, Ownable {
     return newItemId;
   }
 
+  function getTokenId() public view returns (uint256) {
+    uint256 currentTokenId = _tokenIds.current();
+    return currentTokenId;
+  }
+
   function getPrice() public view returns (uint256) {
     return nftPrice;
   }

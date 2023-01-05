@@ -46,7 +46,7 @@ const KakaoMap = ({locationName, submitLocation, resetLocation})=>{
     }
 
     const resetKeyword= ()=>{
-        setKeyword=("");
+        setKeyword("");
     }
 
     const resetBtnHandler = ()=>{
