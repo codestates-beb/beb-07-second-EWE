@@ -6,7 +6,7 @@ const userController = require('../controllers/userController');
 router.get('/:userId', userController.getUserinfo);
 router.get('/:userId/balance', userController.getBalance);
 router.get('/:userId/nfts', userController.getNfts);
-router.get('/:userId/posts', userController.getPosts);
+router.get('/:userId/posts', userController.getPostsByUserId);
 
 router.post('/join', userController.join);
 router.post('/login', userController.login);
