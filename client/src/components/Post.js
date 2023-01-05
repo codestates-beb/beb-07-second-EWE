@@ -1,4 +1,4 @@
-import '../assets/css/post.css'
+import '../assets/css/asset.css'
 const Post = ({posts}) => {
     const viewCount = (views) =>{
         if(views<=1000){
@@ -13,25 +13,25 @@ const Post = ({posts}) => {
         }
     }
     return(
-        <a href='/postdetail' className="post_container">
+        <a href='/postdetail' className="asset_container">
             <div>
                 <div className='user1'>
                     <div className="user_img">
                         <i className='fas fa-user '></i>
                     </div>
                     <div className="post_title"><h6>{posts.title}</h6></div>
-                    <div className="post_num">{posts.id}</div>
+                    <div className="post_num">#{posts.id}</div>
                 </div> 
                 <div className='user2'>
                     <div className="creator">{posts.creator}</div>
                     <div className="view">
                         {viewCount(posts.views)}
                     </div>
-                    <div className="createdAt" >{posts.created_at.slice(0,10)}</div>
+                    <div className="createdAt" >{posts.createdAt.slice(0,10)}</div>
                 </div>
             </div>
             <div className="image" >
-                <img src = {posts.images}  alt="food"></img>
+                <img src = {posts.images[0].uri}  alt="food"></img>
             </div>
 
             <div className="comments">

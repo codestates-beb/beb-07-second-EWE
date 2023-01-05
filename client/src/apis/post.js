@@ -25,7 +25,7 @@ export const getPostOne = async (id)=>{
 
 export const getPostsv2 = async()=>{
     const posts = await axios.get(getPostsURLv2)
-    .then(res=>res.data.result)
+    .then(res=>res.data)
     .catch(console.log);
     return posts;
 }
