@@ -1,0 +1,79 @@
+.mypage{
+    display: flex;
+    background-color: var(--Secondary-color);
+}
+.user_info{
+    margin: 1.5%;
+    padding: 15px;
+    width: 200px;
+    border-radius: 20px;
+    background-color: var(--white-color);
+
+}
+.token_transfer{
+    margin-top: 25%;
+}
+.nickname, .email, .eth, .erc20,.receivers_address, .amount{
+    margin: 10px;
+}
+.wallet_account{
+    margin: 10px;
+}
+.account{
+    display: flex;
+    align-items: center;
+}
+.account button{
+    padding: 0 0 3px 0;
+    width: 50px;
+    height: 20px;
+    color: var(--gray-light-color);
+    border: 1px solid var(--gray-light-color);
+    border-radius: 10px;
+    align-items: center;
+    text-align: center;
+}
+.account button:focus{
+    border: 1px solid var(--Primary-color);
+    color: var(--Primary-color);
+}
+.account button:hover{
+    background-color: var(--gray-light-color);
+    color: var(--white-color);
+}
+.wallet_account p{
+    width: 120px;
+    height: auto;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.mypage .post_wrapper{
+    width: 100%;
+    padding: 1%;
+}
+.mypage .post_wrapper h2{
+    padding: 1%;
+
+}
+.my_assets{
+    color: var(--white-color);
+    text-align: center;
+    transition: 0.3s;
+}
+.mypage .post_wrapper:hover .my_assets{
+    color: var(--Primary-color);
+
+}
+.transaction{
+    padding: 5% 0;
+    text-align: center;
+    border: 1px solid var(--Primary-color);
+    color: var(--Primary-color);
+    border-radius: 10px;
+    transition: 0.5s;
+}
+.transaction:hover{
+    background-color:  var(--Primary-color);
+    color: var(--white-color);
+
+}

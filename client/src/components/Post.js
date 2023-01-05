@@ -13,7 +13,7 @@ const Post = ({posts}) => {
         }
     }
     return(
-        <a href='/' className="post_container">
+        <a href='/postdetail' className="post_container">
             <div>
                 <div className='user1'>
                     <div className="user_img">
