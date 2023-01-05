@@ -8,8 +8,10 @@
     width: 600px;
 }
 
-.post_image_wrapper, .kakaomap_wrapper,
-.post_title_wrapper
+.post_image_wrapper, 
+.kakaomap_wrapper,
+.post_title_wrapper,
+.post_content_wrapper
 {
     margin-bottom: 1rem;
 }
@@ -20,6 +22,12 @@
 {
     color: var(--gray-light-color);
     font-style:italic;
+}
+
+.post_title_wrapper .title_input:focus,
+.post_content_wrapper .content_textarea:focus
+{
+    outline: none;
 }
 
 /* 작성글 제목 */
@@ -84,13 +92,26 @@
     font-size:5rem;
 }
 
+.swiper .swiper-button-prev, .swiper .swiper-button-next{
+    color: var(--white-color)
+}
+
+.swiper-pagination-bullet.swiper-pagination-bullet-active{
+    background-color: var(--white-color)
+}
+
 /* 작성글 내용*/
+.write_wrapper .post_content_wrapper {
+    padding: 1rem 0;
+    border-top : 1px solid var(--gray-light-color);
+    border-bottom : 1px solid var(--gray-light-color);
+}
+
 .post_content_wrapper .content_textarea{
     width: 100%;
-    box-shadow: 0 0 0.2rem var(--gray-light-color);
     border-radius: 0.5rem;
     border: none;
-    padding: 0.5rem;
+    padding: 0.5rem 0;
     font-size: 1rem;
     resize: none;
 }
@@ -99,6 +120,7 @@
 
 .write_wrapper .btn_group{
     display: flex;
+    margin-bottom: 2rem;
 }
 
 .write_wrapper .btn_group button{
