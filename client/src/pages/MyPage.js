@@ -1,38 +1,93 @@
-import { useState, useEffect } from "react";
-import {getUser} from '../apis/user'
-import {Post} from '../components/Post'
-const MyPage = () => {
- const[user, setUser] = useState([])
- useEffect(()=>{
-    getUser()
-    .then((result)=>{
-        console.log(result)
-        setUser(result)
-        console.log(result)
-    })
- },[])
- const userData =[{
-    "id": 1,
-    "nickname": "Russ",
-    "address": "wallet_address",
-    "token_balance": "12.02",
-    "nfts": "20",
-    "posts": "199",
-  }
-]
+import { useState } from 'react';
+import Post from '../components/Post'
+import '../assets/css/mypage.css'
+import Footer from '../components/Footer'
+const MyPage = ({user, posts}) => {
+    const [isFiltered, setIsFiltered] = useState('')
+    const [filteredPost, setFilteredPost] = useState([])
+    const handleFilterPost=(e)=>{
+        if(e.target.value === ''){
+            setIsFiltered(false)
+        }else{
+            const filtered = posts.filter(
+                (post)=>post.creator===user.nickname
+            ) 
+            setIsFiltered(true)
+            setFilteredPost(filtered)
+        }
+    }
+    const handleCopyClipBoard = async (text) => {
+        try {
+            await navigator.clipboard.writeText(text);
+        } catch (e) {
+        }
+    };
+
     return(
         <div>
-            <div className="front_image">
-                <img src="https://i.pinimg.com/564x/ca/43/e8/ca43e8863e1abdcee7dc801a24a0d415.jpg" alt="front"></img>
+                    <a href='/write' className='write'>
+                <div className='post_button'>POST</div>
+            </a>
+            <div className='mypage'>
+            <div className='user_info'>
+            <h2>User Information</h2>
+                <div className="nickname">
+                    <h3>Nickname</h3>
+                    {user.nickname}
+                </div>
+                <div className="email">
+                    <h3>Email</h3>
+                    {user.email}
+                </div>
+                <div className="wallet_account">
+                    <h3>Wallet Account</h3>
+                    <div className='account'>
+                        <p>{user.wallet_account}</p>
+                        <button onClick={() => {handleCopyClipBoard(user.wallet_account)}}>copy</button>
+                    </div>
+                </div>
+                <div className="eth">
+                    <h3>Balance</h3>
+                    {user.eth}ETH
+                </div>
+                <div className="erc20">
+                    <h3>Token</h3>
+                    {user.erc20}
+                </div>
+                <div className='token_transfer'>
+                    <h2>Token Transfer</h2>
+                    <div className="receivers_address">
+                        <h4>Receiver's Address</h4>
+                        <input></input>
+                    </div>
+                    <div className="amount">
+                        <h4>Amount</h4>
+                        <input></input>
+                    </div>
+                    <div className='transaction'>
+                        <h2>Transaction</h2>
+                    </div>
+                </div>
             </div>
-            <div className="nickname">{userData[0].nickname}</div>
-            <div className="address">{userData[0].address}</div>
-            <div className="token_balance">{userData[0].token_balance}ETH</div>
-            <div className="posts">{
-
-                }</div>
-            <div className="nfts">{userData[0].nfts}</div>
-
+            <div className='post_wrapper'>
+            <h1 className='my_assets'>My NFTs</h1>
+            {  
+                posts.map((posts)=>{
+                    return (<Post key={posts.id} posts={posts}/>)
+                })
+            }</div>
+            
+            </div>
+            <div className='mypage'>
+            <div className='post_wrapper'>
+            <h1 className='my_assets'>My Posts</h1>
+            {  
+                posts.map((posts)=>{
+                    return (<Post key={posts.id} posts={posts}/>)
+                })
+            }</div>
+            </div>
+            <Footer/>
         </div>
     );
 }

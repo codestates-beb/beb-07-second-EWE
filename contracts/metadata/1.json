@@ -1,0 +1,6 @@
+{
+  "name": "bibimbap",
+  "description": "It's called bibimbap (pronounced bee-BIM-bop)—bibim meaning mixed and bap meaning rice. This beloved Korean bowl incorporates steamed white rice with assorted fresh, marinated, and sautéed vegetables along with raw or seared meat, if desired.",
+  "image": "https://ewe-metadata.s3.ap-northeast-2.amazonaws.com/1.jpeg",
+  "attributes": [{ "trait_type": "category", "value": "korean" }]
+}

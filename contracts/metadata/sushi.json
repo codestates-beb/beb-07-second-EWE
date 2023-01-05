@@ -1,8 +1,0 @@
-{
-	"name":"sushi",
-	"description":"A type of Japanese food consisting of squares or balls of cold boiled rice, with small pieces of other food, especially raw fish, on top or rolled inside.",
-	"image":"sushi.jpg",
-	"attributes":[
-		{"trait_type":"category","value":"Japanese"}
-	]
-}
