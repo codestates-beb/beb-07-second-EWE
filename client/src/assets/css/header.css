@@ -1,10 +1,25 @@
 header{
     background-color: var(--Secondary-color);
     display: flex;
-    height: 72;
-    text-align: center;
+    height: 72px;
     align-items: center;
-    justify-content: space-between;
+}
+.header_left{
+    width: 33.33%;
+    padding: 1%;
+
+}
+.header_middle{
+    padding: 12%;
+    width: 33.33%;
+
+} 
+.header_right{
+    width: 33.33%;
+}
+.fa-cube{
+    margin: 1%;
+    color: var(--white-color);
 }
 .CI{
     display: flex;
@@ -12,7 +27,31 @@ header{
     align-items: center;
     justify-content: space-between;
 }
+.CI .logo>a,.CI .logo{
+    width: 60px;
+}
+.fa-drumstick-bite{
+    -webkit-transform-origin: bottom left;
+    transform-origin: bottom left;
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+    -webkit-animation-timing-function: ease-out;
+    animation-timing-function: ease-out;
+    transition: 2s;
+}
+.CI:hover .fa-drumstick-bite{
+    -webkit-transform-origin: bottom left;
+    transform-origin: bottom left;
+    -webkit-transform: rotate(-110deg);
+    transform: rotate(-110deg);
+    -webkit-animation-timing-function: ease-in-out;
+    animation-timing-function: ease-in-out;
+}
+.logo a i {
+    margin: 20px;
+    color: var(--onPrimary-color);
 
+}
 .CI .bigName a{
     margin: 0;
     padding: 0;
@@ -34,7 +73,7 @@ header{
     display: flex;
     text-align: center;
     align-items: center;
-    justify-content: space-between;
+    justify-content: right;
 }
 .userMenu a{
     margin-right: 25px;
@@ -95,14 +134,7 @@ header{
 .userTab a:hover{
     color: var(--Primary-color);
 }
-.logo a{ 
-    height: 72px;
-}
-.logo a i {
-    margin: 20px;
-    color: var(--onPrimary-color);
 
-}
 .fa-user, .fa-utensils{
     margin: 0 15px;
     padding: 10px;

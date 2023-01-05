@@ -150,5 +150,7 @@
 .main .pagination :hover{
     background-color: var(--white-color);
     border-radius: 20px;
-
+}
+select{
+    text-align-last: center;
 }
