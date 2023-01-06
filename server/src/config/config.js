@@ -9,10 +9,10 @@ module.exports = {
     dialect: 'mysql',
     timezone: '+09:00',
   },
-  test: {
+  remote_test: {
     username: process.env.MYSQL_USERNAME,
     password: process.env.MYSQL_PASSWORD,
-    database: 'ewe',
+    database: 'ewetest',
     host: 'ls-e945f0c999c4259a860dc114836dde7f7202e401.cvm0kfoaj1h1.ap-northeast-2.rds.amazonaws.com',
     dialect: 'mysql',
     timezone: '+09:00',
