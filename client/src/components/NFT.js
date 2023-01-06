@@ -1,11 +1,13 @@
 import '../assets/css/asset.css'
+import { Link } from 'react-router-dom';
 const NFT = ({nfts}) => {
+    //nft matadata
     return(
-        <a href='/postdetail' className="asset_container">
+        <Link to='/postdetail' className="asset_container">
             <div>
                 <div className='user1'>
                 <div className="user_img">
-                        <i className='fas fa-utensils '></i>
+                        <i className='fab fa-ethereum'></i>
                     </div>
 
                     <div className="post_title token_id"><h6>{nfts.token_id}</h6></div>
@@ -36,7 +38,7 @@ const NFT = ({nfts}) => {
 
             <div className="comments">
             </div>
-        </a>
+        </Link>
     );
 }
 export default NFT;
