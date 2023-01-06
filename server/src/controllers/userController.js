@@ -80,19 +80,25 @@ module.exports = {
     const userPosts = await posts.findAll({
       include: [
         {
+          model: users,
+          attributes: ['id', 'wallet_account', 'nickname'],
+        },
+        {
           model: images,
+          attributes: ['uri'],
         },
       ],
       where: { user_id: userId },
     });
-    console.log(userPosts);
+    // console.log(userPosts);
+
     try {
       if (userPosts === null) {
         return res
           .status(400)
           .send({ data: null, message: 'No updated posts or invalid user' });
       }
-      return res.status(200).json({ data: userPosts });
+      return res.status(200).json(userPosts);
     } catch (err) {
       console.log(err);
       return res.status(500).send({ data: null, message: 'server error' });

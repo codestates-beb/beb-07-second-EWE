@@ -22,15 +22,16 @@ function convertDate(date){
 }
 
 const PostDetailPage = () => {
-    const [post, setPost] = useState(null);
     const {postId} = useParams()
+    const [post, setPost] = useState(null);
+    const [store, setStore] = useState("");
+    
 
     useEffect(()=>{
         (async()=>{
             const result = await getPostOnev2(postId);
-            const {images}= result[0];
 
-            setPost(result[0]);
+            setPost(result);
 
         })();
     }, []);
