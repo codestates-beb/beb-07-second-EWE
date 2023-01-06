@@ -1,6 +1,6 @@
 {
   "name": "jajangmyeon",
   "description": "Jajangmyeon is a Korean noodle dish topped with a thick sauce made of chunjang, diced pork, and vegetables. Variants of the dish use seafood, or other meats.",
-  "image": "https://ewe-metadata.s3.ap-northeast-2.amazonaws.com/4.jpeg",
+  "image": "https://ewe-metadata.s3.ap-northeast-2.amazonaws.com/4.jpg",
   "attributes": [{ "trait_type": "category", "value": "chinese" }]
 }

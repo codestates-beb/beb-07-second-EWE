@@ -1,6 +1,6 @@
-const Pagenation = () => {
+const Pagination = () => {
     return(
-        <div>Pagenation</div>
+        <div>Pagination</div>
     );
 }
-export default Pagenation;
+export default Pagination;

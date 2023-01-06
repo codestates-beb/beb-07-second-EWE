@@ -4,8 +4,30 @@
     margin-top: 2rem;
 }
 
-.post_image_wrapper, .kakaomap_wrapper, .post_title_wrapper{
-    margin-bottom: 0.5rem;
+.write_wrapper{
+    width: 600px;
+}
+
+.post_image_wrapper, 
+.kakaomap_wrapper,
+.post_title_wrapper,
+.post_content_wrapper
+{
+    margin-bottom: 1rem;
+}
+
+
+.post_content_wrapper .content_textarea::placeholder,
+.post_title_wrapper .title_input::placeholder
+{
+    color: var(--gray-light-color);
+    font-style:italic;
+}
+
+.post_title_wrapper .title_input:focus,
+.post_content_wrapper .content_textarea:focus
+{
+    outline: none;
 }
 
 /* 작성글 제목 */
@@ -27,11 +49,69 @@
     
 }
 
+/* 작성글 이미지 */
+.post_image_wrapper {
+    
+}
+
+.post_image_wrapper .image_preview_wrapper{
+    height:400px;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.post_image_wrapper .image_input{
+    display:none;
+}
+
+.post_image_wrapper .swiper{
+    height:400px;
+}
+
+.post_image_wrapper .image_input_wrapper .image_input_helper{
+    display: flex;
+    box-shadow: 0 0 0.2rem;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 400px;
+    border-radius: 0.5rem;
+    font-size: 2rem;
+    font-weight:700;
+    color: var(--gray-light-color);
+    cursor:pointer;
+}
+
+.image_input_wrapper .image_input_helper .image_icon{
+    margin-bottom: 1rem;
+}
+
+.image_input_wrapper .image_input_helper .image_icon:before{
+    font-size:5rem;
+}
+
+.swiper .swiper-button-prev, .swiper .swiper-button-next{
+    color: var(--white-color)
+}
+
+.swiper-pagination-bullet.swiper-pagination-bullet-active{
+    background-color: var(--white-color)
+}
+
 /* 작성글 내용*/
+.write_wrapper .post_content_wrapper {
+    padding: 1rem 0;
+    border-top : 1px solid var(--gray-light-color);
+    border-bottom : 1px solid var(--gray-light-color);
+}
+
 .post_content_wrapper .content_textarea{
     width: 100%;
     border-radius: 0.5rem;
-    padding: 0.5rem;
+    border: none;
+    padding: 0.5rem 0;
     font-size: 1rem;
     resize: none;
 }
@@ -40,6 +120,7 @@
 
 .write_wrapper .btn_group{
     display: flex;
+    margin-bottom: 2rem;
 }
 
 .write_wrapper .btn_group button{

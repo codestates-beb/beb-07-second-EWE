@@ -1,62 +1,93 @@
-.detail_wrapper {
-    width: 400px;
+.detail_section {
+    width: 600px;
+}
+
+.detail_container {
+    display: flex;
+    gap: 1rem;
+    width: 100vw;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 /* 헤더 */
 
-.detail_wrapper .detail_section{
-    display: flex;
-}
-
-.detail_wrapper .detail_header{
-    display: flex;
-    justify-content: space-between;
-    padding-bottom: 1rem;
+.detail_header{
+    display: grid;
+    grid-template-rows: 2.5rem 2.5rem;
+    grid-template-columns: 5rem 320px 1fr;
+    width:100%;
+    align-items: center;
+    padding: 1rem 0.5rem;
     border-bottom: 1px solid #cbcbcb;
     margin-bottom: 1rem;
 }
 
-.detail_wrapper .detail_header .header_section{
+.detail_header .detail_profile_wrapper{
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 3;
+}   
+
+.detail_header .detail_title_wrapper{
+    grid-column-start: 2;
+    grid-column-end: 4;
+    grid-row-start: 1;
+    grid-row-end: 1;
+}
+
+.detail_header .detail_data_wrapper{
+    grid-column-start: 2;
+    grid-column-end: 4;
+    grid-row-start: 2;
+    grid-row-end: 2;
+}
+
+.detail_header .header_section{
     display: flex;
 }
 
-.detail_wrapper .detail_header .detail_title_wrapper, .detail_wrapper .detail_header .detail_data_wrapper{
+.detail_header .detail_title_wrapper, .detail_header .detail_data_wrapper{
     display: flex;
-    flex-direction: column;
     justify-content: space-between;
-    padding: 0.5rem 0;
 }
 
-.detail_wrapper .detail_header .detail_title_wrapper{
+.detail_header .detail_title{
+    margin-left: 1rem;
+    text-overflow: ellipsis;
+}
+
+.detail_header .detail_data{
     margin-left: 1rem;
 }
 
-.detail_wrapper .detail_header .detail_data_wrapper{
-    text-align: right;
-}
-
-.detail_wrapper .detail_header .detail_title_wrapper p, 
-.detail_wrapper .detail_header .detail_data_wrapper
+.detail_header .detail_postid, 
+.detail_header .detail_data,
+.detail_header .detail_date
 {
     color: var(--gray-dark-color);
 }
 
-.detail_wrapper .detail_header .detail_title_wrapper h1 {
-    width: 100px;
-    height: 40px;
+.detail_header .detail_postid, 
+.detail_header .detail_date
+{
+    text-align: right;
+}
+
+
+.detail_header .detail_title {
     font-size: 1rem;
     overflow: hidden;
 }
 
-.detail_wrapper .detail_header .detail_title_wrapper p * {
+.detail_header p.detail_data * {
     margin-right: 0.5rem;
 }
 
-
-
 /* 유저 프로필 */
 
-.detail_wrapper .detail_profile_wrapper .profile_frame{
+.detail_profile_wrapper .profile_frame{
     position: relative;
     border-radius: 100%;
     width: 5rem;
@@ -64,7 +95,7 @@
     overflow:hidden;
 }
 
-.detail_wrapper .detail_profile_wrapper .profile_frame img{
+.detail_profile_wrapper .profile_frame img{
     position: absolute;
     width:100%;
     top: 50%;
@@ -75,6 +106,7 @@
 /* 이미지 슬라이드 */
 .detail_wrapper .detail_image_wrapper{
     margin-bottom: 1rem;
+    background-color: #000;
 }
 
 .detail_wrapper .detail_image_wrapper .swiper{
@@ -82,6 +114,7 @@
 }
 
 .swiper_image_wrapper{
+    background-color: #000;
     position:relative;
     width: 100%;
     height: 400px;
@@ -102,6 +135,14 @@
 }
 
 /* 상세내용 */
-.detail_wrapper .detail_content_wrapper {
-    
+.detail_section .detail_content_wrapper {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--gray-light-color);
 }
+
+/* 상세 맵 */
+.detail_section .detail_location_wrapper{
+    padding: 1rem;
+}
+
+

@@ -1,5 +1,15 @@
 /* eslint-disable camelcase */
 const { users, nfts, posts, images } = require('../models');
+const { createAccount } = require('../chainUtils/accountUtils');
+const { getEtherBalance, useEtherFaucet } = require('../chainUtils/etherUtils');
+const {
+  getTokenBalance,
+  transferTokenToUser,
+  approveTokenToAdmin,
+  spendApprovedToken,
+} = require('../chainUtils/tokenUtils');
+
+const WELCOMETOKEN = '10000000000000000';
 
 module.exports = {
   getUserinfo: async (req, res) => {
@@ -88,7 +98,7 @@ module.exports = {
     }
   },
 
-  join: async (req, res) => {
+  join: async (req, res, next) => {
     console.log(req.body);
     const { email, password, nickname } = req.body;
     if (!email || !password || !nickname) {
@@ -96,25 +106,52 @@ module.exports = {
         .status(400)
         .json({ message: 'input all required values', data: null });
     }
-    // call web3 to create account info
+    // 1. check if account exists
+    const joinedUser = await users.findOne({ where: { email } });
+    if (joinedUser) {
+      const joinedEmail = joinedUser.email;
+      return res.status(403).json({
+        message: `same email already exists : ${joinedEmail}`,
+        data: null,
+      });
+    }
+    // 5. if above processes are done update db.
+    // 6. make above logics as ACID Transaction
     try {
-      const result = await users.create({
+      // 2. create new account
+      // 3. verify created account
+      const { address, privateKey } = await createAccount(); // web3 call
+      const newUser = await users.create({
         email,
         password,
-        wallet_account,
+        wallet_account: address,
         eth: 0,
-        login_provider,
+        login_provider: 'local',
         nickname,
         erc20: 0,
-        wallet_pk,
+        wallet_pk: privateKey,
       });
-      return res.status(200).json(result);
+      // 4. give initial ether and token, nft to account
+      // 5. TODO: make web3 calls async and use eventListeners to update db when web3 transactions are done
+      // NOW it is synchronized logic
+      await useEtherFaucet(address);
+      await transferTokenToUser(address, WELCOMETOKEN);
+      // TODO: call transfer NFT to user here
+      const tokenBalance = await getTokenBalance(address);
+      const etherBalance = await getEtherBalance(address);
+      console.log({ tokenBalance, etherBalance });
+      await newUser.update({
+        eth: etherBalance,
+        erc20: tokenBalance,
+      });
+      return res.status(200).json(newUser);
     } catch (err) {
-      return res.status(500).send({ data: null, message: 'server error' });
+      console.error(err);
+      return next(err);
     }
   },
 
-  login: async (req, res) => {
+  login: async (req, res, next) => {
     // 소셜로그인으로 인한 수정 필요
     const { email, password } = req.body;
     const login = await users.findOne({
@@ -130,7 +167,7 @@ module.exports = {
       return res.status(200).json(login);
     } catch (err) {
       console.log(err);
-      return res.status(500).send({ data: null, message: 'server error' });
+      return next(err);
     }
   },
 };

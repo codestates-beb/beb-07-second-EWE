@@ -11,7 +11,7 @@ export const getUser = async(userId)=>{
     const requestURL = getUserURL + userId
 
     const user = await axios.get(requestURL)
-    .then(res=>res.data.result)
+    .then(res=>res.data)
     .catch(console.log);
 
     return user;
