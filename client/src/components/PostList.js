@@ -8,7 +8,6 @@ const PostList = ({posts,postOffset,postLimit }) => {
                     return (<Post key={posts.id} posts={posts}/>)
                 })
             }
-
         </div>
     );
 }

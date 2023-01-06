@@ -2,6 +2,7 @@ import '../assets/css/main.css'
 import Footer from '../components/Footer'
 import PostList from '../components/PostList'
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const MainPage = ({posts}) => {
     const[postLimit, setPostLimit] = useState(10);
@@ -11,14 +12,14 @@ const MainPage = ({posts}) => {
 
     return(
         <div className='main'>
-            <a href='/write' className='write'>
+            <Link to='/write' className='write'>
                 <div className='post_button'>POST</div>
-            </a>
+            </Link>
             <div className='category'>
-            <a href='/'><h2>Korean</h2></a>
-            <a href='/'><h2>Chinese</h2></a>
-            <a href='/'><h2>Japanese</h2></a>
-            <a href='/'><h2>Western</h2></a>
+            <Link to='/'><h2>Korean</h2></Link>
+            <Link to='/'><h2>Chinese</h2></Link>
+            <Link to='/'><h2>Japanese</h2></Link>
+            <Link to='/'><h2>Western</h2></Link>
 
             </div>
             <div className='post_list'>
