@@ -22,8 +22,10 @@ function convertDate(date){
 }
 
 const PostDetailPage = () => {
-    const [post, setPost] = useState(null);
     const {postId} = useParams()
+    const [post, setPost] = useState(null);
+    const [store, setStore] = useState("");
+    
 
     useEffect(()=>{
         (async()=>{
