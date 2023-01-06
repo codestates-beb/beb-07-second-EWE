@@ -1,26 +1,28 @@
 
 import '../assets/css/header.css'
-
+import { Link } from 'react-router-dom';
 const Header = ({user}) => {
     // const [isLogin, setIsLogin] = useState()
     const isLogin = true;
 
-
-
     return(
         <header>
-            <div className="CI">
+        <div className='header_left'>
+        <i className='fas fa-cube fa-xl'></i>
+        </div>
+            <div className="CI header_middle">
                 <div className="logo" >
-                    <a href="/"><i className='fas fa-drumstick-bite fa-2xl' 
-                    ></i></a>
+                    <Link to="/"><i className='fas fa-drumstick-bite fa-2xl' 
+                    ></i></Link>
                 </div>
                 <div className="ICName">
-                    <a href="/" className="bigName">
-                    <h1>EWE</h1></a>
-                    <a href="/" className="smallName">
-                    <h5>Eat Write Earn</h5></a>
+                    <Link to="/" className="bigName">
+                    <h1>EWE</h1></Link>
+                    <Link to="/" className="smallName">
+                    <h5>Eat Write Earn</h5></Link>
                 </div>
             </div>
+            <div className='header_right'>
                 {isLogin?
                 <div className="userMenu">
                     <div className='user'>
@@ -30,29 +32,29 @@ const Header = ({user}) => {
                         </div>
                         <div className="userTab">
                             <h3>{user.nickname}</h3>
-                            <a href="/mypage">My Page</a>
-                            <a href="/">Mint</a>
-                            <a href="/">ETH Faucet</a>
-                            <a href="/">Log Out</a>
-                            <a href="/">Secession</a>
+                            <Link to="/mypage">My Page</Link>
+                            <Link to="/market">NFT Market</Link>
+                            <Link to="/">ETH Faucet</Link>
+                            <Link to="/">Log Out</Link>
+                            <Link to="/">Secession</Link>
                         </div>
                     </div>
                 </div>    
                 :
                     <div className="userMenu">
                         <div className="Login">
-                            <a href="/">
+                            <Link to="/">
                             <h4>Login</h4>
-                            </a>
+                            </Link>
                             <div className='user_info'>
                                 <input placeholder='ID'></input>
                                 <input placeholder='PW'></input>
                             </div>
                         </div>
                         <div className="signup">
-                            <a href="/signup">
+                            <Link to="/signup">
                             <h4>SignUp</h4>
-                            </a>
+                            </Link>
                         </div>
                         <div className='user'>
                             <div>
@@ -62,6 +64,7 @@ const Header = ({user}) => {
                         </div>
                     </div> 
                 }
+            </div>
         </header>
     );
 }

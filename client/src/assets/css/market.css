@@ -1,0 +1,146 @@
+.market{
+    background-color: var(--Secondary-color);
+    height: 100%;
+}
+.market .pagination {
+    margin: auto;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    border-radius: 20px;
+    transition: 0.5s; 
+    background-color: var(--white-color);
+}
+
+.market .pagination :hover{
+    background-color: var(--white-color);
+    border-radius: 20px;
+}
+
+.market{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.market .market_section{
+    padding: 1rem;
+    width:600px;
+}
+
+/* minting 섹션 */
+.market_section .section_title h1{
+    vertical-align: bottom;
+}
+
+.market_section .mint_section {
+    border-radius: 1rem;
+    overflow:hidden;
+}
+
+.market_section .mint_section .mint_form_wrapper{
+    padding: 1rem;
+}
+
+
+
+/* 이미지 업로드 */
+
+.market_section .image_input_wrapper .image_input_helper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 400px;
+    font-size: 2rem;
+    font-weight:700;
+    background-color: var(--gray-light-color);
+    color: var(--black-color);
+    cursor:pointer;
+    transition: 0.5s;
+}
+
+.market_section .image_input_wrapper .image_input_helper:hover{
+    background-color: var(--gray-dark-color);
+}
+
+.market_section .image_input_wrapper .image_input{
+    display:none;
+}
+
+/* 민팅 폼*/
+.mint_section .mint_form_wrapper .input_group{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+.mint_form_wrapper .input_group label{
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.mint_form_wrapper .input_group input,
+.mint_form_wrapper .input_group textarea
+{
+    border: none;
+    border-bottom: 1px solid var(--gray-light-color);
+    font-size: 1rem;
+}
+
+.mint_form_wrapper .input_group input:focus,
+.mint_form_wrapper .input_group textarea:focus
+{
+    outline: none;
+}
+
+.mint_form_wrapper .input_group input{
+    padding: 0 0 0.2rem 0;
+}
+
+.mint_form_wrapper .input_group textarea{
+    padding: 0.5rem;
+    border : 1px solid var(--gray-light-color);
+    border-radius: 0.5rem;
+    resize: none;
+}
+
+
+
+
+.mint_section .mint_wrapper{
+    background-color: var(--white-color);
+}
+
+.mint_wrapper .mint_form_wrapper .btn_group{
+
+}
+
+.mint_wrapper .btn_group {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.mint_wrapper .btn_group .btn{
+    display: block;
+    border: 1px solid var(--gray-light-color);
+    border-radius: 0.5rem;
+    width: auto;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    transition: 0.5s
+}
+
+.mint_wrapper .btn_group .btn:hover{
+    cursor: pointer;
+    filter: brightness(0.5)
+}
+
+.mint_wrapper .btn_group .btn.btn_mint{
+    background-color: var(--Primary-color);
+}

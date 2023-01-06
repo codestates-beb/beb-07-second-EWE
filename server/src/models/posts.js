@@ -12,6 +12,10 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       posts.hasMany(models.images, { foreignKey: 'post_id', sourceKey: 'id' });
+      posts.belongsTo(models.users, {
+        foreignKey: 'user_id',
+        sourceKey: 'id',
+      });
     }
   }
   posts.init({
@@ -19,7 +23,8 @@ module.exports = (sequelize, DataTypes) => {
     location: DataTypes.STRING,
     content: DataTypes.TEXT,
     views: DataTypes.INTEGER,
-    likes: DataTypes.INTEGER
+    likes: DataTypes.INTEGER,
+    store_name: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'posts',

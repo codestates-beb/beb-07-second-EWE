@@ -7,8 +7,11 @@ const morgan = require('morgan');
 const ejs = require('ejs');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
+
 const testRouter = require('./routes/testRouter');
 const testRouterV2 = require('./routes/testRouterV2');
+const web3Router = require('./routes/web3Router');
+
 const userRouter = require('./routes/userRouter');
 const nftRouter = require('./routes/nftRouter');
 const postRouter = require('./routes/postRouter');
@@ -51,8 +54,12 @@ app.use(
   }),
 );
 
+// test routers
 app.use('/test', testRouter);
 app.use('/testv2', testRouterV2);
+app.use('/web3', web3Router);
+
+// production router
 app.use('/users', userRouter);
 app.use('/nfts', nftRouter);
 app.use('/posts', postRouter);

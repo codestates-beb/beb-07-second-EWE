@@ -2,12 +2,22 @@
     display: flex;
     background-color: var(--Secondary-color);
 }
-.user_info{
+.mypage > .user_info{
     margin: 1.5%;
     padding: 15px;
     width: 200px;
     border-radius: 20px;
     background-color: var(--white-color);
+}
+.mypage > .pagination{
+    padding: 2% 1%;
+    align-items: center;
+
+}
+.mypage > .pagination select{
+    margin: 15%;
+    padding: auto;
+    width: 70%;
 
 }
 .token_transfer{

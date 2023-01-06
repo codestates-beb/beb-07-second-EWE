@@ -15,7 +15,7 @@
     --Primary-Container-color: #asdf323;
     --onPrimary-Container-color: #asdf323;
 
-    --Secondary-color: #F0ECCF;
+    --Secondary-color: #efe9d2;
     --onSecondary-color: #A3BB98;
     --Secondary-Container-color: #asdf323;
     --onSecondary-Container-color: #asdf323;
@@ -89,9 +89,19 @@
     padding: 2% 1% 10% 1%;
     height: 100%;
     background-color: var(--Secondary-color);
+    align-items: center;
+}
+.post_list:hover .post_head h2{
+    color: var(--Primary-color);
+    
+}
+.post_head h2{
+    margin-left: 0.6%;
+    color: var(--white-color);
+    transition: 0.8s;
 }
 .post_wrapper{
-    padding: 1% 0;
+    padding: 0 0 1% 0;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(20%, 1fr) );
     margin: 0;
@@ -124,5 +134,23 @@
 .github_repo{
     margin: 1% 0;
     width: 25%;
+}
+.main .pagination {
+    margin: auto;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    border-radius: 20px;
+    transition: 0.5s;
+    background-color: var(--white-color);
 
+}
+
+.main .pagination :hover{
+    background-color: var(--white-color);
+    border-radius: 20px;
+}
+select{
+    text-align-last: center;
 }
