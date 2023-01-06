@@ -1,6 +1,5 @@
 /* eslint-disable camelcase */
 const { users, nfts, posts, images } = require('../models');
-const { post } = require('../routes/postRouter');
 
 module.exports = {
   getAllposts: async (req, res) => {
@@ -137,5 +136,5 @@ module.exports = {
       console.log(err);
       return res.status(500).send({ data: null, message: 'server error' });
     }
-  }
+  },
 };
