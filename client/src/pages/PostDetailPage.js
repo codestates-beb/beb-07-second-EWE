@@ -30,9 +30,8 @@ const PostDetailPage = () => {
     useEffect(()=>{
         (async()=>{
             const result = await getPostOnev2(postId);
-            const {images}= result[0];
 
-            setPost(result[0]);
+            setPost(result);
 
         })();
     }, []);
