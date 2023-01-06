@@ -8,6 +8,16 @@
     width: 200px;
     border-radius: 20px;
     background-color: var(--white-color);
+}
+.mypage > .pagination{
+    padding: 2% 1%;
+    align-items: center;
+
+}
+.mypage > .pagination select{
+    margin: 15%;
+    padding: auto;
+    width: 70%;
 
 }
 .token_transfer{

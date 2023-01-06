@@ -1,4 +1,5 @@
 import '../assets/css/asset.css'
+import { Link } from 'react-router-dom'
 const Post = ({posts}) => {
     const viewCount = (views) =>{
         if(views<=1000){
@@ -13,11 +14,11 @@ const Post = ({posts}) => {
         }
     }
     return(
-        <a href='/postdetail' className="asset_container">
+        <Link to={'/post/'+ posts.id }className="asset_container">
             <div>
                 <div className='user1'>
                     <div className="user_img">
-                        <i className='fas fa-user '></i>
+                        <i className='fas fa-utensils '></i>
                     </div>
                     <div className="post_title"><h6>{posts.title}</h6></div>
                     <div className="post_num">#{posts.id}</div>
@@ -36,7 +37,7 @@ const Post = ({posts}) => {
 
             <div className="comments">
             </div>
-        </a>
+        </Link>
     );
 }
 export default Post;

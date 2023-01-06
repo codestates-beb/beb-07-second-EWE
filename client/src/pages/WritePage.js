@@ -1,6 +1,7 @@
 //modules
 import {useState, useEffect} from "react";
 import {Swiper, SwiperSlide} from "swiper/react";
+import {Navigation, Pagination} from "swiper";
 import {Wrapper, Status} from "@googlemaps/react-wrapper";
 
 //components
@@ -10,6 +11,8 @@ import GoogleMap from "../components/Map/GoogleMap";
 //css
 import "../assets/css/write.css";
 import "swiper/css"
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 const WritePage = () => {
     const [title, setTitle] = useState("");
@@ -49,6 +52,9 @@ const WritePage = () => {
                     { images? 
                     <div className="image_preview_wrapper">
                         <Swiper
+                            modules={[Navigation, Pagination]}
+                            navigation
+                            pagination={{clickable:false}}
                             slidesPerView={1}
                         >
                             <SwiperSlide>
@@ -88,6 +94,7 @@ const WritePage = () => {
                         className="content_textarea" 
                         placeholder="내용을 입력해주세요."
                         rows="15"
+                        spellCheck={false}
                         onChange={(e)=>{setContent(e.target.value)}}
                     />
                 </div>

@@ -91,8 +91,17 @@
     background-color: var(--Secondary-color);
     align-items: center;
 }
+.post_list:hover .post_head h2{
+    color: var(--Primary-color);
+    
+}
+.post_head h2{
+    margin-left: 0.6%;
+    color: var(--white-color);
+    transition: 0.8s;
+}
 .post_wrapper{
-    padding: 1% 0;
+    padding: 0 0 1% 0;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(20%, 1fr) );
     margin: 0;
@@ -126,32 +135,22 @@
     margin: 1% 0;
     width: 25%;
 }
-
-.pagination{
+.main .pagination {
     margin: auto;
-    padding: 0 2%;
-    width: 40%;
-    height: 40px;    
-    display: flex;
     align-items: center;
+    display: flex;
     justify-content: center;
-    border: 1px solid var(--white-color);
-    border-radius: 50px;
-
-}
-.pagination div{
-    
-    margin: 3%;
-}
-.pagination div :hover{
-}
-.pagination div i{
-    transform: scale(1);
+    width: 50%;
+    border-radius: 20px;
     transition: 0.5s;
-    color: var(--white-color);
+    background-color: var(--white-color);
 
 }
-.pagination div i:hover{
-    transform: scale(1.3);
-    color: var(--Primary-color);
+
+.main .pagination :hover{
+    background-color: var(--white-color);
+    border-radius: 20px;
+}
+select{
+    text-align-last: center;
 }

@@ -117,8 +117,8 @@ const SignupPage = () => {
                 <div className="sign_up_with">
                     <button>
                         <div className="google">
-                            <h1 className="fa-google">N</h1>
-                            <h3>Naver</h3>
+                            <h1>N</h1>
+                            <h3>Naver social Login</h3>
                         </div>
                     </button>
 
