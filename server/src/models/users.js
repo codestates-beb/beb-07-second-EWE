@@ -19,10 +19,10 @@ module.exports = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     password: DataTypes.STRING,
     wallet_account: DataTypes.CHAR,
-    eth: DataTypes.INTEGER,
+    eth: DataTypes.STRING,
     login_provider: DataTypes.ENUM('local', 'naver', 'google', 'kakao'),
     nickname: DataTypes.STRING,
-    erc20: DataTypes.INTEGER,
+    erc20: DataTypes.STRING,
     wallet_pk: DataTypes.CHAR
   }, {
     sequelize,

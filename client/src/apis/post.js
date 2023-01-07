@@ -4,8 +4,11 @@ import axios from "axios";
 const origin = "http://20.214.190.113:5050";
 const getPostsURL = origin + "/test/posts";
 const getPostOneURL = origin + "/test/posts/"
+
 const getPostsURLv2 = origin + "/testv2/posts";
 const getPostOneURLv2 = origin + "/testv2/posts/"
+
+const postReviewURL = origin + "/posts";
 
 // Test API Request
 export const getPosts = async()=>{
@@ -35,6 +38,16 @@ export const getPostOnev2 = async(id)=>{
     const post = await axios.get(requestURL)
     .then(res=>res.data)
     .catch(console.log);
-    console.log(post);
+    
     return post;
+}
+
+export const createReview = async(review)=>{
+    if(!review.user_id || !review.title || !review.store_name || !review.content) return;
+
+    const createResult = await axios.post(postReviewURL, review)
+    .then(res=>res)
+    .catch(err=>err);
+
+    return createResult;
 }

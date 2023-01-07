@@ -6,6 +6,8 @@ const getUserURL = origin + "/test/users/";
 
 const getUserURLv2 = origin + "/testv2/users";
 
+const signupUserURL = origin + "/users/join"
+
 // Test API Request
 export const getUser = async(userId)=>{
     const requestURL = getUserURL + userId
@@ -25,6 +27,16 @@ export const getUserv2 = async(userId)=>{
     .catch(console.log);
 
     return user;
+}
+
+export const signupUser = async(userInfo)=>{
+    if(!userInfo.email || !!userInfo.password || !userInfo.nickname) return;
+
+    const resultSignup = await axios.post(signupUserURL, userInfo)
+    .then(result=>result)
+    .then(err=>err)
+
+    return resultSignup;
 }
 
 

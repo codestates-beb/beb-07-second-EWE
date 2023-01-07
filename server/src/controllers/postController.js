@@ -1,6 +1,5 @@
 /* eslint-disable camelcase */
 const { users, nfts, posts, images } = require('../models');
-const { post } = require('../routes/postRouter');
 
 module.exports = {
   getAllposts: async (req, res) => {
@@ -8,7 +7,12 @@ module.exports = {
       const allPosts = await posts.findAll({
         include: [
           {
+            model: users,
+            attributes: ['id', 'wallet_account', 'nickname'],
+          },
+          {
             model: images,
+            attributes: ['uri'],
           },
         ],
       });
@@ -22,10 +26,15 @@ module.exports = {
   getPostsByPostId: async (req, res) => {
     try {
       const { postId } = req.params;
-      const post = await posts.findAll({
+      const post = await posts.findOne({
         include: [
           {
+            model: users,
+            attributes: ['id', 'wallet_account', 'nickname'],
+          },
+          {
             model: images,
+            attributes: ['uri'],
           },
         ],
         where: { id: postId },
@@ -116,7 +125,7 @@ module.exports = {
     }
   },
 
-  updateLike: async (req, res) => {
+  updateLikes: async (req, res) => {
     const { id } = req.body;
     try {
       if (id === null) {
@@ -124,18 +133,53 @@ module.exports = {
           .status(400)
           .send({ data: null, message: 'no according posts' });
       }
+      const targetIndex = await posts.findOne({
+        where: { id },
+      });
       const plusLike = await posts.update(
         {
-          likes: 1,
+          likes: targetIndex.likes + 1,
         },
         {
           where: { id },
         },
       );
-      return res.status(200).json(plusLike);
+      return res.status(200).json({
+        likes: targetIndex.likes + 1,
+        message: 'successfully updated!',
+      });
     } catch (err) {
       console.log(err);
       return res.status(500).send({ data: null, message: 'server error' });
     }
-  }
+  },
+
+  updateViews: async (req, res) => {
+    const { id } = req.body;
+    try {
+      if (id === null) {
+        return res
+          .status(400)
+          .send({ data: null, message: 'no according posts' });
+      }
+      const targetIndex = await posts.findOne({
+        where: { id },
+      });
+      const plusView = await posts.update(
+        {
+          views: targetIndex.views + 1,
+        },
+        {
+          where: { id },
+        },
+      );
+      return res.status(200).json({
+        views: targetIndex.views + 1,
+        message: 'successfully updated!',
+      });
+    } catch (err) {
+      console.log(err);
+      return res.status(500).send({ data: null, message: 'server error' });
+    }
+  },
 };
