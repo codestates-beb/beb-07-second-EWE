@@ -26,6 +26,17 @@ module.exports = {
   getPostsByPostId: async (req, res) => {
     try {
       const { postId } = req.params;
+      const targetIndex = await posts.findOne({
+        where: { id: postId },
+      });
+      await posts.update(
+        {
+          views: targetIndex.views + 1,
+        },
+        {
+          where: { id: postId },
+        },
+      );
       const post = await posts.findOne({
         include: [
           {
@@ -78,9 +89,9 @@ module.exports = {
 
   deletePosts: async (req, res) => {
     // 수정 필요
-    const { id } = req.body;
+    const { postId } = req.params;
     const ifexist = await posts.findOne({
-      where: { id },
+      where: { id: postId },
     });
     try {
       if (!ifexist) {
@@ -89,10 +100,10 @@ module.exports = {
           .send({ data: null, message: 'no according posts' });
       }
       const deletePost = await posts.destroy({
-        where: { id },
+        where: { id: postId },
       });
       const deleteImg = await images.destroy({
-        where: { post_id: id },
+        where: { post_id: postId },
       });
       console.log(deletePost);
       console.log(deleteImg);
@@ -104,9 +115,9 @@ module.exports = {
   },
 
   deleteImgs: async (req, res) => {
-    const { id } = req.body;
+    const { postId } = req.parms;
     const ifexist = await images.findOne({
-      where: { id },
+      where: { id: postId },
     });
     try {
       if (!ifexist) {
@@ -115,7 +126,7 @@ module.exports = {
           .send({ data: null, message: 'no according posts' });
       }
       const deleteImg = await images.destroy({
-        where: { id },
+        where: { id: postId },
       });
       console.log(deleteImg);
       return res.status(200).send({ message: 'successfully deleted!' });
@@ -136,7 +147,7 @@ module.exports = {
       const targetIndex = await posts.findOne({
         where: { id },
       });
-      const plusLike = await posts.update(
+      await posts.update(
         {
           likes: targetIndex.likes + 1,
         },
@@ -146,35 +157,6 @@ module.exports = {
       );
       return res.status(200).json({
         likes: targetIndex.likes + 1,
-        message: 'successfully updated!',
-      });
-    } catch (err) {
-      console.log(err);
-      return res.status(500).send({ data: null, message: 'server error' });
-    }
-  },
-
-  updateViews: async (req, res) => {
-    const { id } = req.body;
-    try {
-      if (id === null) {
-        return res
-          .status(400)
-          .send({ data: null, message: 'no according posts' });
-      }
-      const targetIndex = await posts.findOne({
-        where: { id },
-      });
-      const plusView = await posts.update(
-        {
-          views: targetIndex.views + 1,
-        },
-        {
-          where: { id },
-        },
-      );
-      return res.status(200).json({
-        views: targetIndex.views + 1,
         message: 'successfully updated!',
       });
     } catch (err) {
