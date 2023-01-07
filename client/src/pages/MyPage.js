@@ -4,6 +4,7 @@ import PostList from '../components/PostList';
 import NFTList from '../components/NFTList';
 import '../assets/css/mypage.css'
 import Footer from '../components/Footer'
+
 const MyPage = ({user, posts, nfts}) => {
     const [responsibleToggle,SetResponsibleToggle] = useState(false)
     const[postLimit, setPostLimit] = useState(10);
@@ -29,7 +30,7 @@ const MyPage = ({user, posts, nfts}) => {
                 <div className='post_button'>POST</div>
             </a>
             <div className='category narrow'>
-            <i class="fa-solid fa-caret-down" onClick={()=>{SetResponsibleToggle(!responsibleToggle)}}>
+            <i className="fa-solid fa-caret-down" onClick={()=>{SetResponsibleToggle(!responsibleToggle)}}>
                 </i>
                 {
                 responsibleToggle === false?
