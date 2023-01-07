@@ -1,21 +1,21 @@
 import '../assets/css/asset.css'
 import { Link } from 'react-router-dom';
-import { getNftMetadata } from '../apis/nft';
-import { useState, useEffect } from 'react'
+// import { getNftMetadata } from '../apis/nft';
+// import { useState, useEffect } from 'react'
 
 
 const NFT = ({nft}) => {
-    const [metadata, setMetadata] = useState([])
-    useEffect(()=>{
-        getNftMetadata(nft.metadata)
-        .then((result)=>{
-            setMetadata(result)
-        })
-    },[])
-    useEffect(()=>{
-        console.log(metadata)
-    },[metadata])
-    console.log(nft.metadata)
+    // const [metadata, setMetadata] = useState([])
+    // useEffect(()=>{
+    //     getNftMetadata(nft.metadata)
+    //     .then((result)=>{
+    //         setMetadata(result)
+    //     })
+    // },[])
+    // useEffect(()=>{
+    //     console.log(metadata)
+    // },[metadata])
+    // console.log(nft.metadata)
 
     return(
         <Link 
