@@ -1,5 +1,6 @@
 //modules
 import { useState, useEffect } from 'react'
+import { useNavigate } from "react-router-dom";
 
 //apis
 import {signupUser} from "../apis/user"
@@ -8,6 +9,8 @@ import {signupUser} from "../apis/user"
 import '../assets/css/signup.css'
 
 const SignupPage = () => {
+    const navigator = useNavigate();
+
     const [email, setEmail] = useState('')
     const [nickname, setNickname] = useState('')
     const [password, setPassword] = useState('')
@@ -62,7 +65,12 @@ const SignupPage = () => {
 
         const signupResult = await signupUser(userInfo);
         
-        console.log(signupResult);
+        if (signupResult.status === 200){
+            console.log(signupResult.data)
+            navigator("/");
+        } else{
+            return new Error("No User Created");
+        }
     }
 
     useEffect(()=>{
