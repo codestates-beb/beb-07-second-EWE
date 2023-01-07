@@ -7,19 +7,21 @@ const Header = ({user}) => {
 
     return(
         <header>
-        <div className='header_left'>
-        <i className='fas fa-cube fa-xl'></i>
-        </div>
+            <div className='header_left'>
+                <i className='fas fa-cube fa-xl'></i>
+            </div>
             <div className="CI header_middle">
-                <div className="logo" >
-                    <Link to="/"><i className='fas fa-drumstick-bite fa-2xl' 
-                    ></i></Link>
-                </div>
-                <div className="ICName">
-                    <Link to="/" className="bigName">
-                    <h1>EWE</h1></Link>
-                    <Link to="/" className="smallName">
-                    <h5>Eat Write Earn</h5></Link>
+                <div className='header_logo'>
+                    <div className="logo" >
+                        <Link to="/"><i className='fas fa-drumstick-bite ' 
+                        ></i></Link>
+                    </div>
+                    <div className="ICName">
+                        <Link to="/" className="bigName">
+                        <h1>EWE</h1></Link>
+                        <Link to="/" className="smallName">
+                        <h5>Eat Write Earn</h5></Link>
+                    </div>
                 </div>
             </div>
             <div className='header_right'>
@@ -31,7 +33,7 @@ const Header = ({user}) => {
                             {/* <img src='{userImg}'></img> */}
                         </div>
                         <div className="userTab">
-                            {/* <h3>{user.nickname}</h3> */}
+                            <h3>{user.nickname}</h3>
                             <Link to="/mypage">My Page</Link>
                             <Link to="/market">NFT Market</Link>
                             <Link to="/">ETH Faucet</Link>

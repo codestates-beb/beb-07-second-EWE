@@ -28,43 +28,47 @@ const MyPage = ({user, posts, nfts}) => {
                 <div className='post_button'>POST</div>
             </a>
             <div className='mypage'>
-            <div className='user_info'>
-            <h2>User Information</h2>
-                <div className="nickname">
-                    <h3>Nickname</h3>
-                    {user.nickname}
+                <div className='user_info'>
+                    <div className='user_info_1'>
+                        <h2>User Information</h2>
+                        <div className="nickname">
+                            <h3>Nickname</h3>
+                            {user.nickname}
+                        </div>
+                        <div className="email">
+                            <h3>Email</h3>
+                            {user.email}
+                        </div>
+                        <div className="wallet_account">
+                            <h3>Wallet Account</h3>
+                            <div className='account'>
+                                <p>{user.wallet_account}</p>
+                                <button onClick={() => {handleCopyClipBoard(user.wallet_account)}}>copy</button>
+                            </div>
+                        </div>
+                        <div className="eth">
+                            <h3>Balance</h3>
+                            {user.eth}ETH
+                        </div>
+                        <div className="erc20">
+                            <h3>Token</h3>
+                            {user.erc20}
+                        </div>
                 </div>
-                <div className="email">
-                    <h3>Email</h3>
-                    {user.email}
-                </div>
-                <div className="wallet_account">
-                    <h3>Wallet Account</h3>
-                    <div className='account'>
-                        <p>{user.wallet_account}</p>
-                        <button onClick={() => {handleCopyClipBoard(user.wallet_account)}}>copy</button>
-                    </div>
-                </div>
-                <div className="eth">
-                    <h3>Balance</h3>
-                    {user.eth}ETH
-                </div>
-                <div className="erc20">
-                    <h3>Token</h3>
-                    {user.erc20}
-                </div>
-                <div className='token_transfer'>
-                    <h2>Token Transfer</h2>
-                    <div className="receivers_address">
-                        <h4>Receiver's Address</h4>
-                        <input></input>
-                    </div>
-                    <div className="amount">
-                        <h4>Amount</h4>
-                        <input></input>
-                    </div>
-                    <div className='transaction'>
-                        <h2>Transaction</h2>
+                <div className='user_info_2'>
+                    <div className='token_transfer'>
+                        <h2>Token Transfer</h2>
+                        <div className="receivers_address">
+                            <h4>Receiver's Address</h4>
+                            <input></input>
+                        </div>
+                        <div className="amount">
+                            <h4>Amount</h4>
+                            <input></input>
+                        </div>
+                        <div className='transaction'>
+                            <h2>Transaction</h2>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -82,9 +86,10 @@ const MyPage = ({user, posts, nfts}) => {
                     <option value='30'>30</option>
                     <option value='100'>100</option> */}
                 </select>
-                <button onClick={()=> setPostPage( postPage - 1 )} disabled = {postPage === 1}>
-                    <i className='fas fa-up-long'></i>
-                </button>
+                <div className='pagination_button'>
+                    <button onClick={()=> setPostPage( postPage - 1 )} disabled = {postPage === 1}>
+                        <i className='fas fa-up-long'></i>
+                    </button>
                     {Array(numPostPages)
                     .fill()
                     .map((_,i) => (
@@ -102,7 +107,7 @@ const MyPage = ({user, posts, nfts}) => {
                     <i className='fas fa-down-long'></i>
                     </button>
                 </div>
-
+            </div>
             }
             {  
                 <PostList 
@@ -128,27 +133,29 @@ const MyPage = ({user, posts, nfts}) => {
                     <option value='30'>30</option>
                     <option value='100'>100</option> */}
                 </select>
-                <button onClick={()=> setNftPage( nftPage - 1 )} disabled = {nftPage === 1}>
-                    <i className='fas fa-up-long'></i>
-                </button>
-                    {Array(numNftPages)
-                    .fill()
-                    .map((_,i) => (
-                        <button
-                        className='pagination_num'
-                        key = {i + 1}
-                        onClick={()=>setNftPage( i + 1 )}
-                        aria-current = {nftPage !== i + 1 ? "page" : null}
-                        >
-                        { i + 1 }
-                        </button>
-                        ))
-                    }
-                    <button onClick={()=> setNftPage( nftPage + 1 )}      disabled = {nftPage === numNftPages}>
-                    <i className='fas fa-down-long'></i>
-                    </button>
-                </div>
+                <div className='pagination_button'>
 
+                    <button onClick={()=> setNftPage( nftPage - 1 )} disabled = {nftPage === 1}>
+                        <i className='fas fa-up-long'></i>
+                    </button>
+                        {Array(numNftPages)
+                        .fill()
+                        .map((_,i) => (
+                            <button
+                            className='pagination_num'
+                            key = {i + 1}
+                            onClick={()=>setNftPage( i + 1 )}
+                            aria-current = {nftPage !== i + 1 ? "page" : null}
+                            >
+                            { i + 1 }
+                            </button>
+                            ))
+                        }
+                        <button onClick={()=> setNftPage( nftPage + 1 )}      disabled = {nftPage === numNftPages}>
+                        <i className='fas fa-down-long'></i>
+                        </button>
+                    </div>
+                </div>
             }
             {  
                 <NFTList

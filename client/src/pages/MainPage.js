@@ -4,7 +4,7 @@ import PostList from '../components/PostList'
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const MainPage = ({posts}) => {
+const MainPage = ({posts, user}) => {
     const[postLimit, setPostLimit] = useState(10);
     const[postPage, setPostPage] = useState(1);
     const postOffset = (postPage - 1) * postLimit
@@ -30,7 +30,8 @@ const MainPage = ({posts}) => {
                 key={posts.id} 
                 posts={posts}
                 postOffset ={postOffset}
-                postLimit={postLimit}                
+                postLimit={postLimit}   
+                user={user}             
                 />
                 <div className='pagination'>
                 <select 
