@@ -1,5 +1,5 @@
 //modules
-import { useState} from 'react'
+import { useState, useEffect } from 'react'
 
 //apis
 import {signupUser} from "../apis/user"
@@ -8,9 +8,12 @@ import {signupUser} from "../apis/user"
 import '../assets/css/signup.css'
 
 const SignupPage = () => {
-    const [isEmail, setIsEmail] = useState('')
-    const [isNickname, setIsNickname] = useState('')
+    const [email, setEmail] = useState('')
+    const [nickname, setNickname] = useState('')
     const [password, setPassword] = useState('')
+    const [isValidEmail, setIsValidEmail] = useState(false);
+    const [isValidNickname, setIsValidNickname] = useState(false);
+    const [isValidPassword, setIsValidPassword] = useState(false);
 
     function emailFormat(value){
         return value.includes('@'&&'.'); 
@@ -48,17 +51,39 @@ const SignupPage = () => {
         }}
 
     const signupBtnHandler = async()=>{
+        if(!isValidEmail || !isValidNickname || !isValidPassword)
+            return new Error("Invalid Info");
+
         const userInfo = { 
-            email: isEmail, 
-            nickname: isNickname, 
+            email: email, 
+            nickname: nickname, 
             password: password 
         };
-        console.log(userInfo);
 
         const signupResult = await signupUser(userInfo);
         
         console.log(signupResult);
     }
+
+    useEffect(()=>{
+        if (emailFormat(email) && email.length > 0) setIsValidEmail(true);
+        else setIsValidEmail(false);
+    },[email]);
+
+    useEffect(()=>{
+        if (nicknameFormat(nickname) && nickname.length > 0) setIsValidNickname(true);
+        else setIsValidNickname(false);
+    }, [nickname]);
+
+    useEffect(()=>{
+        if ( pwFormatLength(password) 
+            && pwFormatLeastNum(password) 
+            && pwFormatUppercase(password) 
+            && pwFormatSpecial(password)
+            && password.length > 0
+        ) setIsValidPassword(true);
+        else setIsValidPassword(false);
+    }, [password])
 
     return(
 <div className='signUpPage'>
@@ -83,20 +108,20 @@ const SignupPage = () => {
             </div>
             <div className="email">
                 <input type="text" placeholder="Email" id="email" onChange={e=>
-                {setIsEmail(e.target.value)}}/>
+                {setEmail(e.target.value)}}/>
                 <div>
-                    {isEmail.length>0 || isEmail === ''?<></>:<div className="failure_message none_id "><h6>Enter Email address</h6></div>}
+                    {email.length>0 || email === ''?<></>:<div className="failure_message none_id "><h6>Enter Email address</h6></div>}
                     
-                    {emailFormat(isEmail) || isEmail === ''? <></>:<div className="failure_message wrong_id "><h6>The account you entered (mail or phone number) is in the wrong format</h6></div>}
+                    {emailFormat(email) || email === ''? <></>:<div className="failure_message wrong_id "><h6>The account you entered (mail or phone number) is in the wrong format</h6></div>}
                     
                 </div>
             </div>
             <div className="nickname">
                 <input type="text" placeholder="Nickname" id="nickname" onChange={e=>
-                {setIsNickname(e.target.value)}}/>
+                {setNickname(e.target.value)}}/>
                 <div>
-                    {isNickname.length>0 || isNickname === ''?<></>:<div className="failure_message none_id "><h6>Enter Your Nickname</h6></div>}
-                    {nicknameFormat(isNickname) || isNickname === ''? <></>:<div className="failure_message"><h6>8 to 32 digits</h6></div>}
+                    {nickname.length>0 || nickname === ''?<></>:<div className="failure_message none_id "><h6>Enter Your Nickname</h6></div>}
+                    {nicknameFormat(nickname) || nickname === ''? <></>:<div className="failure_message"><h6>8 to 32 characters</h6></div>}
                 </div>
             </div>
             <div className="pw">
