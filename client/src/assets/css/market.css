@@ -144,3 +144,46 @@
 .mint_wrapper .btn_group .btn.btn_mint{
     background-color: var(--Primary-color);
 }
+
+@media screen and (max-width: 2100px){
+    .market .post_wrapper{
+        grid-template-columns: repeat(auto-fill, minmax(30%, 1fr) );
+        }
+    
+}
+
+@media screen and (max-width: 480px){
+    .market .post_wrapper{
+        grid-template-columns: repeat(auto-fill, minmax(100%, 1fr) );
+        }
+    .market .post_button{
+        font-size: 80px;
+    }
+    .market .post_button:hover{
+        padding: 0;
+        margin: 0;
+        font-size: 120px;
+        color: var(--white-color);
+        transform: scale(1.01);
+        filter: brightness(1.05);
+    }    
+}
+
+@media screen and (max-width: 768px){
+    .market .post_wrapper{
+        grid-template-columns: repeat(auto-fill, minmax(50%, 1fr) );
+    }
+    .market  .wide{
+        display: none;
+    }
+    .market  .narrow{
+        display: block;
+        justify-content: center;
+    }
+    .market  .fa-caret-down{
+        display: block;
+    }
+    .market  .header_right .fa-user{
+        display: none;
+    }
+}
