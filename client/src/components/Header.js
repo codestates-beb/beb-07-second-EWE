@@ -8,7 +8,7 @@ const Header = ({user}) => {
     return(
         <header>
             <div className='header_left'>
-                <i className='fas fa-cube fa-xl'></i>
+                <i className='fab fa-bitcoin fa-xl'></i>
             </div>
             <div className="CI header_middle">
                 <div className='header_logo'>

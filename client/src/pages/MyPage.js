@@ -1,10 +1,12 @@
 import { useState } from 'react';
+import {Link} from 'react-router-dom' 
 import PostList from '../components/PostList';
 import NFTList from '../components/NFTList';
 import '../assets/css/mypage.css'
 import Footer from '../components/Footer'
-const MyPage = ({user, posts, nfts}) => {
 
+const MyPage = ({user, posts, nfts}) => {
+    const [responsibleToggle,SetResponsibleToggle] = useState(false)
     const[postLimit, setPostLimit] = useState(10);
     const[postPage, setPostPage] = useState(1);
     const postOffset = (postPage - 1) * postLimit
@@ -27,6 +29,38 @@ const MyPage = ({user, posts, nfts}) => {
             <a href='/write' className='write'>
                 <div className='post_button'>POST</div>
             </a>
+            <div className='category narrow'>
+            <i className="fa-solid fa-caret-down" onClick={()=>{SetResponsibleToggle(!responsibleToggle)}}>
+                </i>
+                {
+                responsibleToggle === false?
+                <></>
+                :<div className='toggle_category'>
+                    <div className='toggle_category_1'>
+                        <h2>{user.nickname}</h2>
+                        <Link to="/mypage"><h4>My Page</h4></Link>
+                        <Link to="/market"><h4>NFT Market</h4></Link>
+                        <Link to="/"><h4>ETH Faucet</h4></Link>
+                        <Link to="/"><h4>Log Out</h4></Link>
+                        <Link to="/"><h4>Secession</h4></Link>
+                    </div>
+                    <div className='toggle_category_2'>
+                        <Link to='/'><h5>Korean</h5></Link>
+                        <Link to='/'><h5>Chinese</h5></Link>
+                        <Link to='/'><h5>Japanese</h5></Link>
+                        <Link to='/'><h5>Western</h5></Link>
+                    </div>    
+                </div>
+                }
+
+
+            </div>
+            <div className='category wide'>
+                <Link to='/'><h2>Korean</h2></Link>
+                <Link to='/'><h2>Chinese</h2></Link>
+                <Link to='/'><h2>Japanese</h2></Link>
+                <Link to='/'><h2>Western</h2></Link>
+            </div>
             <div className='mypage'>
                 <div className='user_info'>
                     <div className='user_info_1'>

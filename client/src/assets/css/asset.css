@@ -1,12 +1,13 @@
 
 .asset_container{
+    min-width: 170px;
     margin: 5% auto;
     padding: 10px;
     display: block;
     border: 3px solid var(--white-color);
     border-radius: 10px;
     width: 95%;
-    height: 95%;
+    height: width * 1.618;
     background-color: var(--Secondary-color);
     justify-content: space-between;
     align-items: baseline;
@@ -90,7 +91,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    max-width: 100%;
+    width: 100%;
     height: 100%;
 }
 

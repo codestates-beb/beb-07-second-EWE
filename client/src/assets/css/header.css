@@ -24,9 +24,13 @@ margin: auto;
 
     width: 33.33%;
 }
-.fa-cube{
-    margin: 1%;
+.fa-bitcoin{
+    font-size: 40px;
+    margin: 12px 1% 1% 5%;
     color: var(--white-color);
+}
+.fa-bitcoin:hover{
+    color: var(--Primary-color);  
 }
 .CI{
     display: flex;
@@ -158,10 +162,12 @@ margin: auto;
 
 .fa-user:hover, .fa-utensils:hover, .fa-ethereum:hover{
     border: 3px solid var(--Primary-color);
-    border-radius: 30px;
+    border-radius: 50px;
     color: var(--Primary-color);
 }
-
+.fa-bitcoin:hover{
+    color: var(--Primary-color);  
+}
 a{
     color: var(--black);
 }
