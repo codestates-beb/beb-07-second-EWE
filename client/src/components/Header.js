@@ -31,7 +31,7 @@ const Header = ({user}) => {
                             {/* <img src='{userImg}'></img> */}
                         </div>
                         <div className="userTab">
-                            <h3>{user.nickname}</h3>
+                            {/* <h3>{user.nickname}</h3> */}
                             <Link to="/mypage">My Page</Link>
                             <Link to="/market">NFT Market</Link>
                             <Link to="/">ETH Faucet</Link>

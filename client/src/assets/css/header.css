@@ -135,7 +135,7 @@ header{
     color: var(--Primary-color);
 }
 
-.fa-user, .fa-utensils{
+.fa-user, .fa-utensils, .fa-ethereum{
     margin: 0 15px;
     padding: 10px;
     border: 3px solid var(--white-color);
@@ -148,7 +148,7 @@ header{
 
 }
 
-.fa-user:hover, .fa-utensils:hover{
+.fa-user:hover, .fa-utensils:hover, .fa-ethereum:hover{
     border: 3px solid var(--Primary-color);
     border-radius: 30px;
     color: var(--Primary-color);

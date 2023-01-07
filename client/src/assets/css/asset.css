@@ -19,7 +19,7 @@
     background-color: var(--white-color);
     opacity: 0.9;
 }
-.asset_container:hover .fa-utensils{
+.asset_container:hover .fa-ethereum{
     border: 3px solid var(--Primary-color);
     border-radius: 30px;
     color: var(--Primary-color);
@@ -30,7 +30,7 @@
     justify-content: space-between;
     align-items: baseline;
 }
-.user1 .fa-utensils{
+.user1 .fa-ethereum{
     margin: 0;
 }
 .user2{
