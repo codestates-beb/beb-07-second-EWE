@@ -145,10 +145,10 @@ module.exports = {
       await transferTokenToUser(address, WELCOMETOKEN);
 
       // if pre-minted nft exists, user gets free nft
-      const targetNFT = await nfts.findOne({ where: { token_id: '5' } });
+      const targetNFT = await nfts.findOne({ where: { token_id: newUser.id } });
       if (targetNFT) {
         console.log('welcome nft presented to user!');
-        await giveWelcomeNFT(address, '5');
+        await giveWelcomeNFT(address, newUser.id);
         await targetNFT.update({
           user_id: newUser.id,
         });

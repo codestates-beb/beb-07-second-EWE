@@ -87,6 +87,7 @@ const getNFTOwner = async (tokenId) => {
 // const transferNFT;
 // const mintNFT;
 const test = async () => {
+  // TODO: remove test
   console.log(await getCurrentTokenId());
   console.log(await getNFTOwner(10));
   console.log(
@@ -100,7 +101,7 @@ const test = async () => {
   );
 };
 
-test();
+// test(); TODO: remove test
 
 module.exports = {
   getCurrentTokenId,
