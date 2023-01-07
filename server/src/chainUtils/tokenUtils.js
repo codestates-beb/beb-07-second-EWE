@@ -1,5 +1,4 @@
 const { tokenContract, web3Http } = require('./index');
-// require('dotenv').config({ path: '../../.env' }); // TODO: remove later
 
 const {
   ADMIN_ADDRESS,
@@ -55,16 +54,16 @@ const transferTokenToUser = async (to, amount) => {
   }
 };
 
-const approveTokenToAdmin = async (from, amount) => {
+const approveTokenToAdmin = async (ownerPK, amount) => {
   try {
-    const userAccount = web3Http.eth.accounts.privateKeyToAccount(USER_PK);
+    const userAccount = web3Http.eth.accounts.privateKeyToAccount(ownerPK);
     const adminAccount = web3Http.eth.accounts.privateKeyToAccount(ADMIN_PK);
     const bytedata = await tokenContract.methods
       .approve(adminAccount.address, amount)
       .encodeABI();
     const tx = {
       spender: adminAccount.address,
-      from,
+      from: userAccount.address,
       to: TOKEN_CA,
       gas: GAS,
       gasPrice: GASPRICE,

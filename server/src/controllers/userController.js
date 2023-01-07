@@ -9,6 +9,13 @@ const {
   spendApprovedToken,
 } = require('../chainUtils/tokenUtils');
 
+const {
+  getCurrentTokenId,
+  giveWelcomeNFT,
+  getNFTOwner,
+  getMyNFTBalance,
+} = require('../chainUtils/nftUtils');
+
 const WELCOMETOKEN = '10000000000000000';
 
 module.exports = {
@@ -136,10 +143,23 @@ module.exports = {
       // NOW it is synchronized logic
       await useEtherFaucet(address);
       await transferTokenToUser(address, WELCOMETOKEN);
-      // TODO: call transfer NFT to user here
+      await approveTokenToAdmin(address, WELCOMETOKEN);
+
+      // if pre-minted nft exists, user gets free nft
+      const targetNFT = await nfts.findOne({ where: { token_id: newUser.id } });
+      if (targetNFT) {
+        console.log('welcome nft presented to user!');
+        await giveWelcomeNFT(address, newUser.id);
+        await targetNFT.update({
+          user_id: newUser.id,
+        });
+      }
+
       const tokenBalance = await getTokenBalance(address);
       const etherBalance = await getEtherBalance(address);
-      console.log({ tokenBalance, etherBalance });
+      const NFTBalance = await getMyNFTBalance(address);
+      const NFTOwner = await getNFTOwner('5');
+      console.log({ tokenBalance, etherBalance, NFTBalance, NFTOwner });
       await newUser.update({
         eth: etherBalance,
         erc20: tokenBalance,
