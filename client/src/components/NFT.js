@@ -1,21 +1,19 @@
 import '../assets/css/asset.css'
 import { Link } from 'react-router-dom';
-// import { getNftMetadata } from '../apis/nft';
-// import { useState, useEffect } from 'react'
+import { getNftMetadata } from '../apis/nft';
+import { useState, useEffect } from 'react'
 
 
 const NFT = ({nft}) => {
-    // const [metadata, setMetadata] = useState([])
-    // useEffect(()=>{
-    //     getNftMetadata(nft.metadata)
-    //     .then((result)=>{
-    //         setMetadata(result)
-    //     })
-    // },[])
-    // useEffect(()=>{
-    //     console.log(metadata)
-    // },[metadata])
-    // console.log(nft.metadata)
+    const [metadata, setMetadata] = useState(null);
+
+    useEffect(()=>{
+        getNftMetadata(nft.metadata)
+        .then(metadata=>{
+            setMetadata(metadata);
+        })
+        .catch(console.log);
+    }, [])
 
     return(
         <Link 
@@ -54,7 +52,7 @@ const NFT = ({nft}) => {
             <div className="image" >
             {nft.price}
 
-                <img src ={nft.metadata === undefined ||nft.metadata=== null ? 'https://play-lh.googleusercontent.com/wQiHW5YgQhHmSR_60o9l2lypA9Vn2_hxH0l2X6Iin5lEGTbmfhrZnP8bKywoRGKkJl4' :nft.metadata}alt="food"></img>
+                {/* <img src ={nft.metadata === undefined ||nft.metadata=== null ? 'https://play-lh.googleusercontent.com/wQiHW5YgQhHmSR_60o9l2lypA9Vn2_hxH0l2X6Iin5lEGTbmfhrZnP8bKywoRGKkJl4' :nft.metadata}alt="food"></img> */}
             </div>
 
             <div className="comments">
