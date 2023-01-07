@@ -20,16 +20,16 @@
     width: 70%;
 
 }
+
+.nickname, .email, .eth, .erc20,.receivers_address, .amount,.wallet_account{
+    margin: 2%;
+}
 .token_transfer{
     margin-top: 25%;
 }
-.nickname, .email, .eth, .erc20,.receivers_address, .amount{
-    margin: 10px;
-}
-.wallet_account{
-    margin: 10px;
-}
+
 .account{
+    width: 150px;
     display: flex;
     align-items: center;
 }
@@ -85,5 +85,75 @@
 .transaction:hover{
     background-color:  var(--Primary-color);
     color: var(--white-color);
+
+}
+
+@media screen and (max-width: 1024px){
+    .mypage{
+        display: block;
+        padding: 2%;
+    }
+    .mypage > .user_info{
+        display: flex;
+        padding: 15px;
+        width: auto;
+        border-radius: 20px;
+        background-color: var(--white-color);
+        justify-content: center;
+    }
+    .user_info_1{
+        display: block;
+    }
+    .user_info_1>h2, .user_info_1>h3{
+        margin: 2%;
+
+    }
+    .user_info_2{
+        margin: 2%;
+        display: flex;
+    }
+    .token_transfer{
+        margin-top: 0%;
+    }
+    .mypage > .pagination{
+        padding: 2% 1%;
+        align-items: center;
+    
+    }
+    .mypage > .pagination select{
+        display: none;
+    
+    }
+    .pagination_button{
+        display: flex;
+    }
+    
+}
+@media screen and (max-width: 768px){
+    .mypage{
+        display: block;
+        padding: 2%;
+    }
+    .mypage > .user_info{
+        display: flex;
+        margin: 0;
+        padding: 15px;
+        width: auto;
+        border-radius: 20px;
+        background-color: var(--white-color);
+        justify-content: space-around;
+        align-items: baseline;
+    }
+    .user_info_1{
+        display: block;
+    }
+    .user_info_2{
+        display: flex;
+    }
+    .token_transfer{
+        margin-top: 0%;
+    }
+}
+@media screen and (max-width: 480px){
 
 }

@@ -1,16 +1,18 @@
 
 .asset_container{
+    min-width: 170px;
     margin: 5% auto;
     padding: 10px;
     display: block;
     border: 3px solid var(--white-color);
     border-radius: 10px;
     width: 95%;
-    height: 95%;
+    height: width * 1.618;
     background-color: var(--Secondary-color);
     justify-content: space-between;
     align-items: baseline;
     transition: 0.2s;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.1), 0 10px 10px rgba(0,0,0,0.1);;
 }
 .asset_container:hover{
     border-radius: 20px;
@@ -19,7 +21,8 @@
     background-color: var(--white-color);
     opacity: 0.9;
 }
-.asset_container:hover .fa-utensils{
+.asset_container:hover .fa-utensils,
+.asset_container:hover .fa-ethereum{
     border: 3px solid var(--Primary-color);
     border-radius: 30px;
     color: var(--Primary-color);
@@ -28,23 +31,36 @@
 .user1{
     display: flex;
     justify-content: space-between;
-    align-items: baseline;
+    align-items:unset;
 }
-.user1 .fa-utensils{
+.user1 .fa-ethereum, .user1 .fa-utensils{
     margin: 0;
 }
 .user2{
     display: flex;
+    align-items: baseline;
     justify-content: space-between;
-    align-items: center;
-    margin: 2% 0;
+    text-align: center;
+    margin: 0;
+    text-overflow: hidden;
+
+}
+.nickname>h6{
 }
 .post_title  h3, .nft_title h3{
     margin: 0;
     color: var(--black-color);
 }
 .post_title, .nft_title{
+    align-items: baseline;
+    top: 0;
+    height: 40px;
+    text-align: center;
+    overflow: hidden;
     font-size: var(--font-large);
+}
+.location{
+    color: var(--Primary-color);
 }
 .creator{
     color: var(--gray-dark-color);
@@ -78,3 +94,16 @@
     max-width: 100%;
     height: 100%;
 }
+
+.post_bottom{
+    padding: 2% 1.5% 3% 1.5%;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+}
+.post_bottom i{
+    font-size: small;
+    color: var(--Primary-color);
+}
+
+
