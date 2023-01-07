@@ -10,6 +10,7 @@ const NFT = ({nft}) => {
     useEffect(()=>{
         getNftMetadata(nft.metadata)
         .then(metadata=>{
+            console.log(metadata);
             setMetadata(metadata);
         })
         .catch(console.log);
@@ -51,8 +52,14 @@ const NFT = ({nft}) => {
             </div>
             <div className="image" >
             {nft.price}
-
-                {/* <img src ={nft.metadata === undefined ||nft.metadata=== null ? 'https://play-lh.googleusercontent.com/wQiHW5YgQhHmSR_60o9l2lypA9Vn2_hxH0l2X6Iin5lEGTbmfhrZnP8bKywoRGKkJl4' :nft.metadata}alt="food"></img> */}
+                <img 
+                    src ={
+                        nft.metadata === undefined ||nft.metadata=== null 
+                        ? 'https://play-lh.googleusercontent.com/wQiHW5YgQhHmSR_60o9l2lypA9Vn2_hxH0l2X6Iin5lEGTbmfhrZnP8bKywoRGKkJl4' 
+                        : metadata.image
+                    } 
+                    alt="food"    
+                />
             </div>
 
             <div className="comments">
