@@ -77,7 +77,8 @@ select{
 .mobile_number{
     color: var(--gray-light-color);
 }
-.email, .pw{
+.email, .pw, .nickname{
+    margin: 2%;
     height: auto;
 }
 .pw_requires{
