@@ -6,15 +6,22 @@ header{
 }
 .header_left{
     width: 33.33%;
-    padding: 1%;
+    padding: auto;
 
 }
 .header_middle{
-    padding: 12%;
     width: 33.33%;
 
+    align-items: center;
+    justify-content: center;
 } 
+.header_logo{
+margin: auto;
+    display: flex;
+}
 .header_right{
+    padding: auto;
+
     width: 33.33%;
 }
 .fa-cube{
@@ -27,10 +34,12 @@ header{
     align-items: center;
     justify-content: space-between;
 }
-.CI .logo>a,.CI .logo{
-    width: 60px;
+.logo>a{
+    width: 0px;
 }
+
 .fa-drumstick-bite{
+    font-size: 32px;
     -webkit-transform-origin: bottom left;
     transform-origin: bottom left;
     -webkit-transform: rotate(0deg);
@@ -48,9 +57,8 @@ header{
     animation-timing-function: ease-in-out;
 }
 .logo a i {
-    margin: 20px;
+    margin: 0;
     color: var(--onPrimary-color);
-
 }
 .CI .bigName a{
     margin: 0;
@@ -135,7 +143,7 @@ header{
     color: var(--Primary-color);
 }
 
-.fa-user, .fa-utensils{
+.fa-user, .fa-utensils, .fa-ethereum{
     margin: 0 15px;
     padding: 10px;
     border: 3px solid var(--white-color);
@@ -148,7 +156,7 @@ header{
 
 }
 
-.fa-user:hover, .fa-utensils:hover{
+.fa-user:hover, .fa-utensils:hover, .fa-ethereum:hover{
     border: 3px solid var(--Primary-color);
     border-radius: 30px;
     color: var(--Primary-color);

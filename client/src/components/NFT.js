@@ -10,28 +10,32 @@ const NFT = ({nfts}) => {
                         <i className='fab fa-ethereum'></i>
                     </div>
 
-                    <div className="post_title token_id"><h6>{nfts.token_id}</h6></div>
+                    <div className="post_title token_id">
+                    <h6>
+                    {/* {nfts.token_id} */}
+                    </h6>
+                    </div>
                     <div className="post_num id">#
 
-                    {nfts.id}
+                    {/* {nfts.id} */}
                     
                     </div>
                 </div> 
                 <div className='user2'>
                     <div className="creator">
                     
-                    {nfts.owner}
+                    {/* {nfts.owner} */}
                     
                     </div>
                     <div className="contract_account" >
                     
-                    {nfts.contract_account}
+                    {/* {nfts.contract_account} */}
                     
                     </div>
                 </div>
             </div>
             <div className="image" >
-            {nfts.price}
+            {/* {nfts.price} */}
 
                 {/* <img src ={nfts.price}alt="food"></img> */}
             </div>
