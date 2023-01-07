@@ -21,16 +21,15 @@
 
 }
 
-.nickname, .email, .eth, .erc20,.receivers_address, .amount{
-    margin: 10px;
+.nickname, .email, .eth, .erc20,.receivers_address, .amount,.wallet_account{
+    margin: 2%;
 }
 .token_transfer{
     margin-top: 25%;
 }
-.wallet_account{
-    margin: 10px;
-}
+
 .account{
+    width: 150px;
     display: flex;
     align-items: center;
 }
@@ -96,7 +95,6 @@
     }
     .mypage > .user_info{
         display: flex;
-        margin: 1%;
         padding: 15px;
         width: auto;
         border-radius: 20px;
@@ -104,8 +102,11 @@
         justify-content: center;
     }
     .user_info_1{
-        margin: 2%;
         display: block;
+    }
+    .user_info_1>h2, .user_info_1>h3{
+        margin: 2%;
+
     }
     .user_info_2{
         margin: 2%;
