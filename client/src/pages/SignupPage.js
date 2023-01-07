@@ -1,4 +1,10 @@
+//modules
 import { useState} from 'react'
+
+//apis
+import {signupUser} from "../apis/user"
+
+//css
 import '../assets/css/signup.css'
 
 const SignupPage = () => {
@@ -41,6 +47,19 @@ const SignupPage = () => {
             return false;
         }}
 
+    const signupBtnHandler = async()=>{
+        const userInfo = { 
+            email: isEmail, 
+            nickname: isNickname, 
+            password: password 
+        };
+        console.log(userInfo);
+
+        const signupResult = await signupUser(userInfo);
+        
+        console.log(signupResult);
+    }
+
     return(
 <div className='signUpPage'>
     <div><img className="loginImg" src="http://gdimg.gmarket.co.kr/2096967704/still/600?ver=1619205661" alt=""></img></div>
@@ -63,7 +82,7 @@ const SignupPage = () => {
                 <a href="#" className="mobile_number"><h3>Mobile number</h3></a>
             </div>
             <div className="email">
-                <input type="text" placeholder="Email" id="username" onChange={e=>
+                <input type="text" placeholder="Email" id="email" onChange={e=>
                 {setIsEmail(e.target.value)}}/>
                 <div>
                     {isEmail.length>0 || isEmail === ''?<></>:<div className="failure_message none_id "><h6>Enter Email address</h6></div>}
@@ -73,7 +92,7 @@ const SignupPage = () => {
                 </div>
             </div>
             <div className="nickname">
-                <input type="text" placeholder="Nickname" id="username" onChange={e=>
+                <input type="text" placeholder="Nickname" id="nickname" onChange={e=>
                 {setIsNickname(e.target.value)}}/>
                 <div>
                     {isNickname.length>0 || isNickname === ''?<></>:<div className="failure_message none_id "><h6>Enter Your Nickname</h6></div>}
@@ -130,7 +149,7 @@ const SignupPage = () => {
                 <a href="/"><h6>&#60;Terms of Use&#62;</h6></a>
             </div>
             <div className="buttons">
-                <button className="sign_up_button"><h3>Sign Up</h3></button>
+                <button className="sign_up_button" onClick={signupBtnHandler}><h3>Sign Up</h3></button>
                 <h5>or sign up with</h5>
                 <div className="sign_up_with">
                     <button>

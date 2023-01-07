@@ -30,7 +30,8 @@ export const getUserv2 = async(userId)=>{
 }
 
 export const signupUser = async(userInfo)=>{
-    if(!userInfo.email || !!userInfo.password || !userInfo.nickname) return;
+    if(!userInfo.email || !userInfo.password || !userInfo.nickname)
+        return new Error("Invalid User Info!");
 
     const resultSignup = await axios.post(signupUserURL, userInfo)
     .then(result=>result)
