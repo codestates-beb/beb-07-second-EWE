@@ -13,7 +13,6 @@ const Post = ({posts}) => {
             return Math.floor(num/10000) +' M '
         }
     }
-    console.log(posts)
     return(
         <Link to={'/post/'+ posts.id }className="asset_container">
             <div>

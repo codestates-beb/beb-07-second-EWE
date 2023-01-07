@@ -16,7 +16,7 @@ const MainPage = ({posts, user}) => {
                 <div className='post_button'>POST</div>
             </Link>
             <div className='category narrow'>
-            <i class="fa-solid fa-caret-down" onClick={()=>{SetResponsibleToggle(!responsibleToggle)}}>
+            <i className="fa-solid fa-caret-down" onClick={()=>{SetResponsibleToggle(!responsibleToggle)}}>
                 </i>
                 {
                 responsibleToggle === false?
