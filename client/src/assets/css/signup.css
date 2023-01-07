@@ -83,7 +83,7 @@ select{
 }
 .pw_requires{
     width: 180px;
-    margin: 10px 0;
+    margin: 10px auto;
     padding: 5px;
     border: 1px solid var(--onPrimary-color);
     border-radius: 5%;
@@ -240,3 +240,4 @@ button{
 .fa-circle{
     color: var( --onSecondary-color);
 } 
+

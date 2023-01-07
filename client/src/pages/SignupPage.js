@@ -66,16 +66,18 @@ const SignupPage = () => {
                 <input type="text" placeholder="Email" id="username" onChange={e=>
                 {setIsEmail(e.target.value)}}/>
                 <div>
-                    {isEmail.length>0?<></>:<div className="failure_message none_id "><h6>Enter Email address</h6></div>}
-                    {emailFormat(isEmail)? <></>:<div className="failure_message wrong_id "><h6>The account you entered (mail or phone number) is in the wrong format</h6></div>}
+                    {isEmail.length>0 || isEmail === ''?<></>:<div className="failure_message none_id "><h6>Enter Email address</h6></div>}
+                    
+                    {emailFormat(isEmail) || isEmail === ''? <></>:<div className="failure_message wrong_id "><h6>The account you entered (mail or phone number) is in the wrong format</h6></div>}
+                    
                 </div>
             </div>
             <div className="nickname">
                 <input type="text" placeholder="Nickname" id="username" onChange={e=>
                 {setIsNickname(e.target.value)}}/>
                 <div>
-                    {isNickname.length>0?<></>:<div className="failure_message none_id "><h6>Enter Your Nickname</h6></div>}
-                    {nicknameFormat(isNickname)? <></>:<div className="failure_message"><h6>8 to 32 digits</h6></div>}
+                    {isNickname.length>0 || isNickname === ''?<></>:<div className="failure_message none_id "><h6>Enter Your Nickname</h6></div>}
+                    {nicknameFormat(isNickname) || isNickname === ''? <></>:<div className="failure_message"><h6>8 to 32 digits</h6></div>}
                 </div>
             </div>
             <div className="pw">
@@ -85,11 +87,13 @@ const SignupPage = () => {
                     {pwFormatLength(password)&&
                     pwFormatLeastNum(password)&&
                     pwFormatUppercase(password)&&
-                    pwFormatSpecial(password)?<></>:
+                    pwFormatSpecial(password) || password === '' ?<></>:
                     <div className="failure_message wrong_pw "><h6>8 to 32 digits, at least 1 number, 1 uppercase letter, and 1Special characters</h6></div>}   
-                    {password.length>0?<></>:<div className="failure_message none_pw "><h6>Please enter password</h6></div>}
-                </div>    
+                    {password.length>0 || password === ''?<></>:<div className="failure_message none_pw "><h6>Please enter password</h6></div>}
+                </div>  
+                {password === '' ?<></>:   
                 <div className="pw_requires ">
+
                     <div className="requires">
                         {pwFormatLength(password)?
                         <i className=" fa-regular fa-circle-check digitsK "></i>:
@@ -114,7 +118,9 @@ const SignupPage = () => {
                         <i className="fa-regular fa-circle digitsC"></i>}
                         <h6>At least 1 special characters</h6>
                     </div>
+                    
                 </div>
+                }
             </div>
         </div>
         <div>
