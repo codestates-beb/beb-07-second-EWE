@@ -1,5 +1,5 @@
 // modules
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 // components
 import NFTList from '../components/NFTList';
@@ -9,11 +9,29 @@ import Footer from "../components/Footer";
 import '../assets/css/market.css';
 
 const MarketPage = ({nfts}) => {
+    // Minting State Variable
+    const [imageNFT, setImageNFT] = useState();
+    const [imageURL, setImageURL] = useState();
+
     const[nftLimit, setNftLimit] = useState(10);
     const[nftPage, setNftPage] = useState(1);
     const nftOffset = (nftPage - 1) * nftLimit
     let numNftPages = Math.ceil(nfts.length/nftLimit)
 
+    const imageChangeHandler = (e)=>{
+        const file = e.target.files[0];
+        const reader = new FileReader();
+
+        if (/\.(jpe?g|png|gif)$/i.test(file.name)){
+
+            reader.addEventListener("load",
+            ()=>{
+                setImageNFT(reader.result);
+            },false)
+        }
+
+        reader.readAsDataURL(file);
+    }
 
     return(
         <>
@@ -27,9 +45,21 @@ const MarketPage = ({nfts}) => {
                         <div className="image_upload_wrapper">
                             <div className="image_input_wrapper">
                                 <label className="image_input_helper" htmlFor="image_input">
-                                    <i className="fas fa-image image_icon"/>
-                                    Click to upload images.
+                                    <div className="image_input_guide">
+                                        {imageNFT? 
+                                            <div className="image_preview_wrapper">
+                                                <img src={imageNFT}/>
+                                            </div>
+                                        :
+                                        <>
+                                            <i className="fas fa-image image_icon"/>
+                                            <span>Click to upload NFT image.</span>
+                                        </>
+                                        }
+                                        
+                                    </div>
                                     <input
+                                        onChange={imageChangeHandler}
                                         id="image_input"
                                         className="image_input"
                                         type="file"

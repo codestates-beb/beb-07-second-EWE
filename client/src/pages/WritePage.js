@@ -1,8 +1,13 @@
 //modules
 import {useState, useEffect} from "react";
+import {useNavigate} from "react-router-dom";
 import {Swiper, SwiperSlide} from "swiper/react";
 import {Navigation, Pagination} from "swiper";
 import {Wrapper, Status} from "@googlemaps/react-wrapper";
+
+
+// apis
+import {createReview} from "../apis/post";
 
 //components
 // import KakaoMap from "../components/Map/KakaoMap";
@@ -14,7 +19,13 @@ import "swiper/css"
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-const WritePage = () => {
+const WritePage = ({user}) => {
+    const navigator = useNavigate();
+
+    if(!user){
+        navigator(-1);
+    }
+
     const [title, setTitle] = useState("");
     const [locationName, setLocationName] = useState("");
     const [locationId, setLocationId] = useState(null);
@@ -31,6 +42,26 @@ const WritePage = () => {
         setLocationId("");
     }
 
+    const submitBtnHandler = async ()=>{
+        const review = {
+            user_id: user.id,
+            title,
+            store_name: locationName,
+            location: locationId,
+            content: content,
+            uri: "https://img3.daumcdn.net/thumb/R658x0.q70/?fname=https://t1.daumcdn.net/news/202012/11/elle/20201211193633070ycoe.jpg"
+        }
+        console.log(review);
+
+        const createReviewResult = await createReview(review);
+
+        if (createReviewResult.status=== 200) {
+            navigator("/");
+        } else {
+            console.log(createReviewResult);
+        }
+    }
+
     return(
         <div className="container">
             <div className="write_wrapper">
@@ -38,7 +69,7 @@ const WritePage = () => {
                     <input 
                         name="title" 
                         className="title_input" 
-                        placeholder="제목을 입력해주세요."
+                        placeholder="Please insert title."
                         onChange={(e)=>{setTitle(e.target.value)}}
                     />
                 </div>
@@ -78,7 +109,7 @@ const WritePage = () => {
                     <div className="image_input_wrapper">
                         <label className="image_input_helper" htmlFor="image_input">
                             <i className="fas fa-image image_icon"/>
-                            클릭해서 이미지를 업로드하세요.
+                            Please click to upload images.
                             <input
                                 id="image_input"
                                 className="image_input"
@@ -92,15 +123,15 @@ const WritePage = () => {
                 <div className="post_content_wrapper">
                     <textarea 
                         className="content_textarea" 
-                        placeholder="내용을 입력해주세요."
+                        placeholder="Please insert contents."
                         rows="15"
                         spellCheck={false}
                         onChange={(e)=>{setContent(e.target.value)}}
                     />
                 </div>
                 <div className="btn_group">
-                    <button className="btn_cancel">취소</button>
-                    <button className="btn_submit">전송</button>
+                    <button className="btn_cancel">Cancel</button>
+                    <button className="btn_submit" onClick={submitBtnHandler}>Submit</button>
                 </div>
             </div>
         </div>
