@@ -86,13 +86,9 @@ module.exports = {
         likes: 0,
         user_id: user.id,
       });
-<<<<<<< HEAD
       console.log(newPost);
       // TODO: give reward token when post is created
       // TODO: img upload logic
-=======
-      // console.log(newPost);
->>>>>>> ab0f51ca2b50a37f665b746f378f9f2b789a1d07
       const newImg = await images.create({
         uri: req.file.location,
         post_id: newPost.id,
