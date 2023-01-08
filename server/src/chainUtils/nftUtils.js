@@ -205,4 +205,5 @@ module.exports = {
   getNFTOwner,
   approveAllNFTToAdmin,
   transferNFT,
+  mintNFT,
 };
