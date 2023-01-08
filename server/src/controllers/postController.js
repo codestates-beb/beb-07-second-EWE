@@ -66,6 +66,17 @@ module.exports = {
         .json({ message: 'input all required values', data: null });
     }
     try {
+      const { email, nickname } = req.decoded;
+      const user = await users.findOne({
+        where: {
+          email,
+          nickname,
+        },
+      });
+      if (!user) {
+        return res.status(403).json({ data: null, message: 'no such user' });
+      }
+
       const newPost = await posts.create({
         title,
         location,
@@ -73,9 +84,11 @@ module.exports = {
         content,
         views: 0,
         likes: 0,
-        user_id,
+        user_id: user.id,
       });
       console.log(newPost);
+      // TODO: give reward token when post is created
+      // TODO: img upload logic
       const newImg = await images.create({
         uri,
         post_id: newPost.id,
