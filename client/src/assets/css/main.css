@@ -15,7 +15,7 @@
     --Primary-Container-color: #asdf323;
     --onPrimary-Container-color: #asdf323;
 
-    --Secondary-color: #efe9d2;
+    --Secondary-color: #f2f2f2;
     --onSecondary-color: #A3BB98;
     --Secondary-Container-color: #asdf323;
     --onSecondary-Container-color: #asdf323;
@@ -45,19 +45,20 @@
 
 }
 .post_button{
-    
-    background-color: var(--black-color);
-    background-image: url(https://cdn.imweb.me/upload/S2017101359e025984d346/7c5de9abb3b3d.jpg);
+    background-color: var(--onPrimary-color);
+    background-image: url(https://images.pexels.com/photos/2673353/pexels-photo-2673353.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2);
+    font-size: 200px;
+
     margin: 0;
     padding: 1% 0;
     text-align: center;
     align-items: center;
     color: var(--white-color);
-    filter: brightness(0.8);
+    filter: brightness(0.95);
     transition: 0.5s;
 }
 .post_button:hover{
-    font-size: 150px;
+    font-size: 220px;
     color: var(--white-color);
     transform: scale(1.01);
     filter: brightness(1.05);

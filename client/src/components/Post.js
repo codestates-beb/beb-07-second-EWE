@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom'
 const Post = ({post}) => {
     const numCount = (num) =>{
         if(num<=1000){
-            return num + ' '
+            return ' ' + num + ' '
         }
         else if(num>1000){ 
-            return Math.floor(num/1000)+ ' K '
+            return ' ' + Math.floor(num/1000)+ ' K '
         }
 
         else if(num>10000){ 
-            return Math.floor(num/10000) +' M '
+            return ' ' + Math.floor(num/10000) +' M '
         }
     }
     return(
@@ -38,7 +38,7 @@ const Post = ({post}) => {
             </div>
             <div className='post_bottom'>
                 <div className="likes">
-                    <i className='fas fas fa-thumbs-up'>{numCount(post.views)}
+                    <i className='fas fas fa-thumbs-up'>{numCount(post.likes)}
                     </i>
                 </div>
                 <div className="view">
