@@ -1,6 +1,11 @@
 /* eslint-disable camelcase */
 const { users, nfts, posts, images } = require('../models');
+const {
+  transferTokenToUser,
+  getTokenBalance,
+} = require('../chainUtils/tokenUtils');
 
+const POSTREWARD = '10000000000000000';
 module.exports = {
   getAllposts: async (req, res) => {
     try {
@@ -57,7 +62,7 @@ module.exports = {
     }
   },
 
-  createNewPost: async (req, res) => {
+  createNewPost: async (req, res, next) => {
     console.log(req.body);
     const { user_id, title, location, store_name, content } = req.body;
     if (!user_id || !title || !location || !store_name || !content) {
@@ -87,27 +92,31 @@ module.exports = {
         user_id: user.id,
       });
       console.log(newPost);
-      // TODO: give reward token when post is created
-      // TODO: img upload logic
       const newImg = await images.create({
         uri: req.file.location,
         post_id: newPost.id,
       });
       console.log(newImg);
+      await transferTokenToUser(user.wallet_account, POSTREWARD);
+      const newErc20 = await getTokenBalance(user.wallet_account);
+      await user.update({
+        erc20: newErc20,
+      });
       return res.status(200).send({ posts: newPost, images: newImg });
     } catch (err) {
-      return res.status(500).send({ data: null, message: 'server error' });
+      console.log(err);
+      return next(err);
     }
   },
 
   deletePosts: async (req, res) => {
     // 수정 필요
     const { postId } = req.params;
-    const ifexist = await posts.findOne({
+    const ifExists = await posts.findOne({
       where: { id: postId },
     });
     try {
-      if (!ifexist) {
+      if (!ifExists) {
         return res
           .status(400)
           .send({ data: null, message: 'no according posts' });
@@ -129,11 +138,11 @@ module.exports = {
 
   deleteImgs: async (req, res) => {
     const { postId } = req.parms;
-    const ifexist = await images.findOne({
+    const ifExists = await images.findOne({
       where: { id: postId },
     });
     try {
-      if (!ifexist) {
+      if (!ifExists) {
         return res
           .status(400)
           .send({ data: null, message: 'no according posts' });

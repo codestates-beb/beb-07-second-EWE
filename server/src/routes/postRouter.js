@@ -7,7 +7,12 @@ const { verifyToken } = require('../middlewares/verifyToken');
 
 router.get('/', postController.getAllposts);
 router.get('/:postId', postController.getPostsByPostId);
-router.post('/', upload.single('image'), postController.createNewPost);
+router.post(
+  '/',
+  verifyToken,
+  upload.single('image'),
+  postController.createNewPost,
+);
 router.post('/:postId/delpost', postController.deletePosts);
 router.post('/:postId/delimg', postController.deleteImgs);
 router.put('/:postId/likes', postController.updateLikes);

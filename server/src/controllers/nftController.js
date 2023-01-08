@@ -47,4 +47,8 @@ module.exports = {
       return next(err);
     }
   },
+
+  transferNFT: async (req, res, next) => {
+    return res.status(200).json({ message: 'under construction' });
+  },
 };
