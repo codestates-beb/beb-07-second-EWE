@@ -1,4 +1,13 @@
 const { users, nfts, posts, images } = require('../models');
+const {
+  getCurrentTokenId,
+  giveWelcomeNFT,
+  getMyNFTBalance,
+  getNFTOwner,
+  approveAllNFTToAdmin,
+  transferNFT,
+  mintNFT,
+} = require('../chainUtils/nftUtils');
 
 module.exports = {
   getAllNfts: async (req, res) => {
@@ -25,6 +34,17 @@ module.exports = {
     } catch (err) {
       console.log(err);
       return res.status(500).send({ data: null, message: 'server error' });
+    }
+  },
+
+  mintNewNFT: async (req, res, next) => {
+    try {
+      const userPK = '';
+      await mintNFT(userPK);
+      return true;
+    } catch (err) {
+      console.error(err);
+      return next(err);
     }
   },
 };

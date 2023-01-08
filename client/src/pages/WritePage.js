@@ -38,7 +38,7 @@ const WritePage = () => {
                     <input 
                         name="title" 
                         className="title_input" 
-                        placeholder="제목을 입력해주세요."
+                        placeholder="Please insert title."
                         onChange={(e)=>{setTitle(e.target.value)}}
                     />
                 </div>
@@ -78,7 +78,7 @@ const WritePage = () => {
                     <div className="image_input_wrapper">
                         <label className="image_input_helper" htmlFor="image_input">
                             <i className="fas fa-image image_icon"/>
-                            클릭해서 이미지를 업로드하세요.
+                            Please click to upload images.
                             <input
                                 id="image_input"
                                 className="image_input"
@@ -92,15 +92,15 @@ const WritePage = () => {
                 <div className="post_content_wrapper">
                     <textarea 
                         className="content_textarea" 
-                        placeholder="내용을 입력해주세요."
+                        placeholder="Please insert contents."
                         rows="15"
                         spellCheck={false}
                         onChange={(e)=>{setContent(e.target.value)}}
                     />
                 </div>
                 <div className="btn_group">
-                    <button className="btn_cancel">취소</button>
-                    <button className="btn_submit">전송</button>
+                    <button className="btn_cancel">Cancel</button>
+                    <button className="btn_submit">Submit</button>
                 </div>
             </div>
         </div>

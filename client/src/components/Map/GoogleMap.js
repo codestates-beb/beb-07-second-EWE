@@ -92,7 +92,7 @@ const GoogleMap =  ({locationName, submitLocation, resetLocation})=>{
                         size="15"
                         disabled={true}
                     /> 
-                    <button onClick={resetBtnHandler}>다시찾기</button> 
+                    <button onClick={resetBtnHandler}>Research</button> 
                     </>
                     :
                     <>
@@ -101,9 +101,9 @@ const GoogleMap =  ({locationName, submitLocation, resetLocation})=>{
                         onChange={(e)=>{setKeyword(e.target.value)}} 
                         onKeyUp={searchEnterHandler}
                         size="15"
-                        placeholder="장소명을 입력해주세요."
+                        placeholder="Please insert keyword for the place."
                     /> 
-                    <button onClick={searchBtnHandler}>검색하기</button> 
+                    <button onClick={searchBtnHandler}>Search</button> 
                     </>
                     }
                 </div>
