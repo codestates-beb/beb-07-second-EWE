@@ -59,8 +59,8 @@ module.exports = {
 
   createNewPost: async (req, res) => {
     console.log(req.body);
-    const { user_id, title, location, store_name, content, uri } = req.body;
-    if (!user_id || !title || !location || !store_name || !content || !uri) {
+    const { user_id, title, location, store_name, content } = req.body;
+    if (!user_id || !title || !location || !store_name || !content) {
       return res
         .status(400)
         .json({ message: 'input all required values', data: null });
@@ -75,9 +75,9 @@ module.exports = {
         likes: 0,
         user_id,
       });
-      console.log(newPost);
+      // console.log(newPost);
       const newImg = await images.create({
-        uri,
+        uri: req.file.location,
         post_id: newPost.id,
       });
       console.log(newImg);
