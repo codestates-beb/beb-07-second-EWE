@@ -16,6 +16,7 @@ import MyPage from './pages/MyPage';
 import SignupPage from './pages/SignupPage';
 import WritePage from './pages/WritePage';
 import PostDetailPage from './pages/PostDetailPage';
+import NotFoundPage from './pages/NotFoundPage';
 
 // apis
 import {getUser, getUserv2} from './apis/user'
@@ -64,6 +65,7 @@ const App =()=> {
         <Route path='/signup' element={<SignupPage/>}/>
         <Route path='/write' element={<WritePage user = {user}/>}/>
         <Route path='/post/:postId' element={<PostDetailPage/>}/>
+        <Route path='/404' element={<NotFoundPage/>}/>
       </Routes>
     </BrowserRouter>
   );

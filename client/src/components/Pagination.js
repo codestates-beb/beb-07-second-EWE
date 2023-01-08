@@ -1,11 +1,16 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-const origin = "http://20.214.190.113:5050";
-const postPaginationURL = origin + "/posts";
 
-export const getPagination = async(page, limit)=>{
+
+const origin = "http://20.214.190.113:5050";
+
+export const getPagination = async(page, limit, assets)=>{
+    const paginationURL = (e)=>{
+        if(e === 'nfts') return origin + "/nfts";
+        else if(e === 'posts') return origin + "/posts";
+    } 
     const offset = (page-1)*limit
-    const pagination = await axios.get(postPaginationURL+ '/?offset=' + offset + '&limit=' + limit)
+    const pagination = await axios.get(paginationURL(assets)+ `/?offset= ${offset} &limit=${limit}`)
     .then(res=>res)
     .catch(err=>err);
 
@@ -13,20 +18,23 @@ export const getPagination = async(page, limit)=>{
 }
 
 
-const Pagination = () => {
-    const [pages, setPages] = useState({})
+const Pagination = ({assets}) => {
+    const [pagination, setPagination] = useState({})
+    const [page, setPage] = useState(1)
     const [limit, setLimit] = useState(10)
-    let numPages = Math.ceil(pages.totalNum/limit)
+    let numPages = Math.ceil(pagination.totalNum/limit)
 
+    
     useEffect(()=>{
-        getPagination(pages,limit)
+        getPagination(page,limit, assets)
             .then((result)=>{
-                setPages(result)
+                setPagination(result)
                 console.log(result)
             })
-    },[])
+    },{})
     return(
         <div className='pagination'>
+
             <select 
                 type = 'number'
                 value={limit}
@@ -37,20 +45,20 @@ const Pagination = () => {
                 <option value='30'>30</option>
                 <option value='100'>100</option>
             </select>
-            <button onClick={()=> setPages( pages - 1 )} disabled = {pages === 1}>
+            <button onClick={()=> setPage( page - 1 )} disabled = {page === 1}>
                     <i className='fas fa-left-long'></i>
             </button>            
             {Array(numPages).fill().map((_,i) => {
             <button
             className='pagination_num'
             key = {i + 1}
-            onClick={()=>setPages( i + 1 )}
-            aria-current = {pages !== i + 1 ? "page" : null}
+            onClick={()=>setPage( i + 1 )}
+            aria-current = {page !== i + 1 ? "page" : null}
             >
             { i + 1 }
             </button>
             })}    
-            <button onClick={()=> setPages( pages + 1 )} disabled = {pages === numPages}>
+            <button onClick={()=> setPage( page + 1 )} disabled = {page === numPages}>
                     <i className='fas fa-right-long'></i>
                     </button>
         </div>

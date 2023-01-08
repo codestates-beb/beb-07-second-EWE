@@ -3,8 +3,11 @@
     padding: 0;
     box-sizing:border-box;
     list-style: none;
-    font-family: sans-serif;
     text-decoration: none;
+}
+.post_button_head {
+    font-family: Helvetica;
+
 }
 :root{
     /* Color */
@@ -39,34 +42,41 @@
 } */
 
 .write{
-    font-size: 120px;
-    height: 300px;
     width: 100%;
 
 }
 .post_button{
+    position: relative;;
     background-color: var(--onPrimary-color);
-    background-image: url(https://images.pexels.com/photos/2673353/pexels-photo-2673353.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2);
-    font-size: 200px;
-
+    width: 100%;
     margin: 0;
-    padding: 1% 0;
     text-align: center;
     align-items: center;
     color: var(--white-color);
     filter: brightness(0.95);
     transition: 0.5s;
 }
+.post_button img{
+    
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    max-width: 100%;
+    height: auto;
+}
 .post_button:hover{
-    font-size: 220px;
+    font-size: 140px;
     color: var(--white-color);
     transform: scale(1.01);
     filter: brightness(1.05);
 }
+
 .category{
     display: flex;
     height: auto;
-    min-height: 62px;
+    min-height: 30px;
     width: 100%;
     border-top: 3px solid var(--onPrimary-color);
     border-bottom: 3px solid var(--onPrimary-color);
@@ -85,22 +95,23 @@
 
 }
 .fa-caret-down{
-    margin: 2%;
+    margin: 1%;
 
 }
 .toggle_category_1{
     margin-bottom: 10px;
+    display:grid;
 
 }
 .toggle_category_1 h2{
     color: var(--black-color);
     margin-bottom: 10px;
 }
-.toggle_category_1 h4{
+.toggle_category_1 a{
     padding: 3px;
-    margin-bottom: 10px;
+    margin-top: 10px;
 }
-.toggle_category_1 h4:hover{
+.toggle_category_1 a:hover{
     color: var(--white-color);
     background-color: var(--Primary-color);
 }
@@ -243,20 +254,3 @@ select{
         filter: brightness(1.05);
     }    
 }
-/* 
-@media all and (max-width: 1024px){
-	//브라우저 창 width가 1024px보다 작아지는 순간부터 적용
-	//태블릿
-}
-@media all and (max-width: 768px){
-	//브라우저 창 width가 768px보다 작아지는 순간부터 적용
-	//모바일
-}
-@media all and (min-width: 768px){
-	//브라우저 창 width가 768px보다 커지는 순간부터 적용
-	//태블릿
-}
-@media all and (min-width: 1024px){
-	//브라우저 창 width가 1024px보다 커지는 순간부터 적용
-	//데스크탑
-} */
