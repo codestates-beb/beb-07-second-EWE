@@ -43,7 +43,8 @@ export const getPostOnev2 = async(id)=>{
 }
 
 export const createReview = async(review)=>{
-    if(!review.user_id || !review.title || !review.store_name || !review.content) return;
+    if(!review.user_id || !review.title || !review.store_name || !review.content) 
+        return new Error("Invalid Review Info!");
 
     const createResult = await axios.post(postReviewURL, review)
     .then(res=>res)
