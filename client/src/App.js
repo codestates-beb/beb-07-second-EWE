@@ -26,18 +26,31 @@ import PostDetailPage from './pages/PostDetailPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 // apis
-import {getUser, getUserv2} from './apis/user'
+import {getUser, getUserv2, loginUser} from './apis/user'
 import {getPosts, getPostsv2} from './apis/post'
 import {getNfts, getNftsv2} from './apis/nft'
 
 const App =()=> {
   const [posts, setPosts] = useState([])
-  const user = useSelector((state)=>state.user);
+  const [user, setUser] = useState(null);
+  // const user = useSelector((state)=>state.user);
   const [nfts, setNfts] = useState([])
   const [isLogin, setIsLogin] = useState(false);
   
   const dispatch = useDispatch();
-  
+
+  const loginFunc = async(email, password)=>{
+    const result = await loginUser({email, password})
+
+    const userId = result.userId;
+
+    getUserv2(userId)
+    .then(result=>{ 
+      setUser(user);
+      setIsLogin(true);
+    })
+  }
+
   useEffect(()=>{
     getPostsv2()
       .then((result)=>{
@@ -52,13 +65,9 @@ const App =()=> {
       })
   },[])
 
-  useEffect(()=>{
-    console.log(user);
-  }, [user])
-
   return (
     <BrowserRouter>
-      <Header user = {user} isLogin={isLogin}/>
+      <Header user = {user} isLogin={isLogin} loginFunc={loginFunc}/>
       <Routes>
         <Route path='/' element={<MainPage  user = {user} posts={posts}/>}/>
         <Route path='/market' element={<MarketPage

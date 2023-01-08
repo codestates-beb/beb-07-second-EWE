@@ -1,7 +1,17 @@
-
-import '../assets/css/header.css'
+// modules
+import { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
-const Header = ({user, isLogin}) => {
+
+// css
+import '../assets/css/header.css'
+
+const Header = ({user, isLogin, loginFunc}) => {
+    const [email, setEmail] = useState();
+    const [password, setPassword] = useState();
+
+    const loginEnterHandler= (e)=>{
+        if(e.key === "Enter") loginFunc(email, password);
+    }
 
     return(
         <header>
@@ -47,8 +57,17 @@ const Header = ({user, isLogin}) => {
                         <h4>Login</h4>
                         </Link>
                         <div className='user_info'>
-                            <input placeholder='ID'></input>
-                            <input placeholder='PW'></input>
+                            <input 
+                                placeholder='ID' 
+                                onChange={(e)=>{setEmail(e.target.value)}}
+                                onKeyUp={loginEnterHandler}
+                            />
+                            <input 
+                                placeholder='PW' 
+                                type="password" 
+                                onChange={(e)=>{setPassword(e.target.value)}}
+                                onKeyUp={loginEnterHandler}
+                            />
                         </div>
                     </div>
                     <div className="signup">
