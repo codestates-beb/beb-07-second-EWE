@@ -5,6 +5,7 @@ import NFTList from '../components/NFTList';
 import '../assets/css/mypage.css'
 import Footer from '../components/Footer'
 
+
 const MyPage = ({user, posts, nfts}) => {
     const [responsibleToggle,SetResponsibleToggle] = useState(false)
     const[postLimit, setPostLimit] = useState(10);
@@ -27,7 +28,7 @@ const MyPage = ({user, posts, nfts}) => {
     return(
         <div>
             <a href='/write' className='write'>
-                <div className='post_button'>POST</div>
+                <img className='post_button' src={require('../assets/image/post_2.png')}></img>
             </a>
             <div className='category narrow'>
             <i className="fa-solid fa-caret-down" onClick={()=>{SetResponsibleToggle(!responsibleToggle)}}>
@@ -55,12 +56,12 @@ const MyPage = ({user, posts, nfts}) => {
 
 
             </div>
-            <div className='category wide'>
+            {/* <div className='category wide'>
                 <Link to='/'><h2>Korean</h2></Link>
                 <Link to='/'><h2>Chinese</h2></Link>
                 <Link to='/'><h2>Japanese</h2></Link>
                 <Link to='/'><h2>Western</h2></Link>
-            </div>
+            </div> */}
             <div className='mypage'>
                 <div className='user_info'>
                     <div className='user_info_1'>

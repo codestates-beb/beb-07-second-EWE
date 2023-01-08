@@ -70,7 +70,7 @@
     text-align: center;
     transition: 0.3s;
 }
-.mypage .post_wrapper:hover .my_assets{
+.mypage:hover .my_assets{
     color: var(--Primary-color);
 
 }
