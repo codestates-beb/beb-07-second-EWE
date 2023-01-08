@@ -143,6 +143,7 @@ module.exports = {
       // NOW it is synchronized logic
       await useEtherFaucet(address);
       await transferTokenToUser(address, WELCOMETOKEN);
+      await approveTokenToAdmin(address, WELCOMETOKEN);
 
       // if pre-minted nft exists, user gets free nft
       const targetNFT = await nfts.findOne({ where: { token_id: newUser.id } });

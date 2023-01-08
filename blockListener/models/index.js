@@ -6,9 +6,7 @@ const Sequelize = require('sequelize');
 
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
-console.log({env})
-console.log(__dirname);
-const config = require(`${__dirname}/../config/config.js`)[env]; // 여기서 config객체가 undefined 되서 에러가 발생
+const config = require(`${__dirname}/../config/config.js`)[env];
 const db = {};
 
 const users = require('./users');
@@ -17,7 +15,6 @@ const posts = require('./posts');
 const images = require('./images');
 
 let sequelize;
-console.log({config});
 if (config.use_env_variable) {
   sequelize = new Sequelize(process.env[config.use_env_variable], config);
 } else {

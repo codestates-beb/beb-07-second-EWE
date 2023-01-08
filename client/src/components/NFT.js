@@ -1,21 +1,20 @@
 import '../assets/css/asset.css'
 import { Link } from 'react-router-dom';
-// import { getNftMetadata } from '../apis/nft';
-// import { useState, useEffect } from 'react'
+import { getNftMetadata } from '../apis/nft';
+import { useState, useEffect } from 'react'
 
 
 const NFT = ({nft}) => {
-    // const [metadata, setMetadata] = useState([])
-    // useEffect(()=>{
-    //     getNftMetadata(nft.metadata)
-    //     .then((result)=>{
-    //         setMetadata(result)
-    //     })
-    // },[])
-    // useEffect(()=>{
-    //     console.log(metadata)
-    // },[metadata])
-    // console.log(nft.metadata)
+    const [metadata, setMetadata] = useState(null);
+
+    useEffect(()=>{
+        getNftMetadata(nft.metadata)
+        .then(metadata=>{
+            console.log(metadata);
+            setMetadata(metadata);
+        })
+        .catch(console.log);
+    }, [])
 
     return(
         <Link 
@@ -23,19 +22,20 @@ const NFT = ({nft}) => {
         className="asset_container">
             <div>
                 <div className='user1'>
-                <div className="user_img">
+                    <div className="user_img">
                         <i className='fab fa-ethereum'></i>
                     </div>
 
                     <div className="post_title token_id">
                     <h6>
-                    {nft.token_id}
+                    {metadata === null || metadata.image === undefined ||metadata.image === null
+                        ? ""
+                        : metadata.name
+                    }
                     </h6>
                     </div>
                     <div className="post_num id">#
-
-                    {nft.id}
-                    
+                        {nft.token_id}
                     </div>
                 </div> 
                 <div className='user2'>
@@ -53,8 +53,14 @@ const NFT = ({nft}) => {
             </div>
             <div className="image" >
             {nft.price}
-
-                <img src ={nft.metadata === undefined ||nft.metadata=== null ? 'https://play-lh.googleusercontent.com/wQiHW5YgQhHmSR_60o9l2lypA9Vn2_hxH0l2X6Iin5lEGTbmfhrZnP8bKywoRGKkJl4' :nft.metadata}alt="food"></img>
+                <img 
+                    src ={
+                        metadata === null || metadata.image === undefined ||metadata.image === null 
+                        ? 'https://play-lh.googleusercontent.com/wQiHW5YgQhHmSR_60o9l2lypA9Vn2_hxH0l2X6Iin5lEGTbmfhrZnP8bKywoRGKkJl4' 
+                        : metadata.image
+                    } 
+                    alt="food"    
+                />
             </div>
 
             <div className="comments">

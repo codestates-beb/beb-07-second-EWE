@@ -16,13 +16,17 @@ import MyPage from './pages/MyPage';
 import SignupPage from './pages/SignupPage';
 import WritePage from './pages/WritePage';
 import PostDetailPage from './pages/PostDetailPage';
+
+// apis
 import {getUser, getUserv2} from './apis/user'
 import {getPosts, getPostsv2} from './apis/post'
 import {getNfts, getNftsv2} from './apis/nft'
+
 const App =()=> {
   const [posts, setPosts] = useState([])
   const [user, setUser] = useState([])
   const [nfts, setNfts] = useState([])
+
   useEffect(()=>{
     getPostsv2()
       .then((result)=>{
@@ -30,15 +34,16 @@ const App =()=> {
 
       })
   },[])
+
   useEffect(()=>{
     getNftsv2()
       .then((result)=>{
           setNfts(result)
-
       })
   },[])
 
   const userId = 2;
+
   useEffect(()=>{
       getUser(userId)
       .then((result)=>{
