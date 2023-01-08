@@ -10,6 +10,50 @@
     justify-content: center;
 }
 
+/* 네비게이션 바*/
+.detail_section .detail_navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--gray-light-color);
+}
+
+.detail_section .detail_navbar .btn{
+    display: inline;
+    width: auto;
+    font-weight: 700;
+}
+
+.detail_section .detail_navbar .btn span{
+    margin-left: 0.5rem;
+}
+
+.detail_section .detail_navbar .btn:hover {
+    cursor: pointer;
+}
+
+.detail_section .detail_navbar .btn.ellipsis{
+    position:relative;
+    width: 2rem;
+    height: 2rem;
+    margin-right: 1rem;
+    border-radius: 100%;
+    transition: 0.5s;
+}
+
+.detail_section .detail_navbar .btn.ellipsis .fas{
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform: translate(-50%, -50%);
+}
+
+.detail_section .detail_navbar .btn.ellipsis:hover{
+    background-color: var(--gray-light-color);
+}
+
+
 /* 헤더 */
 
 .detail_header{
@@ -139,6 +183,33 @@
     padding-bottom: 1rem;
     border-bottom: 1px solid var(--gray-light-color);
 }
+
+.detail_section .detail_content_wrapper .detail_content{
+    min-height: 400px;
+}
+
+.detail_section .detail_content_wrapper .content_tail{
+    display: flex;
+    justify-content: space-between;
+    padding: 0 0.5rem;
+}
+
+.content_tail .content_like {
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.5rem;
+    transition: 0.5s;
+}
+
+.content_tail .content_like:hover{
+    background-color: var(--gray-light-color);
+    color: var(--white-color);
+    cursor: pointer;
+}
+
+.content_tail .content_like .like_num{
+    margin-left: 0.5rem;
+}
+
 
 /* 상세 맵 */
 .detail_section .detail_location_wrapper{
