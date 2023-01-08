@@ -11,9 +11,9 @@ const Dropdown = ({children, isDropdownview})=>{
                 {visibility:"collapse"}
             }
         >
-            {children.map((child)=>{
+            {children.map((child, idx)=>{
                 return (
-                    <li className="dropdown_item">
+                    <li key={idx} className="dropdown_item">
                         {child}
                     </li>
                 )

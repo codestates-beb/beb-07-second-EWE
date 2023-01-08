@@ -1,9 +1,17 @@
-
-import '../assets/css/header.css'
+// modules
+import { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
-const Header = ({user}) => {
-    // const [isLogin, setIsLogin] = useState()
-    const isLogin = true;
+
+// css
+import '../assets/css/header.css'
+
+const Header = ({user, isLogin, loginFunc}) => {
+    const [email, setEmail] = useState();
+    const [password, setPassword] = useState();
+
+    const loginEnterHandler= (e)=>{
+        if(e.key === "Enter") loginFunc(email, password);
+    }
 
     return(
         <header>
@@ -43,28 +51,37 @@ const Header = ({user}) => {
                     </div>
                 </div>    
                 :
-                    <div className="userMenu">
-                        <div className="Login">
-                            <Link to="/">
-                            <h4>Login</h4>
-                            </Link>
-                            <div className='user_info'>
-                                <input placeholder='ID'></input>
-                                <input placeholder='PW'></input>
-                            </div>
+                <div className="userMenu">
+                    <div className="Login">
+                        <Link to="/">
+                        <h4>Login</h4>
+                        </Link>
+                        <div className='user_info'>
+                            <input 
+                                placeholder='ID' 
+                                onChange={(e)=>{setEmail(e.target.value)}}
+                                onKeyUp={loginEnterHandler}
+                            />
+                            <input 
+                                placeholder='PW' 
+                                type="password" 
+                                onChange={(e)=>{setPassword(e.target.value)}}
+                                onKeyUp={loginEnterHandler}
+                            />
                         </div>
-                        <div className="signup">
-                            <Link to="/signup">
-                            <h4>SignUp</h4>
-                            </Link>
+                    </div>
+                    <div className="signup">
+                        <Link to="/signup">
+                        <h4>SignUp</h4>
+                        </Link>
+                    </div>
+                    <div className='user'>
+                        <div>
+                            <i className='fas fa-user '></i>
+                            {/* <img src='{userImg}'></img> */}
                         </div>
-                        <div className='user'>
-                            <div>
-                                <i className='fas fa-user '></i>
-                                {/* <img src='{userImg}'></img> */}
-                            </div>
-                        </div>
-                    </div> 
+                    </div>
+                </div> 
                 }
             </div>
         </header>
