@@ -158,9 +158,7 @@ module.exports = {
 
       const tokenBalance = await getTokenBalance(address);
       const etherBalance = await getEtherBalance(address);
-      const NFTBalance = await getMyNFTBalance(address);
-      const NFTOwner = await getNFTOwner('5');
-      console.log({ tokenBalance, etherBalance, NFTBalance, NFTOwner });
+
       await newUser.update({
         eth: etherBalance,
         erc20: tokenBalance,
