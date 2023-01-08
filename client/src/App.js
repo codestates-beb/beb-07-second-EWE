@@ -2,6 +2,13 @@
 import React from 'react';
 import {Route, Routes, BrowserRouter} from "react-router-dom"
 import { useState, useEffect } from 'react'
+import { useSelector, useDispatch} from 'react-redux';
+
+// redux actions
+import {
+  setUser,
+  resetUser
+} from "./feature/userSlice";
 
 // css
 import './App.css';
@@ -24,14 +31,16 @@ import {getNfts, getNftsv2} from './apis/nft'
 
 const App =()=> {
   const [posts, setPosts] = useState([])
-  const [user, setUser] = useState([])
+  const user = useSelector((state)=>state.user);
   const [nfts, setNfts] = useState([])
-
+  const [isLogin, setIsLogin] = useState(false);
+  
+  const dispatch = useDispatch();
+  
   useEffect(()=>{
     getPostsv2()
       .then((result)=>{
           setPosts(result)
-
       })
   },[])
 
@@ -42,17 +51,13 @@ const App =()=> {
       })
   },[])
 
-  const userId = 2;
-
   useEffect(()=>{
-      getUser(userId)
-      .then((result)=>{
-          setUser(result)
-      })
-  },[])
+    console.log(user);
+  }, [user])
+
   return (
     <BrowserRouter>
-      <Header user = {user}/>
+      <Header user = {user} isLogin={isLogin}/>
       <Routes>
         <Route path='/' element={<MainPage posts={posts}/>}/>
         <Route path='/market' element={<MarketPage

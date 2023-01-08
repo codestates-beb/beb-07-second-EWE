@@ -1,9 +1,7 @@
 
 import '../assets/css/header.css'
 import { Link } from 'react-router-dom';
-const Header = ({user}) => {
-    // const [isLogin, setIsLogin] = useState()
-    const isLogin = true;
+const Header = ({user, isLogin}) => {
 
     return(
         <header>
@@ -43,28 +41,28 @@ const Header = ({user}) => {
                     </div>
                 </div>    
                 :
-                    <div className="userMenu">
-                        <div className="Login">
-                            <Link to="/">
-                            <h4>Login</h4>
-                            </Link>
-                            <div className='user_info'>
-                                <input placeholder='ID'></input>
-                                <input placeholder='PW'></input>
-                            </div>
+                <div className="userMenu">
+                    <div className="Login">
+                        <Link to="/">
+                        <h4>Login</h4>
+                        </Link>
+                        <div className='user_info'>
+                            <input placeholder='ID'></input>
+                            <input placeholder='PW'></input>
                         </div>
-                        <div className="signup">
-                            <Link to="/signup">
-                            <h4>SignUp</h4>
-                            </Link>
+                    </div>
+                    <div className="signup">
+                        <Link to="/signup">
+                        <h4>SignUp</h4>
+                        </Link>
+                    </div>
+                    <div className='user'>
+                        <div>
+                            <i className='fas fa-user '></i>
+                            {/* <img src='{userImg}'></img> */}
                         </div>
-                        <div className='user'>
-                            <div>
-                                <i className='fas fa-user '></i>
-                                {/* <img src='{userImg}'></img> */}
-                            </div>
-                        </div>
-                    </div> 
+                    </div>
+                </div> 
                 }
             </div>
         </header>
