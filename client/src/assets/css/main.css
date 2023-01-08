@@ -49,7 +49,7 @@
     background-color: var(--black-color);
     background-image: url(https://cdn.imweb.me/upload/S2017101359e025984d346/7c5de9abb3b3d.jpg);
     margin: 0;
-    padding: 0% 0;
+    padding: 1% 0;
     text-align: center;
     align-items: center;
     color: var(--white-color);
@@ -57,7 +57,7 @@
     transition: 0.5s;
 }
 .post_button:hover{
-    font-size: 200px;
+    font-size: 150px;
     color: var(--white-color);
     transform: scale(1.01);
     filter: brightness(1.05);
@@ -65,7 +65,7 @@
 .category{
     display: flex;
     height: auto;
-    min-height: 52px;
+    min-height: 62px;
     width: 100%;
     border-top: 3px solid var(--onPrimary-color);
     border-bottom: 3px solid var(--onPrimary-color);

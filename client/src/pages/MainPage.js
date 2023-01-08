@@ -1,6 +1,7 @@
 import '../assets/css/main.css'
 import Footer from '../components/Footer'
 import PostList from '../components/PostList'
+import {postPagination} from '../apis/post'
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 

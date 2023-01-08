@@ -43,13 +43,14 @@ const App =()=> {
       getUser(userId)
       .then((result)=>{
           setUser(result)
+          console.log(result)
       })
   },[])
   return (
     <BrowserRouter>
       <Header user = {user}/>
       <Routes>
-        <Route path='/' element={<MainPage posts={posts}/>}/>
+        <Route path='/' element={<MainPage  user = {user} posts={posts}/>}/>
         <Route path='/market' element={<MarketPage
           nfts={nfts}
         />}/>
