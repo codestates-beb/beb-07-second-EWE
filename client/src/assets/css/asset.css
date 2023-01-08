@@ -11,12 +11,12 @@
     background-color: var(--Secondary-color);
     justify-content: space-between;
     align-items: baseline;
-    transition: 0.2s;
+    transition: 0.1s;
     box-shadow: 0 14px 28px rgba(0,0,0,0.1), 0 10px 10px rgba(0,0,0,0.1);;
 }
 .asset_container:hover{
     border-radius: 20px;
-    transform: scale(1.1);
+    transform: scale(1.05);
 
     background-color: var(--white-color);
     opacity: 0.9;

@@ -23,6 +23,7 @@ import MyPage from './pages/MyPage';
 import SignupPage from './pages/SignupPage';
 import WritePage from './pages/WritePage';
 import PostDetailPage from './pages/PostDetailPage';
+import NotFoundPage from './pages/NotFoundPage';
 
 // apis
 import {getUser, getUserv2} from './apis/user'
@@ -59,7 +60,7 @@ const App =()=> {
     <BrowserRouter>
       <Header user = {user} isLogin={isLogin}/>
       <Routes>
-        <Route path='/' element={<MainPage posts={posts}/>}/>
+        <Route path='/' element={<MainPage  user = {user} posts={posts}/>}/>
         <Route path='/market' element={<MarketPage
           nfts={nfts}
         />}/>
@@ -68,6 +69,7 @@ const App =()=> {
         <Route path='/signup' element={<SignupPage/>}/>
         <Route path='/write' element={<WritePage user = {user}/>}/>
         <Route path='/post/:postId' element={<PostDetailPage/>}/>
+        <Route path='/404' element={<NotFoundPage/>}/>
       </Routes>
     </BrowserRouter>
   );

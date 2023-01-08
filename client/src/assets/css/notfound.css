@@ -1,0 +1,11 @@
+.not_found{
+    text-align: center;
+    align-items: center;
+}
+.not_found>.CI{
+    justify-content: center;
+}
+
+.not_found_link{
+    color: var(--Primary-color);
+}
