@@ -1,5 +1,7 @@
 import axios from "axios";
 
+const localStorage = window.localStorage;
+
 // Test URL
 const origin = "http://20.214.190.113:5050";
 const getUserURL = origin + "/test/users/";
@@ -36,6 +38,8 @@ export const loginUser = async(userInfo)=>{
     const loginResult = await axios.post(loginURL, userInfo, {withCredentials:true})
     .then(res=>res.data)
     .catch(console.log);
+
+    localStorage.setItem("accessToken", loginResult.data.accessToken);
 
     return loginResult;
 }
