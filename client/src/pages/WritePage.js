@@ -1,8 +1,13 @@
 //modules
 import {useState, useEffect} from "react";
+import {useNavigate} from "react-router-dom";
 import {Swiper, SwiperSlide} from "swiper/react";
 import {Navigation, Pagination} from "swiper";
 import {Wrapper, Status} from "@googlemaps/react-wrapper";
+
+
+// apis
+import {createReview} from "../apis/post";
 
 //components
 // import KakaoMap from "../components/Map/KakaoMap";
@@ -14,7 +19,13 @@ import "swiper/css"
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-const WritePage = () => {
+const WritePage = ({user}) => {
+    const navigator = useNavigate();
+
+    if(!user){
+        navigator(-1);
+    }
+
     const [title, setTitle] = useState("");
     const [locationName, setLocationName] = useState("");
     const [locationId, setLocationId] = useState(null);
@@ -29,6 +40,26 @@ const WritePage = () => {
     const resetLocation = ()=>{
         setLocationName("");
         setLocationId("");
+    }
+
+    const submitBtnHandler = async ()=>{
+        const review = {
+            user_id: user.id,
+            title,
+            store_name: locationName,
+            location: locationId,
+            content: content,
+            uri: "https://img3.daumcdn.net/thumb/R658x0.q70/?fname=https://t1.daumcdn.net/news/202012/11/elle/20201211193633070ycoe.jpg"
+        }
+        console.log(review);
+
+        const createReviewResult = await createReview(review);
+
+        if (createReviewResult.status=== 200) {
+            navigator("/");
+        } else {
+            console.log(createReviewResult);
+        }
     }
 
     return(
@@ -100,7 +131,7 @@ const WritePage = () => {
                 </div>
                 <div className="btn_group">
                     <button className="btn_cancel">Cancel</button>
-                    <button className="btn_submit">Submit</button>
+                    <button className="btn_submit" onClick={submitBtnHandler}>Submit</button>
                 </div>
             </div>
         </div>
