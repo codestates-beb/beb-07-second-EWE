@@ -194,7 +194,7 @@ module.exports = {
         },
         process.env.JWT_SECRET,
         {
-          expiresIn: '60m',
+          expiresIn: '5m',
           issuer: 'EWE api server',
         },
       );
@@ -206,15 +206,15 @@ module.exports = {
         },
         process.env.JWT_SECRET,
         {
-          expiresIn: '60m',
+          expiresIn: '1h',
           issuer: 'EWE api server',
         },
       );
-
+      console.log({ refreshToken });
       res.cookie('refreshToken', refreshToken, {
         sameSite: 'none',
         secure: true,
-        maxAge: 90000,
+        maxAge: 60 * 60,
         httpOnly: true,
       });
       return res
@@ -251,6 +251,51 @@ module.exports = {
       return res.status(200).json(user);
     } catch (err) {
       console.error(err);
+      return next(err);
+    }
+  },
+
+  newAccessToken: async (req, res, next) => {
+    const { refreshToken } = req.cookies;
+    if (!refreshToken) {
+      return res
+        .status(404)
+        .json({ data: null, message: 'no refresh token in cookie' });
+    }
+
+    try {
+      const refreshTokenData = jwt.verify(refreshToken, process.env.JWT_SECRET);
+      const { email, nickname } = refreshTokenData;
+      if (!email || !nickname) {
+        return res
+          .status(400)
+          .json({ data: null, message: 'Invalid refresh token' });
+      }
+      const user = await users.findOne({
+        where: {
+          email,
+          nickname,
+        },
+      });
+      if (!user) {
+        return res.status(400).send({ data: null, message: 'failed to login' });
+      }
+      const accessToken = jwt.sign(
+        {
+          email,
+          nickname,
+        },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: '5m',
+          issuer: 'EWE api server',
+        },
+      );
+      return res
+        .status(200)
+        .json({ data: { accessToken, user }, message: 'accessToken issued' });
+    } catch (err) {
+      console.log(err);
       return next(err);
     }
   },

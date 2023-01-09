@@ -1,12 +1,13 @@
 .mypage{
     display: flex;
     background-color: var(--Secondary-color);
+    padding-bottom: 80px;
+
 }
 .mypage > .user_info{
     margin: 1.5%;
     padding: 15px;
     width: 200px;
-    border-radius: 20px;
     background-color: var(--white-color);
 }
 .mypage > .pagination{
@@ -19,6 +20,17 @@
     padding: auto;
     width: 70%;
 
+}
+.mypage .pagination_button .pagination_num{
+    color : var(--gray-dark-color);
+    text-align: center;
+    
+}
+.mypage .pagination_num:hover{
+    color : var(--Primary-color);
+    transition: 0.3s;
+    transform: scale(1.2);
+    
 }
 
 .nickname, .email, .eth, .erc20,.receivers_address, .amount,.wallet_account{
