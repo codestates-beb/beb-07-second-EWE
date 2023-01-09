@@ -7,6 +7,7 @@ const { verifyToken } = require('../middlewares/verifyToken');
 router.post('/join', userController.join);
 router.post('/login', userController.login);
 router.get('/my', verifyToken, userController.my);
+router.get('/newAccessToken', userController.newAccessToken);
 
 router.get('/:userId', userController.getUserinfo);
 router.get('/:userId/balance', userController.getBalance);
