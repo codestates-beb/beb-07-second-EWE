@@ -4,7 +4,7 @@ const localStorage = window.localStorage;
 
 // Test URL
 const origin = "http://20.214.190.113:5050";
-const getUserURL = origin + "/test/users/";
+const getUserURL = origin + "/users/";
 
 const getUserURLv2 = origin + "/testv2/users";
 
@@ -37,7 +37,7 @@ export const loginUser = async(userInfo)=>{
     if(!userInfo.email || !userInfo.password) return new Error("invalid info");
 
     const loginResult = await axios.post(loginURL, userInfo, {withCredentials:true})
-    .then(res=>res.data)
+    .then(result=>result.data)
     .catch(console.log);
 
     return loginResult;
