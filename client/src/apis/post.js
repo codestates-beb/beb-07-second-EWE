@@ -5,6 +5,7 @@ const origin = "http://20.214.190.113:5050";
 const getPostsURL = origin + "/posts";
 const getPostOneURL = origin + "/posts/"
 const createReviewURL = origin + "/posts";
+const increaseLikeURL = origin
 
 // Test API Request
 export const getPosts = async()=>{
@@ -37,4 +38,13 @@ export const createReview = async(review, accessToken)=>{
     .catch(err=>err);
 
     return createResult;
+}
+
+export const increaseLike = async(postId)=>{
+    const requestURL = `${origin}/posts/${postId}/likes`;
+    const likeResult = await axios.post(requestURL)
+    .then(res=>res)
+    .catch(err=>err);
+
+    return likeResult;
 }
