@@ -27,9 +27,9 @@ import NFTDetailPage from './pages/NFTDetailPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 // apis
-import {getUser, getUserv2, loginUser, verifyUser} from './apis/user'
-import {getPosts, getPostsv2} from './apis/post'
-import {getNfts, getNftsv2} from './apis/nft'
+import {loginUser, verifyUser} from './apis/user'
+import {getPosts} from './apis/post'
+import {getNfts} from './apis/nft'
 
 const App =()=> {
   const [posts, setPosts] = useState([])
@@ -54,22 +54,23 @@ const App =()=> {
   }
 
   useEffect(()=>{
-    verifyUser()
-    .then(result=>{
-      setUser(result.data.user);
-      setIsLogin(true);
-      setAccessToken(result.data.accessToken);
-    })
-    .catch(console.log)
+    try{
+      verifyUser()
+      .then(result=>{
+        setUser(result.data.user);
+        setIsLogin(true);
+        setAccessToken(result.data.accessToken);
+      })
+    } catch{}
 
-    getPostsv2()
+    getPosts()
       .then((result)=>{
           setPosts(result)
       })
   },[])
 
   useEffect(()=>{
-    getNftsv2()
+    getNfts()
       .then((result)=>{
           setNfts(result)
       })
