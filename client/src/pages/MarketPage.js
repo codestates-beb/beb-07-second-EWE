@@ -12,8 +12,12 @@ import '../assets/css/market.css';
 
 const MarketPage = ({nfts}) => {
     // Minting State Variable
-    const [imageNFT, setImageNFT] = useState();
-    const [imageURL, setImageURL] = useState();
+    const [name, setName] = useState("");
+    const [description, setDescription] = useState("");
+    const [image, setImage] = useState(null);
+    const [category, setCategory] = useState();
+
+    const [previewImage, setPreviewImage] = useState();
 
     const[nftLimit, setNftLimit] = useState(10);
     const[nftPage, setNftPage] = useState(1);
@@ -28,11 +32,17 @@ const MarketPage = ({nfts}) => {
 
             reader.addEventListener("load",
             ()=>{
-                setImageNFT(reader.result);
+                setPreviewImage(reader.result);
             },false)
         }
 
         reader.readAsDataURL(file);
+    }
+
+    const resetButtonHandler = (e)=>{
+        setName("")
+        setDescription("");
+        setImage(null);
     }
 
     return(
@@ -48,9 +58,9 @@ const MarketPage = ({nfts}) => {
                             <div className="image_input_wrapper">
                                 <label className="image_input_helper" htmlFor="image_input">
                                     <div className="image_input_guide">
-                                        {imageNFT? 
+                                        {previewImage? 
                                             <div className="image_preview_wrapper">
-                                                <img src={imageNFT}/>
+                                                <img src={previewImage}/>
                                             </div>
                                         :
                                         <>
@@ -75,6 +85,8 @@ const MarketPage = ({nfts}) => {
                                 <input 
                                     name="name"
                                     placeholder="Please insert NFT's name."
+                                    onChange={(e)=>{setName(e.target.value)}}
+                                    value={name}
                                 />
                             </div>
                             <div className="input_group">
@@ -83,20 +95,21 @@ const MarketPage = ({nfts}) => {
                                     name="description"
                                     placeholder="Please insert description of NFT."
                                     rows={5}
+                                    onChange={(e)=>{setDescription(e.target.value)}}
                                 />
                             </div>
                             <div className="input_group">
                                 <label>Category</label>
                                 <select>
-                                    <option>Korean</option>
-                                    <option>Chinese</option>
-                                    <option>Japanese</option>
-                                    <option>Western</option>
+                                    <option value="korean">Korean</option>
+                                    <option value="chinese">Chinese</option>
+                                    <option value="japanese">Japanese</option>
+                                    <option value="western">Western</option>
                                 </select>
                             </div>
                         </div>
                         <div className="btn_group">
-                            <button className="btn btn_reset">Reset</button>
+                            <button className="btn btn_reset" resetButtonHandler={resetButtonHandler}>Reset</button>
                             <button className="btn btn_mint">Minting</button>
                         </div>
                     </div>
