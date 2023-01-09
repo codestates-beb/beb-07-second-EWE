@@ -7,7 +7,7 @@ import { useSelector, useDispatch} from 'react-redux';
 // redux actions
 import {
   setUser,
-  resetUser
+  resetUser,
 } from "./feature/userSlice";
 
 // css
@@ -26,7 +26,7 @@ import PostDetailPage from './pages/PostDetailPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 // apis
-import {getUser, getUserv2, loginUser} from './apis/user'
+import {getUser, getUserv2, loginUser, verifyUser} from './apis/user'
 import {getPosts, getPostsv2} from './apis/post'
 import {getNfts, getNftsv2} from './apis/nft'
 
@@ -36,17 +36,31 @@ const App =()=> {
   // const user = useSelector((state)=>state.user);
   const [nfts, setNfts] = useState([])
   const [isLogin, setIsLogin] = useState(false);
+  const [accessToken, setAccessToken] = useState(null);
   
   const dispatch = useDispatch();
 
   const loginFunc = async(email, password)=>{
-    const result = await loginUser({email, password})
+    try{
+      const result = await loginUser({email, password})
 
-    setUser(result.data.user);
-    setIsLogin(true);
+      setUser(result.data.user);
+      setIsLogin(true);
+    } catch{
+      console.log("login failed");
+    }
+
   }
 
   useEffect(()=>{
+    verifyUser()
+    .then(result=>{
+      setUser(result.data.user);
+      setIsLogin(true);
+      setAccessToken(result.data.accessToken);
+    })
+    .catch(console.log)
+
     getPostsv2()
       .then((result)=>{
           setPosts(result)
@@ -61,7 +75,7 @@ const App =()=> {
   },[])
 
   useEffect(()=>{
-    console.log(user)
+    console.log(user);
   },[user])
 
   return (

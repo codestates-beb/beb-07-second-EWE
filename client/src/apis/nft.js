@@ -7,6 +7,8 @@ const getNftOneURL = origin + "/test/nfts/"
 const getNftsURLv2 = origin + "/testv2/nfts";
 const getNftOneURLv2 = origin + "/testv2/nfts/"
 
+const mintNFTURL = origin + "/nfts";
+
 // Test API Request
 export const getNfts = async()=>{
     const nfts = await axios.get(getNftsURL)
@@ -46,4 +48,18 @@ export const getNftMetadata = async (getNftMetadataURL)=>{
     .catch(console.log);
 
     return metadata
+}
+
+export const mintNFT = async(metadata, accessToken)=>{
+    if(metadata) return new Error("Invalid NFT data!");
+    
+    const mintResult = await axios.post(mintNFTURL, metadata, {
+        headers: {
+            Authorization: accessToken
+        }
+    })
+    .then(result=>result)
+    .catch(console.log);
+
+    return mintResult;
 }
