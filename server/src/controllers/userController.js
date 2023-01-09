@@ -219,7 +219,7 @@ module.exports = {
       });
       return res
         .status(200)
-        .json({ data: { accessToken }, message: 'accessToken issued' });
+        .json({ data: { accessToken, user }, message: 'accessToken issued' });
     } catch (err) {
       console.log(err);
       return next(err);
