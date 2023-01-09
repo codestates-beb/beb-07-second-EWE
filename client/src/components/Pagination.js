@@ -13,7 +13,6 @@ export const getPagination = async(page, limit, assets)=>{
     const pagination = await axios.get(paginationURL(assets)+ `/?offset= ${offset} &limit=${limit}`)
     .then(res=>res)
     .catch(err=>err);
-
     return pagination;
 }
 
@@ -23,7 +22,6 @@ const Pagination = ({assets}) => {
     const [page, setPage] = useState(1)
     const [limit, setLimit] = useState(10)
     let numPages = Math.ceil(pagination.totalNum/limit)
-
     
     useEffect(()=>{
         getPagination(page,limit, assets)
@@ -31,10 +29,9 @@ const Pagination = ({assets}) => {
                 setPagination(result)
                 console.log(result)
             })
-    },{})
+    },[])
     return(
         <div className='pagination'>
-
             <select 
                 type = 'number'
                 value={limit}
