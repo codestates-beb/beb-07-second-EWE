@@ -3,23 +3,15 @@ import { createSlice } from "@reduxjs/toolkit";
 export const userSlice = createSlice({
     name: "user",
     initialState: {
-        nickname: "",
-        address: "",
-        balanceOf: "",
+        accessToken: null,
     },
     reducers:{
         setUser: (state, action)=>{
-            const curUser = action.payload
-            if(!curUser.nickname || !curUser.address || !curUser.balanceOf) return;
-            state = curUser;
+            state.accessToken = action.payload.accessToken;
         },
 
         resetUser: (state)=>{
-            state = {
-                nickname: "",
-                address: "",
-                balanceOf: "",
-            }
+            state = null;
         }
     }
 })

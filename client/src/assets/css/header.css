@@ -1,8 +1,12 @@
 header{
+    top: 0;
+    position:sticky;
+    z-index: 11;
     background-color: var(--Secondary-color);
     display: flex;
     height: 72px;
     align-items: center;
+    opacity: 0.9;
 }
 .header_left{
     width: 33.33%;

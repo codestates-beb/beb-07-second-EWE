@@ -34,7 +34,10 @@ sequelize
 app.use(morgan('dev'));
 app.use(
   cors({
-    origin: '*',
+    origin: [
+      'http://localhost:3000',
+      'http://ewe-client.s3-website.ap-northeast-2.amazonaws.com',
+    ],
     credentials: true,
   }),
 );

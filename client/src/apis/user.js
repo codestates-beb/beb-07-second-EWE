@@ -1,5 +1,7 @@
 import axios from "axios";
 
+const localStorage = window.localStorage;
+
 // Test URL
 const origin = "http://20.214.190.113:5050";
 const getUserURL = origin + "/test/users/";
@@ -7,6 +9,7 @@ const getUserURL = origin + "/test/users/";
 const getUserURLv2 = origin + "/testv2/users";
 
 const signupUserURL = origin + "/users/join"
+const loginURL = origin + "/users/login";
 
 // Test API Request
 export const getUser = async(userId)=>{
@@ -27,6 +30,18 @@ export const getUserv2 = async(userId)=>{
     .catch(console.log);
 
     return user;
+}
+
+export const loginUser = async(userInfo)=>{
+    if(!userInfo.email || !userInfo.password) return new Error("invalid info");
+
+    const loginResult = await axios.post(loginURL, userInfo, {withCredentials:true})
+    .then(res=>res.data)
+    .catch(console.log);
+
+    localStorage.setItem("accessToken", loginResult.data.accessToken);
+
+    return loginResult;
 }
 
 export const signupUser = async(userInfo)=>{
