@@ -28,7 +28,9 @@ const MainPage = ({posts, user}) => {
                 <></>
                 :<div className='toggle_category'>
                     <div className='toggle_category_1'>
-                        <h2>{user.nickname}'s Dishes</h2>
+                        <h2>{user===null || user===undefined ?
+                        'Guest' : user.nickname
+                            }</h2>
                         <Link to="/mypage">My Page</Link>
                         <Link to="/market">NFT Market</Link>
                         <Link to="/">ETH Faucet</Link>
@@ -43,7 +45,7 @@ const MainPage = ({posts, user}) => {
             <div className='category wide'>
                 <Link to='/'>
                 {/* <h2>EWE</h2> */}
-                Eat Write Earn   Incentive Community : Get your token with Boasting your dishes!. 
+                Eat Write Earn   Incentive Community : Get your token with Boasting your dishes! 
                 
                 
                 </Link>
