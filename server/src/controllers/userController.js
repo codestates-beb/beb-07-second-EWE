@@ -212,8 +212,9 @@ module.exports = {
       );
       console.log({ refreshToken });
       res.cookie('refreshToken', refreshToken, {
-        sameSite: 'none',
-        secure: true,
+        // domain: '.localhost:3000',
+        // sameSite: 'lax',
+        // secure: false,
         maxAge: 60 * 60,
         httpOnly: true,
       });
