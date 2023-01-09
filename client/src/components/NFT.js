@@ -15,11 +15,11 @@ const NFT = ({nft}) => {
             setMetadata(metadata);
             setIsLoading(false);
         })
-        .catch(console.log());
+        .catch(console.log(nft));
     }, [])
     return(
         <Link 
-        // to='/postdetail'
+        to={'/nft/'+ nft.id }
         className="asset_container">
             <div>
                 <div className='user1'>
