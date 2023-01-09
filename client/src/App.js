@@ -2,6 +2,13 @@
 import React from 'react';
 import {Route, Routes, BrowserRouter} from "react-router-dom"
 import { useState, useEffect } from 'react'
+import { useSelector, useDispatch} from 'react-redux';
+
+// redux actions
+import {
+  setUser,
+  resetUser
+} from "./feature/userSlice";
 
 // css
 import './App.css';
@@ -19,20 +26,35 @@ import PostDetailPage from './pages/PostDetailPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 // apis
-import {getUser, getUserv2} from './apis/user'
+import {getUser, getUserv2, loginUser} from './apis/user'
 import {getPosts, getPostsv2} from './apis/post'
 import {getNfts, getNftsv2} from './apis/nft'
 
 const App =()=> {
   const [posts, setPosts] = useState([])
-  const [user, setUser] = useState([])
+  const [user, setUser] = useState(null);
+  // const user = useSelector((state)=>state.user);
   const [nfts, setNfts] = useState([])
+  const [isLogin, setIsLogin] = useState(false);
+  
+  const dispatch = useDispatch();
+
+  const loginFunc = async(email, password)=>{
+    const result = await loginUser({email, password})
+
+    const userId = result.userId;
+
+    getUserv2(userId)
+    .then(result=>{ 
+      setUser(user);
+      setIsLogin(true);
+    })
+  }
 
   useEffect(()=>{
     getPostsv2()
       .then((result)=>{
           setPosts(result)
-
       })
   },[])
 
@@ -43,18 +65,9 @@ const App =()=> {
       })
   },[])
 
-  const userId = 2;
-
-  useEffect(()=>{
-      getUser(userId)
-      .then((result)=>{
-          setUser(result)
-          console.log(result)
-      })
-  },[])
   return (
     <BrowserRouter>
-      <Header user = {user}/>
+      <Header user = {user} isLogin={isLogin} loginFunc={loginFunc}/>
       <Routes>
         <Route path='/' element={<MainPage  user = {user} posts={posts}/>}/>
         <Route path='/market' element={<MarketPage
