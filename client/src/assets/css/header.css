@@ -110,13 +110,21 @@ margin: auto;
 }
 .Login:hover .user_info{
     width: 150px;
-    
+}
+.user_info input[type="text"]:focus .user_info{
+    width: 150px;
+
 }
 .Login .user_info{
     transition: 1s;
     height: 40px;
     width: 0;
     overflow: hidden;
+}
+.Login .user_info:focus{
+
+    width: 180;
+
 }
 .Login .user_info input{
     border: 0;
