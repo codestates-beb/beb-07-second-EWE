@@ -61,7 +61,7 @@ const Header = ({user, isLogin, loginFunc}) => {
                         </Link>
                         <div className='user_info'>
                             <input 
-                                placeholder='ID' 
+                                placeholder='Email' 
                                 onChange={(e)=>{setEmail(e.target.value)}}
                                 onKeyUp={loginEnterHandler}
                             />

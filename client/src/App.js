@@ -23,6 +23,7 @@ import MyPage from './pages/MyPage';
 import SignupPage from './pages/SignupPage';
 import WritePage from './pages/WritePage';
 import PostDetailPage from './pages/PostDetailPage';
+import NFTDetailPage from './pages/NFTDetailPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 // apis
@@ -77,6 +78,7 @@ const App =()=> {
         <Route path='/signup' element={<SignupPage/>}/>
         <Route path='/write' element={<WritePage user = {user}/>}/>
         <Route path='/post/:postId' element={<PostDetailPage/>}/>
+        <Route path='/nfts/:nftId' element={<NFTDetailPage/>}/>
         <Route path='/404' element={<NotFoundPage/>}/>
       </Routes>
     </BrowserRouter>
