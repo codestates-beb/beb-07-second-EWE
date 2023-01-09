@@ -42,11 +42,17 @@ export const getPostOnev2 = async(id)=>{
     return post;
 }
 
-export const createReview = async(review)=>{
-    if(!review.user_id || !review.title || !review.store_name || !review.content) 
+export const createReview = async(review, accessToken)=>{
+    if(!review.user_id || !review.title || !review.location || !review.content)
         return new Error("Invalid Review Info!");
 
-    const createResult = await axios.post(postReviewURL, review)
+    if(!accessToken) return new Error("Not Authorized");
+
+    const createResult = await axios.post(postReviewURL, review, {
+        headers:{
+            Authorization: accessToken
+        }
+    })
     .then(res=>res)
     .catch(err=>err);
 

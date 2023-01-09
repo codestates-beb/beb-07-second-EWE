@@ -50,8 +50,6 @@
 
 .market_section .image_input_wrapper .image_input_helper{
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
     width: 100%;
     height: 400px;
@@ -63,13 +61,55 @@
     transition: 0.5s;
 }
 
+.market_section .image_input_wrapper .image_input_helper .image_input_guide{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.image_input_wrapper .image_input_helper .image_preview_wrapper {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    background-color: var(--black-color);
+}
+
+.image_input_wrapper .image_input_helper .image_preview_wrapper img{
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: 0.5s;
+}
+
+.image_input_wrapper .image_input_helper .image_preview_wrapper:hover::after{
+    display:flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    z-index: 5;
+    content: "Click to change image.";
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--black-color);
+    transition: 0.5s;
+    filter:none;
+}
+
 .market_section .image_input_wrapper .image_input_helper:hover{
-    background-color: var(--gray-dark-color);
+    filter: brightness(0.5);
 }
 
 .market_section .image_input_wrapper .image_input{
     display:none;
 }
+
+
 
 /* 민팅 폼*/
 .mint_section .mint_form_wrapper .input_group{
@@ -107,9 +147,6 @@
     border-radius: 0.5rem;
     resize: none;
 }
-
-
-
 
 .mint_section .mint_wrapper{
     background-color: var(--white-color);

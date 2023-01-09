@@ -2,9 +2,11 @@ const express = require('express');
 
 const router = express.Router();
 const userController = require('../controllers/userController');
+const { verifyToken } = require('../middlewares/verifyToken');
 
 router.post('/join', userController.join);
 router.post('/login', userController.login);
+router.get('/my', verifyToken, userController.my);
 
 router.get('/:userId', userController.getUserinfo);
 router.get('/:userId/balance', userController.getBalance);

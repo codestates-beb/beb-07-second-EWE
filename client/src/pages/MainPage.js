@@ -1,9 +1,9 @@
 import '../assets/css/main.css'
 import Footer from '../components/Footer'
 import PostList from '../components/PostList'
+import {postPagination} from '../apis/post'
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-
 const MainPage = ({posts, user}) => {
     const[postLimit, setPostLimit] = useState(10);
     const[postPage, setPostPage] = useState(1);
@@ -13,8 +13,14 @@ const MainPage = ({posts, user}) => {
     return(
         <div className='main'>
             <Link to='/write' className='write'>
-                <div className='post_button'>POST</div>
+                <img className='post_button' src={require('../assets/image/post_1.png')}>
+                    
+                {/* <div className='post_button_head'>What you got, Where you like, Whatever you eat</div>
+                <div className='post_button_body'>POST</div>
+                <div className='post_button_footer'>Incentive Programs for Community Engagement</div> */}
+                </img>
             </Link>
+            {/* A disease that cannot be cured with food cannot be cured by a doctor. */}
             <div className='category narrow'>
             <i className="fa-solid fa-caret-down" onClick={()=>{SetResponsibleToggle(!responsibleToggle)}}>
                 </i>
@@ -23,30 +29,24 @@ const MainPage = ({posts, user}) => {
                 <></>
                 :<div className='toggle_category'>
                     <div className='toggle_category_1'>
-                        <h2>{user.nickname}</h2>
-                        <Link to="/mypage"><h4>My Page</h4></Link>
-                        <Link to="/market"><h4>NFT Market</h4></Link>
-                        <Link to="/"><h4>ETH Faucet</h4></Link>
-                        <Link to="/"><h4>Log Out</h4></Link>
-                        <Link to="/"><h4>Secession</h4></Link>
+                        <h4>{user.nickname}</h4>
+                        <Link to="/mypage">My Page</Link>
+                        <Link to="/market">NFT Market</Link>
+                        <Link to="/">ETH Faucet</Link>
+                        <Link to="/">Log Out</Link>
+                        <Link to="/">Secession</Link>
                     </div>
-                    <div className='toggle_category_2'>
-                        <Link to='/'><h5>Korean</h5></Link>
-                        <Link to='/'><h5>Chinese</h5></Link>
-                        <Link to='/'><h5>Japanese</h5></Link>
-                        <Link to='/'><h5>Western</h5></Link>
-                    </div>    
                 </div>
                 }
 
 
             </div>
-            <div className='category wide'>
+            {/* <div className='category wide'>
                 <Link to='/'><h2>Korean</h2></Link>
                 <Link to='/'><h2>Chinese</h2></Link>
                 <Link to='/'><h2>Japanese</h2></Link>
                 <Link to='/'><h2>Western</h2></Link>
-            </div>
+            </div> */}
             <div className='post_list'>
             <div className='post_head'>
                 <h2>Posts</h2>
