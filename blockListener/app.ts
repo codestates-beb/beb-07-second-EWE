@@ -1,15 +1,14 @@
-const express = require('express');
+import express from 'express';
 require('dotenv').config();
 
-const path = require('path');
-const cors = require('cors');
-const morgan = require('morgan');
-const ejs = require('ejs');
-const session = require('express-session');
-const cookieParser = require('cookie-parser');
+import path from 'path';
+import cors from 'cors';
+import morgan from 'morgan';
+import ejs from 'ejs';
+import session from 'express-session';
+import cookieParser from 'cookie-parser';
 
-const logger = require('./logger');
-const { sequelize } = require('./models');
+import { sequelize } from './models';
 
 const app = express();
 app.set('port', process.env.PORT || 5050);
@@ -48,14 +47,6 @@ app.use(
 );
 
 // test routers
-app.use('/test', testRouter);
-app.use('/testv2', testRouterV2);
-app.use('/web3', web3Router);
-
-// production router
-app.use('/users', userRouter);
-app.use('/nfts', nftRouter);
-app.use('/posts', postRouter);
 
 app.use((req, res, next) => {
   const err = new Error(`${req.method} ${req.url} There is no Router`);
@@ -70,7 +61,7 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(app.get('port'), () => {
-  logger.info(app.get('port'), 'is up and listening');
+  console.log(app.get('port'), 'is up and listening');
 });
 
 module.exports = app;
