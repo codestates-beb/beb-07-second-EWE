@@ -13,8 +13,8 @@
     /* Color */
     --white-color : #fff;
     --black-color : #000000;
-    --Primary-color: #FFB100;
-    --onPrimary-color: #FBC252;
+    --Primary-color: #ff8800;
+    --onPrimary-color: #fb9e52;
     --Primary-Container-color: #asdf323;
     --onPrimary-Container-color: #asdf323;
 
@@ -23,7 +23,7 @@
     --Secondary-Container-color: #asdf323;
     --onSecondary-Container-color: #asdf323;
     --gray-dark-color: #6b6b6b;
-    --gray-light-color: #C3C7C9; 
+    --gray-light-color: #b6b6b6; 
 
     /* Size */
     --padding: 10px;
@@ -43,7 +43,6 @@
 
 .write{
     width: 100%;
-
 }
 .post_button{
     position: relative;;
@@ -72,23 +71,30 @@
     transform: scale(1.01);
     filter: brightness(1.05);
 }
+.pagination_num{
+    color : var(--gray-dark-color);
+    transition: 0.3s;
 
+}
+.pagination_num:hover{
+    color : var(--Primary-color);
+    transform: scale(1.1);
+    
+}
 .category{
+    background-image: url('../image/category_1.png');
     display: flex;
     height: auto;
     min-height: 30px;
     width: 100%;
-    border-top: 3px solid var(--onPrimary-color);
-    border-bottom: 3px solid var(--onPrimary-color);
-    font-size: var(--font-large);
-    color: var(--onPrimary-color);
-    background-color: var(--white-color);
+    font-size: var(--font-medium);
+    color: var(--gray-light-color);
     justify-content: space-around;
     align-items: center;
     transition: 1s;
 }
 .narrow{
-    padding: auto;
+    padding: 1px;
     display: none;
     text-align: center;
     align-items: center;
@@ -112,8 +118,9 @@
     margin-top: 10px;
 }
 .toggle_category_1 a:hover{
-    color: var(--white-color);
-    background-color: var(--Primary-color);
+    color: var(--black-color);
+    background-color: var(--white-color);
+    opacity: 0.7;
 }
 .toggle_category_2{
     display: flex;
@@ -135,7 +142,7 @@
 }
 
 .post_list{
-    padding: 2% 1% 10% 1%;
+    padding: 2% 5% 10% 5%;
     height: 100%;
     background-color: var(--Secondary-color);
     align-items: center;
@@ -159,34 +166,54 @@
 }
 
 .footer{
+    position: relative;
     display: block;
+    align-items: center;
     justify-content: center;
     text-align: center;
-
+}
+.footer .logo{
+    margin: 10% 0;
 }
 .web{
     width: auto;
     justify-content: center;
 
 }
-.footer .CI{
-    margin: 30px 30px 20px ;
-    justify-content: center;
-}
-.footer .published, .footer .github_repo{
-    /* justify-content: center;
-    display: flex; */
-    width: 100%;
-    margin: 0;
-}
 .footer .team{
-    width: auto;
+    position: absolute;
+    top: 0px;
+    bottom: 0;
+    right: 77%;
+    left:0;
+    margin: auto;
+    padding: 20px;
+    width: 300px;
+    height: 450px;
+    border-radius: 5px;
+    background-color: var(--white-color);
+    opacity: 0.8;
+    transition: 0.8;
 }
-.team, .mail, .blogs, .github_repo{
-    margin: 1%;
-    width: auto;
-}
+.footer .project{
+    position: absolute;
+    top: 0px;
+    bottom: 0;
+    right: 0;
+    left:77%;
+    margin: auto;
+    padding: 20px;
+    width: 300px;
+    height: 450px;
+    border-radius: 5px;
+    background-color: var(--white-color);
+    opacity: 0.8;
+    transition: 0.8;
 
+}
+.footer .project:hover,.footer .team:hover{
+    opacity: 1;
+}
 .main .pagination {
     margin: auto;
     align-items: center;
@@ -203,6 +230,7 @@
     background-color: var(--white-color);
     border-radius: 20px;
 }
+
 select{
     text-align-last: center;
 }
@@ -216,6 +244,15 @@ select{
     
 }
 @media screen and (max-width: 1024px){
+
+    .footer .project{
+        left:50%;
+    }
+    .footer .team{
+        right: 50%;
+    }
+
+
 
 }
 @media screen and (max-width: 768px){
@@ -236,6 +273,24 @@ select{
         display: none;
     }
     
+    .footer .team{
+        position: absolute;
+        top: 0px;
+        bottom: 0;
+        right: 0;
+        left:0;
+        margin: auto;
+        padding: 20px;
+        width: 300px;
+        height: 450px;
+        border-radius: 5px;
+        background-color: var(--white-color);
+        opacity: 0.8;
+        transition: 0.8;
+    }
+    .footer .project{
+        display: none;
+    }
 
 }
 @media screen and (max-width: 480px){

@@ -21,14 +21,17 @@ const Header = ({user, isLogin, loginFunc}) => {
             <div className="CI header_middle">
                 <div className='header_logo'>
                     <div className="logo" >
-                        <Link to="/"><i className='fas fa-drumstick-bite ' 
+                        <Link to="/">
+                        <img src={require('../assets/image/EWElogo_1.png')}></img>
+                        {/* <i className='fas fa-drumstick-bite ' 
                         ></i></Link>
                     </div>
                     <div className="ICName">
                         <Link to="/" className="bigName">
                         <h1>EWE</h1></Link>
                         <Link to="/" className="smallName">
-                        <h5>Eat Write Earn</h5></Link>
+                        <h5>Eat Write Earn</h5> */}
+                        </Link>
                     </div>
                 </div>
             </div>

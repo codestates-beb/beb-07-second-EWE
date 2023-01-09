@@ -115,11 +115,11 @@ const MyPage = ({user, posts, nfts}) => {
                     type = 'number'
                     value={postLimit}
                     onChange={({target: {value}})=> setPostLimit(Number(value))}>
-                    {/* <option value='5'>5</option> */}
+                    <option value='5'>5</option>
                     <option value='10'>10</option>
-                    {/* <option value='15'>15</option>
+                    <option value='15'>15</option>
                     <option value='30'>30</option>
-                    <option value='100'>100</option> */}
+                    <option value='100'>100</option>
                 </select>
                 <div className='pagination_button'>
                     <button onClick={()=> setPostPage( postPage - 1 )} disabled = {postPage === 1}>
@@ -128,14 +128,14 @@ const MyPage = ({user, posts, nfts}) => {
                     {Array(numPostPages)
                     .fill()
                     .map((_,i) => (
-                        <button
+                        <div
                         className='pagination_num'
                         key = {i + 1}
                         onClick={()=>setPostPage( i + 1 )}
                         aria-current = {postPage === i + 1 ? "page" : null}
                         >
                         { i + 1 }
-                        </button>
+                        </div>
                         ))
                     }
                     <button onClick={()=> setPostPage( postPage + 1 )} disabled = {postPage === numPostPages}>
@@ -162,11 +162,11 @@ const MyPage = ({user, posts, nfts}) => {
                     type = 'number'
                     value={nftLimit}
                     onChange={({target: {value}})=> setNftLimit(Number(value))}>
-                    {/* <option value='5'>5</option> */}
+                    <option value='5'>5</option>
                     <option value='10'>10</option>
-                    {/* <option value='15'>15</option>
+                    <option value='15'>15</option>
                     <option value='30'>30</option>
-                    <option value='100'>100</option> */}
+                    <option value='100'>100</option>
                 </select>
                 <div className='pagination_button'>
 
@@ -176,14 +176,14 @@ const MyPage = ({user, posts, nfts}) => {
                         {Array(numNftPages)
                         .fill()
                         .map((_,i) => (
-                            <button
+                            <div
                             className='pagination_num'
                             key = {i + 1}
                             onClick={()=>setNftPage( i + 1 )}
                             aria-current = {nftPage !== i + 1 ? "page" : null}
                             >
                             { i + 1 }
-                            </button>
+                            </div>
                             ))
                         }
                         <button onClick={()=> setNftPage( nftPage + 1 )}      disabled = {nftPage === numNftPages}>
