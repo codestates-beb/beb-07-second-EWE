@@ -88,7 +88,7 @@ module.exports = {
   },
 
   deletePosts: async (req, res) => {
-    // 수정 필요
+    // 수정필요사항 : DB 반영 및 AWS에서도 삭제 가능하도록 구현 필요.
     const { postId } = req.params;
     const ifexist = await posts.findOne({
       where: { id: postId },
