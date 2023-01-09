@@ -192,8 +192,8 @@
     height: 450px;
     border-radius: 5px;
     background-color: var(--white-color);
-    opacity: 0.8;
-    transition: 0.8;
+    opacity: 0.9;
+    transition: 0.9;
 }
 .footer .project{
     position: absolute;
@@ -207,9 +207,8 @@
     height: 450px;
     border-radius: 5px;
     background-color: var(--white-color);
-    opacity: 0.8;
-    transition: 0.8;
-
+    opacity: 0.9;
+    transition: 0.9;
 }
 .footer .project:hover,.footer .team:hover{
     opacity: 1;
