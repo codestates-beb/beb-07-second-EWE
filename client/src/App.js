@@ -42,13 +42,8 @@ const App =()=> {
   const loginFunc = async(email, password)=>{
     const result = await loginUser({email, password})
 
-    const userId = result.userId;
-
-    getUserv2(userId)
-    .then(result=>{ 
-      setUser(user);
-      setIsLogin(true);
-    })
+    setUser(result.data.user);
+    setIsLogin(true);
   }
 
   useEffect(()=>{
@@ -64,6 +59,10 @@ const App =()=> {
           setNfts(result)
       })
   },[])
+
+  useEffect(()=>{
+    console.log(user)
+  },[user])
 
   return (
     <BrowserRouter>
