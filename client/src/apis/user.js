@@ -4,12 +4,13 @@ const localStorage = window.localStorage;
 
 // Test URL
 const origin = "http://20.214.190.113:5050";
-const getUserURL = origin + "/test/users/";
+const getUserURL = origin + "/users/";
 
 const getUserURLv2 = origin + "/testv2/users";
 
 const signupUserURL = origin + "/users/join"
 const loginURL = origin + "/users/login";
+const verifyUserURL = origin + "/users/newAccessToken";
 
 // Test API Request
 export const getUser = async(userId)=>{
@@ -36,12 +37,20 @@ export const loginUser = async(userInfo)=>{
     if(!userInfo.email || !userInfo.password) return new Error("invalid info");
 
     const loginResult = await axios.post(loginURL, userInfo, {withCredentials:true})
-    .then(res=>res.data)
+    .then(result=>result.data)
     .catch(console.log);
 
-    localStorage.setItem("accessToken", loginResult.data.accessToken);
-
     return loginResult;
+}
+
+export const verifyUser = async()=>{
+    const verifyResult = await axios.get(verifyUserURL, {
+        withCredentials:true,
+    })
+    .then(result=>result.data)
+    .catch(console.log);
+
+    return verifyResult;
 }
 
 export const signupUser = async(userInfo)=>{
@@ -54,5 +63,4 @@ export const signupUser = async(userInfo)=>{
 
     return resultSignup;
 }
-
 
