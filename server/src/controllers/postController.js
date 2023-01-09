@@ -1,6 +1,11 @@
 /* eslint-disable camelcase */
 const { users, nfts, posts, images } = require('../models');
+const {
+  transferTokenToUser,
+  getTokenBalance,
+} = require('../chainUtils/tokenUtils');
 
+const POSTREWARD = '10000000000000000';
 module.exports = {
   getAllposts: async (req, res) => {
     try {
@@ -57,7 +62,7 @@ module.exports = {
     }
   },
 
-  createNewPost: async (req, res) => {
+  createNewPost: async (req, res, next) => {
     console.log(req.body);
     const { user_id, title, location, store_name, content } = req.body;
     if (!user_id || !title || !location || !store_name || !content) {
@@ -66,6 +71,17 @@ module.exports = {
         .json({ message: 'input all required values', data: null });
     }
     try {
+      const { email, nickname } = req.decoded;
+      const user = await users.findOne({
+        where: {
+          email,
+          nickname,
+        },
+      });
+      if (!user) {
+        return res.status(403).json({ data: null, message: 'no such user' });
+      }
+
       const newPost = await posts.create({
         title,
         location,
@@ -73,28 +89,34 @@ module.exports = {
         content,
         views: 0,
         likes: 0,
-        user_id,
+        user_id: user.id,
       });
-      // console.log(newPost);
+      console.log(newPost);
       const newImg = await images.create({
         uri: req.file.location,
         post_id: newPost.id,
       });
       console.log(newImg);
+      await transferTokenToUser(user.wallet_account, POSTREWARD);
+      const newErc20 = await getTokenBalance(user.wallet_account);
+      await user.update({
+        erc20: newErc20,
+      });
       return res.status(200).send({ posts: newPost, images: newImg });
     } catch (err) {
-      return res.status(500).send({ data: null, message: 'server error' });
+      console.log(err);
+      return next(err);
     }
   },
 
   deletePosts: async (req, res) => {
     // 수정 필요
     const { postId } = req.params;
-    const ifexist = await posts.findOne({
+    const ifExists = await posts.findOne({
       where: { id: postId },
     });
     try {
-      if (!ifexist) {
+      if (!ifExists) {
         return res
           .status(400)
           .send({ data: null, message: 'no according posts' });
@@ -116,11 +138,11 @@ module.exports = {
 
   deleteImgs: async (req, res) => {
     const { postId } = req.parms;
-    const ifexist = await images.findOne({
+    const ifExists = await images.findOne({
       where: { id: postId },
     });
     try {
-      if (!ifexist) {
+      if (!ifExists) {
         return res
           .status(400)
           .send({ data: null, message: 'no according posts' });
