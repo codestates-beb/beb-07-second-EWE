@@ -11,7 +11,7 @@ import DetailGoogleMap from "../components/Map/DetailGoogleMap";
 import Dropdown from "../components/Dropdown";
 
 // apis
-import { getPostOnev2 } from "../apis/post";
+import { getPosts } from "../apis/post";
 
 // css
 import "../assets/css/postdetail.css";
@@ -46,7 +46,7 @@ const PostDetailPage = () => {
 
     useEffect(()=>{
         (async()=>{
-            const result = await getPostOnev2(postId);
+            const result = await getPosts(postId);
 
             setPost(result);
             setUser(result.user);
@@ -136,9 +136,9 @@ const PostDetailPage = () => {
                             height="400px"
                             src="https://shareditassets.s3.ap-northeast-2.amazonaws.com/production/uploads/post/featured_image/936/%EB%A7%9B%EC%A7%91.JPG"
                         />
-                        {/* <Wrapper apiKey={process.env.REACT_APP_GOOGLE_API_KEY} libraries={["places"]}>
+                        <Wrapper apiKey={process.env.REACT_APP_GOOGLE_API_KEY} libraries={["places"]}>
                             <DetailGoogleMap/>
-                        </Wrapper> */}
+                        </Wrapper>
                     </div>
                 </div>
             </div>

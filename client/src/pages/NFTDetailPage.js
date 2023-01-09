@@ -1,24 +1,35 @@
-import { Link,useParams } from "react-router-dom";
+// modules
+import { useParams } from "react-router-dom";
 import { useState, useEffect }  from "react";
-import { getNftOne,getNftMetadata } from "../apis/nft";
+
+// apis
+import { getNfts ,getNftMetadata } from "../apis/nft";
+
 const NFTDetail = () =>{
-    const {nftId} = useParams(1)
+    const {nftId} = useParams()
     const [ nft , setNft ] = useState(null)
     const [metadata, setMetadata] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
-    const [user, setUser] = useState(null);
 
     useEffect(()=>{
         (async()=>{
-            const result = await getNftOne(nftId);
+            const result = await getNfts(nftId);
             setNft(result);
-            console.log(nft);
-            setMetadata(getNftMetadata(result.metadata))
-            console.log(metadata);
-
-            setUser(result.user);
+            
+            const metadata = await getNftMetadata(result.metadata)
+            setMetadata(metadata)
         })();
     }, []);
+
+
+    useEffect(()=>{
+        console.log(nft);
+    }, [nft])
+
+    useEffect(()=>{
+        
+    }, [metadata])
+
     // useEffect(()=>{
     //     getNftMetadata(metadata)
     //     .then(metadata=>{
@@ -29,7 +40,6 @@ const NFTDetail = () =>{
     //     .catch(console.log());
     // }, [])
     // console.log(nft)
-    console.log(metadata)
     // console.log(user)
     return(
         <div>
