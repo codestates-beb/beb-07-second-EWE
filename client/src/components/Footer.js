@@ -37,8 +37,10 @@ const Footer = () => {
                     <br/>
                             <h5>github_repo</h5>
                         </a>
-
                 </div>
+
+                <img className='logo_opacity'src={require('../assets/image/EWElogo_opacity.png')}></img>
+
                 <div className="project">
 
                     <h5>Project EWE</h5>

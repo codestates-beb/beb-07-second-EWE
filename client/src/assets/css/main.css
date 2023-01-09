@@ -210,6 +210,17 @@
     opacity: 0.9;
     transition: 0.9;
 }
+.footer .logo_opacity{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left:0;
+    margin: auto;
+    width: 200px;
+    height: 200px;
+    opacity: 0.3;
+}
 .footer .project:hover,.footer .team:hover{
     opacity: 1;
 }
@@ -273,17 +284,10 @@ select{
     }
     
     .footer .team{
-        position: absolute;
         top: 0px;
         bottom: 0;
         right: 0;
         left:0;
-        margin: auto;
-        padding: 20px;
-        width: 300px;
-        height: 450px;
-        border-radius: 5px;
-        background-color: var(--white-color);
         opacity: 0.8;
         transition: 0.8;
     }
