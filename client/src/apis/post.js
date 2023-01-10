@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // Test URL
-const origin = "http://20.214.190.113:5050";
+const origin = "https://nodeauction.42msnsnsfoav6.ap-northeast-2.cs.amazonlightsail.com";
 const getPostsURL = origin + "/posts";
 const getPostOneURL = origin + "/posts/"
 const createReviewURL = origin + "/posts";
@@ -31,7 +31,7 @@ export const createReview = async(review, accessToken)=>{
 
     const createResult = await axios.post(createReviewURL, review, {
         headers:{
-            Authorization: accessToken
+            Authorization: `Token ${accessToken}`
         }
     })
     .then(res=>res)
