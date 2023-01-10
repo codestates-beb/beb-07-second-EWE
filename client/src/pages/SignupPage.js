@@ -10,13 +10,14 @@ import '../assets/css/signup.css'
 
 const SignupPage = () => {
     const navigator = useNavigate();
-
+    const [buttonC,setButtonC] = useState('')
     const [email, setEmail] = useState('')
     const [nickname, setNickname] = useState('')
     const [password, setPassword] = useState('')
     const [isValidEmail, setIsValidEmail] = useState(false);
     const [isValidNickname, setIsValidNickname] = useState(false);
     const [isValidPassword, setIsValidPassword] = useState(false);
+    console.log(buttonC)
 
     function emailFormat(value){
         return value.includes('@'&&'.'); 
@@ -62,7 +63,6 @@ const SignupPage = () => {
             nickname: nickname, 
             password: password 
         };
-
         const signupResult = await signupUser(userInfo);
         
         if (signupResult.status === 200){
@@ -115,7 +115,7 @@ const SignupPage = () => {
                 <a href="#" className="mobile_number"><h3>Mobile number</h3></a>
             </div>
             <div className="email">
-                <input type="text" placeholder="Email" id="email" onChange={e=>
+                <input type="text" placeholder="Email" id="email" onKeyUp={e=>{setButtonC(e.target.value)}} onChange={e=>
                 {setEmail(e.target.value)}}/>
                 <div>
                     {email.length>0 || email === ''?<></>:<div className="failure_message none_id "><h6>Enter Email address</h6></div>}

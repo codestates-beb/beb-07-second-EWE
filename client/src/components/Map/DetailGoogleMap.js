@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react"
 
-const DetailGoogleMap = ({liftStore})=>{
+const DetailGoogleMap = ()=>{
     const [map, setMap] = useState("");
     const ref = useRef();
 

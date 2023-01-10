@@ -4,6 +4,9 @@ import axios from "axios";
 const origin = "http://20.214.190.113:5050";
 const getNftsURL = origin + "/nfts";
 const getNftOneURL = origin + "/nfts/"
+const getNftsURLv2 = origin + "/testv2/nfts";
+const getNftOneURLv2 = origin + "/testv2/nfts/"
+
 const mintNFTURL = origin + "/nfts";
 
 // Test API Request
@@ -21,6 +24,22 @@ export const getNftOne = async (id)=>{
     .catch(console.log);
 
     return nft
+}
+
+export const getNftsv2 = async()=>{
+    const nfts = await axios.get(getNftsURLv2)
+    .then(res=>res.data)
+    .catch(console.log);
+    
+    return nfts;
+}
+
+export const getNftOnev2 = async(id)=>{
+    const requestURL = getNftOneURLv2 + id;
+    const nfts = await axios.get(requestURL)
+    .then(res=>res.data)
+    .catch(console.log);
+    return nfts;
 }
 
 export const getNftMetadata = async (getNftMetadataURL)=>{
