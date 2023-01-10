@@ -33,8 +33,8 @@ import {getNfts} from './apis/nft'
 
 const App =()=> {
   const [posts, setPosts] = useState([])
-  const [user, setUser] = useState(null);
   const [nfts, setNfts] = useState([])
+  const [user, setUser] = useState(null);
 
   const accessToken = useSelector((state)=>state.auth.accessToken);
   const isLogin = useSelector((state)=>state.auth.isLogin);
@@ -56,7 +56,7 @@ const App =()=> {
     verifyUser()
     .then(result=>{
       setUser(result.data.user);
-      dispatch(setAuth(result.data.accessToken));
+      dispatch(setAuth({accessToken: result.data.accessToken}));
     })
     .catch(err=>{return;})
 
@@ -84,7 +84,7 @@ const App =()=> {
         <Route path='/signup' element={<SignupPage/>}/>
         <Route path='/write' element={<WritePage user = {user}/>}/>
         <Route path='/post/:postId' element={<PostDetailPage/>}/>
-        <Route path='/nfts/:nftId' element={<NFTDetailPage/>}/>
+        <Route path='/nft/:nftId' element={<NFTDetailPage/>}/>
         <Route path='/404' element={<NotFoundPage/>}/>
       </Routes>
     </BrowserRouter>

@@ -34,7 +34,7 @@ const Post = ({post}) => {
                 </div>
             </div>
             <div className="image" >
-                <img src = {post.images[0].uri}  alt="food"></img>
+                <img src = {post.images.length === 0 ?require('../assets/image/unnamed.png'):post.images[0].uri}  alt="food"></img>
             </div>
             <div className='post_bottom'>
                 <div className="likes">

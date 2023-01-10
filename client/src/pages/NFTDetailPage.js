@@ -26,7 +26,6 @@ const NFTDetail = () =>{
             })
     },[]);
 
-
     useEffect(()=>{
         (async()=>{
             const result = await getNftOne(nftId);
@@ -38,6 +37,16 @@ const NFTDetail = () =>{
         })();
     }, []);
 
+    useEffect(()=>{
+        (async()=>{
+            const result = await getNftOne(nftId);
+            // console.log(result);
+            setNft(result);
+            const metadata = await getNftMetadata(result.metadata)
+            // console.log(metadata);
+            setMetadata(metadata)
+        })();
+    }, [nftId]);
 
     useEffect(()=>{
         console.log(nft);
@@ -69,11 +78,8 @@ const NFTDetail = () =>{
                     </div>
                     <h2>description</h2>
                     <h5>{metadata===null?<></>:metadata.description}</h5>
-
                     </div>
-
                 </div>
-
             </div>
             {  
                     <NFTList

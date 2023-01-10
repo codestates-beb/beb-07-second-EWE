@@ -202,15 +202,12 @@ button{
     font-weight: bold;
     color: rgb(95, 203, 95);
 }
-.fa-google{
-    font-size: 25px;    
-    color: var(--gray-light-color);
-
-}
 .google:hover{
     border: 1px solid rgb(95, 203, 95) ;
     border-radius: 10px;
     }
+
+
 .login_button{
     margin: 0 0 8px;
     padding: 6px 0;
