@@ -11,11 +11,9 @@ const NFT = ({nft}) => {
     useEffect(()=>{
         getNftMetadata(nft.metadata)
         .then(metadata=>{
-            console.log(metadata);
             setMetadata(metadata);
             setIsLoading(false);
         })
-        .catch(console.log(nft));
     }, [])
     return(
         <Link 

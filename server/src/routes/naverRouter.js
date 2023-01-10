@@ -25,7 +25,9 @@ const WELCOMETOKEN = '10000000000000000';
 const client_id = process.env.NAVER_ID;
 const client_secret = process.env.NAVER_SECRET;
 let state = 'RANDOM_STATE';
-const redirectURI = encodeURI('http://localhost:5050/naver/callback');
+const redirectURI = encodeURI(
+  'https://nodeauction.42msnsnsfoav6.ap-northeast-2.cs.amazonlightsail.com/naver/callback',
+);
 let api_url = '';
 
 router.get('/login', function (req, res) {

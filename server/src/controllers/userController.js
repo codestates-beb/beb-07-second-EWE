@@ -194,7 +194,7 @@ module.exports = {
         },
         process.env.JWT_SECRET,
         {
-          expiresIn: '5m',
+          expiresIn: '30m',
           issuer: 'EWE api server',
         },
       );
@@ -206,16 +206,16 @@ module.exports = {
         },
         process.env.JWT_SECRET,
         {
-          expiresIn: '1h',
+          expiresIn: '60m',
           issuer: 'EWE api server',
         },
       );
       console.log({ refreshToken });
       res.cookie('refreshToken', refreshToken, {
         // domain: '.localhost:3000',
-        // sameSite: 'lax',
-        // secure: false,
-        maxAge: 60 * 60,
+        sameSite: 'none',
+        secure: true,
+        maxAge: 60 * 60 * 1000,
         httpOnly: true,
       });
       return res
@@ -227,6 +227,24 @@ module.exports = {
     }
   },
 
+  logout: async (req, res, next) => {
+    try {
+      if (!req.cookies.refreshToken) {
+        return res
+          .status(200)
+          .json({ message: 'no refresh token provied', status: 'ok' });
+      }
+
+      res.clearCookie('refreshToken');
+      return res.status(200).json({
+        message: 'refresh Token now removed from cookie',
+        status: 'ok',
+      });
+    } catch (err) {
+      console.error(err);
+      return next(err);
+    }
+  },
   my: async (req, res, next) => {
     try {
       if (!req.decoded) {
@@ -288,7 +306,7 @@ module.exports = {
         },
         process.env.JWT_SECRET,
         {
-          expiresIn: '5m',
+          expiresIn: '30m',
           issuer: 'EWE api server',
         },
       );

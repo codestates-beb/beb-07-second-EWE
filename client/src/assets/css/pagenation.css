@@ -27,3 +27,13 @@
     transform: scale(1.3);
     color: var(--Primary-color);
 }
+.pagination_num{
+    color : var(--gray-dark-color);
+    transition: 0.3s;
+
+}
+.pagination_num:hover{
+    color : var(--Primary-color);
+    transform: scale(1.1);
+    
+}
