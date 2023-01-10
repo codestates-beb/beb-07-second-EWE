@@ -6,9 +6,9 @@ import { useSelector, useDispatch} from 'react-redux';
 
 // redux actions
 import {
-  setUser,
-  resetUser,
-} from "./feature/userSlice";
+  setAuth,
+  resetAuth,
+} from "./feature/authSlice";
 
 // css
 import './App.css';
@@ -34,10 +34,10 @@ import {getNfts} from './apis/nft'
 const App =()=> {
   const [posts, setPosts] = useState([])
   const [user, setUser] = useState(null);
-  // const user = useSelector((state)=>state.user);
   const [nfts, setNfts] = useState([])
-  const [isLogin, setIsLogin] = useState(false);
-  const [accessToken, setAccessToken] = useState(null);
+
+  const accessToken = useSelector((state)=>state.auth.accessToken);
+  const isLogin = useSelector((state)=>state.auth.isLogin);
   
   const dispatch = useDispatch();
 
@@ -46,11 +46,10 @@ const App =()=> {
       const result = await loginUser({email, password})
 
       setUser(result.data.user);
-      setIsLogin(true);
+      dispatch(setAuth({accessToken: result.data.accessToken}));
     } catch{
       console.log("login failed");
     }
-
   }
 
   useEffect(()=>{
@@ -58,8 +57,7 @@ const App =()=> {
       verifyUser()
       .then(result=>{
         setUser(result.data.user);
-        setIsLogin(true);
-        setAccessToken(result.data.accessToken);
+        setAuth(result.data.accessToken)
       })
     } catch{}
 
@@ -67,18 +65,12 @@ const App =()=> {
       .then((result)=>{
           setPosts(result)
       })
-  },[])
 
-  useEffect(()=>{
     getNfts()
-      .then((result)=>{
-          setNfts(result)
-      })
+    .then((result)=>{
+        setNfts(result)
+    })
   },[])
-
-  useEffect(()=>{
-    console.log(user);
-  },[user])
 
   return (
     <BrowserRouter>
