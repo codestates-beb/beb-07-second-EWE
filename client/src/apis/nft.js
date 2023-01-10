@@ -27,9 +27,9 @@ export const getNftMetadata = async (getNftMetadataURL)=>{
     const metadata = await axios.get(getNftMetadataURL, {
         responseType: "json"
     })
+    
     .then(res=>res.data)
     .catch(console.log);
-
     return metadata
 }
 

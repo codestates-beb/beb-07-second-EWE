@@ -71,16 +71,7 @@
     transform: scale(1.01);
     filter: brightness(1.05);
 }
-.pagination_num{
-    color : var(--gray-dark-color);
-    transition: 0.3s;
 
-}
-.pagination_num:hover{
-    color : var(--Primary-color);
-    transform: scale(1.1);
-    
-}
 .category{
     background-image: url('../image/category_1.png');
     display: flex;
@@ -165,7 +156,7 @@
     color: var(--white-color);
     transition: 0.8s;
 }
-.post_wrapper{
+.post_wrapper,.nft_wrapper{
     padding: 0 0 1% 0;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(20%, 1fr) );
@@ -246,7 +237,7 @@ select{
 
 
 @media screen and (max-width: 1300px){
-    .post_wrapper{
+    .post_wrapper,.nft_wrapper{
         grid-template-columns: repeat(auto-fill, minmax(30%, 1fr) );
         }
     
@@ -264,7 +255,7 @@ select{
 
 }
 @media screen and (max-width: 768px){
-    .post_wrapper{
+    .post_wrapper,.nft_wrapper{
         grid-template-columns: repeat(auto-fill, minmax(50%, 1fr) );
     }
     .wide{
@@ -302,7 +293,7 @@ select{
 
 }
 @media screen and (max-width: 480px){
-    .post_wrapper{
+    .post_wrapper,.nft_wrapper{
         grid-template-columns: repeat(auto-fill, minmax(100%, 1fr) );
         }
     .post_button{
