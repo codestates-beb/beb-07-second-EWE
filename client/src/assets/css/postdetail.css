@@ -212,9 +212,6 @@
 
 
 /* 상세 맵 */
-.detail_section .detail_location_wrapper .detail_location_name{
-    margin-left: 1rem;
-}
 .detail_section .detail_location_wrapper{
     padding: 1rem;
 }

@@ -10,7 +10,12 @@ const Header = ({user, isLogin, loginFunc}) => {
     const [password, setPassword] = useState();
 
     const loginEnterHandler= (e)=>{
+        console.log(e.target.value)
         if(e.key === "Enter") loginFunc(email, password);
+    }
+    const loginButtonHandler= (e)=>{
+        console.log(e.target.value)
+        loginFunc(email, password);
     }
 
     return(
@@ -56,7 +61,7 @@ const Header = ({user, isLogin, loginFunc}) => {
                 :
                 <div className="userMenu">
                     <div className="Login">
-                        <Link to="/">
+                        <Link to="/" onClick={loginButtonHandler}>
                         <h4>Login</h4>
                         </Link>
                         <div className='user_info'>

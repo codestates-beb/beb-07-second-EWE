@@ -38,7 +38,8 @@ const MyPage = ({user, posts, nfts}) => {
                 <></>
                 :<div className='toggle_category'>
                     <div className='toggle_category_1'>
-                        <h2>{user.nickname}</h2>
+                        <h2>{user.nickname
+                            }</h2>
                         <Link to="/mypage"><h4>My Page</h4></Link>
                         <Link to="/market"><h4>NFT Market</h4></Link>
                         <Link to="/"><h4>ETH Faucet</h4></Link>
