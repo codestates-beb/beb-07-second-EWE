@@ -4,33 +4,62 @@ import Modal from 'react-modal'
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from 'react-router-dom';
 
+// apis
+import { 
+    localLoginUser, 
+    logoutUser,
+    naverLoginUser,
+} from "../apis/user";
+
 // actions
-import { resetAuth } from "../feature/authSlice";
+import {setAuth, resetAuth } from "../feature/authSlice";
 
 // css
 import '../assets/css/header.css'
 import '../assets/css/modal.css'
 
-const Header = ({user, isLogin, loginFunc}) => {
+const Header = ({user, liftUser}) => {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
     const [isOpen, setIsOpen] = useState(false);
     const [modalIsOpen, setModalIsOpen] = useState(true);
+
+    const isLogin = useSelector((state)=>state.auth.isLogin);
+    const accessToken = useSelector((state)=>state.auth.accessToken);
     const dispatch = useDispatch();
 
     const closeModal=()=>{
         setIsOpen(!isOpen)
     }
 
+    const loginFunc = async()=>{
+        try{
+          const result = await localLoginUser({email, password})
+          console.log(result);
+          liftUser(result.data.user);
+          dispatch(setAuth({accessToken: result.data.accessToken}));
+          setIsOpen(false);
+        } catch{
+          console.log("login failed");
+        }
+    }
+
     const loginEnterHandler= (e)=>{
         if(e.key === "Enter") loginFunc(email, password);
     }
 
-    const logoutButtonHandler = ()=>{
-        dispatch(resetAuth());
-    }
-    const socialLoginHandler = ()=>{
+    const logoutButtonHandler = async()=>{
+        if(isLogin===false) return;
 
+        try{
+            const result = await logoutUser(accessToken);
+            if (result.status === "ok") dispatch(resetAuth());
+        }catch{
+            console.log("logout failed");
+        }
+    }
+    const socialLoginHandler = async()=>{
+        await naverLoginUser();
     }
 
     return(
@@ -90,14 +119,14 @@ const Header = ({user, isLogin, loginFunc}) => {
                         />
                     </div>
                 </div>
-                <Link to="/"><h3  className="login_button">Log in</h3></Link>
+                <button onClick={loginFunc}><h3 className="login_button">Log in</h3></button>
                 <div className="sign_up_with">
-                    <button onClick={(e)=>{socialLoginHandler(e.target)}}>
+                    <a href="https://nodeauction.42msnsnsfoav6.ap-northeast-2.cs.amazonlightsail.com/naver/login" target="_blank">
                         <div className="modal_naver">
                             <h1>N</h1>
                             <h3>Naver Login</h3>
                         </div>
-                    </button>                
+                    </a>                
                 </div>
                 <h4 className="create_your_account">Create your Account!</h4>
                 <Link to="/signup" onClick={()=>setIsOpen(!isOpen)}><h3  className="modal_sign_up_button">Sign Up</h3></Link>
