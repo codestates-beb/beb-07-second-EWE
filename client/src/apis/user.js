@@ -1,9 +1,7 @@
 import axios from "axios";
 
-const localStorage = window.localStorage;
-
 // Test URL
-const origin = "http://20.214.190.113:5050";
+const origin = "https://nodeauction.42msnsnsfoav6.ap-northeast-2.cs.amazonlightsail.com";
 const getUserOneURL = origin + "/users/";
 
 const signupUserURL = origin + "/users/join"

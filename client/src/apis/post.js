@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // Test URL
-const origin = "http://20.214.190.113:5050";
+const origin = "https://nodeauction.42msnsnsfoav6.ap-northeast-2.cs.amazonlightsail.com";
 const getPostsURL = origin + "/posts";
 const getPostOneURL = origin + "/posts/"
 const createReviewURL = origin + "/posts";
@@ -24,14 +24,15 @@ export const getPostOne = async (id)=>{
 }
 
 export const createReview = async(review, accessToken)=>{
-    if(!review.user_id || !review.title || !review.location || !review.content)
+    if(!review.user_id || !review.title || !review.location || !review.content || !review.image)
         return new Error("Invalid Review Info!");
 
     if(!accessToken) return new Error("Not Authorized");
 
     const createResult = await axios.post(createReviewURL, review, {
         headers:{
-            Authorization: accessToken
+            Authorization: `${accessToken}`,
+            "Content-Type": "multipart/form-data"
         }
     })
     .then(res=>res)

@@ -39,6 +39,8 @@ app.use(
     origin: [
       'http://localhost:3000',
       'http://ewe-client.s3-website.ap-northeast-2.amazonaws.com',
+      'https://d108dnok4co062.cloudfront.net',
+      'http://d108dnok4co062.cloudfront.net',
     ],
     credentials: true,
   }),
@@ -47,17 +49,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
-app.use(
-  session({
-    resave: false,
-    saveUninitialized: false,
-    secret: process.env.COOKIE_SECRET,
-    cookie: {
-      httpOnly: true,
-      secure: false,
-    },
-  }),
-);
+// app.use(
+//   session({
+//     resave: false,
+//     saveUninitialized: false,
+//     secret: process.env.COOKIE_SECRET,
+//     cookie: {
+//       httpOnly: true,
+//       secure: true,
+//     },
+//   }),
+// );
 
 // test routers
 app.use('/test', testRouter);
@@ -66,6 +68,9 @@ app.use('/web3', web3Router);
 
 // production router
 app.use('/naver', naverRouter);
+app.use('/health', (req, res, next) => {
+  return res.status(200).json({ message: 'ok', data: null });
+});
 app.use('/users', userRouter);
 app.use('/nfts', nftRouter);
 app.use('/posts', postRouter);

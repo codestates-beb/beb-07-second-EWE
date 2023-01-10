@@ -4,6 +4,7 @@ import {useNavigate} from "react-router-dom";
 import {Swiper, SwiperSlide} from "swiper/react";
 import {Navigation, Pagination} from "swiper";
 import {Wrapper, Status} from "@googlemaps/react-wrapper";
+import { useSelector } from "react-redux";
 
 
 // apis
@@ -19,18 +20,32 @@ import "swiper/css"
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
+const Slide = ({image})=>{
+    return(
+        <SwiperSlide>
+            <div className="swiper_image_wrapper">
+                <img src={image}/>
+            </div>
+        </SwiperSlide>
+    )
+}
+
 const WritePage = ({user}) => {
     const navigator = useNavigate();
 
-    if(!user){
-        navigator(-1);
-    }
+    const isLogin = useSelector((state)=>state.auth.isLogin);
+    const accessToken = useSelector((state)=>state.auth.accessToken);
 
+    if (isLogin === false) navigator(-1);
+
+    // New Review State Variable
     const [title, setTitle] = useState("");
     const [locationName, setLocationName] = useState("");
     const [locationId, setLocationId] = useState(null);
     const [content, setContent] = useState("");
-    const [images, setImages] = useState(false);
+    const [images, setImages] = useState(null);
+
+    const [previewImage, setPreviewImage] = useState("");
     
     const submitLocation = (locationName, locationId)=>{
         setLocationName(locationName)
@@ -42,6 +57,23 @@ const WritePage = ({user}) => {
         setLocationId("");
     }
 
+    const imageChangeHandler = (e)=>{
+        const file = e.target.files[0];
+        setImages(file);
+
+        const reader = new FileReader();
+
+        if (/\.(jpe?g|png|gif)$/i.test(file.name)){
+
+            reader.addEventListener("load",
+            ()=>{
+                setPreviewImage(reader.result);
+            },false)
+        }
+
+        reader.readAsDataURL(file);
+    }
+
     const submitBtnHandler = async ()=>{
         const review = {
             user_id: user.id,
@@ -49,11 +81,10 @@ const WritePage = ({user}) => {
             store_name: locationName,
             location: locationId,
             content: content,
-            uri: "https://img3.daumcdn.net/thumb/R658x0.q70/?fname=https://t1.daumcdn.net/news/202012/11/elle/20201211193633070ycoe.jpg"
+            image: images,
         }
-        console.log(review);
-
-        const createReviewResult = await createReview(review);
+        
+        const createReviewResult = await createReview(review, accessToken);
 
         if (createReviewResult.status=== 200) {
             navigator("/");
@@ -61,6 +92,12 @@ const WritePage = ({user}) => {
             console.log(createReviewResult);
         }
     }
+
+    useEffect(()=>{
+        if(!user){
+            navigator("/");
+        }
+    },[])
 
     return(
         <div className="container">
@@ -80,45 +117,31 @@ const WritePage = ({user}) => {
                     </Wrapper>
                 </div>
                 <div className="post_image_wrapper">
-                    { images? 
-                    <div className="image_preview_wrapper">
-                        <Swiper
-                            modules={[Navigation, Pagination]}
-                            navigation
-                            pagination={{clickable:false}}
-                            slidesPerView={1}
-                        >
-                            <SwiperSlide>
-                                <div className="swiper_image_wrapper">
-                                    <img src="https://img3.daumcdn.net/thumb/R658x0.q70/?fname=https://t1.daumcdn.net/news/202012/11/elle/20201211193633070ycoe.jpg"></img>
-                                </div>
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <div className="swiper_image_wrapper">
-                                    <img src="https://d12zq4w4guyljn.cloudfront.net/20210208191223_photo0_6YN01m7Ob30F.jpg"></img>
-                                </div>
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <div className="swiper_image_wrapper">
-                                    <img src="https://img3.daumcdn.net/thumb/R658x0.q70/?fname=https://t1.daumcdn.net/news/202012/11/elle/20201211193633070ycoe.jpg"></img>
-                                </div>
-                            </SwiperSlide>
-                        </Swiper>
-                    </div>
-                    :
-                    <div className="image_input_wrapper">
-                        <label className="image_input_helper" htmlFor="image_input">
-                            <i className="fas fa-image image_icon"/>
-                            Please click to upload images.
-                            <input
-                                id="image_input"
-                                className="image_input"
-                                type="file"
-                                onChange={(e)=>{setImages(e.target.value)}}
-                            />
-                        </label>
-                    </div>
-                    }
+                    <label className="image_input_helper">
+                        { previewImage? 
+                            <div className="image_preview_wrapper">
+                                <Swiper
+                                    modules={[Navigation, Pagination]}
+                                    navigation
+                                    pagination={{clickable:false}}
+                                    slidesPerView={1}
+                                >
+                                    <Slide image={previewImage}/>
+                                </Swiper>
+                            </div>
+                        :
+                            <div className="image_input_wrapper">
+                                <i className="fas fa-image image_icon"/>
+                                <span>Please click to upload images.</span>
+                            </div>
+                        }
+                        <input
+                            id="image_input"
+                            className="image_input"
+                            type="file"
+                            onChange={imageChangeHandler}
+                        />
+                    </label>
                 </div>
                 <div className="post_content_wrapper">
                     <textarea 
