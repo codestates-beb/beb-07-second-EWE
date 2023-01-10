@@ -14,7 +14,6 @@ const NFT = ({nft}) => {
             setMetadata(metadata);
             setIsLoading(false);
         })
-        .catch(console.log(nft));
     }, [])
     return(
         <Link 
