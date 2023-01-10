@@ -1,4 +1,5 @@
 import React from 'react';
+import Modal from 'react-modal'
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { store } from './app/store';
@@ -15,3 +16,4 @@ root.render(
   </React.StrictMode>
 );
 
+Modal.setAppElement('#root')

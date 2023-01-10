@@ -15,7 +15,7 @@ const MainPage = ({posts, user}) => {
     const postOffset = (postPage - 1) * postLimit
     let numPages = Math.ceil(posts.length/postLimit)
 
-    const [nfts,setNfts] = useState([])
+    const[nfts,setNfts] = useState([])
     const[nftLimit, setNftLimit] = useState(10);
     const[nftPage, setNftPage] = useState(1);
     const nftOffset = (nftPage - 1) * nftLimit
