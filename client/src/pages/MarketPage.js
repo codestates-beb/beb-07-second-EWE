@@ -1,7 +1,10 @@
 // modules
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
-import {mintNTF} from "../apis/nft";
+// apis
+import { mintNFT, mintNTF } from "../apis/nft";
 
 // components
 import NFTList from '../components/NFTList';
@@ -11,6 +14,14 @@ import Footer from "../components/Footer";
 import '../assets/css/market.css';
 
 const MarketPage = ({nfts}) => {
+    const navigator = useNavigate();
+
+    // User Global Variable
+    const isLogin = useSelector((state)=>state.auth.isLogin);
+    const accessToken = useSelector((state)=>state.auth.accessToken);
+
+    if (isLogin === false) navigator(-1);
+
     // Minting State Variable
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
@@ -26,6 +37,8 @@ const MarketPage = ({nfts}) => {
 
     const imageChangeHandler = (e)=>{
         const file = e.target.files[0];
+        setImage(file);
+
         const reader = new FileReader();
 
         if (/\.(jpe?g|png|gif)$/i.test(file.name)){
@@ -39,10 +52,23 @@ const MarketPage = ({nfts}) => {
         reader.readAsDataURL(file);
     }
 
-    const resetButtonHandler = (e)=>{
+    const mintButtonHandler = async ()=>{
+        console.log(name, description, image, category);
+        if (!name || !description || !image || !category) return;
+
+        const metadata = {
+            name, description, image, category
+        }
+
+        const resultMint = await mintNFT(metadata, accessToken);
+        console.log(resultMint)
+    }
+
+    const resetButtonHandler = ()=>{
         setName("")
         setDescription("");
         setImage(null);
+        setPreviewImage(null);
     }
 
     return(
@@ -109,8 +135,8 @@ const MarketPage = ({nfts}) => {
                             </div>
                         </div>
                         <div className="btn_group">
-                            <button className="btn btn_reset" resetButtonHandler={resetButtonHandler}>Reset</button>
-                            <button className="btn btn_mint">Minting</button>
+                            <button className="btn btn_reset" onClick={resetButtonHandler}>Reset</button>
+                            <button className="btn btn_mint" onClick={mintButtonHandler}>Minting</button>
                         </div>
                     </div>
                 </div>

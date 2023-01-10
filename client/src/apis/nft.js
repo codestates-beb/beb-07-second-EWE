@@ -34,10 +34,11 @@ export const getNftMetadata = async (getNftMetadataURL)=>{
 }
 
 export const mintNFT = async(metadata, accessToken)=>{
-    if(metadata) return new Error("Invalid NFT data!");
+    if(!metadata.image || !metadata.name || !metadata.description || !metadata.category) return new Error("Invalid NFT data!");
     
     const mintResult = await axios.post(mintNFTURL, metadata, {
         headers: {
+            "Content-Type": "multipart/form-data",
             Authorization: accessToken
         }
     })
