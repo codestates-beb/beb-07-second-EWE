@@ -228,16 +228,22 @@ module.exports = {
   },
 
   logout: async (req, res, next) => {
-    if (!req.cookie.refreshToken) {
-      return res
-        .status(200)
-        .json({ message: 'no refresh token provied', status: 'ok' });
-    }
+    try {
+      if (!req.cookie.refreshToken) {
+        return res
+          .status(200)
+          .json({ message: 'no refresh token provied', status: 'ok' });
+      }
 
-    res.clearCookie('refreshToken');
-    return res
-      .status(200)
-      .json({ message: 'refresh Token now removed from cookie', status: 'ok' });
+      res.clearCookie('refreshToken');
+      return res.status(200).json({
+        message: 'refresh Token now removed from cookie',
+        status: 'ok',
+      });
+    } catch (err) {
+      console.error(err);
+      return next(err);
+    }
   },
   my: async (req, res, next) => {
     try {
