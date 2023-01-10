@@ -63,6 +63,9 @@ app.use('/testv2', testRouterV2);
 app.use('/web3', web3Router);
 
 // production router
+app.use('/health', (req, res, next) => {
+  return res.status(200).json({ message: 'ok', data: null });
+});
 app.use('/users', userRouter);
 app.use('/nfts', nftRouter);
 app.use('/posts', postRouter);
