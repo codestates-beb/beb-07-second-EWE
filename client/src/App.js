@@ -7,7 +7,7 @@ import { useSelector, useDispatch} from 'react-redux';
 // redux actions
 import {
   setUser,
-  resetUser
+  resetUser,
 } from "./feature/userSlice";
 
 // css
@@ -27,9 +27,9 @@ import NFTDetailPage from './pages/NFTDetailPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 // apis
-import {getUser, getUserv2, loginUser} from './apis/user'
-import {getPosts, getPostsv2} from './apis/post'
-import {getNfts, getNftsv2} from './apis/nft'
+import {loginUser, verifyUser} from './apis/user'
+import {getPosts} from './apis/post'
+import {getNfts} from './apis/nft'
 
 const App =()=> {
   const [posts, setPosts] = useState([])
@@ -37,32 +37,47 @@ const App =()=> {
   // const user = useSelector((state)=>state.user);
   const [nfts, setNfts] = useState([])
   const [isLogin, setIsLogin] = useState(false);
+  const [accessToken, setAccessToken] = useState(null);
   
   const dispatch = useDispatch();
 
   const loginFunc = async(email, password)=>{
-    const result = await loginUser({email, password})
+    try{
+      const result = await loginUser({email, password})
 
-    setUser(result.data.user);
-    setIsLogin(true);
+      setUser(result.data.user);
+      setIsLogin(true);
+    } catch{
+      console.log("login failed");
+    }
+
   }
 
   useEffect(()=>{
-    getPostsv2()
+    try{
+      verifyUser()
+      .then(result=>{
+        setUser(result.data.user);
+        setIsLogin(true);
+        setAccessToken(result.data.accessToken);
+      })
+    } catch{}
+
+    getPosts()
       .then((result)=>{
           setPosts(result)
       })
   },[])
 
   useEffect(()=>{
-    getNftsv2()
+    getNfts()
       .then((result)=>{
           setNfts(result)
       })
   },[])
 
   useEffect(()=>{
-    console.log(user)
+    console.log(user);
   },[user])
 
   return (

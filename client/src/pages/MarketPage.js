@@ -1,6 +1,8 @@
 // modules
 import { useState, useEffect } from 'react';
 
+import {mintNTF} from "../apis/nft";
+
 // components
 import NFTList from '../components/NFTList';
 import Footer from "../components/Footer";
