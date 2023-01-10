@@ -1,33 +1,15 @@
 import '../assets/css/main.css'
 import Footer from '../components/Footer'
 import PostList from '../components/PostList'
-import NFTList  from  '../components/NFTList'
-
 import {postPagination} from '../apis/post'
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getNfts } from '../apis/nft';
-
 const MainPage = ({posts, user}) => {
     const[postLimit, setPostLimit] = useState(10);
     const[postPage, setPostPage] = useState(1);
     const [responsibleToggle,SetResponsibleToggle] = useState(false)
     const postOffset = (postPage - 1) * postLimit
     let numPages = Math.ceil(posts.length/postLimit)
-
-    const [nfts,setNfts] = useState([])
-    const[nftLimit, setNftLimit] = useState(10);
-    const[nftPage, setNftPage] = useState(1);
-    const nftOffset = (nftPage - 1) * nftLimit
-    let numNftPages = Math.ceil(nfts.length/nftLimit)
-
-    useEffect(()=>{
-        getNfts()
-            .then((result)=>{
-                setNfts(result)
-            })
-    },[]);
-
     return(
         <div className='main'>
             <Link to='/write' className='write'>
@@ -46,9 +28,7 @@ const MainPage = ({posts, user}) => {
                 <></>
                 :<div className='toggle_category'>
                     <div className='toggle_category_1'>
-                        <h2>{user===null || user===undefined ?
-                        'Guest' : user.nickname
-                            }</h2>
+                        <h2>{user.nickname}'s Dishes</h2>
                         <Link to="/mypage">My Page</Link>
                         <Link to="/market">NFT Market</Link>
                         <Link to="/">ETH Faucet</Link>
@@ -63,7 +43,7 @@ const MainPage = ({posts, user}) => {
             <div className='category wide'>
                 <Link to='/'>
                 {/* <h2>EWE</h2> */}
-                Eat Write Earn   Incentive Community : Get your token with Boasting your dishes! 
+                Eat Write Earn   Incentive Community : Get your token with Boasting your dishes!. 
                 
                 
                 </Link>
@@ -110,53 +90,9 @@ const MainPage = ({posts, user}) => {
                     <i className='fas fa-right-long'></i>
                     </button>
                 </div>
-                <div className='nft_list'>
-                <div className='nft_head'>
-                    <h2>NFTs</h2>
-                </div>
-                {  
-                        <NFTList
-                    nftLimit={nftLimit}
-                    nftOffset={nftOffset}
-                    nfts={nfts}
-                        />
-                }
-                <div className='pagination'>
-                <select 
-                    type = 'number'
-                    value={nftLimit}
-                    onChange={({target: {value}})=> setNftLimit(Number(value))}>
-                    <option value='5'>5</option>
-                    <option value='10'>10</option>
-                    <option value='15'>15</option>
-                    <option value='30'>30</option>
-                    <option value='100'>100</option>
-                </select>
 
-                <button className='pagination_num' onClick={()=> setNftPage( nftPage - 1 )} disabled = {nftPage === 1}>
-                    <i className='fas fa-left-long'></i>
-                </button>
-                    {Array(numNftPages)
-                    .fill()
-                    .map((_,i) => (
-                        <button
-                        className='pagination_num'
-                        key = {i + 1}
-                        onClick={()=>setNftPage( i + 1 )}
-                        aria-current = {nftPage !== i + 1 ? "page" : null}
-                        >
-                        { i + 1 }
-                        </button>
-                        ))
-                    }
-                    <button className='pagination_num' onClick={()=> setNftPage( nftPage + 1 )} disabled = {nftPage === numNftPages}>
-                    <i className='fas fa-right-long'></i>
-                    </button>
-                </div>
-                </div>
 
             </div>
-
 
             <Footer/>
         </div>
