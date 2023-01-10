@@ -1,39 +1,65 @@
 import '../assets/css/asset.css'
 import { Link } from 'react-router-dom';
-const NFT = ({nfts}) => {
-    //nft matadata
+import { getNftMetadata } from '../apis/nft';
+import { useState, useEffect } from 'react'
+import '../assets/image/loading.gif'
+
+const NFT = ({nft}) => {
+    const [isLoading, setIsLoading] = useState(true)
+    const [metadata, setMetadata] = useState(null);
+
+    useEffect(()=>{
+        getNftMetadata(nft.metadata)
+        .then(metadata=>{
+            setMetadata(metadata);
+            setIsLoading(false);
+        })
+    }, [])
     return(
-        <Link to='/postdetail' className="asset_container">
+        <Link 
+        to={'/nft/'+ nft.id }
+        className="asset_container">
             <div>
                 <div className='user1'>
-                <div className="user_img">
+                    <div className="user_img">
                         <i className='fab fa-ethereum'></i>
                     </div>
 
-                    <div className="post_title token_id"><h6>{nfts.token_id}</h6></div>
+                    <div className="post_title token_id">
+                    <h6>
+                    {metadata === null || metadata.image === undefined ||metadata.image === null
+                        ? ""
+                        : metadata.name
+                    }
+                    </h6>
+                    </div>
                     <div className="post_num id">#
-
-                    {nfts.id}
-                    
+                        {nft.token_id}
                     </div>
                 </div> 
                 <div className='user2'>
                     <div className="creator">
                     
-                    {nfts.owner}
+                    {nft.owner}
                     
                     </div>
                     <div className="contract_account" >
                     
-                    {nfts.contract_account}
+                    {nft.contract_account}
                     
                     </div>
                 </div>
             </div>
             <div className="image" >
-            {nfts.price}
-
-                {/* <img src ={nfts.price}alt="food"></img> */}
+            {nft.price}
+                <img 
+                    src ={isLoading? '../assets/image/loading.gif':
+                        metadata === null || metadata.image === undefined ||metadata.image === null 
+                        ? 'https://play-lh.googleusercontent.com/wQiHW5YgQhHmSR_60o9l2lypA9Vn2_hxH0l2X6Iin5lEGTbmfhrZnP8bKywoRGKkJl4' 
+                        : metadata.image
+                    }
+                    alt="food"    
+                />
             </div>
 
             <div className="comments">

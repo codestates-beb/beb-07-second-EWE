@@ -7,7 +7,6 @@
     align-items: center;
     text-align: center;
 }
-
 .loginImg{
     display: block;
     margin: 30px;
@@ -17,7 +16,6 @@
     min-height: 300px;
     border-radius: 10%;
 }
-
 .loginImgIn{
     padding: 0;
     margin: 0;
@@ -77,12 +75,13 @@ select{
 .mobile_number{
     color: var(--gray-light-color);
 }
-.email, .pw{
+.email, .pw, .nickname{
+    margin: 2%;
     height: auto;
 }
 .pw_requires{
     width: 180px;
-    margin: 10px 0;
+    margin: 10px auto;
     padding: 5px;
     border: 1px solid var(--onPrimary-color);
     border-radius: 5%;
@@ -174,7 +173,8 @@ button{
 .buttons h5{
     margin: 10px 0;
 }
-#username, #pw{
+
+#email, #nickname, #pw{
     width: 100%; 
     height: 30px;
     border: none;
@@ -222,7 +222,6 @@ button{
     color: var(--white-color);
 }
 .login h3{
-
     color: var(--Primary-color);
 }
 .login{
@@ -239,3 +238,4 @@ button{
 .fa-circle{
     color: var( --onSecondary-color);
 } 
+

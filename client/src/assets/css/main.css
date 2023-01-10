@@ -3,24 +3,27 @@
     padding: 0;
     box-sizing:border-box;
     list-style: none;
-    font-family: sans-serif;
     text-decoration: none;
+}
+.post_button_head {
+    font-family: Helvetica;
+
 }
 :root{
     /* Color */
     --white-color : #fff;
     --black-color : #000000;
-    --Primary-color: #FFB100;
-    --onPrimary-color: #FBC252;
+    --Primary-color: #ff8800;
+    --onPrimary-color: #fb9e52;
     --Primary-Container-color: #asdf323;
     --onPrimary-Container-color: #asdf323;
 
-    --Secondary-color: #efe9d2;
+    --Secondary-color: #f2f2f2;
     --onSecondary-color: #A3BB98;
     --Secondary-Container-color: #asdf323;
     --onSecondary-Container-color: #asdf323;
     --gray-dark-color: #6b6b6b;
-    --gray-light-color: #C3C7C9; 
+    --gray-light-color: #b6b6b6; 
 
     /* Size */
     --padding: 10px;
@@ -39,54 +42,98 @@
 } */
 
 .write{
-    font-size: 120px;
-    height: 300px;
     width: 100%;
-
 }
 .post_button{
-    
-    background-color: var(--black-color);
-    background-image: url(https://cdn.imweb.me/upload/S2017101359e025984d346/7c5de9abb3b3d.jpg);
-    padding: 4% 30%;
+    position: relative;;
+    background-color: var(--onPrimary-color);
+    width: 100%;
+    margin: 0;
     text-align: center;
     align-items: center;
     color: var(--white-color);
-    filter: brightness(0.8);
+    filter: brightness(0.95);
     transition: 0.5s;
 }
+.post_button img{
+    
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    max-width: 100%;
+    height: auto;
+}
 .post_button:hover{
-    padding: 1%;
-    font-size: 200px;
+    font-size: 140px;
     color: var(--white-color);
     transform: scale(1.01);
     filter: brightness(1.05);
 }
+
 .category{
+    background-image: url('../image/category_1.png');
     display: flex;
-    height: 70px;
+    height: auto;
+    min-height: 30px;
     width: 100%;
-    border-top: 3px solid var(--onPrimary-color);
-    border-bottom: 3px solid var(--onPrimary-color);
-    font-size: var(--font-large);
-    color: var(--black-color);
-    background-color: var(--white-color);
+    font-size: var(--font-medium);
+    color: var(--gray-light-color);
     justify-content: space-around;
+    align-items: center;
+    transition: 1s;
+}
+.narrow{
+    padding: 1px;
+    display: none;
+    text-align: center;
     align-items: center;
 
 }
-.category h2{
+.fa-caret-down{
+    margin: 1%;
+
+}
+.toggle_category_1{
+    margin-bottom: 10px;
+    display:grid;
+
+}
+.toggle_category_1 h2{
+    color: var(--black-color);
+    margin-bottom: 10px;
+}
+.toggle_category_1 a{
+    padding: 3px;
+    margin-top: 10px;
+}
+.toggle_category_1 a:hover{
+    color: var(--black-color);
+    background-color: var(--white-color);
+    opacity: 0.7;
+}
+.toggle_category_2{
+    display: flex;
+    justify-content: space-around;
+
+}
+.wide h2{
     color: var(--onPrimary-color);
     transform:scale(1.0) ;
     transition: 0.2s;
 }
-.category h2:hover{
+.wide h2:hover{
     color: var(--Primary-color);
     transform:scale(1.5) ;
 
 }
+.fa-caret-down{
+    display: none;
+}
+
 .post_list{
-    padding: 2% 1% 10% 1%;
+    padding: 2% 5% 10% 5%;
     height: 100%;
     background-color: var(--Secondary-color);
     align-items: center;
@@ -95,12 +142,21 @@
     color: var(--Primary-color);
     
 }
-.post_head h2{
+.nft_list{
+    height: 100%;
+    background-color: var(--Secondary-color);
+    align-items: center;
+}
+.nft_list:hover .nft_head h2{
+    color: var(--Primary-color);
+    
+}
+.post_head h2,.nft_list h2{
     margin-left: 0.6%;
     color: var(--white-color);
     transition: 0.8s;
 }
-.post_wrapper{
+.post_wrapper,.nft_wrapper{
     padding: 0 0 1% 0;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(20%, 1fr) );
@@ -108,32 +164,54 @@
     justify-content: space-between;
     align-items: baseline;
 }
+
 .footer{
-    align-items: flex-start;
-    margin: 1%;
-    display: flex;
+    position: relative;
+    display: block;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
-.footer .CI{
-    margin: 1% 1% 0 0;
+.footer .logo{
+    margin: 10% 0;
+}
+.web{
+    width: auto;
+    justify-content: center;
 
 }
-.team{
-    margin: 1%;
-    width: 20%;
+.footer .team{
+    position: absolute;
+    top: 0px;
+    bottom: 0;
+    right: 77%;
+    left:0;
+    margin: auto;
+    padding: 20px;
+    width: 300px;
+    height: 450px;
+    border-radius: 5px;
+    background-color: var(--white-color);
+    opacity: 0.9;
+    transition: 0.9;
 }
-.mail{
-    margin: 1% 0;
-    width: 25%;
-
+.footer .project{
+    position: absolute;
+    top: 0px;
+    bottom: 0;
+    right: 0;
+    left:77%;
+    margin: auto;
+    padding: 20px;
+    width: 300px;
+    height: 450px;
+    border-radius: 5px;
+    background-color: var(--white-color);
+    opacity: 0.9;
+    transition: 0.9;
 }
-.blogs{
-    margin: 1%;
-    width: 30%;
-
-}
-.github_repo{
-    margin: 1% 0;
-    width: 25%;
+.footer .project:hover,.footer .team:hover{
+    opacity: 1;
 }
 .main .pagination {
     margin: auto;
@@ -151,6 +229,82 @@
     background-color: var(--white-color);
     border-radius: 20px;
 }
+
 select{
     text-align-last: center;
+}
+
+
+
+@media screen and (max-width: 1300px){
+    .post_wrapper,.nft_wrapper{
+        grid-template-columns: repeat(auto-fill, minmax(30%, 1fr) );
+        }
+    
+}
+@media screen and (max-width: 1024px){
+
+    .footer .project{
+        left:50%;
+    }
+    .footer .team{
+        right: 50%;
+    }
+
+
+
+}
+@media screen and (max-width: 768px){
+    .post_wrapper,.nft_wrapper{
+        grid-template-columns: repeat(auto-fill, minmax(50%, 1fr) );
+    }
+    .wide{
+        display: none;
+    }
+    .narrow{
+        display: block;
+        justify-content: center;
+    }
+    .fa-caret-down{
+        display: block;
+    }
+    .header_right .fa-user{
+        display: none;
+    }
+    
+    .footer .team{
+        position: absolute;
+        top: 0px;
+        bottom: 0;
+        right: 0;
+        left:0;
+        margin: auto;
+        padding: 20px;
+        width: 300px;
+        height: 450px;
+        border-radius: 5px;
+        background-color: var(--white-color);
+        opacity: 0.8;
+        transition: 0.8;
+    }
+    .footer .project{
+        display: none;
+    }
+
+}
+@media screen and (max-width: 480px){
+    .post_wrapper,.nft_wrapper{
+        grid-template-columns: repeat(auto-fill, minmax(100%, 1fr) );
+        }
+    .post_button{
+        font-size: 80px;
+    }
+    .post_button:hover{
+        padding: 0;
+        margin: 0;
+        font-size: 120px;
+        color: var(--white-color);
+        transform: scale(1.01);
+        filter: brightness(1.05);
+    }    
 }

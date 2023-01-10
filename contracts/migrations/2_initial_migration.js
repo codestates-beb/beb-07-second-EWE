@@ -20,5 +20,5 @@ module.exports = async function (deployer, network, accounts) {
   await contract.mintNFT(accounts[0], { from: accounts[0] });
   const tokenId = await contract.getTokenId();
   console.log({ tokenId });
-  if (tokenId.toString() !== '10') throw new Error('token id should be 3');
+  if (tokenId.toString() !== '10') throw new Error('token id should be 10');
 };

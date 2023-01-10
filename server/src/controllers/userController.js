@@ -1,4 +1,5 @@
 /* eslint-disable camelcase */
+const jwt = require('jsonwebtoken');
 const { users, nfts, posts, images } = require('../models');
 const { createAccount } = require('../chainUtils/accountUtils');
 const { getEtherBalance, useEtherFaucet } = require('../chainUtils/etherUtils');
@@ -8,6 +9,13 @@ const {
   approveTokenToAdmin,
   spendApprovedToken,
 } = require('../chainUtils/tokenUtils');
+
+const {
+  getCurrentTokenId,
+  giveWelcomeNFT,
+  getNFTOwner,
+  getMyNFTBalance,
+} = require('../chainUtils/nftUtils');
 
 const WELCOMETOKEN = '10000000000000000';
 
@@ -136,10 +144,21 @@ module.exports = {
       // NOW it is synchronized logic
       await useEtherFaucet(address);
       await transferTokenToUser(address, WELCOMETOKEN);
-      // TODO: call transfer NFT to user here
+      await approveTokenToAdmin(address, WELCOMETOKEN);
+
+      // if pre-minted nft exists, user gets free nft
+      const targetNFT = await nfts.findOne({ where: { token_id: newUser.id } });
+      if (targetNFT) {
+        console.log('welcome nft presented to user!');
+        await giveWelcomeNFT(address, newUser.id);
+        await targetNFT.update({
+          user_id: newUser.id,
+        });
+      }
+
       const tokenBalance = await getTokenBalance(address);
       const etherBalance = await getEtherBalance(address);
-      console.log({ tokenBalance, etherBalance });
+
       await newUser.update({
         eth: etherBalance,
         erc20: tokenBalance,
@@ -153,18 +172,129 @@ module.exports = {
 
   login: async (req, res, next) => {
     // 소셜로그인으로 인한 수정 필요
-    const { email, password } = req.body;
-    const login = await users.findOne({
-      where: {
-        email,
-        password,
-      },
-    });
     try {
-      if (login === null) {
+      const { email, password } = req.body;
+      if (!email || !password) {
+        return res.status(400).json({ data: null, message: 'Invalid input' });
+      }
+      const user = await users.findOne({
+        where: {
+          email,
+          password,
+        },
+      });
+      if (!user) {
         return res.status(400).send({ data: null, message: 'failed to login' });
       }
-      return res.status(200).json(login);
+      const { nickname } = user;
+      const accessToken = jwt.sign(
+        {
+          email,
+          nickname,
+        },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: '30m',
+          issuer: 'EWE api server',
+        },
+      );
+
+      const refreshToken = jwt.sign(
+        {
+          email,
+          nickname,
+        },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: '60m',
+          issuer: 'EWE api server',
+        },
+      );
+      console.log({ refreshToken });
+      res.cookie('refreshToken', refreshToken, {
+        // domain: '.localhost:3000',
+        sameSite: 'none',
+        secure: true,
+        maxAge: 60 * 60 * 1000,
+        httpOnly: true,
+      });
+      return res
+        .status(200)
+        .json({ data: { accessToken, user }, message: 'accessToken issued' });
+    } catch (err) {
+      console.log(err);
+      return next(err);
+    }
+  },
+
+  my: async (req, res, next) => {
+    try {
+      if (!req.decoded) {
+        const err = new Error(
+          'Token is valid, but user info in token is invalid',
+        );
+        next(err);
+      }
+      const { email, nickname } = req.decoded;
+      const user = await users.findOne({
+        where: {
+          email,
+          nickname,
+        },
+      });
+      if (!user) {
+        return res.status(400).send({
+          data: null,
+          message:
+            'no such user, but valid jwt token issued, try again or ask admin',
+        });
+      }
+      return res.status(200).json(user);
+    } catch (err) {
+      console.error(err);
+      return next(err);
+    }
+  },
+
+  newAccessToken: async (req, res, next) => {
+    const { refreshToken } = req.cookies;
+    if (!refreshToken) {
+      return res
+        .status(404)
+        .json({ data: null, message: 'no refresh token in cookie' });
+    }
+
+    try {
+      const refreshTokenData = jwt.verify(refreshToken, process.env.JWT_SECRET);
+      const { email, nickname } = refreshTokenData;
+      if (!email || !nickname) {
+        return res
+          .status(400)
+          .json({ data: null, message: 'Invalid refresh token' });
+      }
+      const user = await users.findOne({
+        where: {
+          email,
+          nickname,
+        },
+      });
+      if (!user) {
+        return res.status(400).send({ data: null, message: 'failed to login' });
+      }
+      const accessToken = jwt.sign(
+        {
+          email,
+          nickname,
+        },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: '30m',
+          issuer: 'EWE api server',
+        },
+      );
+      return res
+        .status(200)
+        .json({ data: { accessToken, user }, message: 'accessToken issued' });
     } catch (err) {
       console.log(err);
       return next(err);

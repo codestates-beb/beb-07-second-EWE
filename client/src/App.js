@@ -2,6 +2,13 @@
 import React from 'react';
 import {Route, Routes, BrowserRouter} from "react-router-dom"
 import { useState, useEffect } from 'react'
+import { useSelector, useDispatch} from 'react-redux';
+
+// redux actions
+import {
+  setAuth,
+  resetAuth,
+} from "./feature/authSlice";
 
 // css
 import './App.css';
@@ -16,40 +23,59 @@ import MyPage from './pages/MyPage';
 import SignupPage from './pages/SignupPage';
 import WritePage from './pages/WritePage';
 import PostDetailPage from './pages/PostDetailPage';
-import {getUser, getUserv2} from './apis/user'
-import {getPosts, getPostsv2} from './apis/post'
-import {getNfts, getNftsv2} from './apis/nft'
+import NFTDetailPage from './pages/NFTDetailPage';
+import NotFoundPage from './pages/NotFoundPage';
+
+// apis
+import {loginUser, verifyUser} from './apis/user'
+import {getPosts} from './apis/post'
+import {getNfts} from './apis/nft'
+
 const App =()=> {
   const [posts, setPosts] = useState([])
-  const [user, setUser] = useState([])
+  const [user, setUser] = useState(null);
   const [nfts, setNfts] = useState([])
+
+  const accessToken = useSelector((state)=>state.auth.accessToken);
+  const isLogin = useSelector((state)=>state.auth.isLogin);
+  
+  const dispatch = useDispatch();
+
+  const loginFunc = async(email, password)=>{
+    try{
+      const result = await loginUser({email, password})
+
+      setUser(result.data.user);
+      dispatch(setAuth({accessToken: result.data.accessToken}));
+    } catch{
+      console.log("login failed");
+    }
+  }
+
   useEffect(()=>{
-    getPostsv2()
+    verifyUser()
+    .then(result=>{
+      setUser(result.data.user);
+      dispatch(setAuth(result.data.accessToken));
+    })
+    .catch(err=>{return;})
+
+    getPosts()
       .then((result)=>{
           setPosts(result)
-
       })
-  },[])
-  useEffect(()=>{
-    getNftsv2()
-      .then((result)=>{
-          setNfts(result)
 
-      })
+    getNfts()
+    .then((result)=>{
+        setNfts(result)
+    })
   },[])
 
-  const userId = 2;
-  useEffect(()=>{
-      getUser(userId)
-      .then((result)=>{
-          setUser(result)
-      })
-  },[])
   return (
     <BrowserRouter>
-      <Header user = {user}/>
+      <Header user = {user} isLogin={isLogin} loginFunc={loginFunc}/>
       <Routes>
-        <Route path='/' element={<MainPage posts={posts}/>}/>
+        <Route path='/' element={<MainPage  user = {user} posts={posts}/>}/>
         <Route path='/market' element={<MarketPage
           nfts={nfts}
         />}/>
@@ -58,6 +84,8 @@ const App =()=> {
         <Route path='/signup' element={<SignupPage/>}/>
         <Route path='/write' element={<WritePage user = {user}/>}/>
         <Route path='/post/:postId' element={<PostDetailPage/>}/>
+        <Route path='/nfts/:nftId' element={<NFTDetailPage/>}/>
+        <Route path='/404' element={<NotFoundPage/>}/>
       </Routes>
     </BrowserRouter>
   );
