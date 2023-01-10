@@ -229,7 +229,7 @@ module.exports = {
 
   logout: async (req, res, next) => {
     try {
-      if (!req.cookie.refreshToken) {
+      if (!req.cookies.refreshToken) {
         return res
           .status(200)
           .json({ message: 'no refresh token provied', status: 'ok' });
