@@ -122,37 +122,37 @@ const MainPage = ({posts, user}) => {
                         />
                 }
                 <div className='pagination'>
-                <select 
-                    type = 'number'
-                    value={nftLimit}
-                    onChange={({target: {value}})=> setNftLimit(Number(value))}>
-                    <option value='5'>5</option>
-                    <option value='10'>10</option>
-                    <option value='15'>15</option>
-                    <option value='30'>30</option>
-                    <option value='100'>100</option>
-                </select>
+                    <select 
+                        type = 'number'
+                        value={nftLimit}
+                        onChange={({target: {value}})=> setNftLimit(Number(value))}>
+                        <option value='5'>5</option>
+                        <option value='10'>10</option>
+                        <option value='15'>15</option>
+                        <option value='30'>30</option>
+                        <option value='100'>100</option>
+                    </select>
 
-                <button className='pagination_num' onClick={()=> setNftPage( nftPage - 1 )} disabled = {nftPage === 1}>
+                    <button className='pagination_num' onClick={()=> setNftPage( nftPage - 1 )} disabled = {nftPage === 1}>
                     <i className='fas fa-left-long'></i>
-                </button>
-                    {Array(numNftPages)
-                    .fill()
-                    .map((_,i) => (
-                        <button
-                        className='pagination_num'
-                        key = {i + 1}
-                        onClick={()=>setNftPage( i + 1 )}
-                        aria-current = {nftPage !== i + 1 ? "page" : null}
-                        >
-                        { i + 1 }
-                        </button>
-                        ))
-                    }
-                    <button className='pagination_num' onClick={()=> setNftPage( nftPage + 1 )} disabled = {nftPage === numNftPages}>
-                    <i className='fas fa-right-long'></i>
                     </button>
-                </div>
+                        {Array(numNftPages)
+                        .fill()
+                        .map((_,i) => (
+                            <button
+                            className='pagination_num'
+                            key = {i + 1}
+                            onClick={()=>setNftPage( i + 1 )}
+                            aria-current = {nftPage !== i + 1 ? "page" : null}
+                            >
+                            { i + 1 }
+                            </button>
+                            ))
+                        }
+                        <button className='pagination_num' onClick={()=> setNftPage( nftPage + 1 )} disabled = {nftPage === numNftPages}>
+                        <i className='fas fa-right-long'></i>
+                        </button>
+                    </div>
                 </div>
 
             </div>

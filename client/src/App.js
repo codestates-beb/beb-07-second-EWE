@@ -53,13 +53,12 @@ const App =()=> {
   }
 
   useEffect(()=>{
-    try{
-      verifyUser()
-      .then(result=>{
-        setUser(result.data.user);
-        setAuth(result.data.accessToken)
-      })
-    } catch{}
+    verifyUser()
+    .then(result=>{
+      setUser(result.data.user);
+      dispatch(setAuth(result.data.accessToken));
+    })
+    .catch(err=>{return;})
 
     getPosts()
       .then((result)=>{
