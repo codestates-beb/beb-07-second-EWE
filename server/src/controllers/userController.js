@@ -213,9 +213,9 @@ module.exports = {
       console.log({ refreshToken });
       res.cookie('refreshToken', refreshToken, {
         // domain: '.localhost:3000',
-        // sameSite: 'lax',
-        // secure: false,
-        maxAge: 60 * 60,
+        sameSite: 'none',
+        secure: true,
+        maxAge: 60 * 60 * 24,
         httpOnly: true,
       });
       return res
