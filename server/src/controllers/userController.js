@@ -215,7 +215,7 @@ module.exports = {
         // domain: '.localhost:3000',
         sameSite: 'none',
         secure: true,
-        maxAge: 60 * 60 * 24,
+        maxAge: 60 * 60 * 1000,
         httpOnly: true,
       });
       return res
