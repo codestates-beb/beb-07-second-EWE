@@ -11,7 +11,7 @@ import DetailGoogleMap from "../components/Map/DetailGoogleMap";
 import Dropdown from "../components/Dropdown";
 
 // apis
-import { getPostOnev2 } from "../apis/post";
+import { getPostOne, increaseLike } from "../apis/post";
 
 // css
 import "../assets/css/postdetail.css";
@@ -34,6 +34,12 @@ const PostDetailPage = () => {
     const [isLike, setIsLike] = useState(false);
     const [isDropdownView, setIsDropdownView] = useState(false)
 
+    const clickLikeHandler = async()=>{
+        setIsLike(true);
+        const result = await increaseLike(postId);
+        console.log(result);
+    }
+
     const toggleLike = ()=>{
         setIsLike(!isLike);
         if(isLike === false) setPost({...post, likes: post.likes+1});
@@ -44,9 +50,13 @@ const PostDetailPage = () => {
         setIsDropdownView(!isDropdownView);
     }
 
+    const liftStore = (store)=>{
+        setStore(store);
+    }
+
     useEffect(()=>{
         (async()=>{
-            const result = await getPostOnev2(postId);
+            const result = await getPostOne(postId);
 
             setPost(result);
             setUser(result.user);
@@ -100,7 +110,7 @@ const PostDetailPage = () => {
                         <p className="detail_postid"># {post.id}</p>
                         <p className="detail_data">
                             <i className="fas fa-pen"/>
-                            <span>{user.nickname}</span>
+                            <span>{user? user.nickname:""}</span>
                             <span>|</span>
                             <i className="fas fa-eye" />
                             <span>{post.views}</span>
@@ -113,7 +123,7 @@ const PostDetailPage = () => {
                             <div className="content_left">
                                 <div 
                                     className="content_like"
-                                    onClick={toggleLike}
+                                    onClick={clickLikeHandler}
                                 >
                                     { isLike?
                                         <i className="fas fa-thumbs-up"/>
@@ -129,16 +139,12 @@ const PostDetailPage = () => {
                 <div className="detail_section">
                     <div className="detail_location_wrapper">
                         <i className="fas fa-location-pin"/>
+                        <span className="detail_location_name">{post.store_name}</span>
                     </div>
                     <div className="detail_map_wrapper">
-                        <img 
-                            width="100%"
-                            height="400px"
-                            src="https://shareditassets.s3.ap-northeast-2.amazonaws.com/production/uploads/post/featured_image/936/%EB%A7%9B%EC%A7%91.JPG"
-                        />
-                        {/* <Wrapper apiKey={process.env.REACT_APP_GOOGLE_API_KEY} libraries={["places"]}>
-                            <DetailGoogleMap/>
-                        </Wrapper> */}
+                        <Wrapper apiKey={process.env.REACT_APP_GOOGLE_API_KEY} libraries={["places"]}>
+                            <DetailGoogleMap liftStore={liftStore}/>
+                        </Wrapper>
                     </div>
                 </div>
             </div>
