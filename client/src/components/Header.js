@@ -34,13 +34,13 @@ const Header = ({user, liftUser}) => {
 
     const loginFunc = async()=>{
         try{
-          const result = await localLoginUser({email, password})
-          console.log(result);
-          liftUser(result.data.user);
-          dispatch(setAuth({accessToken: result.data.accessToken}));
-          setIsOpen(false);
+            const result = await localLoginUser({email, password})
+            console.log(result);
+            liftUser(result.data.user);
+            dispatch(setAuth({accessToken: result.data.accessToken}));
+            setIsOpen(false);
         } catch{
-          console.log("login failed");
+            console.log("login failed");
         }
     }
 
@@ -64,77 +64,43 @@ const Header = ({user, liftUser}) => {
 
     return(
         <header>
-        <Modal 
-            isOpen={isOpen}
-            onRequestClose={()=> setModalIsOpen(false)}
-            style={{
-                overlay:{
-                    position:'fixed',
-                    top:0,
-                    left:0,
-                    right:0,
-                    bottom:0,
-                    backgroundColor: '#00000050',
-                    zIndex:'50',
-                    
-                },
-                content:{
-                    width:'420px',
-                    height:'75%',
-                    margin:'auto',
-                    padding:'0px 3% 3% 3%',
-                    position:"absolute",
-                    top:'40px',
-                    left:'40px',
-                    right:'40px',
-                    bottom:'40px',
-                    border: '1px solid #ccc',
-                    background:'#fff',
-                    borderRadius: '30px',
-                    outline:'none',
-                    textAlign:'center',
-                },
-            }}
-            >
-            <div className='login_modal'>  
-                <i className="fas fa-xmark" onClick={()=>closeModal()}></i>
-                <div className="hide">{ isOpen===true? document.body.style= 'overflow: hidden':document.body.style = 'overflow: auto'}</div>        
-                <img className='login_modal_CI'src={require('../assets/image/EWElogo_1.png')} alt='home'></img>
-                <h1>Login</h1>
-                <h5 className="welcome">[Welcome to EWE]</h5>
-                <div>
-                    <div className='login_user_info'>
-                        <h2>Email</h2>
-                        <input 
-                            onChange={(e)=>{setEmail(e.target.value)}}
-                            onKeyUp={loginEnterHandler}
-                        />
-                    </div>
-                    <div className='login_user_info'>
-                        <h2>Password</h2>
-                        <input 
-                            type="password" 
-                            onChange={(e)=>{setPassword(e.target.value)}}
-                            onKeyUp={loginEnterHandler}
-                        />
-                    </div>
-                </div>
-                <button onClick={loginFunc}><h3 className="login_button">Log in</h3></button>
-                <div className="sign_up_with">
-                    <a href="https://nodeauction.42msnsnsfoav6.ap-northeast-2.cs.amazonlightsail.com/naver/login" target="_blank">
-                        <div className="modal_naver">
-                            <h1>N</h1>
-                            <h3>Naver Login</h3>
-                        </div>
-                    </a>                
-                </div>
-                <h4 className="create_your_account">Create your Account!</h4>
-                <Link to="/signup" onClick={()=>setIsOpen(!isOpen)}><h3  className="modal_sign_up_button">Sign Up</h3></Link>
-            </div>
-        </Modal>
             <div className='header_left'>
                 <i className='fab fa-bitcoin fa-xl'></i>
             </div>
+            <Modal
+                isOpen={isOpen}
+                onRequestClose={()=> setModalIsOpen(false)}
+                style={{
+                    overlay:{
+                        position:'fixed',
+                        top:0,
+                        left:0,
+                        right:0,
+                        bottom:0,
+                        backgroundColor: '#00000050',
+                        zIndex:'50',
+                        
+                    },
+                    content:{
+                        width:'420px',
+                        height:'75%',
+                        margin:'auto',
+                        padding:'0px 3% 3% 3%',
+                        position:"absolute",
+                        top:'40px',
+                        left:'40px',
+                        right:'40px',
+                        bottom:'40px',
+                        border: '1px solid #ccc',
+                        background:'#fff',
+                        borderRadius: '30px',
+                        outline:'none',
+                        textAlign:'center',
+                    },
+                }}
+            >
+                
+            </Modal>
             <div className="CI header_middle">
                 <div className='header_logo'>
                     <div className="logo" >
@@ -178,6 +144,75 @@ const Header = ({user, liftUser}) => {
                         >
                         <h4>Login</h4>
                         </Link>
+                        <Modal 
+                isOpen={isOpen}
+                onRequestClose={()=> setModalIsOpen(false)}
+                style={{
+                    overlay:{
+                        position:'fixed',
+                        top:0,
+                        left:0,
+                        right:0,
+                        bottom:0,
+                        backgroundColor: '#00000050',
+                        zIndex:'50',
+                        
+                    },
+                    content:{
+                        width:'420px',
+                        height:'75%',
+                        margin:'auto',
+                        padding:'0px 3% 3% 3%',
+                        position:"absolute",
+                        top:'40px',
+                        left:'40px',
+                        right:'40px',
+                        bottom:'40px',
+                        border: '1px solid #ccc',
+                        background:'#fff',
+                        borderRadius: '30px',
+                        outline:'none',
+                        textAlign:'center',
+                    },
+                }}
+                >
+                <div className='login_modal'>  
+                    <i className="fas fa-xmark" onClick={()=>closeModal()}></i>
+                    <div className="hide">{ isOpen===true? document.body.style= 'overflow: hidden':document.body.style = 'overflow: auto'}</div>        
+                    <img className='login_modal_CI'src={require('../assets/image/EWElogo_1.png')} alt='home'></img>
+                    <h1>Login</h1>
+                    <h5 className="welcome">[Welcome to EWE]</h5>
+                    <div>
+                        <div className='login_user_info'>
+                            <h2>Email</h2>
+                            <input 
+                                onChange={(e)=>{setEmail(e.target.value)}}
+                                onKeyUp={loginEnterHandler}
+                            />
+                        </div>
+                        <div className='login_user_info'>
+                            <h2>Password</h2>
+                            <input 
+                                type="password" 
+                                onChange={(e)=>{setPassword(e.target.value)}}
+                                onKeyUp={loginEnterHandler}
+                            />
+                        </div>
+                    </div>
+                    <button onClick={loginFunc}><h3 className="login_button">Log in</h3></button>
+                    <div className="sign_up_with">
+                        <a href="https://nodeauction.42msnsnsfoav6.ap-northeast-2.cs.amazonlightsail.com/naver/login" target="_blank">
+                            <div className="modal_naver">
+                                <h1>N</h1>
+                                <h3>Naver Login</h3>
+                            </div>
+                        </a>                
+                    </div>
+                    <h4 className="create_your_account">Create your Account!</h4>
+                    <Link to="/signup" onClick={()=>setIsOpen(!isOpen)}><h3  className="modal_sign_up_button">Sign Up</h3></Link>
+                </div>
+            </Modal>
+
                     </div>
                     <div className="signup">
                         <Link to="/signup">

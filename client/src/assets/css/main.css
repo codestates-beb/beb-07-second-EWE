@@ -213,7 +213,7 @@
 .footer .project:hover,.footer .team:hover{
     opacity: 1;
 }
-.main .pagination {
+.main .pagination  {
     margin: auto;
     align-items: center;
     display: flex;
@@ -225,11 +225,31 @@
 
 }
 
-.main .pagination :hover{
+.pagination :hover{
     background-color: var(--white-color);
     border-radius: 20px;
 }
+.pagination_num{
+    color : var(--gray-dark-color);
+    transition: 0.3s;
 
+}
+.pagination_num:hover{
+    color : var(--Primary-color);
+    transform: scale(1.1);
+    
+}
+.pagination button{
+    display: flex;
+    width: 100%;
+    background-color: rgba(240, 248, 255, 0.164);
+    border-color:rgba(255, 228, 196, 0);
+    padding: 5px;
+    align-items: center;
+    text-align: center;
+    justify-content: space-around;
+
+}
 select{
     text-align-last: center;
 }
