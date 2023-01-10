@@ -33,8 +33,8 @@ import {getNfts} from './apis/nft'
 
 const App =()=> {
   const [posts, setPosts] = useState([])
-  const [user, setUser] = useState(null);
   const [nfts, setNfts] = useState([])
+  const [user, setUser] = useState(null);
 
   const accessToken = useSelector((state)=>state.auth.accessToken);
   const isLogin = useSelector((state)=>state.auth.isLogin);
@@ -53,13 +53,12 @@ const App =()=> {
   }
 
   useEffect(()=>{
-    try{
-      verifyUser()
-      .then(result=>{
-        setUser(result.data.user);
-        setAuth(result.data.accessToken)
-      })
-    } catch{}
+    verifyUser()
+    .then(result=>{
+      setUser(result.data.user);
+      dispatch(setAuth({accessToken: result.data.accessToken}));
+    })
+    .catch(err=>{return;})
 
     getPosts()
       .then((result)=>{

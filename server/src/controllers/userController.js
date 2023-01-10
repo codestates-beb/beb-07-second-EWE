@@ -194,7 +194,7 @@ module.exports = {
         },
         process.env.JWT_SECRET,
         {
-          expiresIn: '5m',
+          expiresIn: '30m',
           issuer: 'EWE api server',
         },
       );
@@ -206,16 +206,16 @@ module.exports = {
         },
         process.env.JWT_SECRET,
         {
-          expiresIn: '1h',
+          expiresIn: '60m',
           issuer: 'EWE api server',
         },
       );
       console.log({ refreshToken });
       res.cookie('refreshToken', refreshToken, {
         // domain: '.localhost:3000',
-        // sameSite: 'lax',
-        // secure: false,
-        maxAge: 60 * 60,
+        sameSite: 'none',
+        secure: true,
+        maxAge: 60 * 60 * 1000,
         httpOnly: true,
       });
       return res
@@ -288,7 +288,7 @@ module.exports = {
         },
         process.env.JWT_SECRET,
         {
-          expiresIn: '5m',
+          expiresIn: '30m',
           issuer: 'EWE api server',
         },
       );

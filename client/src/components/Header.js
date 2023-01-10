@@ -1,7 +1,11 @@
 // modules
 import { useState, useEffect } from "react";
-import { Link } from 'react-router-dom';
 import Modal from 'react-modal'
+import { useSelector, useDispatch } from "react-redux";
+import { Link, useNavigate } from 'react-router-dom';
+
+// actions
+import { resetAuth } from "../feature/authSlice";
 
 // css
 import '../assets/css/header.css'
@@ -12,14 +16,21 @@ const Header = ({user, isLogin, loginFunc}) => {
     const [password, setPassword] = useState();
     const [isOpen, setIsOpen] = useState(false);
     const [modalIsOpen, setModalIsOpen] = useState(true);
-    
-    const loginEnterHandler= (e)=>{
-        if(e.key === "Enter") loginFunc(email, password);
-    }
+    const dispatch = useDispatch();
+
     const closeModal=()=>{
         setIsOpen(!isOpen)
     }
-    
+
+    const loginEnterHandler= (e)=>{
+        if(e.key === "Enter") loginFunc(email, password);
+    }
+
+    const logoutButtonHandler = ()=>{
+        dispatch(resetAuth());
+    }
+
+
     return(
         <header>
         <Modal 
@@ -58,7 +69,7 @@ const Header = ({user, isLogin, loginFunc}) => {
             }}
             >
             <div className='login_modal'>    
-                <div className="hide">               { isOpen===true? document.body.style= 'overflow: hidden':document.body.style = 'overflow: auto'}</div>        
+                <div className="hide">{ isOpen===true? document.body.style= 'overflow: hidden':document.body.style = 'overflow: auto'}</div>        
                 <img src={require('../assets/image/EWElogo_1.png')} alt='home' onClick={()=>closeModal()}></img>
                 <h1>Login</h1>
                 <h5 className="welcome">[Welcome to EWE]</h5>
@@ -127,7 +138,7 @@ const Header = ({user, isLogin, loginFunc}) => {
                             <Link to="/mypage">My Page</Link>
                             <Link to="/market">NFT Market</Link>
                             <Link to="/">ETH Faucet</Link>
-                            <Link to="/">Log Out</Link>
+                            <Link onClick={logoutButtonHandler}>Log Out</Link>
                             <Link to="/">Secession</Link>
                         </div>
                     </div>

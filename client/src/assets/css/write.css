@@ -50,12 +50,7 @@
 }
 
 /* 작성글 이미지 */
-.post_image_wrapper {
-    
-}
-
 .post_image_wrapper .image_preview_wrapper{
-    height:400px;
     border-radius: 0.5rem;
     overflow: hidden;
     cursor: pointer;
@@ -66,15 +61,11 @@
 }
 
 .post_image_wrapper .swiper{
-    height:400px;
+    height: inherit;
 }
 
-.post_image_wrapper .image_input_wrapper .image_input_helper{
-    display: flex;
+.post_image_wrapper .image_input_helper{
     box-shadow: 0 0 0.2rem;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
     width: 100%;
     height: 400px;
     border-radius: 0.5rem;
@@ -84,11 +75,28 @@
     cursor:pointer;
 }
 
-.image_input_wrapper .image_input_helper .image_icon{
+.post_image_wrapper .image_input_helper .image_input_wrapper:hover{
+    background-color: black;
+    opacity: 0.5;
+}
+
+.post_image_wrapper .image_input_helper .image_input_wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 400px;
+    box-shadow: 0 0 0.2rem;
+    border-radius: 0.5rem;
+    transition: 0.5s
+}
+
+.post_image_wrapper .image_input_helper .image_icon{
     margin-bottom: 1rem;
 }
 
-.image_input_wrapper .image_input_helper .image_icon:before{
+.post_image_wrapper .image_input_helper .image_icon:before{
     font-size:5rem;
 }
 
@@ -98,6 +106,27 @@
 
 .swiper-pagination-bullet.swiper-pagination-bullet-active{
     background-color: var(--white-color)
+}
+
+.swiper-slide .swiper_image_wrapper{
+    transition: 0.5s;
+}
+
+.swiper-slide .swiper_image_wrapper:hover {
+    background-color: var(--black-color);
+    filter: brightness(0.5);
+}
+
+.swiper-slide .swiper_image_wrapper:hover::after{
+    position:absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--white-color);
+    width:100%;
+    height:100%;
+    content: "Click to change image.";
+    transition: 0.5s;
 }
 
 /* 작성글 내용*/
