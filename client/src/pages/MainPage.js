@@ -20,7 +20,6 @@ const MainPage = ({posts, user}) => {
                 <div className='post_button_footer'>Incentive Programs for Community Engagement</div> */}
                 </img>
             </Link>
-            {/* A disease that cannot be cured with food cannot be cured by a doctor. */}
             <div className='category narrow'>
             <i className="fa-solid fa-caret-down" onClick={()=>{SetResponsibleToggle(!responsibleToggle)}}>
                 </i>
@@ -29,7 +28,7 @@ const MainPage = ({posts, user}) => {
                 <></>
                 :<div className='toggle_category'>
                     <div className='toggle_category_1'>
-                        <h4>{user.nickname}</h4>
+                        <h2>{user.nickname}'s Dishes</h2>
                         <Link to="/mypage">My Page</Link>
                         <Link to="/market">NFT Market</Link>
                         <Link to="/">ETH Faucet</Link>
@@ -41,15 +40,17 @@ const MainPage = ({posts, user}) => {
 
 
             </div>
-            {/* <div className='category wide'>
-                <Link to='/'><h2>Korean</h2></Link>
-                <Link to='/'><h2>Chinese</h2></Link>
-                <Link to='/'><h2>Japanese</h2></Link>
-                <Link to='/'><h2>Western</h2></Link>
-            </div> */}
+            <div className='category wide'>
+                <Link to='/'>
+                {/* <h2>EWE</h2> */}
+                Eat Write Earn   Incentive Community : Get your token with Boasting your dishes!. 
+                
+                
+                </Link>
+            </div>
             <div className='post_list'>
             <div className='post_head'>
-                <h2>Posts</h2>
+                <h2>Popular Dishes</h2>
             </div>
                 <PostList 
                 key={posts.id} 
@@ -69,7 +70,7 @@ const MainPage = ({posts, user}) => {
                     <option value='30'>30</option>
                     <option value='100'>100</option>
                 </select>
-                <button onClick={()=> setPostPage( postPage - 1 )} disabled = {postPage === 1}>
+                <button className='pagination_num' onClick={()=> setPostPage( postPage - 1 )} disabled = {postPage === 1}>
                     <i className='fas fa-left-long'></i>
                 </button>
                     {Array(numPages)
@@ -85,7 +86,7 @@ const MainPage = ({posts, user}) => {
                         </button>
                         ))
                     }
-                    <button onClick={()=> setPostPage( postPage + 1 )} disabled = {postPage === numPages}>
+                    <button className='pagination_num' onClick={()=> setPostPage( postPage + 1 )} disabled = {postPage === numPages}>
                     <i className='fas fa-right-long'></i>
                     </button>
                 </div>

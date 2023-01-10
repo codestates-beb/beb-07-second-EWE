@@ -5,7 +5,7 @@
     padding: 10px;
     display: block;
     border: 3px solid var(--white-color);
-    border-radius: 10px;
+    border-radius: 5px;
     width: 95%;
     height: width * 1.618;
     background-color: var(--Secondary-color);
@@ -35,6 +35,8 @@
 }
 .user1 .fa-ethereum, .user1 .fa-utensils{
     margin: 0;
+    transition: 0.9s;
+
 }
 .user2{
     display: flex;
@@ -60,6 +62,7 @@
     font-size: var(--font-large);
 }
 .location{
+    font-size: small;
     color: var(--Primary-color);
 }
 .creator{
@@ -83,8 +86,6 @@
 
 }
 .image img{
-    border-radius: 10px;
-
     object-fit: cover;
     position: absolute;
     top: 0;
