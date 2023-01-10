@@ -37,6 +37,8 @@ app.use(
     origin: [
       'http://localhost:3000',
       'http://ewe-client.s3-website.ap-northeast-2.amazonaws.com',
+      'https://d108dnok4co062.cloudfront.net',
+      'http://d108dnok4co062.cloudfront.net',
     ],
     credentials: true,
   }),
