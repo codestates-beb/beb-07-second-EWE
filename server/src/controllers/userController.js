@@ -241,6 +241,7 @@ module.exports = {
         maxAge: 1,
         httpOnly: true,
       });
+
       return res.status(200).json({
         message: 'refresh Token now removed from cookie',
         status: 'ok',
