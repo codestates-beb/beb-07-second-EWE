@@ -1,12 +1,9 @@
 import axios from "axios";
 
 // Test URL
-const origin = "http://20.214.190.113:5050";
+const origin = "https://nodeauction.42msnsnsfoav6.ap-northeast-2.cs.amazonlightsail.com";
 const getNftsURL = origin + "/nfts";
 const getNftOneURL = origin + "/nfts/"
-const getNftsURLv2 = origin + "/testv2/nfts";
-const getNftOneURLv2 = origin + "/testv2/nfts/"
-
 const mintNFTURL = origin + "/nfts";
 
 // Test API Request
@@ -26,22 +23,6 @@ export const getNftOne = async (id)=>{
     return nft
 }
 
-export const getNftsv2 = async()=>{
-    const nfts = await axios.get(getNftsURLv2)
-    .then(res=>res.data)
-    .catch(console.log);
-    
-    return nfts;
-}
-
-export const getNftOnev2 = async(id)=>{
-    const requestURL = getNftOneURLv2 + id;
-    const nfts = await axios.get(requestURL)
-    .then(res=>res.data)
-    .catch(console.log);
-    return nfts;
-}
-
 export const getNftMetadata = async (getNftMetadataURL)=>{
     const metadata = await axios.get(getNftMetadataURL, {
         responseType: "json"
@@ -53,11 +34,12 @@ export const getNftMetadata = async (getNftMetadataURL)=>{
 }
 
 export const mintNFT = async(metadata, accessToken)=>{
-    if(metadata) return new Error("Invalid NFT data!");
+    if(!metadata.image || !metadata.name || !metadata.description || !metadata.attributes) return new Error("Invalid NFT data!");
     
     const mintResult = await axios.post(mintNFTURL, metadata, {
         headers: {
-            Authorization: accessToken
+            "Content-Type": "multipart/form-data",
+            Authorization: `${accessToken}`,
         }
     })
     .then(result=>result)

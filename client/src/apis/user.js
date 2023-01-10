@@ -1,12 +1,8 @@
 import axios from "axios";
 
-const localStorage = window.localStorage;
-
 // Test URL
-const origin = "http://20.214.190.113:5050";
-const getUserURL = origin + "/users/";
-
-const getUserURLv2 = origin + "/testv2/users";
+const origin = "https://nodeauction.42msnsnsfoav6.ap-northeast-2.cs.amazonlightsail.com";
+const getUserOneURL = origin + "/users/";
 
 const signupUserURL = origin + "/users/join"
 const loginURL = origin + "/users/login";
@@ -14,20 +10,10 @@ const verifyUserURL = origin + "/users/newAccessToken";
 
 // Test API Request
 export const getUser = async(userId)=>{
-    const requestURL = getUserURL + userId
+    const requestURL = getUserOneURL + userId
 
     const user = await axios.get(requestURL)
     .then(res=>res.data)
-    .catch(console.log);
-
-    return user;
-}
-
-export const getUserv2 = async(userId)=>{
-    const requestURL = getUserURLv2 + userId
-
-    const user = await axios.get(requestURL)
-    .then(res=>res.data.result)
     .catch(console.log);
 
     return user;
@@ -48,7 +34,6 @@ export const verifyUser = async()=>{
         withCredentials:true,
     })
     .then(result=>result.data)
-    .catch(console.log);
 
     return verifyResult;
 }
