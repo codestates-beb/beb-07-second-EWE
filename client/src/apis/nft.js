@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // Test URL
-const origin = "http://20.214.190.113:5050";
+const origin = "https://nodeauction.42msnsnsfoav6.ap-northeast-2.cs.amazonlightsail.com";
 const getNftsURL = origin + "/nfts";
 const getNftOneURL = origin + "/nfts/"
 const mintNFTURL = origin + "/nfts";
@@ -34,12 +34,12 @@ export const getNftMetadata = async (getNftMetadataURL)=>{
 }
 
 export const mintNFT = async(metadata, accessToken)=>{
-    if(!metadata.image || !metadata.name || !metadata.description || !metadata.category) return new Error("Invalid NFT data!");
+    if(!metadata.image || !metadata.name || !metadata.description || !metadata.attributes) return new Error("Invalid NFT data!");
     
     const mintResult = await axios.post(mintNFTURL, metadata, {
         headers: {
             "Content-Type": "multipart/form-data",
-            Authorization: accessToken
+            Authorization: `${accessToken}`,
         }
     })
     .then(result=>result)
