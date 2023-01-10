@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 const express = require('express');
 require('dotenv').config();
 
@@ -12,6 +13,7 @@ const testRouter = require('./routes/testRouter');
 const testRouterV2 = require('./routes/testRouterV2');
 const web3Router = require('./routes/web3Router');
 
+const naverRouter = require('./routes/naverRouter');
 const userRouter = require('./routes/userRouter');
 const nftRouter = require('./routes/nftRouter');
 const postRouter = require('./routes/postRouter');
@@ -65,6 +67,7 @@ app.use('/testv2', testRouterV2);
 app.use('/web3', web3Router);
 
 // production router
+app.use('/naver', naverRouter);
 app.use('/health', (req, res, next) => {
   return res.status(200).json({ message: 'ok', data: null });
 });
