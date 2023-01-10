@@ -26,7 +26,7 @@ const MarketPage = ({nfts}) => {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [image, setImage] = useState(null);
-    const [category, setCategory] = useState();
+    const [category, setCategory] = useState("korean");
 
     const [previewImage, setPreviewImage] = useState();
 
@@ -57,7 +57,7 @@ const MarketPage = ({nfts}) => {
         if (!name || !description || !image || !category) return;
 
         const metadata = {
-            name, description, image, category
+            name, description, image, attributes:{category}
         }
 
         const resultMint = await mintNFT(metadata, accessToken);
@@ -126,7 +126,7 @@ const MarketPage = ({nfts}) => {
                             </div>
                             <div className="input_group">
                                 <label>Category</label>
-                                <select>
+                                <select defaultValue={"korean"} onChange={(e)=>setCategory(e.target.value)}>
                                     <option value="korean">Korean</option>
                                     <option value="chinese">Chinese</option>
                                     <option value="japanese">Japanese</option>
