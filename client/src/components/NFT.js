@@ -9,6 +9,8 @@ const NFT = ({nft}) => {
     const [metadata, setMetadata] = useState(null);
 
     useEffect(()=>{
+        console.log(nft)
+
         getNftMetadata(nft.metadata)
         .then(metadata=>{
             setMetadata(metadata);
@@ -40,7 +42,7 @@ const NFT = ({nft}) => {
                 <div className='user2'>
                     <div className="creator">
                     
-                    {nft.owner}
+                    {nft.creator}
                     
                     </div>
                     <div className="contract_account" >

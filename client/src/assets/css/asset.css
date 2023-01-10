@@ -29,6 +29,7 @@
 }
 
 .user1{
+    margin-bottom: 10px;
     display: flex;
     justify-content: space-between;
     align-items:unset;
@@ -37,6 +38,10 @@
     margin: 0;
     transition: 0.9s;
 
+}
+.fa-ethereum{
+    width: 110%;
+    text-align: center;
 }
 .user2{
     display: flex;
@@ -49,7 +54,8 @@
 }
 .nickname>h6{
 }
-.post_title  h3, .nft_title h3{
+.post_title >h3, .nft_title>h3{
+    width: 100%;
     margin: 0;
     color: var(--black-color);
 }

@@ -7,7 +7,11 @@
     padding: 1%;
     display: flex;
 }
-.nft_detail_wrapper > h1,h2,h3,h4,h5{
+.nft_detail_wrapper > h1,
+.nft_detail_wrapper > h2,
+.nft_detail_wrapper > h3,
+.nft_detail_wrapper > h4,
+.nft_detail_wrapper > h5{
 margin: 1%;}
 .nft_detail_wrapper .nft_image{
     padding: 1%;

@@ -1,6 +1,14 @@
 .login_modal{
     position: relative;
 }
+.ReactModal__Content--after-open{
+    transform: scale(1);
+    transition: 1.7s;
+}
+.ReactModal__Content--after-open:active{
+    transform: scale(1.05);
+}
+
 .login_user_info>input{
     margin: 0 1%;
     width: 85%;
@@ -13,7 +21,7 @@
     text-align: left;
 }
 .login_modal>h1{
-    font-size:60px;
+    font-size:50px;
     color: var(--Primary-color);
 }
 .login_modal_CI{

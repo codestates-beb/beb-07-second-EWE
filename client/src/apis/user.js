@@ -48,4 +48,3 @@ export const signupUser = async(userInfo)=>{
 
     return resultSignup;
 }
-
