@@ -54,7 +54,6 @@ const WritePage = ({user}) => {
             image: images,
         }
         
-        console.log(accessToken);
         const createReviewResult = await createReview(review, accessToken);
 
         if (createReviewResult.status=== 200) {
