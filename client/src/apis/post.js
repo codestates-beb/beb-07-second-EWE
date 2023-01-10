@@ -24,14 +24,15 @@ export const getPostOne = async (id)=>{
 }
 
 export const createReview = async(review, accessToken)=>{
-    if(!review.user_id || !review.title || !review.location || !review.content)
+    if(!review.user_id || !review.title || !review.location || !review.content || !review.image)
         return new Error("Invalid Review Info!");
 
     if(!accessToken) return new Error("Not Authorized");
 
     const createResult = await axios.post(createReviewURL, review, {
         headers:{
-            Authorization: `Token ${accessToken}`
+            Authorization: `${accessToken}`,
+            "Content-Type": "multipart/form-data"
         }
     })
     .then(res=>res)

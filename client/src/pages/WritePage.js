@@ -4,6 +4,7 @@ import {useNavigate} from "react-router-dom";
 import {Swiper, SwiperSlide} from "swiper/react";
 import {Navigation, Pagination} from "swiper";
 import {Wrapper, Status} from "@googlemaps/react-wrapper";
+import { useSelector } from "react-redux";
 
 
 // apis
@@ -22,15 +23,16 @@ import "swiper/css/pagination";
 const WritePage = ({user}) => {
     const navigator = useNavigate();
 
-    if(!user){
-        navigator(-1);
-    }
+    const isLogin = useSelector((state)=>state.auth.isLogin);
+    const accessToken = useSelector((state)=>state.auth.accessToken);
+
+    if (isLogin === false) navigator(-1);
 
     const [title, setTitle] = useState("");
     const [locationName, setLocationName] = useState("");
     const [locationId, setLocationId] = useState(null);
     const [content, setContent] = useState("");
-    const [images, setImages] = useState(false);
+    const [images, setImages] = useState(null);
     
     const submitLocation = (locationName, locationId)=>{
         setLocationName(locationName)
@@ -49,11 +51,10 @@ const WritePage = ({user}) => {
             store_name: locationName,
             location: locationId,
             content: content,
-            uri: "https://img3.daumcdn.net/thumb/R658x0.q70/?fname=https://t1.daumcdn.net/news/202012/11/elle/20201211193633070ycoe.jpg"
+            image: images,
         }
-        console.log(review);
-
-        const createReviewResult = await createReview(review);
+        
+        const createReviewResult = await createReview(review, accessToken);
 
         if (createReviewResult.status=== 200) {
             navigator("/");
@@ -61,6 +62,12 @@ const WritePage = ({user}) => {
             console.log(createReviewResult);
         }
     }
+
+    useEffect(()=>{
+        if(!user){
+            navigator("/");
+        }
+    },[])
 
     return(
         <div className="container">
@@ -114,7 +121,7 @@ const WritePage = ({user}) => {
                                 id="image_input"
                                 className="image_input"
                                 type="file"
-                                onChange={(e)=>{setImages(e.target.value)}}
+                                onChange={(e)=>{setImages(e.target.files[0])}}
                             />
                         </label>
                     </div>
