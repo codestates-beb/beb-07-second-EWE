@@ -194,7 +194,7 @@ module.exports = {
         },
         process.env.JWT_SECRET,
         {
-          expiresIn: '5m',
+          expiresIn: '30m',
           issuer: 'EWE api server',
         },
       );
@@ -206,7 +206,7 @@ module.exports = {
         },
         process.env.JWT_SECRET,
         {
-          expiresIn: '1h',
+          expiresIn: '60m',
           issuer: 'EWE api server',
         },
       );
@@ -288,7 +288,7 @@ module.exports = {
         },
         process.env.JWT_SECRET,
         {
-          expiresIn: '5m',
+          expiresIn: '30m',
           issuer: 'EWE api server',
         },
       );
