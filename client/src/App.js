@@ -84,7 +84,7 @@ const App =()=> {
         <Route path='/signup' element={<SignupPage/>}/>
         <Route path='/write' element={<WritePage user = {user}/>}/>
         <Route path='/post/:postId' element={<PostDetailPage/>}/>
-        <Route path='/nfts/:nftId' element={<NFTDetailPage/>}/>
+        <Route path='/nft/:nftId' element={<NFTDetailPage/>}/>
         <Route path='/404' element={<NotFoundPage/>}/>
       </Routes>
     </BrowserRouter>
