@@ -29,7 +29,9 @@ const Header = ({user, isLogin, loginFunc}) => {
     const logoutButtonHandler = ()=>{
         dispatch(resetAuth());
     }
+    const socialLoginHandler = ()=>{
 
+    }
 
     return(
         <header>
@@ -45,14 +47,13 @@ const Header = ({user, isLogin, loginFunc}) => {
                     bottom:0,
                     backgroundColor: '#00000050',
                     zIndex:'50',
-                    overflow: 'hidden',
                     
                 },
                 content:{
                     width:'420px',
                     height:'75%',
                     margin:'auto',
-                    padding:'3% 3% 3% 3%',
+                    padding:'0px 3% 3% 3%',
                     position:"absolute",
                     top:'40px',
                     left:'40px',
@@ -60,24 +61,22 @@ const Header = ({user, isLogin, loginFunc}) => {
                     bottom:'40px',
                     border: '1px solid #ccc',
                     background:'#fff',
-                    overflow: 'hidden',
-                    WebkitOverflowScrolling:'touch',
                     borderRadius: '30px',
                     outline:'none',
                     textAlign:'center',
                 },
             }}
             >
-            <div className='login_modal'>    
+            <div className='login_modal'>  
+                <i className="fas fa-xmark" onClick={()=>closeModal()}></i>
                 <div className="hide">{ isOpen===true? document.body.style= 'overflow: hidden':document.body.style = 'overflow: auto'}</div>        
-                <img src={require('../assets/image/EWElogo_1.png')} alt='home' onClick={()=>closeModal()}></img>
+                <img className='login_modal_CI'src={require('../assets/image/EWElogo_1.png')} alt='home'></img>
                 <h1>Login</h1>
                 <h5 className="welcome">[Welcome to EWE]</h5>
                 <div>
                     <div className='login_user_info'>
                         <h2>Email</h2>
                         <input 
-                            placeholder='Email' 
                             onChange={(e)=>{setEmail(e.target.value)}}
                             onKeyUp={loginEnterHandler}
                         />
@@ -85,7 +84,6 @@ const Header = ({user, isLogin, loginFunc}) => {
                     <div className='login_user_info'>
                         <h2>Password</h2>
                         <input 
-                            placeholder='PW' 
                             type="password" 
                             onChange={(e)=>{setPassword(e.target.value)}}
                             onKeyUp={loginEnterHandler}
@@ -94,7 +92,7 @@ const Header = ({user, isLogin, loginFunc}) => {
                 </div>
                 <Link to="/"><h3  className="login_button">Log in</h3></Link>
                 <div className="sign_up_with">
-                    <button>
+                    <button onClick={(e)=>{socialLoginHandler(e.target)}}>
                         <div className="modal_naver">
                             <h1>N</h1>
                             <h3>Naver Login</h3>
