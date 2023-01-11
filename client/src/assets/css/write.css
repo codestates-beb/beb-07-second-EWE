@@ -108,16 +108,16 @@
     background-color: var(--white-color)
 }
 
-.swiper-slide .swiper_image_wrapper{
+.post_image_wrapper .swiper-slide .swiper_image_wrapper{
     transition: 0.5s;
 }
 
-.swiper-slide .swiper_image_wrapper:hover {
+.post_image_wrapper .swiper-slide .swiper_image_wrapper:hover {
     background-color: var(--black-color);
     filter: brightness(0.5);
 }
 
-.swiper-slide .swiper_image_wrapper:hover::after{
+.post_image_wrapper .swiper-slide .swiper_image_wrapper:hover::after{
     position:absolute;
     display: flex;
     justify-content: center;

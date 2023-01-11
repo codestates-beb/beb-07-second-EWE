@@ -24,7 +24,7 @@ function convertDate(date){
 }
 
 const PostDetailPage = () => {
-    const navigator = useNavigate(-1);
+    const navigator = useNavigate();
 
     const {postId} = useParams()
     const [post, setPost] = useState(null);
@@ -57,6 +57,8 @@ const PostDetailPage = () => {
     useEffect(()=>{
         (async()=>{
             const result = await getPostOne(postId);
+
+            if (result.status === 500) navigator("/404");
 
             setPost(result);
             setUser(result.user);
