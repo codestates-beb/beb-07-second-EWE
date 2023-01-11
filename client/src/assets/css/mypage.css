@@ -1,21 +1,14 @@
 .mypage{
-    display: flex;
-    background-color: var(--Secondary-color);
-    padding-bottom: 80px;
-    width: 100%;
-
+    
 }
+
 .mypage > .user_info{
     margin: 1.5%;
     padding: 15px;
     width: 200px;
     background-color: var(--white-color);
 }
-.mypage > .pagination{
-    padding: 2% 1%;
-    align-items: center;
 
-}
 .mypage > .pagination select{
     margin: 15%;
     padding: auto;
@@ -71,10 +64,7 @@
     text-overflow: ellipsis;
     overflow: hidden;
 }
-.mypage .post_wrapper, .mypage .nft_wrapper{
-    width: 100%;
-    padding: 1%;
-}
+
 .mypage .post_wrapper h2{
     padding: 1%;
 
@@ -175,7 +165,4 @@
     .token_transfer{
         margin-top: 0%;
     }
-}
-@media screen and (max-width: 480px){
-
 }

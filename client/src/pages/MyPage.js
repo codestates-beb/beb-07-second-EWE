@@ -51,11 +51,11 @@ const MyPage = ({user}) => {
             />
             }
             </div>
+            <div className='mypage'>
             <Link to='/mint' className='mint'>
                 <img className='post_button' src={require('../assets/image/mint.png')}>
                 </img>
             </Link>
-            <div className='mypage'>
 
             <h1 className='my_assets'>My NFTs</h1>
             {

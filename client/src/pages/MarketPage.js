@@ -4,16 +4,15 @@ import { useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 
 // apis
-import { mintNFT, mintNTF } from "../apis/nft";
+import { mintNFT } from "../apis/nft";
 
 // components
-import NFTList from '../components/NFTList';
 import Pagination from "../components/Pagination";
 
 // css
 import '../assets/css/market.css';
 
-const MarketPage = ({nfts}) => {
+const MarketPage = ({nfts,user}) => {
     const navigator = useNavigate();
 
     // User Global Variable
@@ -29,7 +28,7 @@ const MarketPage = ({nfts}) => {
     const [category, setCategory] = useState("korean");
 
     const [previewImage, setPreviewImage] = useState();
-
+    const [responsibleToggle,SetResponsibleToggle] = useState(false)
 
     const imageChangeHandler = (e)=>{
         const file = e.target.files[0];
@@ -75,7 +74,33 @@ const MarketPage = ({nfts}) => {
                 <img className='post_button' src={require('../assets/image/mint.png')}>
                 </img>
             </Link>
+            <div className='category narrow'>
+            <i className="fa-solid fa-caret-down" onClick={()=>{SetResponsibleToggle(!responsibleToggle)}}>
+                </i>
+                {
+                responsibleToggle === false?
+                <></>
+                :<div className='toggle_category'>
+                    <div className='toggle_category_1'>
+                        <h2>{user===null || user===undefined ?
+                        'Guest' : user.nickname
+                            }</h2>
+                        <Link to="/mypage">My Page</Link>
+                        <Link to="/market">NFT Market</Link>
+                        <Link to="/">ETH Faucet</Link>
+                        <Link to="/">Log Out</Link>
+                        <Link to="/">Secession</Link>
+                    </div>
+                </div>
+                }
 
+
+            </div>
+            <div className='category wide'>
+                <Link to='/'>
+                Eat Write Earn   Incentive Community : Get your token with Boasting your dishes! 
+                </Link>
+            </div>
             <div className='market_section'>
                 <div className="section_title">
                     <h1>Minting</h1>

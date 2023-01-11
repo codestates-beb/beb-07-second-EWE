@@ -45,68 +45,86 @@ const Pagination = ({props,user}) => {
                 setPagination(result.data)
             })    
         }
-
     },[page,limit, props,user])
 
 
+    useEffect(()=>{
+        const numMapping =(e) => {
+        }
+        numMapping()
+    },[])
+
+
+
+    // useEffect(() => {
+    //     async function ex() {
+    //     const A = await 비동기함수;
+    //     console.log(A);
+    //     }
+    //     ex();
+    //     }, [])
     return(
-        <div className='post_wrapper'>
-                <div className='pagination'>
-    
-    <select 
-        type = 'number'
-        value={limit}
-        onChange={({target: {value}})=> setLimit(Number(value))}>
-        <option value='5'>5</option>
-        <option value='10'>10</option>
-        <option value='15'>15</option>
-        <option value='30'>30</option>
-        <option value='100'>100</option>
-    </select>
-    <button onClick={()=> setPage( page - 1 )} disabled = {page === 1}>
-            <i className='fas fa-left-long'></i>
-    </button>            
-    {Array(numPages()).fill().map((_,i) => {
-    <button
-    className='pagination_num'
-    key = {i + 1}
-    onClick={()=>setPage( i + 1 )}
-    aria-current = {page !== i + 1 ? "page" : null}
-    >
-    { i + 1 }
-    </button>
-    })}    
-    <button onClick={()=> setPage( page + 1 )} disabled = {page === numPages()}>
-            <i className='fas fa-right-long'></i>
-            </button>
-</div>
+        <div>
 
-        {props==='posts'&&
-            (pagination!==undefined&&pagination !== null)?
-                pagination.posts.map((post)=>{
-                return (<Post key={post.id} post={post} user={user}/>)
-                }):<></>
-        }
-        {props==='nfts'&&
-            (pagination!==undefined&&pagination !== null)? 
-                pagination.nfts.map((nft)=>{
-                return (<NFT key={nft.id} nft={nft} user={user}/>)
-                }):<></>
-        } 
-        {props==='post'&&
-            (pagination!==undefined&&pagination !== null)?
-                pagination.posts.map((post)=>{
-                return (<Post key={post.id} post={post} user={user}/>)
-                }):<></>
-        }
-        { props==='nft'&&
-            (pagination!==undefined&&pagination !== null)? 
-                pagination.nfts.map((nft)=>{
-                return (<NFT key={nft.id} nft={nft} user={user}/>)
-                }):<></>
-        } 
+                    
+            <div className='pagination'>
+
+                <select 
+                    type = 'number'
+                    value={limit}
+                    onChange={({target: {value}})=> setLimit(Number(value))}>
+                    <option value='5'>5</option>
+                    <option value='10'>10</option>
+                    <option value='15'>15</option>
+                    <option value='30'>30</option>
+                    <option value='100'>100</option>
+                </select>
+                <button onClick={()=> setPage( page - 1 )} disabled = {page === 1}>
+                        <i className='fas fa-left-long'></i>
+                        
+                </button>            
+
+                {Array(setPage).fill().map((_,i) => {
+                <button
+                className='pagination_num'
+                key = {i + 1}
+                onClick={()=>setPage( i + 1 )}
+                aria-current = {page !== i + 1 ? "page" : null}>
+                { i + 1 }
+                </button>
+                })}
+
+                <button onClick={()=> setPage( page + 1 )} disabled = {page === numPages()}>
+                        <i className='fas fa-right-long'></i>
+                        </button>
+            </div>
+            <div className='post_wrapper'>
+            {props==='posts'&&
+                (pagination!==undefined&&pagination !== null)?
+                    pagination.posts.map((post)=>{
+                    return (<Post key={post.id} post={post} user={user}/>)
+                    }):<></>
+            }
+            {props==='nfts'&&
+                (pagination!==undefined&&pagination !== null)? 
+                    pagination.nfts.map((nft)=>{
+                    return (<NFT key={nft.id} nft={nft} user={user}/>)
+                    }):<></>
+            } 
+            {props==='post'&&
+                (pagination!==undefined&&pagination !== null)?
+                    pagination.posts.map((post)=>{
+                    return (<Post key={post.id} post={post} user={user}/>)
+                    }):<></>
+            }
+            { props==='nft'&&
+                (pagination!==undefined&&pagination !== null)? 
+                    pagination.nfts.map((nft)=>{
+                    return (<NFT key={nft.id} nft={nft} user={user}/>)
+                    }):<></>
+            } 
         
-
+            </div>
         </div>
     );
 }
