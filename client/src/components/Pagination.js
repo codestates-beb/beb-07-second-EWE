@@ -39,17 +39,15 @@ const Pagination = ({props,user}) => {
             .then((result)=>{
                 setPagination(result.data)
             })
+        }else if(user===null||user===undefined){
+        getPagination(page,limit, props,null)
+            .then((result)=>{
+                setPagination(result.data)
+            })    
         }
+
     },[page,limit, props,user])
 
-    // useEffect(()=>{
-    // }, [pagination])
-    // useEffect(()=>{
-    // }, [limit])
-    // useEffect( ()=>{
-    // }, [page])
-    // useEffect( ()=>{
-    // }, [user])
 
     return(
         <div className='post_wrapper'>
@@ -89,7 +87,7 @@ const Pagination = ({props,user}) => {
                 return (<Post key={post.id} post={post} user={user}/>)
                 }):<></>
         }
-        { props==='nfts'&&
+        {props==='nfts'&&
             (pagination!==undefined&&pagination !== null)? 
                 pagination.nfts.map((nft)=>{
                 return (<NFT key={nft.id} nft={nft} user={user}/>)
