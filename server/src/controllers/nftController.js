@@ -15,11 +15,20 @@ module.exports = {
   getAllNfts: async (req, res) => {
     const { offset, limit } = req.query;
     try {
+      if (!offset || !limit) {
+        const allNfts = await nfts.findAll({});
+        const nftCounts = await nfts.findAll({
+          attributes: [
+            [sequelize.fn('COUNT', sequelize.col('id')), 'totalNum'],
+          ],
+        });
+        return res.status(200).json({ nfts: allNfts, totalNum: nftCounts[0] });
+      }
       const allNfts = await nfts.findAll({
         offset: Number(offset),
         limit: Number(limit),
       });
-      const nftCounts = await posts.findAll({
+      const nftCounts = await nfts.findAll({
         attributes: [[sequelize.fn('COUNT', sequelize.col('id')), 'totalNum']],
       });
       return res.status(200).json({ nfts: allNfts, totalNum: nftCounts[0] });
