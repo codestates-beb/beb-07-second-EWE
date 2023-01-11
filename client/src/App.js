@@ -30,7 +30,7 @@ import NotFoundPage from './pages/NotFoundPage';
 import {localLoginUser, verifyUser} from './apis/user'
 
 const App =()=> {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({nickname: "Guest"});
   const accessToken = useSelector((state)=>state.auth.accessToken);
   const isLogin = useSelector((state)=>state.auth.isLogin);
   
