@@ -29,7 +29,6 @@ const PostDetailPage = () => {
     const {postId} = useParams()
     const [post, setPost] = useState(null);
     const [user, setUser] = useState(null);
-    const [store, setStore] = useState("");
 
     const [isLike, setIsLike] = useState(false);
     const [isDropdownView, setIsDropdownView] = useState(false)
@@ -48,10 +47,6 @@ const PostDetailPage = () => {
 
     const toggleIsDropdownView = ()=>{
         setIsDropdownView(!isDropdownView);
-    }
-
-    const liftStore = (store)=>{
-        setStore(store);
     }
 
     useEffect(()=>{
@@ -146,7 +141,7 @@ const PostDetailPage = () => {
                     </div>
                     <div className="detail_map_wrapper">
                         <Wrapper apiKey={process.env.REACT_APP_GOOGLE_API_KEY} libraries={["places"]}>
-                            <DetailGoogleMap liftStore={liftStore}/>
+                            <DetailGoogleMap location={post.location}/>
                         </Wrapper>
                     </div>
                     
