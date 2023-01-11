@@ -12,8 +12,6 @@ const NFT = ({nft}) => {
         getNftMetadata(nft.metadata)
         .then(metadata=>{
             setMetadata(metadata);
-            console.log(metadata)
-
             setIsLoading(false);
         })
     }, [])
