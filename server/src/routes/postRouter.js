@@ -13,8 +13,8 @@ router.post(
   upload.single('image'),
   postController.createNewPost,
 );
-router.post('/:postId/delpost', postController.deletePosts);
-router.post('/:postId/delimg', postController.deleteImgs);
+router.post('/:postId/deletepost', postController.deletePosts);
+router.post('/:postId/deleteimg', postController.deleteImgs);
 router.put('/:postId/likes', postController.updateLikes);
 
 module.exports = router;

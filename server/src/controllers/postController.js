@@ -9,6 +9,12 @@ const POSTREWARD = '10000000000000000';
 module.exports = {
   getAllposts: async (req, res) => {
     const { offset, limit } = req.query;
+    if (!offset || !limit) {
+      return res.status(400).json({
+        message: 'offset and limit query parameters needed', 
+        data: null,
+      });
+    }
     try {
       const allPosts = await posts.findAll({
         include: [
@@ -115,6 +121,8 @@ module.exports = {
     }
   },
 
+  updatePost: async (req, res) => {},
+
   deletePosts: async (req, res) => {
     // 수정필요사항 : DB 반영 및 AWS에서도 삭제 가능하도록 구현 필요.
     const { postId } = req.params;
@@ -127,11 +135,11 @@ module.exports = {
           .status(400)
           .send({ data: null, message: 'no according posts' });
       }
-      const deletePost = await posts.destroy({
-        where: { id: postId },
-      });
       const deleteImg = await images.destroy({
         where: { post_id: postId },
+      });
+      const deletePost = await posts.destroy({
+        where: { id: postId },
       });
       console.log(deletePost);
       console.log(deleteImg);
