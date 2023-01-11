@@ -1,5 +1,5 @@
 # Logs
-combined.log
+**/combined.log
 error.log
 logs
 *.log

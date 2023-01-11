@@ -111,18 +111,22 @@ module.exports = {
         })
         .promise();
       console.log('metadata to s3 upload result', result);
-      // 5. 민팅이 완료되면 nft 테이블을 업데이트 한다.
-      const newNFT = await nfts.create({
-        contract_address: NFT_CA,
-        token_id: newTokenId,
-        price: 1,
-        listed: false,
-        creator: user.wallet_account,
-        txhash: null,
-        metadata: `https://ewe-metadata.s3.ap-northeast-2.amazonaws.com/${newTokenId}.json`,
-        user_id: user.id,
+      // 5. 민팅이 완료되면 nft 테이블을 업데이트 한다. - block listener로 기능 이관
+      // const newNFT = await nfts.create({
+      //   contract_address: NFT_CA,
+      //   token_id: newTokenId,
+      //   price: 1,
+      //   listed: false,
+      //   creator: user.wallet_account,
+      //   txhash: null,
+      //   metadata: `https://ewe-metadata.s3.ap-northeast-2.amazonaws.com/${newTokenId}.json`,
+      //   user_id: user.id,
+      // });
+      return res.status(201).json({
+        status: 'ok',
+        message: 'new nft created',
+        tokenId: newTokenId,
       });
-      return res.status(201).json(newNFT);
     } catch (err) {
       console.error(err);
       return next(err);

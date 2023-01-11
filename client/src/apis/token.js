@@ -4,13 +4,17 @@ const origin = "https://nodeauction.42msnsnsfoav6.ap-northeast-2.cs.amazonlights
 
 const transferTokenURL = origin + "/token/transfer";
 
-export const transferToken = async(address, amount)=>{
-    if (!address || !amount|| amount<0) return new Error("Invalid Input");
+export const transferToken = async(address, amount, accessToken)=>{
+    if (!address || !amount) return new Error("Invalid Input");
 
-    const receit = await axios.post(transferTokenURL, {address, amount: new Number(amount)})
+    const receipt = await axios.post(transferTokenURL, {address, amount}, {
+        headers:{
+            Authorization: accessToken
+        }
+    })
     .then(res=>res.data)
-    .error(console.log);
+    .catch(console.log);
 
-    if(receit.status === "ok") return true;
+    if(receipt.status === "ok") return true;
     else return false;
 }

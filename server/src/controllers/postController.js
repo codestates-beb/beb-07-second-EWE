@@ -1,9 +1,11 @@
 /* eslint-disable camelcase */
-const { users, posts, images, sequelize } = require('../models');
+const { users, posts, images, sequelize, Sequelize } = require('../models');
 const {
   transferTokenToUser,
   getTokenBalance,
 } = require('../chainUtils/tokenUtils');
+
+const { Op } = Sequelize;
 
 const POSTREWARD = '10000000000000000';
 module.exports = {
@@ -127,11 +129,7 @@ module.exports = {
         post_id: newPost.id,
       });
       console.log(newImg);
-      await transferTokenToUser(user.wallet_account, POSTREWARD);
-      const newErc20 = await getTokenBalance(user.wallet_account);
-      await user.update({
-        erc20: newErc20,
-      });
+      transferTokenToUser(user.wallet_account, POSTREWARD);
       return res.status(200).send({ posts: newPost, images: newImg });
     } catch (err) {
       console.log(err);
@@ -239,6 +237,39 @@ module.exports = {
         likes: targetIndex.likes + 1,
         message: 'successfully updated!',
       });
+    } catch (err) {
+      console.log(err);
+      return res.status(500).send({ data: null, message: 'server error' });
+    }
+  },
+
+  searchPosts: async (req, res) => {
+    const { search, offset, limit } = req.query;
+    try {
+      if (!offset || !limit) {
+        const filteredPosts = await posts.findAll({
+          where: {
+            [Op.or]: [
+              { title: { [Op.like]: `%${search}%` } },
+              { content: { [Op.like]: `%${search}%` } },
+            ],
+          },
+        });
+        const totalNum = filteredPosts.length;
+        return res.status(200).json({ posts: filteredPosts, totalNum });
+      }
+      const filteredPosts = await posts.findAll({
+        where: {
+          [Op.or]: [
+            { title: { [Op.like]: `%${search}%` } },
+            { content: { [Op.like]: `%${search}%` } },
+          ],
+        },
+        offset: Number(offset),
+        limit: Number(limit),
+      });
+      const totalNum = filteredPosts.length;
+      return res.status(200).json({ posts: filteredPosts, totalNum });
     } catch (err) {
       console.log(err);
       return res.status(500).send({ data: null, message: 'server error' });

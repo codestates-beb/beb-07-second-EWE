@@ -65,20 +65,21 @@ router.get('/callback', function (req, res) {
             const { email } = body2.response;
             const { nickname } = body2.response;
             const joinedUser = await users.findOne({ where: { email } });
-            if (joinedUser && joinedUser.login_provider === 'naver') {
-              // DB에 존재하는 이메일일 경우 네이버 토큰을 돌려줌
-              console.log(refreshToken);
-              res.cookie('refreshToken', refreshToken, {
-                maxAge: 60 * 60,
-                httpOnly: true,
-              });
-              return res.status(200).json({
-                data: { accessToken, user: joinedUser },
-                message: 'accessToken issued',
-              });
-            }
-            // DB에 존재하지 않을 경우 회원가입 진행 (password 는 null)
             try {
+              if (joinedUser !== null && joinedUser.login_provider == 'naver') {
+                // DB에 존재하는 이메일일 경우 네이버 토큰을 돌려줌
+                console.log(refreshToken);
+                res.cookie('refreshToken', refreshToken, {
+                  maxAge: 60 * 60,
+                  httpOnly: true,
+                });
+                console.log('already joined');
+                return res.status(200).json({
+                  data: { accessToken, user: joinedUser },
+                  message: 'accessToken issued',
+                });
+              }
+              // DB에 존재하지 않을 경우 회원가입 진행 (password 는 null)
               const { address, privateKey } = await createAccount(); // web3 call
               const newUser = await users.create({
                 email,
@@ -133,6 +134,7 @@ router.get('/callback', function (req, res) {
           }
         },
       );
+      // 여기서 리턴값 필요
     } else {
       res.status(response.statusCode).end();
       console.log(`error = ${response.statusCode}`);
@@ -157,6 +159,7 @@ router.get('/newAccessToken', async (req, res, next) => {
     return next(err);
   }
 });
-// https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=VxWHtOzH3cIGqBItpTdY&client_secret=V2vruDLVGa&access_token={accessToken}&service_provider=NAVER
+// 배포 https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=VxWHtOzH3cIGqBItpTdY&client_secret=V2vruDLVGa&access_token={accessToken}&service_provider=NAVER
+// 로컬 https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=G8M4m6BnEwXW_4MuPXjv&client_secret=_hhYGsrqAs&access_token={accessToken}&service_provider=NAVER
 
 module.exports = router;

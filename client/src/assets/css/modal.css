@@ -152,3 +152,8 @@
 .sidebar_user{
     margin: 10% 0;
 }
+
+.modal_sidebar .sidebar_head{
+    display: flex;
+    justify-content: space-between;
+}
