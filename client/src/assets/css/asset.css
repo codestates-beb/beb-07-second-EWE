@@ -29,6 +29,7 @@
 }
 
 .user1{
+    margin-bottom: 10px;
     display: flex;
     justify-content: space-between;
     align-items:unset;
@@ -37,6 +38,10 @@
     margin: 0;
     transition: 0.9s;
 
+}
+.fa-ethereum{
+    width: 110%;
+    text-align: center;
 }
 .user2{
     display: flex;
@@ -47,9 +52,9 @@
     text-overflow: hidden;
 
 }
-.nickname>h6{
-}
-.post_title  h3, .nft_title h3{
+
+.post_title >h3, .nft_title>h3{
+    width: 100%;
     margin: 0;
     color: var(--black-color);
 }
@@ -108,3 +113,22 @@
 }
 
 
+.user2 .creator{
+    width: 150px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+.nft_contract_account button{
+    padding: 0 0 3px 0;
+    width: 50px;
+    height: 20px;
+    color: var(--gray-light-color);
+    border: 1px solid var(--gray-light-color);
+    border-radius: 10px;
+    align-items: center;
+    text-align: center;
+}
+.contract_address{
+    color: var(--Primary-color);
+}

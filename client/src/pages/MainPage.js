@@ -32,10 +32,6 @@ const MainPage = ({posts, user}) => {
         <div className='main'>
             <Link to='/write' className='write'>
                 <img className='post_button' src={require('../assets/image/post_1.png')}>
-                    
-                {/* <div className='post_button_head'>What you got, Where you like, Whatever you eat</div>
-                <div className='post_button_body'>POST</div>
-                <div className='post_button_footer'>Incentive Programs for Community Engagement</div> */}
                 </img>
             </Link>
             <div className='category narrow'>
@@ -110,6 +106,11 @@ const MainPage = ({posts, user}) => {
                     <i className='fas fa-right-long'></i>
                     </button>
                 </div>
+                <Link to='/market' className='market'>
+                <img className='post_button' src={require('../assets/image/mint.png')}>
+                </img>
+                </Link>
+
                 <div className='nft_list'>
                 <div className='nft_head'>
                     <h2>NFTs</h2>

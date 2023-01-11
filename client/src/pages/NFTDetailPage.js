@@ -1,5 +1,5 @@
 // modules
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useState, useEffect }  from "react";
 import NFTList  from  '../components/NFTList'
 
@@ -61,6 +61,11 @@ const NFTDetail = () =>{
 
     return(
         <div className="nft_detail">
+            <Link to='/mint' className='mint'>
+                <img className='post_button' src={require('../assets/image/mint.png')}>
+                </img>
+            </Link>
+
             <div className="nft_detail_wrapper">
                 <div className="nft_image">
                     <h2>image</h2>

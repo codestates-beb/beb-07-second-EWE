@@ -1,6 +1,14 @@
 .login_modal{
     position: relative;
 }
+.ReactModal__Content--after-open{
+    transform: scale(1);
+    transition: 1.7s;
+}
+.ReactModal__Content--after-open:active{
+    transform: scale(1.05);
+}
+
 .login_user_info>input{
     margin: 0 1%;
     width: 85%;
@@ -13,7 +21,7 @@
     text-align: left;
 }
 .login_modal>h1{
-    font-size:60px;
+    font-size:50px;
     color: var(--Primary-color);
 }
 .login_modal_CI{
@@ -39,12 +47,29 @@
     transform: scale(1.5);
 
 }
+.login_modal button{
+    display: flex;
+    width: 100%;
+    background-color: rgba(240, 248, 255, 0.164);
+    border-color:rgba(255, 228, 196, 0);
+    padding: 0;
+    margin: 0;
+    align-items: center;
+    text-align: center;
+    justify-content: space-around;
+    border: 0;
+}
+.login_modal button h3{
+    font-size: 20px;
+}
 .login_modal .login_button{
     margin-top: 30px;
-    padding: auto;
+    padding: 16px;
+
+    width: 100%;
     border: 1px solid var(--Primary-color);
     color: var(--Primary-color);
-    height: 40px;
+    height: 50px;
     align-items: center;
     transition: 0.5s;
 }
@@ -61,13 +86,15 @@
 }
 .modal_sign_up_button{
     margin-top: 30px 0 0 0;
-    padding: 10px;
+    padding: 12px;
     border: 1px solid var(--Primary-color);
     border-radius: 10px;
     color: var(--white-color);
-    align-items:baseline;
+    align-items:center;
     background-color: var(--Primary-color);
     transition: 0.5s;
+    width: 100%;
+    height: 50px;
 }
 .modal_sign_up_button:hover{
     border: 1px solid var(--white-color);
@@ -86,7 +113,7 @@
     justify-content: center;
 }
 .modal_naver>h1{
-    margin: 0;
+    margin: 0 10px 0 0 ;
     font-weight: bold;
     color: rgb(95, 203, 95);
     transition: 0.5s;
@@ -113,4 +140,15 @@
 }
 .hide{
     display: none;
+}
+.modal_sidebar{
+    min-width: 170px;
+    padding: 12% 10% 0 10%;
+}
+.modal_sidebar .transaction{
+    min-width: 165px;
+    width: 70%;
+}
+.sidebar_user{
+    margin: 10% 0;
 }
