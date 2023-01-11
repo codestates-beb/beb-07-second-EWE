@@ -6,6 +6,7 @@ const postController = require('../controllers/postController');
 const { verifyToken } = require('../middlewares/verifyToken');
 
 router.get('/', postController.getAllposts);
+router.get('/findposts', postController.searchPosts);
 router.get('/:postId', postController.getPostsByPostId);
 router.post(
   '/',
