@@ -27,7 +27,7 @@ import NFTDetailPage from './pages/NFTDetailPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 // apis
-import {loginUser, verifyUser} from './apis/user'
+import {localLoginUser, verifyUser} from './apis/user'
 import {getPosts} from './apis/post'
 import {getNfts} from './apis/nft'
 
@@ -41,16 +41,10 @@ const App =()=> {
   
   const dispatch = useDispatch();
 
-  const loginFunc = async(email, password)=>{
-    try{
-      const result = await loginUser({email, password})
-
-      setUser(result.data.user);
-      dispatch(setAuth({accessToken: result.data.accessToken}));
-    } catch{
-      console.log("login failed");
-    }
+  const liftUser = (user)=>{
+    setUser(user);
   }
+
 
   useEffect(()=>{
     verifyUser()
@@ -73,7 +67,7 @@ const App =()=> {
 
   return (
     <BrowserRouter>
-      <Header user = {user} isLogin={isLogin} loginFunc={loginFunc}/>
+      <Header user = {user} liftUser={liftUser}/>
       <Routes>
         <Route path='/' element={<MainPage  user = {user} posts={posts}/>}/>
         <Route path='/market' element={<MarketPage
@@ -84,7 +78,7 @@ const App =()=> {
         <Route path='/signup' element={<SignupPage/>}/>
         <Route path='/write' element={<WritePage user = {user}/>}/>
         <Route path='/post/:postId' element={<PostDetailPage/>}/>
-        <Route path='/nfts/:nftId' element={<NFTDetailPage/>}/>
+        <Route path='/nft/:nftId' element={<NFTDetailPage/>}/>
         <Route path='/404' element={<NotFoundPage/>}/>
       </Routes>
     </BrowserRouter>

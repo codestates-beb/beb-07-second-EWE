@@ -38,75 +38,29 @@ const MyPage = ({user, posts, nfts}) => {
                 <></>
                 :<div className='toggle_category'>
                     <div className='toggle_category_1'>
-                        <h2>{user.nickname}</h2>
-                        <Link to="/mypage"><h4>My Page</h4></Link>
-                        <Link to="/market"><h4>NFT Market</h4></Link>
-                        <Link to="/"><h4>ETH Faucet</h4></Link>
-                        <Link to="/"><h4>Log Out</h4></Link>
-                        <Link to="/"><h4>Secession</h4></Link>
+                        <h2>{user===null || user===undefined ?
+                        'Guest' : user.nickname
+                            }</h2>
+                        <Link to="/mypage">My Page</Link>
+                        <Link to="/market">NFT Market</Link>
+                        <Link to="/">ETH Faucet</Link>
+                        <Link to="/">Log Out</Link>
+                        <Link to="/">Secession</Link>
                     </div>
-                    <div className='toggle_category_2'>
-                        <Link to='/'><h5>Korean</h5></Link>
-                        <Link to='/'><h5>Chinese</h5></Link>
-                        <Link to='/'><h5>Japanese</h5></Link>
-                        <Link to='/'><h5>Western</h5></Link>
-                    </div>    
                 </div>
                 }
 
 
             </div>
-            {/* <div className='category wide'>
-                <Link to='/'><h2>Korean</h2></Link>
-                <Link to='/'><h2>Chinese</h2></Link>
-                <Link to='/'><h2>Japanese</h2></Link>
-                <Link to='/'><h2>Western</h2></Link>
-            </div> */}
-            <div className='mypage'>
-                <div className='user_info'>
-                    <div className='user_info_1'>
-                        <h2>User Information</h2>
-                        <div className="nickname">
-                            <h3>Nickname</h3>
-                            {user.nickname}
-                        </div>
-                        <div className="email">
-                            <h3>Email</h3>
-                            {user.email}
-                        </div>
-                        <div className="wallet_account">
-                            <h3>Wallet Account</h3>
-                            <div className='account'>
-                                <p>{user.wallet_account}</p>
-                                <button onClick={() => {handleCopyClipBoard(user.wallet_account)}}>copy</button>
-                            </div>
-                        </div>
-                        <div className="eth">
-                            <h3>Balance</h3>
-                            {user.eth}ETH
-                        </div>
-                        <div className="erc20">
-                            <h3>Token</h3>
-                            {user.erc20}
-                        </div>
-                </div>
-                <div className='user_info_2'>
-                    <div className='token_transfer'>
-                        <h2>Token Transfer</h2>
-                        <div className="receivers_address">
-                            <h4>Receiver's Address</h4>
-                            <input></input>
-                        </div>
-                        <div className="amount">
-                            <h4>Amount</h4>
-                            <input></input>
-                        </div>
-                        <div className='transaction'>
-                            <h2>Transaction</h2>
-                        </div>
-                    </div>
-                </div>
+            <div className='category wide'>
+                <Link to='/'>
+                {/* <h2>EWE</h2> */}
+                Eat Write Earn   Incentive Community : Get your token with Boasting your dishes! 
+                
+                
+                </Link>
             </div>
+            <div className='mypage'>
             {
                 <div className='pagination'>
                 <h1 className='my_assets'>My Posts</h1>
@@ -154,9 +108,16 @@ const MyPage = ({user, posts, nfts}) => {
                 
             }
             </div>
+
+            <Link to='/mint' className='mint'>
+                <img className='post_button' src={require('../assets/image/mint.png')}>
+                </img>
+            </Link>
             <div className='mypage'>
+            
             {
                 <div className='pagination'>
+                
                 <h1 className='my_assets'>My NFTs</h1>
                 <select 
                     type = 'number'

@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-const { users, nfts, posts, images } = require('../models');
+const { users, posts, images, sequelize } = require('../models');
 const {
   transferTokenToUser,
   getTokenBalance,
@@ -8,6 +8,7 @@ const {
 const POSTREWARD = '10000000000000000';
 module.exports = {
   getAllposts: async (req, res) => {
+    const { offset, limit } = req.query;
     try {
       const allPosts = await posts.findAll({
         include: [
@@ -20,8 +21,13 @@ module.exports = {
             attributes: ['uri'],
           },
         ],
+        offset: Number(offset),
+        limit: Number(limit),
       });
-      return res.status(200).json(allPosts);
+      const postCounts = await posts.findAll({
+        attributes: [[sequelize.fn('COUNT', sequelize.col('id')), 'totalNum']],
+      });
+      return res.status(200).json({ posts: allPosts, totalNum: postCounts[0] });
     } catch (err) {
       console.log(err);
       return res.status(500).send({ data: null, message: 'server error' });

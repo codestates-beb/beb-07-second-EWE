@@ -17,6 +17,8 @@ const naverRouter = require('./routes/naverRouter');
 const userRouter = require('./routes/userRouter');
 const nftRouter = require('./routes/nftRouter');
 const postRouter = require('./routes/postRouter');
+const tokenRouter = require('./routes/tokenRouter');
+
 const logger = require('./logger');
 const { sequelize } = require('./models');
 
@@ -39,8 +41,8 @@ app.use(
     origin: [
       'http://localhost:3000',
       'http://ewe-client.s3-website.ap-northeast-2.amazonaws.com',
-      'https://d108dnok4co062.cloudfront.net',
-      'http://d108dnok4co062.cloudfront.net',
+      'http://d32mzbbvr51cku.cloudfront.net',
+      'https://d32mzbbvr51cku.cloudfront.net',
     ],
     credentials: true,
   }),
@@ -67,13 +69,15 @@ app.use('/testv2', testRouterV2);
 app.use('/web3', web3Router);
 
 // production router
-app.use('/naver', naverRouter);
 app.use('/health', (req, res, next) => {
   return res.status(200).json({ message: 'ok', data: null });
 });
+
+app.use('/naver', naverRouter);
 app.use('/users', userRouter);
 app.use('/nfts', nftRouter);
 app.use('/posts', postRouter);
+app.use('/token', tokenRouter);
 
 app.use((req, res, next) => {
   const err = new Error(`${req.method} ${req.url} There is no Router`);

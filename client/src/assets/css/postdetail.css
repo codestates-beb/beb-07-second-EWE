@@ -8,6 +8,7 @@
     width: 100vw;
     flex-wrap: wrap;
     justify-content: center;
+    margin-bottom: 5rem;
 }
 
 /* 네비게이션 바*/
@@ -185,7 +186,7 @@
 }
 
 .detail_section .detail_content_wrapper .detail_content{
-    min-height: 400px;
+    min-height: 300px;
 }
 
 .detail_section .detail_content_wrapper .content_tail{

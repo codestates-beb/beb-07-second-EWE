@@ -25,13 +25,16 @@ const WELCOMETOKEN = '10000000000000000';
 const client_id = process.env.NAVER_ID;
 const client_secret = process.env.NAVER_SECRET;
 let state = 'RANDOM_STATE';
-const redirectURI = encodeURI('http://localhost:5050/naver/callback');
+const redirectURI = encodeURI(
+  'https://nodeauction.42msnsnsfoav6.ap-northeast-2.cs.amazonlightsail.com/naver/callback',
+);
 let api_url = '';
 
 router.get('/login', function (req, res) {
   api_url = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${client_id}&redirect_uri=${redirectURI}&state=${state}`;
   res.status(200).redirect(api_url);
 });
+
 router.get('/callback', function (req, res) {
   // console.log(req);
   const { code } = req.query;
@@ -137,6 +140,23 @@ router.get('/callback', function (req, res) {
   });
 });
 
-// https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=G8M4m6BnEwXW_4MuPXjv&client_secret=_hhYGsrqAs&access_token={accessToken}&service_provider=NAVER
+router.get('/newAccessToken', async (req, res, next) => {
+  const { refreshToken } = req.cookies;
+  if (!refreshToken) {
+    return res
+      .status(404)
+      .json({ data: null, message: 'no refresh token in cookie' });
+  }
+  try {
+    await request.get(
+      `https://nid.naver.com/oauth2.0/token?grant_type=refresh_token&client_id=${client_id}&client_secret=${client_secret}&refresh_token=${refreshToken}`
+    );
+    // 유저 데이터 조회 후 유저 데이터와 함께 갱신된 토큰 전송
+  } catch (err) {
+    console.log(err);
+    return next(err);
+  }
+});
+// https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=VxWHtOzH3cIGqBItpTdY&client_secret=V2vruDLVGa&access_token={accessToken}&service_provider=NAVER
 
 module.exports = router;

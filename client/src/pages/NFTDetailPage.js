@@ -1,5 +1,5 @@
 // modules
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useState, useEffect }  from "react";
 import NFTList  from  '../components/NFTList'
 
@@ -26,7 +26,6 @@ const NFTDetail = () =>{
             })
     },[]);
 
-
     useEffect(()=>{
         (async()=>{
             const result = await getNftOne(nftId);
@@ -38,6 +37,16 @@ const NFTDetail = () =>{
         })();
     }, []);
 
+    useEffect(()=>{
+        (async()=>{
+            const result = await getNftOne(nftId);
+            // console.log(result);
+            setNft(result);
+            const metadata = await getNftMetadata(result.metadata)
+            // console.log(metadata);
+            setMetadata(metadata)
+        })();
+    }, [nftId]);
 
     useEffect(()=>{
         console.log(nft);
@@ -52,6 +61,11 @@ const NFTDetail = () =>{
 
     return(
         <div className="nft_detail">
+            <Link to='/mint' className='mint'>
+                <img className='post_button' src={require('../assets/image/mint.png')}>
+                </img>
+            </Link>
+
             <div className="nft_detail_wrapper">
                 <div className="nft_image">
                     <h2>image</h2>
@@ -69,11 +83,8 @@ const NFTDetail = () =>{
                     </div>
                     <h2>description</h2>
                     <h5>{metadata===null?<></>:metadata.description}</h5>
-
                     </div>
-
                 </div>
-
             </div>
             {  
                     <NFTList
