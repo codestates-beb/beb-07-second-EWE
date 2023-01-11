@@ -1,7 +1,7 @@
 // modules
-import { useState, useEffect } from 'react';
+import { useState, useEffec } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 // apis
 import { mintNFT, mintNTF } from "../apis/nft";
@@ -30,7 +30,7 @@ const MarketPage = ({nfts}) => {
 
     const [previewImage, setPreviewImage] = useState();
 
-    const[nftLimit, setNftLimit] = useState(10);
+    const[nftLimit, setNftLimit] = useState(4);
     const[nftPage, setNftPage] = useState(1);
     const nftOffset = (nftPage - 1) * nftLimit
     let numNftPages = Math.ceil(nfts.length/nftLimit)
@@ -74,6 +74,12 @@ const MarketPage = ({nfts}) => {
     return(
         <>
         <div className='market'>
+
+            <Link to='/market' className='market'>
+                <img className='post_button' src={require('../assets/image/mint.png')}>
+                </img>
+            </Link>
+
             <div className='market_section'>
                 <div className="section_title">
                     <h1>Minting</h1>
@@ -151,16 +157,16 @@ const MarketPage = ({nfts}) => {
                 nfts={nfts}
                 />
                 <div className='pagination'>
-                    <select 
+                    {/* <select 
                         type = 'number'
                         value={nftLimit}
                         onChange={({target: {value}})=> setNftLimit(Number(value))}>
-                        <option value='5'>5</option>
+                        <option value='4'>4</option>
                         <option value='10'>10</option>
                         <option value='15'>15</option>
                         <option value='30'>30</option>
                         <option value='100'>100</option>
-                    </select>
+                    </select> */}
                     <button onClick={()=> setNftPage( nftPage - 1 )} disabled = {nftPage === 1}>
                         <i className='fas fa-left-long'></i>
                     </button>
@@ -184,6 +190,7 @@ const MarketPage = ({nfts}) => {
             </div>
             
         </div>
+
         <Footer/>
         </>
     );

@@ -45,6 +45,7 @@
     display: flex;
     align-items: center;
 }
+
 .account button{
     padding: 0 0 3px 0;
     width: 50px;
@@ -69,7 +70,7 @@
     text-overflow: ellipsis;
     overflow: hidden;
 }
-.mypage .post_wrapper{
+.mypage .post_wrapper, .mypage .nft_wrapper{
     width: 100%;
     padding: 1%;
 }

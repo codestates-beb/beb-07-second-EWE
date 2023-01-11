@@ -5,7 +5,7 @@ import {Swiper, SwiperSlide} from "swiper/react";
 import {Navigation, Pagination} from "swiper";
 import {Wrapper, Status} from "@googlemaps/react-wrapper";
 import { useSelector } from "react-redux";
-
+import {Link} from 'react-router-dom'
 
 // apis
 import {createReview} from "../apis/post";
@@ -101,7 +101,12 @@ const WritePage = ({user}) => {
 
     return(
         <div className="container">
+                    <Link to='/write' className='write'>
+                <img className='post_button' src={require('../assets/image/post_2.png')}>
+                </img>
+            </Link>
             <div className="write_wrapper">
+            
                 <div className="post_title_wrapper">
                     <input 
                         name="title" 
