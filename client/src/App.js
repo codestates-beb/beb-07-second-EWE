@@ -45,7 +45,10 @@ const App =()=> {
     .then(result=>{
       setUser(result.data.user);
 
-      dispatch(setAuth({accessToken: result.data.accessToken}));
+      dispatch(setAuth({
+        accessToken: result.data.accessToken, 
+        userID: result.data.user.id
+      }));
     })
     .catch(err=>{return;})
   },[])
