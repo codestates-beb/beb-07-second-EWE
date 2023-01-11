@@ -3,15 +3,41 @@ import axios from "axios";
 // Test URL
 const origin = "https://nodeauction.42msnsnsfoav6.ap-northeast-2.cs.amazonlightsail.com";
 const getNftsURL = origin + "/nfts";
+const getNftsByUserURL = origin + "/users";
 const getNftOneURL = origin + "/nfts/"
 const mintNFTURL = origin + "/nfts";
 
 // Test API Request
-export const getNfts = async()=>{
-    const nfts = await axios.get(getNftsURL)
+export const getNfts = async(offset, limit)=>{
+    const requestURL = new URL(getNftsURL)
+    const params = requestURL.searchParams;
+
+    if (offset > -1 && limit > 0) {
+        params.append("offset", offset);
+        params.append("limit", limit);
+    }
+
+    const {nfts, totalNum} = await axios.get(requestURL.toString())
     .then(res=>res.data)
     .catch(console.log);
-    return nfts;
+
+    return {nfts, totalNum: totalNum.totalNum};
+}
+
+export const getNftsByUser = async(offset, limit, userId)=>{
+    const requestURL = new URL(`${getNftsByUserURL}/${userId}/nfts`);
+    const params = requestURL.searchParams;
+
+    if (offset > -1 && limit > 0) {
+        params.append("offset", offset);
+        params.append("limit", limit);
+    }
+
+    const {nfts, totalNum} = await axios.get(requestURL.toString())
+    .then(res=>res.data)
+    .catch(console.log);
+
+    return {nfts, totalNum: totalNum.totalNum};
 }
 
 export const getNftOne = async (id)=>{
