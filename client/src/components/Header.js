@@ -271,7 +271,7 @@ const Header = ({user, liftUser}) => {
                             />
                         </div>
                     </div>
-                    <button onClick={loginFunc}><h3 className="login_button">Log in</h3></button>
+                    <button onClick={()=>closeLoginModal()}><h3 className="login_button" onClick={loginFunc}>Log in</h3></button>
                     <div className="sign_up_with">
                         <a href="https://nodeauction.42msnsnsfoav6.ap-northeast-2.cs.amazonlightsail.com/naver/login" target="_blank">
                             <div className="modal_naver">
