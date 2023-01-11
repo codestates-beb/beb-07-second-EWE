@@ -161,7 +161,10 @@ const MyPage = ({user, posts, nfts}) => {
                 />
             }
             </div>
-            <Footer/>
+            
+            <img className='post_button' src={require('../assets/image/bottom.png')}/>
+
+
         </div>
     );
 }

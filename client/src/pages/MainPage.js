@@ -159,7 +159,10 @@ const MainPage = ({posts, user}) => {
             </div>
 
 
+
             <Footer/>
+            <div className='under_footer'></div>
+
         </div>
     );
 }
