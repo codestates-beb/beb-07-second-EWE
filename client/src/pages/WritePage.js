@@ -35,8 +35,6 @@ const WritePage = ({user}) => {
     const isLogin = useSelector((state)=>state.auth.isLogin);
     const accessToken = useSelector((state)=>state.auth.accessToken);
 
-    if (isLogin === false) navigator(-1);
-
     // New Review State Variable
     const [title, setTitle] = useState("");
     const [locationName, setLocationName] = useState("");
@@ -93,7 +91,7 @@ const WritePage = ({user}) => {
     }
 
     useEffect(()=>{
-        if(!user){
+        if(!isLogin){
             navigator("/");
         }
     },[])

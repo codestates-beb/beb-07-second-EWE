@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react"
 
-const DetailGoogleMap = ({liftStore})=>{
+const DetailGoogleMap = ({location})=>{
     const [map, setMap] = useState("");
     const ref = useRef();
 
@@ -17,7 +17,7 @@ const DetailGoogleMap = ({liftStore})=>{
         const service = new window.google.maps.places.PlacesService(map);
         
         const request = {
-            placeId: "ChIJtUc1yjnlDDURf2QjCfD2tDQ",
+            placeId: location,
             fields: ['name', 'geometry']
         }
 

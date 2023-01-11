@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-const { users, nfts, posts, images } = require('../models');
+const { users, posts, images, sequelize } = require('../models');
 const {
   transferTokenToUser,
   getTokenBalance,
@@ -8,7 +8,32 @@ const {
 const POSTREWARD = '10000000000000000';
 module.exports = {
   getAllposts: async (req, res) => {
+    const { offset, limit } = req.query;
     try {
+      // without query params
+      if (!offset || !limit) {
+        const allPosts = await posts.findAll({
+          include: [
+            {
+              model: users,
+              attributes: ['id', 'wallet_account', 'nickname'],
+            },
+            {
+              model: images,
+              attributes: ['uri'],
+            },
+          ],
+        });
+        const postCounts = await posts.findAll({
+          attributes: [
+            [sequelize.fn('COUNT', sequelize.col('id')), 'totalNum'],
+          ],
+        });
+        return res
+          .status(200)
+          .json({ posts: allPosts, totalNum: postCounts[0] });
+      }
+      // with query params
       const allPosts = await posts.findAll({
         include: [
           {
@@ -20,8 +45,13 @@ module.exports = {
             attributes: ['uri'],
           },
         ],
+        offset: Number(offset),
+        limit: Number(limit),
       });
-      return res.status(200).json(allPosts);
+      const postCounts = await posts.findAll({
+        attributes: [[sequelize.fn('COUNT', sequelize.col('id')), 'totalNum']],
+      });
+      return res.status(200).json({ posts: allPosts, totalNum: postCounts[0] });
     } catch (err) {
       console.log(err);
       return res.status(500).send({ data: null, message: 'server error' });
@@ -109,6 +139,8 @@ module.exports = {
     }
   },
 
+  updatePost: async (req, res) => {},
+
   deletePosts: async (req, res) => {
     // 수정필요사항 : DB 반영 및 AWS에서도 삭제 가능하도록 구현 필요.
     const { postId } = req.params;
@@ -121,11 +153,11 @@ module.exports = {
           .status(400)
           .send({ data: null, message: 'no according posts' });
       }
-      const deletePost = await posts.destroy({
-        where: { id: postId },
-      });
       const deleteImg = await images.destroy({
         where: { post_id: postId },
+      });
+      const deletePost = await posts.destroy({
+        where: { id: postId },
       });
       console.log(deletePost);
       console.log(deleteImg);
