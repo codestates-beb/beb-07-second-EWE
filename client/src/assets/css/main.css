@@ -109,7 +109,7 @@
     margin-top: 10px;
 }
 .toggle_category_1 a:hover{
-    color: var(--black-color);
+    color: var(--Primary-color);
     background-color: var(--white-color);
     opacity: 0.7;
 }

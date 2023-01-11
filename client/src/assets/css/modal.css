@@ -141,3 +141,14 @@
 .hide{
     display: none;
 }
+.modal_sidebar{
+    min-width: 170px;
+    padding: 12% 10% 0 10%;
+}
+.modal_sidebar .transaction{
+    min-width: 165px;
+    width: 70%;
+}
+.sidebar_user{
+    margin: 10% 0;
+}

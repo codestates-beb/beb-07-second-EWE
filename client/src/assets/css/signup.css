@@ -31,7 +31,7 @@
     border-radius: 50px;
     width: 300px;
     display: block;
-    text-align: left;
+    text-align: center;
     align-items: center;
     justify-content: space-between;
     background-color: var(--white-color) ;
@@ -39,7 +39,7 @@
 }
 
 .create_account h1{
-    margin: 5px 0 0 0;
+    margin: 20px 0 20px 0;
     color: var(--Primary-color);
 }
 
