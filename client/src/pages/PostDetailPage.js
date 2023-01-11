@@ -93,27 +93,26 @@ const PostDetailPage = () => {
                         <div className="btn ellipsis">
                             <i className="fas fa-ellipsis" onClick={toggleIsDropdownView}/>
                             <Dropdown isDropdownview={isDropdownView}>
-                                <div className="dropdown_content">수정</div>
-                                <div className="dropdown_content">삭제</div>
+                                <div className="dropdown_content">Update</div>
+                                <div className="dropdown_content">Delete</div>
                             </Dropdown>
                         </div>
                     </div>
                     <div className="detail_header">
-                        <div className="detail_profile_wrapper">
-                            <div className="profile_frame">
-                                <img src="https://spnimage.edaily.co.kr/images/Photo/files/NP/S/2022/07/PS22072100041.jpg"/>
-                            </div>
+                        <div className="detail_header_row">
+                            <h1 className="detail_title">{post.title}</h1>
+                            <p className="detail_postid"># {post.id}</p>
                         </div>
-                        <h1 className="detail_title">{post.title}</h1>
-                        <p className="detail_postid"># {post.id}</p>
-                        <p className="detail_data">
-                            <i className="fas fa-pen"/>
-                            <span>{user? user.nickname:""}</span>
-                            <span>|</span>
-                            <i className="fas fa-eye" />
-                            <span>{post.views}</span>
-                        </p>
-                        <p className="detail_date">{convertDate(post.createdAt)}</p>
+                        <div className="detail_header_row">
+                            <p className="detail_data">
+                                <i className="fas fa-pen"/>
+                                <span>{user? user.nickname:""}</span>
+                                <span>|</span>
+                                <i className="fas fa-eye" />
+                                <span>{post.views}</span>
+                            </p>
+                            <p className="detail_date">{convertDate(post.createdAt)}</p>
+                        </div>
                     </div>
                     <div className="detail_content_wrapper">
                         <p className="detail_content">{post.content}</p>
@@ -131,6 +130,14 @@ const PostDetailPage = () => {
                                     <span className="like_num">{post.likes}</span>
                                 </div>
                             </div>
+                            <div className="content_right">
+                                <div className="content_writer_wallet">
+                                    <i className="fas fa-wallet"/>
+                                    <p className="content_writer_address">
+                                        { user.wallet_account }
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -146,12 +153,11 @@ const PostDetailPage = () => {
                     </div>
                     
                 </div>
-                <Link to='/write' className='write'>
+            </div>
+            <Link to='/write' className='write'>
                 <img className='post_button' src={require('../assets/image/post_2.png')}>
                 </img>
             </Link>
-
-            </div>
             </>
             :<></>}
         </div>
