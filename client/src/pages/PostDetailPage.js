@@ -1,6 +1,6 @@
 // modules
 import {useState, useEffect} from "react";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, Link} from "react-router-dom";
 import {useParams} from "react-router-dom";
 import {Swiper, SwiperSlide} from "swiper/react";
 import {Navigation} from "swiper";
@@ -67,6 +67,7 @@ const PostDetailPage = () => {
 
     return(
         <div>
+
             {post? 
             <>
             <div className="detail_image_wrapper">
@@ -148,7 +149,13 @@ const PostDetailPage = () => {
                             <DetailGoogleMap liftStore={liftStore}/>
                         </Wrapper>
                     </div>
+                    
                 </div>
+                <Link to='/write' className='write'>
+                <img className='post_button' src={require('../assets/image/post_2.png')}>
+                </img>
+            </Link>
+
             </div>
             </>
             :<></>}

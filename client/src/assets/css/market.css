@@ -27,15 +27,18 @@
 
 .market .market_section{
     padding: 1rem;
-    width:600px;
+    width: 45%;
 }
 
 /* minting 섹션 */
 .market_section .section_title h1{
-    vertical-align: bottom;
+    text-align: center;
+    align-items: center;
+
 }
 
 .market_section .mint_section {
+    margin: 3%;
     border-radius: 1rem;
     overflow:hidden;
 }
@@ -182,14 +185,10 @@
     background-color: var(--Primary-color);
 }
 
-@media screen and (max-width: 2100px){
-    .market .post_wrapper{
-        grid-template-columns: repeat(auto-fill, minmax(30%, 1fr) );
-        }
-    
+.market_section .nft_wrapper{
+    grid-template-columns: repeat(auto-fill, minmax(50%, 1fr) );
 }
-
-@media screen and (max-width: 480px){
+@media screen and (min-width: 360px){
     .market .post_wrapper{
         grid-template-columns: repeat(auto-fill, minmax(100%, 1fr) );
         }
@@ -204,23 +203,38 @@
         transform: scale(1.01);
         filter: brightness(1.05);
     }    
+    .market .market_section{
+        margin: 1%;
+        width: 98%;
+    }
+
+}
+@media screen and (max-width: 620px){
+
+    .market .nft_wrapper{
+        grid-template-columns: repeat(auto-fill, minmax(50%, 1fr) );
+        }
+    .market .market_section{
+        margin: 5%;
+        width: 90%;
+    }
+        
+    
 }
 
-@media screen and (max-width: 768px){
-    .market .post_wrapper{
+
+
+@media screen and (min-width: 1400px){
+    .market .nft_wrapper{
         grid-template-columns: repeat(auto-fill, minmax(50%, 1fr) );
     }
-    .market  .wide{
-        display: none;
+    .market .market_section{
+        margin: 2%;
+        width: 45%;
     }
-    .market  .narrow{
-        display: block;
+    .market {
+        display: flex;
         justify-content: center;
     }
-    .market  .fa-caret-down{
-        display: block;
-    }
-    .market  .header_right .fa-user{
-        display: none;
-    }
+
 }

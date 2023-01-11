@@ -251,6 +251,7 @@ module.exports = {
       return next(err);
     }
   },
+
   my: async (req, res, next) => {
     try {
       if (!req.decoded) {

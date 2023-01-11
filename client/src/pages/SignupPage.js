@@ -106,7 +106,6 @@ const SignupPage = () => {
                 <option value="China">China</option>
                 <option value="France">Frence</option>
                 <option value="France">Malta</option>
-
             </select>            
         </div>
         <div className="user_info">
