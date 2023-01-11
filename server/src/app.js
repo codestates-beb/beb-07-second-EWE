@@ -17,6 +17,8 @@ const naverRouter = require('./routes/naverRouter');
 const userRouter = require('./routes/userRouter');
 const nftRouter = require('./routes/nftRouter');
 const postRouter = require('./routes/postRouter');
+const tokenRouter = require('./routes/tokenRouter');
+
 const logger = require('./logger');
 const { sequelize } = require('./models');
 
@@ -75,6 +77,7 @@ app.use('/naver', naverRouter);
 app.use('/users', userRouter);
 app.use('/nfts', nftRouter);
 app.use('/posts', postRouter);
+app.use('/token', tokenRouter);
 
 app.use((req, res, next) => {
   const err = new Error(`${req.method} ${req.url} There is no Router`);
