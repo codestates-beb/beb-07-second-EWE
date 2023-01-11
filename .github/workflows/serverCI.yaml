@@ -12,9 +12,9 @@ on:
 jobs:
   docker:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./server
+#     defaults:
+#       run:
+#         working-directory: ./server
 
     steps:
       - name: Set up QEMU
@@ -29,7 +29,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
-          context: .
+          context: ./server
           file: ./server/Dockerfile
           platforms: linux/amd64
           push: true
