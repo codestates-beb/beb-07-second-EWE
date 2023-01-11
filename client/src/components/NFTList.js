@@ -1,13 +1,13 @@
 import NFT from './NFT'
-const NFTList = ({nfts,nftOffset,nftLimit }) => {
-
+const NFTList = ({nfts}) => {
+    // console.log(nfts)
     return(
         <div className='nft_wrapper'>
-            {  
-                nfts.slice(nftOffset, nftOffset + nftLimit).map((nft)=>{
+            {/* {  
+                nfts.map((nft)=>{
                     return (<NFT key={nft.id} nft={nft}/>)
                 })
-            }
+            } */}
             
         </div>
     );

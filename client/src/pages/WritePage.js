@@ -5,8 +5,7 @@ import {Swiper, SwiperSlide} from "swiper/react";
 import {Navigation, Pagination} from "swiper";
 import {Wrapper, Status} from "@googlemaps/react-wrapper";
 import { useSelector } from "react-redux";
-import {Link} from 'react-router-dom'
-
+import {Link } from 'react-router-dom'
 // apis
 import {createReview} from "../apis/post";
 
@@ -35,8 +34,6 @@ const WritePage = ({user}) => {
 
     const isLogin = useSelector((state)=>state.auth.isLogin);
     const accessToken = useSelector((state)=>state.auth.accessToken);
-
-    if (isLogin === false) navigator(-1);
 
     // New Review State Variable
     const [title, setTitle] = useState("");
@@ -94,7 +91,7 @@ const WritePage = ({user}) => {
     }
 
     useEffect(()=>{
-        if(!user){
+        if(!isLogin){
             navigator("/");
         }
     },[])
@@ -162,6 +159,8 @@ const WritePage = ({user}) => {
                     <button className="btn_submit" onClick={submitBtnHandler}>Submit</button>
                 </div>
             </div>
+                <img className='post_button' src={require('../assets/image/bottom.png')} onClick={()=>navigator(-1)}>
+                </img>
         </div>
     );
 }

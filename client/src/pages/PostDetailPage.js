@@ -24,12 +24,11 @@ function convertDate(date){
 }
 
 const PostDetailPage = () => {
-    const navigator = useNavigate(-1);
+    const navigator = useNavigate();
 
     const {postId} = useParams()
     const [post, setPost] = useState(null);
     const [user, setUser] = useState(null);
-    const [store, setStore] = useState("");
 
     const [isLike, setIsLike] = useState(false);
     const [isDropdownView, setIsDropdownView] = useState(false)
@@ -38,6 +37,14 @@ const PostDetailPage = () => {
         setIsLike(true);
         const result = await increaseLike(postId);
         console.log(result);
+    }
+
+    const clickAddressHandler = async()=>{
+        try{
+            await window.navigator.clipboard.writeText(user.wallet_account)
+        } catch(e) {
+            console.log("copy failed");
+        }
     }
 
     const toggleLike = ()=>{
@@ -50,13 +57,11 @@ const PostDetailPage = () => {
         setIsDropdownView(!isDropdownView);
     }
 
-    const liftStore = (store)=>{
-        setStore(store);
-    }
-
     useEffect(()=>{
         (async()=>{
             const result = await getPostOne(postId);
+
+            if (result.status === 500) navigator("/404");
 
             setPost(result);
             setUser(result.user);
@@ -96,27 +101,26 @@ const PostDetailPage = () => {
                         <div className="btn ellipsis">
                             <i className="fas fa-ellipsis" onClick={toggleIsDropdownView}/>
                             <Dropdown isDropdownview={isDropdownView}>
-                                <div className="dropdown_content">수정</div>
-                                <div className="dropdown_content">삭제</div>
+                                <div className="dropdown_content">Update</div>
+                                <div className="dropdown_content">Delete</div>
                             </Dropdown>
                         </div>
                     </div>
                     <div className="detail_header">
-                        <div className="detail_profile_wrapper">
-                            <div className="profile_frame">
-                                <img src="https://spnimage.edaily.co.kr/images/Photo/files/NP/S/2022/07/PS22072100041.jpg"/>
-                            </div>
+                        <div className="detail_header_row">
+                            <h1 className="detail_title">{post.title}</h1>
+                            <p className="detail_postid"># {post.id}</p>
                         </div>
-                        <h1 className="detail_title">{post.title}</h1>
-                        <p className="detail_postid"># {post.id}</p>
-                        <p className="detail_data">
-                            <i className="fas fa-pen"/>
-                            <span>{user? user.nickname:""}</span>
-                            <span>|</span>
-                            <i className="fas fa-eye" />
-                            <span>{post.views}</span>
-                        </p>
-                        <p className="detail_date">{convertDate(post.createdAt)}</p>
+                        <div className="detail_header_row">
+                            <p className="detail_data">
+                                <i className="fas fa-pen"/>
+                                <span>{user? user.nickname:""}</span>
+                                <span>|</span>
+                                <i className="fas fa-eye" />
+                                <span>{post.views}</span>
+                            </p>
+                            <p className="detail_date">{convertDate(post.createdAt)}</p>
+                        </div>
                     </div>
                     <div className="detail_content_wrapper">
                         <p className="detail_content">{post.content}</p>
@@ -134,6 +138,17 @@ const PostDetailPage = () => {
                                     <span className="like_num">{post.likes}</span>
                                 </div>
                             </div>
+                            <div className="content_right">
+                                <div 
+                                    className="content_writer_wallet"
+                                    onClick={clickAddressHandler}
+                                >
+                                    <i className="fas fa-wallet"/>
+                                    <p className="content_writer_address">
+                                        { user.wallet_account }
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -144,17 +159,16 @@ const PostDetailPage = () => {
                     </div>
                     <div className="detail_map_wrapper">
                         <Wrapper apiKey={process.env.REACT_APP_GOOGLE_API_KEY} libraries={["places"]}>
-                            <DetailGoogleMap liftStore={liftStore}/>
+                            <DetailGoogleMap location={post.location}/>
                         </Wrapper>
                     </div>
                     
                 </div>
-                <Link to='/write' className='write'>
+            </div>
+            <Link to='/write' className='write'>
                 <img className='post_button' src={require('../assets/image/post_2.png')}>
                 </img>
             </Link>
-
-            </div>
             </>
             :<></>}
         </div>

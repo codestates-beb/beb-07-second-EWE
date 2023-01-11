@@ -38,30 +38,28 @@ const MyPage = ({user, posts, nfts}) => {
                 <></>
                 :<div className='toggle_category'>
                     <div className='toggle_category_1'>
-                        <h2>{user.nickname}</h2>
-                        <Link to="/mypage"><h4>My Page</h4></Link>
-                        <Link to="/market"><h4>NFT Market</h4></Link>
-                        <Link to="/"><h4>ETH Faucet</h4></Link>
-                        <Link to="/"><h4>Log Out</h4></Link>
-                        <Link to="/"><h4>Secession</h4></Link>
+                        <h2>{user===null || user===undefined ?
+                        'Guest' : user.nickname
+                            }</h2>
+                        <Link to="/mypage">My Page</Link>
+                        <Link to="/market">NFT Market</Link>
+                        <Link to="/">ETH Faucet</Link>
+                        <Link to="/">Log Out</Link>
+                        <Link to="/">Secession</Link>
                     </div>
-                    <div className='toggle_category_2'>
-                        <Link to='/'><h5>Korean</h5></Link>
-                        <Link to='/'><h5>Chinese</h5></Link>
-                        <Link to='/'><h5>Japanese</h5></Link>
-                        <Link to='/'><h5>Western</h5></Link>
-                    </div>    
                 </div>
                 }
 
 
             </div>
-            {/* <div className='category wide'>
-                <Link to='/'><h2>Korean</h2></Link>
-                <Link to='/'><h2>Chinese</h2></Link>
-                <Link to='/'><h2>Japanese</h2></Link>
-                <Link to='/'><h2>Western</h2></Link>
-            </div> */}
+            <div className='category wide'>
+                <Link to='/'>
+                {/* <h2>EWE</h2> */}
+                Eat Write Earn   Incentive Community : Get your token with Boasting your dishes! 
+                
+                
+                </Link>
+            </div>
             <div className='mypage'>
             {
                 <div className='pagination'>
@@ -163,7 +161,10 @@ const MyPage = ({user, posts, nfts}) => {
                 />
             }
             </div>
-            <Footer/>
+            
+            <img className='post_button' src={require('../assets/image/bottom.png')}/>
+
+
         </div>
     );
 }

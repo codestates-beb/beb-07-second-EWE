@@ -139,6 +139,14 @@
     }
     .pagination_button{
         display: flex;
+        margin: 2%;
+        justify-content: space-around;
+    }
+    .pagination_button button{
+        width: 20px;
+    }
+    .pagination .pagination_num{
+        margin: 2%;
     }
     
 }

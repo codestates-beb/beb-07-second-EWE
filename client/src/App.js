@@ -28,12 +28,8 @@ import NotFoundPage from './pages/NotFoundPage';
 
 // apis
 import {localLoginUser, verifyUser} from './apis/user'
-import {getPosts} from './apis/post'
-import {getNfts} from './apis/nft'
 
 const App =()=> {
-  const [posts, setPosts] = useState([])
-  const [nfts, setNfts] = useState([])
   const [user, setUser] = useState(null);
 
   const accessToken = useSelector((state)=>state.auth.accessToken);
@@ -45,7 +41,6 @@ const App =()=> {
     setUser(user);
   }
 
-
   useEffect(()=>{
     verifyUser()
     .then(result=>{
@@ -53,28 +48,16 @@ const App =()=> {
       dispatch(setAuth({accessToken: result.data.accessToken}));
     })
     .catch(err=>{return;})
-
-    getPosts()
-      .then((result)=>{
-          setPosts(result)
-      })
-
-    getNfts()
-    .then((result)=>{
-        setNfts(result)
-    })
   },[])
 
   return (
     <BrowserRouter>
       <Header user = {user} liftUser={liftUser}/>
       <Routes>
-        <Route path='/' element={<MainPage  user = {user} posts={posts}/>}/>
+        <Route path='/' element={<MainPage  user = {user}/>}/>
         <Route path='/market' element={<MarketPage
-          nfts={nfts}
         />}/>
-        <Route path='/mypage'  element={<MyPage 
-        posts={posts} nfts={nfts} user = {user}/>}/>
+        <Route path='/mypage'  element={<MyPage user = {user}/>}/>
         <Route path='/signup' element={<SignupPage/>}/>
         <Route path='/write' element={<WritePage user = {user}/>}/>
         <Route path='/post/:postId' element={<PostDetailPage/>}/>
