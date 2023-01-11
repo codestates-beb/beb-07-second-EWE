@@ -56,7 +56,11 @@ module.exports = {
 
       // 3. web3 트랜스퍼 호출한다.
       // const spendApprovedToken = async (sender, recipient, amount) =>
-      await spendApprovedToken(sender.address, recipient.address, amount);
+      await spendApprovedToken(
+        sender.wallet_account,
+        recipient.wallet_account,
+        amount,
+      );
       // 4. db를 업데이트 한다.
       const senderBalance = BigInt(sender.erc20) - BigInt(amount);
       const recipientBalance = BigInt(recipient.erc20) + BigInt(amount);
