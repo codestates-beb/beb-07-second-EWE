@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          file: ./Dockerfile
+          file: ./server/Dockerfile
           platforms: linux/amd64
           push: true
           tags: snowdelver/eweapi:latest
