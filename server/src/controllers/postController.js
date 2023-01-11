@@ -139,7 +139,33 @@ module.exports = {
     }
   },
 
-  updatePost: async (req, res) => {},
+  updatePost: async (req, res, next) => {
+    const { postId } = req.params;
+    let { title, location, content, store_name } = req.body;
+    try {
+      const currentPost = await posts.findOne({ where: { id: postId } });
+      if (!title) title = currentPost.title;
+      if (!location) location = currentPost.location;
+      if (!content) content = currentPost.content;
+      if (!store_name) store_name = currentPost.store_name;
+      await posts.update(
+        {
+          title,
+          location,
+          content,
+          store_name,
+        },
+        {
+          where: { id: postId },
+        },
+      );
+      const updatedPost = await posts.findOne({ where: { id: postId } });
+      return res.status(200).json(updatedPost);
+    } catch (err) {
+      console.log(err);
+      return next(err);
+    }
+  },
 
   deletePosts: async (req, res) => {
     // 수정필요사항 : DB 반영 및 AWS에서도 삭제 가능하도록 구현 필요.
