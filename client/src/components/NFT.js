@@ -14,9 +14,18 @@ const NFT = ({nft}) => {
         getNftMetadata(nft.metadata)
         .then(metadata=>{
             setMetadata(metadata);
+            console.log(metadata)
+
             setIsLoading(false);
         })
     }, [])
+    const handleCopyClipBoard = async (text) => {
+        try {
+            await navigator.clipboard.writeText(text);
+        } catch (e) {
+        }
+    };
+
     return(
         <Link 
         to={'/nft/'+ nft.id }
@@ -28,32 +37,33 @@ const NFT = ({nft}) => {
                     </div>
 
                     <div className="post_title token_id">
-                    <h6>
-                    {metadata === null || metadata.image === undefined ||metadata.image === null
-                        ? ""
-                        : metadata.name
+                    <h5>
+                    {metadata === null || metadata.image === undefined ||metadata.image === null? "": metadata.name
                     }
-                    </h6>
+                    <h6 className='contract_address'>{nft === null || nft.contract_address === undefined ||nft.contract_address === null? "": nft.contract_address.slice(0,10)+'...'
+                    }</h6>
+                    </h5>
                     </div>
                     <div className="post_num id">#
-                        {nft.token_id}
+                        {nft === null ?<></>:nft.token_id}
                     </div>
                 </div> 
                 <div className='user2'>
                     <div className="creator">
                     
-                    {nft.creator}
+                    <h6>{nft === null ?<></>:nft.creator}</h6>
                     
                     </div>
-                    <div className="contract_account" >
-                    
-                    {nft.contract_account}
-                    
+                    <div className="nft_contract_account" >
+                    {nft === null ?<></>:nft.contract_account}
+
+                    </div>
+                    <div className='createdAt'>
+                    <h6>{nft.createdAt.slice(0,10)}</h6>
                     </div>
                 </div>
             </div>
             <div className="image" >
-            {nft.price}
                 <img 
                     src ={isLoading? '../assets/image/loading.gif':
                         metadata === null || metadata.image === undefined ||metadata.image === null 

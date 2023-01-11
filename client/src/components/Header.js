@@ -21,7 +21,7 @@ import '../assets/css/modal.css'
 const Header = ({user, liftUser}) => {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
-    const [sidebarModarIsOpen, setSidebarModarIsOpen] = useState(false);
+    const [sidebarModalIsOpen, setSidebarModalIsOpen] = useState(false);
     const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
 
     const isLogin = useSelector((state)=>state.auth.isLogin);
@@ -32,7 +32,7 @@ const Header = ({user, liftUser}) => {
         setLoginModalIsOpen(!loginModalIsOpen)
     }
     const closeSidebarModal=()=>{
-        setSidebarModarIsOpen(!sidebarModarIsOpen)
+        setSidebarModalIsOpen(!sidebarModalIsOpen)
     }
     const handleCopyClipBoard = async (text) => {
         try {
@@ -75,10 +75,10 @@ const Header = ({user, liftUser}) => {
             <div className='header_left'>
                 <i 
                 className='fab fa-bitcoin fa-xl'
-                onClick={()=>setSidebarModarIsOpen(!sidebarModarIsOpen)}></i>
+                onClick={()=>setSidebarModalIsOpen(!sidebarModalIsOpen)}></i>
             </div>
             <Modal
-                isOpen={sidebarModarIsOpen}
+                isOpen={sidebarModalIsOpen}
                 onRequestClose={()=> closeSidebarModal(false)}
                 style={{
                     overlay:{
@@ -92,7 +92,7 @@ const Header = ({user, liftUser}) => {
                         
                     },
                     content:{
-                        width:'220px',
+                        width:'240px',
                         height:'100%',
                         margin:'auto',
                         padding:'0',

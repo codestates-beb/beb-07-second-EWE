@@ -52,8 +52,7 @@
     text-overflow: hidden;
 
 }
-.nickname>h6{
-}
+
 .post_title >h3, .nft_title>h3{
     width: 100%;
     margin: 0;
@@ -114,3 +113,22 @@
 }
 
 
+.user2 .creator{
+    width: 150px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+.nft_contract_account button{
+    padding: 0 0 3px 0;
+    width: 50px;
+    height: 20px;
+    color: var(--gray-light-color);
+    border: 1px solid var(--gray-light-color);
+    border-radius: 10px;
+    align-items: center;
+    text-align: center;
+}
+.contract_address{
+    color: var(--Primary-color);
+}
