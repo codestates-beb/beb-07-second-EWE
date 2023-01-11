@@ -8,11 +8,20 @@ const createReviewURL = origin + "/posts";
 const increaseLikeURL = origin
 
 // Test API Request
-export const getPosts = async()=>{
-    const posts = await axios.get(getPostsURL)
+export const getPosts = async(offset, limit)=>{
+    const requestURL = new URL(getPostsURL);
+    const params = requestURL.searchParams;
+
+    if (offset > -1 && limit> 0) {
+        params.append("offset", offset);
+        params.append("limit", limit);
+    }
+
+    const {posts, totalNum} = await axios.get(requestURL.toString())
     .then(res=>res.data)
     .catch(console.log);
-    return posts;
+
+    return {posts, totalNum : totalNum.totalNum};
 }
 
 export const getPostOne = async (id)=>{
