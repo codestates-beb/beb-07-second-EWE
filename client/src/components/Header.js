@@ -89,7 +89,10 @@ const Header = ({user, liftUser}) => {
         try{
             const result = await localLoginUser({email, password})
             liftUser(result.data.user);
-            dispatch(setAuth({accessToken: result.data.accessToken}));
+            dispatch(setAuth({
+                accessToken: result.data.accessToken, 
+                userID: result.data.user.id
+              }));
             setLoginModalIsOpen(false);
         } catch{
             console.log("login failed");
