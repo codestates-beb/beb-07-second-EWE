@@ -39,6 +39,14 @@ const PostDetailPage = () => {
         console.log(result);
     }
 
+    const clickAddressHandler = async()=>{
+        try{
+            await window.navigator.clipboard.writeText(user.wallet_account)
+        } catch(e) {
+            console.log("copy failed");
+        }
+    }
+
     const toggleLike = ()=>{
         setIsLike(!isLike);
         if(isLike === false) setPost({...post, likes: post.likes+1});
@@ -131,7 +139,10 @@ const PostDetailPage = () => {
                                 </div>
                             </div>
                             <div className="content_right">
-                                <div className="content_writer_wallet">
+                                <div 
+                                    className="content_writer_wallet"
+                                    onClick={clickAddressHandler}
+                                >
                                     <i className="fas fa-wallet"/>
                                     <p className="content_writer_address">
                                         { user.wallet_account }

@@ -202,6 +202,7 @@
 
 .content_tail .content_writer_wallet {
     display: flex;
+    position: relative;
     align-items: center;
     transition: 0.5s;
 }
@@ -210,6 +211,17 @@
     cursor: pointer;
     background-color: var(--gray-light-color);
     color: var(--white-color);
+    transition: 0.2s;
+}
+
+.content_tail .content_writer_wallet:active{
+    color: var(--white-color);
+    opacity: 1;
+    
+}
+
+.content_tail .content_writer_wallet:active{
+    color: var(--black-color);
 }
 
 .content_tail .content_writer_wallet .content_writer_address{
@@ -217,6 +229,30 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.content_tail .content_writer_wallet::after{
+    content: "copy";
+    position:absolute;
+    padding:0.2rem 0.5rem;
+    top: -105%;
+    left: 30%;
+    background-color: var(--black-color);
+    border-radius: 1rem;
+    opacity: 0;
+    
+}
+
+.content_tail .content_writer_wallet:hover::after{
+    color: var(--white-color);
+    opacity: 1;
+    transition: 0.2s;
+}
+
+.content_tail .content_writer_wallet:active::after{
+    color: var(--black-color);
+}
+
+
 
 /* 상세 맵 */
 .detail_section .detail_location_wrapper .detail_location_name{
