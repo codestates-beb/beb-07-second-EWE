@@ -24,7 +24,7 @@ const Pagination = ({props,user}) => {
     const [pagination, setPagination] = useState(null)
     const [page, setPage] = useState(1)
     const [limit, setLimit] = useState(10)
-    
+
     let numPages =()=>{
         if(pagination!==null && pagination!==undefined) {
             let num = Math.ceil(pagination.totalNum.totalNum/limit)
