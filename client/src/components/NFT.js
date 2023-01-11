@@ -9,8 +9,6 @@ const NFT = ({nft}) => {
     const [metadata, setMetadata] = useState(null);
 
     useEffect(()=>{
-        console.log(nft)
-
         getNftMetadata(nft.metadata)
         .then(metadata=>{
             setMetadata(metadata);
