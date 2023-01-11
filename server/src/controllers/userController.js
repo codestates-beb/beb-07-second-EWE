@@ -386,4 +386,30 @@ module.exports = {
       return next(err);
     }
   },
+
+  updateUserinfo: async (req, res, next) => {
+    const { userId } = req.params;
+    try {
+      const currentUserinfo = await users.findOne({ where: { id: userId } });
+      if (currentUserinfo.login_provider === 'local') {
+        let { password, nickname } = req.body;
+        if (!password) password = currentUserinfo.password;
+        if (!nickname) nickname = currentUserinfo.nickname;
+        await users.update({ password, nickname }, { where: { id: userId } });
+        const updatedUserinfo = await users.findOne({ where: { id: userId } });
+        return res.status(200).json(updatedUserinfo);
+      }
+      if (currentUserinfo.login_provider === 'naver') {
+        let { nickname } = req.body;
+        if (!nickname) nickname = currentUserinfo.nickname;
+        await users.update({ nickname }, { where: { id: userId } });
+        const updatedUserinfo = await users.findOne({ where: { id: userId } });
+        return res.status(200).json(updatedUserinfo);
+      }
+      return res.status(400).send({ message: 'invalid user' });
+    } catch (err) {
+      console.log(err);
+      return next(err);
+    }
+  },
 };
