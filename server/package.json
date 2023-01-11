@@ -26,6 +26,7 @@
     "multer-s3": "^2.10.0",
     "mysql2": "^2.3.3",
     "pm2": "^5.2.2",
+    "request": "^2.88.2",
     "sequelize": "^6.28.0",
     "sequelize-cli": "^6.5.2",
     "vitest": "^0.26.3",

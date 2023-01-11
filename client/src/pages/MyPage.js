@@ -27,9 +27,9 @@ const MyPage = ({user, posts, nfts}) => {
 
     return(
         <div>
-            <a href='/write' className='write'>
+            <Link to='/write' className='write'>
                 <img className='post_button' src={require('../assets/image/post_2.png')}></img>
-            </a>
+            </Link>
             <div className='category narrow'>
             <i className="fa-solid fa-caret-down" onClick={()=>{SetResponsibleToggle(!responsibleToggle)}}>
                 </i>

@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from "react-router-dom";
 
 //apis
-import {signupUser} from "../apis/user"
+import {localSignupUser} from "../apis/user"
 
 //css
 import '../assets/css/signup.css'
@@ -63,7 +63,7 @@ const SignupPage = () => {
             password: password 
         };
 
-        const signupResult = await signupUser(userInfo);
+        const signupResult = await localSignupUser(userInfo);
         
         if (signupResult.status === 200){
             console.log(signupResult.data)
