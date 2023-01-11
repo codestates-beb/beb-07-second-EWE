@@ -11,6 +11,8 @@ import {
     naverLoginUser,
 } from "../apis/user";
 
+import { transferToken } from "../apis/token";
+
 // actions
 import {setAuth, resetAuth } from "../feature/authSlice";
 
@@ -19,14 +21,20 @@ import '../assets/css/header.css'
 import '../assets/css/modal.css'
 
 const Header = ({user, liftUser}) => {
+    // Header State Var
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
     const [sidebarModalIsOpen, setSidebarModalIsOpen] = useState(false);
     const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
 
+    // Login Global State Redux
     const isLogin = useSelector((state)=>state.auth.isLogin);
     const accessToken = useSelector((state)=>state.auth.accessToken);
     const dispatch = useDispatch();
+
+    // Token Transfer State Var
+    const [recepient, setRecepient] = useState("");
+    const [amount, setAmount] = useState("")
 
     const closeLoginModal=()=>{
         setLoginModalIsOpen(!loginModalIsOpen)
@@ -50,6 +58,12 @@ const Header = ({user, liftUser}) => {
         } catch{
             console.log("login failed");
         }
+    }
+
+    const tokenTransferButtonHandler = async ()=>{
+        const isSuccess = await transferToken(recepient, amount)
+        if (isSuccess === true) console.log("success");
+        else console.log("failed");
     }
 
     const loginEnterHandler= (e)=>{
@@ -144,13 +158,23 @@ const Header = ({user, liftUser}) => {
                         <h2>Token Transfer</h2>
                         <div className="receivers_address">
                             <h4>Receiver's Address</h4>
-                            <input></input>
+                            <input onChange={e=>{setRecepient(e.target.value)}}/>
                         </div>
                         <div className="amount">
                             <h4>Amount</h4>
-                            <input></input>
+                            <input 
+                                onChange={e=>{
+                                    const { value } = e.target;
+                                    const onlyNumber = value.replace(/[^0-9]/g, '');
+                                    setAmount(onlyNumber);}
+                                }
+                                value={amount}
+                            />
                         </div>
-                        <div className='transaction'>
+                        <div 
+                            className='transaction'
+                            onClick={tokenTransferButtonHandler}
+                        >
                             <h2>Transaction</h2>
                         </div>
                     </div>
@@ -166,7 +190,10 @@ const Header = ({user, liftUser}) => {
                             <h4>Amount</h4>
                             <input></input>
                         </div>
-                        <div className='transaction'>
+                        <div 
+                            className='transaction'
+                            
+                        >
                             <h2>Transaction</h2>
                         </div>
                     </div>
