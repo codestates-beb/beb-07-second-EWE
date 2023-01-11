@@ -268,7 +268,15 @@ module.exports = {
         offset: Number(offset),
         limit: Number(limit),
       });
-      const totalNum = filteredPosts.length;
+      const filteredPostsWithoutLimit = await posts.findAll({
+        where: {
+          [Op.or]: [
+            { title: { [Op.like]: `%${search}%` } },
+            { content: { [Op.like]: `%${search}%` } },
+          ],
+        },
+      });
+      const totalNum = filteredPostsWithoutLimit.length;
       return res.status(200).json({ posts: filteredPosts, totalNum });
     } catch (err) {
       console.log(err);
