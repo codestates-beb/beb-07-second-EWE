@@ -45,6 +45,7 @@
     width: 100%;
 }
 .post_button{
+    margin-top: 20px;
     position: relative;;
     background-color: var(--onPrimary-color);
     width: 100%;
@@ -134,19 +135,24 @@
 }
 
 .post_list{
-    padding: 2% 5% 10% 5%;
+    padding: 2% 2% 10% 2%;
     height: 100%;
     background-color: var(--Secondary-color);
     align-items: center;
+    text-align: center;
+
 }
 .post_list:hover .post_head h2{
     color: var(--Primary-color);
     
 }
 .nft_list{
+    padding: 2% 5% 10% 5%;
+
     height: 100%;
     background-color: var(--Secondary-color);
     align-items: center;
+    text-align: center;
 }
 .nft_list:hover .nft_head h2{
     color: var(--Primary-color);
@@ -159,7 +165,7 @@
 }
 .post_wrapper,  .nft_wrapper{
     padding: 1%;
-    min-height: 850px;
+    min-height: 700px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(20%, 1fr) );
     margin: 0;
@@ -215,7 +221,7 @@
 .footer .project:hover,.footer .team:hover{
     opacity: 1;
 }
-.main .pagination  {
+.pagination  {
     margin: 2% auto 1% auto;
     align-items: center;
     display: flex;
@@ -281,7 +287,7 @@ select{
 
 
 }
-@media screen and (max-width: 768px){
+@media screen and (max-width: 820px){
     .post_wrapper,  .nft_wrapper{
         padding: 2%;
         display: grid;

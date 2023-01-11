@@ -10,8 +10,8 @@ const MyPage = ({user}) => {
 
     return(
         <div>
-            <Link to='/write' className='write'>
-                <img className='post_button' src={require('../assets/image/post_2.png')}></img>
+            <Link to='/mypage'>
+                <img className='post_button' src={require('../assets/image/mypage.png')}></img>
             </Link>
             <div className='category narrow'>
             <i className="fa-solid fa-caret-down" onClick={()=>{SetResponsibleToggle(!responsibleToggle)}}>
@@ -52,10 +52,7 @@ const MyPage = ({user}) => {
             }
             </div>
             <div className='mypage'>
-            <Link to='/mint' className='mint'>
-                <img className='post_button' src={require('../assets/image/mint.png')}>
-                </img>
-            </Link>
+
 
             <h1 className='my_assets'>My NFTs</h1>
             {
@@ -65,6 +62,15 @@ const MyPage = ({user}) => {
             />
             }
             </div>
+            <Link to='/write' className='mint'>
+                <img className='post_button' src={require('../assets/image/post_2.png')}>
+                </img>
+            </Link>
+            <Link to='/mint' className='mint'>
+                <img className='post_button' src={require('../assets/image/mint.png')}>
+                </img>
+            </Link>
+
             <img className='post_button' src={require('../assets/image/bottom.png')}/>
         </div>
     );

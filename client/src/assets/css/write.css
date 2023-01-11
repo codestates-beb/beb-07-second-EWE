@@ -4,8 +4,8 @@
 }
 
 .write_wrapper{
-    margin: auto;
-
+    margin: 10% auto;
+    
     justify-content: center;
     width: 600px;
 }
@@ -150,8 +150,9 @@
 /* 작성글 버튼 */
 
 .write_wrapper .btn_group{
-    display: flex;
-    margin-bottom: 2rem;
+    display: block;
+    margin: auto;
+    width: 600px;
 }
 
 .write_wrapper .btn_group button{
@@ -165,12 +166,18 @@
 }
 
 .write_wrapper .btn_group .btn_submit{
+    border: 1px solid var(--white-color);
+
+    color: var(--white-color);
+    width: 50%;
     border-top-right-radius: 0.5rem;
     border-bottom-right-radius: 0.5rem;
     background-color: var(--Primary-color);
 }
 
 .write_wrapper .btn_group .btn_cancel{
+    border: 1px solid var(--white-color);
+    width: 50%;
     border-top-left-radius: 0.5rem;
     border-bottom-left-radius: 0.5rem;
     background-color: var(--Secondary-color);

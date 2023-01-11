@@ -1,19 +1,4 @@
 
-.pagination .pagination_button{
-    /* margin: auto;
-    padding: 0 2%;
-    width: 40%;
-    height: 40px;    
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid var(--white-color);
-    border-radius: 50px; */
-
-}
-.pagination div{  
-    margin: 3%;
-}
 
 .pagination div i{
     transform: scale(1);
