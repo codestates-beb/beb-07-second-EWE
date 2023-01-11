@@ -9,13 +9,31 @@ const POSTREWARD = '10000000000000000';
 module.exports = {
   getAllposts: async (req, res) => {
     const { offset, limit } = req.query;
-    if (!offset || !limit) {
-      return res.status(400).json({
-        message: 'offset and limit query parameters needed', 
-        data: null,
-      });
-    }
     try {
+      // without query params
+      if (!offset || !limit) {
+        const allPosts = await posts.findAll({
+          include: [
+            {
+              model: users,
+              attributes: ['id', 'wallet_account', 'nickname'],
+            },
+            {
+              model: images,
+              attributes: ['uri'],
+            },
+          ],
+        });
+        const postCounts = await posts.findAll({
+          attributes: [
+            [sequelize.fn('COUNT', sequelize.col('id')), 'totalNum'],
+          ],
+        });
+        return res
+          .status(200)
+          .json({ posts: allPosts, totalNum: postCounts[0] });
+      }
+      // with query params
       const allPosts = await posts.findAll({
         include: [
           {
