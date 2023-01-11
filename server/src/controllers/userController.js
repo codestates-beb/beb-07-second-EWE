@@ -235,7 +235,13 @@ module.exports = {
           .json({ message: 'no refresh token provied', status: 'ok' });
       }
 
-      res.clearCookie('refreshToken');
+      res.clearCookie('refreshToken', {
+        sameSite: 'none',
+        secure: true,
+        maxAge: 1,
+        httpOnly: true,
+      });
+
       return res.status(200).json({
         message: 'refresh Token now removed from cookie',
         status: 'ok',
@@ -245,6 +251,7 @@ module.exports = {
       return next(err);
     }
   },
+
   my: async (req, res, next) => {
     try {
       if (!req.decoded) {

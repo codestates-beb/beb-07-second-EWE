@@ -14,7 +14,7 @@ const Post = ({post}) => {
         }
     }
     return(
-        <Link to={'/post/'+ post.id }className="asset_container">
+        <Link to={'/post/'+ post.id } className="asset_container">
             <div>
                 <div className='user1'>
                     <div className="user_img">

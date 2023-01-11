@@ -1,6 +1,6 @@
 // modules
 import {useState, useEffect} from "react";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, Link} from "react-router-dom";
 import {useParams} from "react-router-dom";
 import {Swiper, SwiperSlide} from "swiper/react";
 import {Navigation} from "swiper";
@@ -24,12 +24,11 @@ function convertDate(date){
 }
 
 const PostDetailPage = () => {
-    const navigator = useNavigate(-1);
+    const navigator = useNavigate();
 
     const {postId} = useParams()
     const [post, setPost] = useState(null);
     const [user, setUser] = useState(null);
-    const [store, setStore] = useState("");
 
     const [isLike, setIsLike] = useState(false);
     const [isDropdownView, setIsDropdownView] = useState(false)
@@ -50,13 +49,11 @@ const PostDetailPage = () => {
         setIsDropdownView(!isDropdownView);
     }
 
-    const liftStore = (store)=>{
-        setStore(store);
-    }
-
     useEffect(()=>{
         (async()=>{
             const result = await getPostOne(postId);
+
+            if (result.status === 500) navigator("/404");
 
             setPost(result);
             setUser(result.user);
@@ -65,6 +62,7 @@ const PostDetailPage = () => {
 
     return(
         <div>
+
             {post? 
             <>
             <div className="detail_image_wrapper">
@@ -143,10 +141,16 @@ const PostDetailPage = () => {
                     </div>
                     <div className="detail_map_wrapper">
                         <Wrapper apiKey={process.env.REACT_APP_GOOGLE_API_KEY} libraries={["places"]}>
-                            <DetailGoogleMap liftStore={liftStore}/>
+                            <DetailGoogleMap location={post.location}/>
                         </Wrapper>
                     </div>
+                    
                 </div>
+                <Link to='/write' className='write'>
+                <img className='post_button' src={require('../assets/image/post_2.png')}>
+                </img>
+            </Link>
+
             </div>
             </>
             :<></>}

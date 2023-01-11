@@ -1,5 +1,5 @@
 
-.pagination{
+.pagination .pagination_button{
     /* margin: auto;
     padding: 0 2%;
     width: 40%;
@@ -11,12 +11,10 @@
     border-radius: 50px; */
 
 }
-.pagination div{
-    
+.pagination div{  
     margin: 3%;
 }
-.pagination div :hover{
-}
+
 .pagination div i{
     transform: scale(1);
     transition: 0.5s;
