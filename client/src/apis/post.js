@@ -18,9 +18,12 @@ export const getPosts = async()=>{
 export const getPostOne = async (id)=>{
     const requestURL = getPostOneURL + id;
     const post = await axios.get(requestURL)
-    .then(res=>res.data)
-    .catch(console.log);
-    return post
+    .then(res=>{
+        if (res.status === 200) return res.data;
+    })
+    .catch(err=>err.response);
+
+    return post;
 }
 
 export const createReview = async(review, accessToken)=>{
