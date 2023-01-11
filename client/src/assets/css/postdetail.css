@@ -163,6 +163,12 @@
     height:100%;
 }
 
+.detail_header .detail_header_row .detail_title.detail_update{
+    border:none;
+    border-bottom: 1px solid var(--gray-light-color);
+    outline:none;
+}
+
 /* 상세내용 */
 .detail_section .detail_content_wrapper {
     padding-bottom: 1rem;
@@ -172,6 +178,13 @@
 .detail_section .detail_content_wrapper .detail_content{
     min-height: 300px;
     padding: 0 0.5rem;
+}
+
+.detail_content_wrapper .detail_content.detail_update{
+    width: 100%;
+    resize: none;
+    outline:none;
+    border:none;
 }
 
 .detail_section .detail_content_wrapper .content_tail{
