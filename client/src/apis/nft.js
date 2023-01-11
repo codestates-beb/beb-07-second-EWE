@@ -26,6 +26,7 @@ export const getNfts = async(offset, limit)=>{
 
 export const getNftsByUser = async(offset, limit, userId)=>{
     const requestURL = new URL(`${getNftsByUserURL}/${userId}/nfts`);
+    const params = requestURL.searchParams;
 
     if (offset > -1 && limit > 0) {
         params.append("offset", offset);
