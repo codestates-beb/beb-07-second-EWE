@@ -1,5 +1,5 @@
 // modules
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useState, useEffect }  from "react";
 import NFTList  from  '../components/NFTList'
 
@@ -56,7 +56,7 @@ const NFTDetail = () =>{
         console.log(metadata);
     }, [metadata])
 
-
+    const navigator = useNavigate()
 
 
     return(
@@ -126,7 +126,8 @@ const NFTDetail = () =>{
                     </button>
             </div>
                 
-
+            <img className='post_button' src={require('../assets/image/bottom.png')} onClick={()=>navigator(-1)}>
+                </img>
         </div>
     )
 }
