@@ -9,6 +9,7 @@ import {
     localLoginUser, 
     logoutUser,
     naverLoginUser,
+    updateUser,
 } from "../apis/user";
 
 import { transferToken } from "../apis/token";
@@ -19,6 +20,7 @@ import {setAuth, resetAuth } from "../feature/authSlice";
 // css
 import '../assets/css/header.css'
 import '../assets/css/modal.css'
+
 
 const Header = ({user, liftUser}) => {
     // Header State Var
@@ -36,6 +38,15 @@ const Header = ({user, liftUser}) => {
     const [recepient, setRecepient] = useState("");
     const [amount, setAmount] = useState("")
 
+    // Update Mode
+    const [updateMode, setUpdateMode] = useState(false);
+
+    const [emailToUpdate, setEmailToUpdate] = useState("");
+    const [nicknameToUpdate, setNicknameToUpdate] = useState("");
+    const [passwordToUpdate, setPasswordToUpdate] = useState("");
+    const [passwordToVerify, setPasswordToVerify] = useState("");
+
+
     const closeLoginModal=()=>{
         setLoginModalIsOpen(!loginModalIsOpen)
     }
@@ -48,10 +59,35 @@ const Header = ({user, liftUser}) => {
         } catch (e) {
         }
     };
+
+    const userUpdateSubmitButtonHandler= async()=>{
+        if (!isLogin) return;
+
+        const userInfoToUpdate = {}
+        if (passwordToUpdate.length > 0){
+            if(passwordToUpdate !== passwordToVerify) return;
+            userInfoToUpdate.password = passwordToUpdate;
+        }
+
+        if (emailToUpdate.length > 0){
+            userInfoToUpdate.email = emailToUpdate;
+        }
+
+        if (nicknameToUpdate.length > 0)
+            userInfoToUpdate.nickname = nicknameToUpdate;
+
+        const userUpdated = await updateUser(userInfoToUpdate, user.id)
+        .then(result=>result)
+        .catch(err=>err);
+
+        if(!userUpdated) return;
+        liftUser(userUpdated);
+        setUpdateMode(false);
+    }
+
     const loginFunc = async()=>{
         try{
             const result = await localLoginUser({email, password})
-            console.log(result);
             liftUser(result.data.user);
             dispatch(setAuth({accessToken: result.data.accessToken}));
             setLoginModalIsOpen(false);
@@ -123,34 +159,75 @@ const Header = ({user, liftUser}) => {
                 }}
             >
                 <div className='modal_sidebar'>
-                    <i className="fas fa-xmark" onClick={()=>closeSidebarModal()}></i>
-
+                    <div className="sidebar_head">
+                        <i className="fas fa-xmark" onClick={()=>{closeSidebarModal(); setUpdateMode(false)}}></i>
+                        {updateMode ?
+                            <button className="user_submit" onClick={userUpdateSubmitButtonHandler}>Submit</button>
+                            :
+                            <button className="user_edit" onClick={()=>{setUpdateMode(true)}}>Edit</button>
+                        }
+                    </div>
                     <div className='user_info'>
                         <div className='sidebar_user user_info_1'>
-                            <h2>User Information</h2>
-                            <div className="nickname">
-                                <h3>Nickname</h3>
-                                {user===null?<div>Guest</div>:user.nickname}
-                            </div>
-                            <div className="email">
-                                <h3>Email</h3>
-                                {user===null?<div>-</div>:user.email}
-                            </div>
-                            <div className="wallet_account">
-                                <h3>Wallet Account</h3>
-                                <div className='account'>
-                                    <p>{user===null?<div>-</div>:user.wallet_account}</p>
-                                    <button onClick={() => {handleCopyClipBoard(user.wallet_account)}}>copy</button>
+                                <h2>User Information</h2>
+                            {!updateMode ?
+                                <>
+                                <div className="nickname">
+                                    <h3>Nickname</h3>
+                                    {user===null?<div>Guest</div>:user.nickname}
                                 </div>
-                            </div>
-                            <div className="eth">
-                                <h3>Balance</h3>
-                                {user===null?<div>0</div>:user.eth}ETH
-                            </div>
-                            <div className="erc20">
-                                <h3>Token</h3>
-                                {user===null?<div>0</div>:user.erc20}
-                            </div>
+                                <div className="email">
+                                    <h3>Email</h3>
+                                    {user===null?<div>-</div>:user.email}
+                                </div>
+                                <div className="wallet_account">
+                                    <h3>Wallet Account</h3>
+                                    <div className='account'>
+                                        <p>{user===null?<div>-</div>:user.wallet_account}</p>
+                                        <button onClick={() => {handleCopyClipBoard(user.wallet_account)}}>copy</button>
+                                    </div>
+                                </div>
+                                <div className="eth">
+                                    <h3>Balance</h3>
+                                    {user===null?<div>0</div>:user.eth}ETH
+                                </div>
+                                <div className="erc20">
+                                    <h3>Token</h3>
+                                    {user===null?<div>0</div>:user.erc20}
+                                </div>
+                                </>
+                            :
+                                <>
+                                <div className="nickname">
+                                    <h3>Nickname</h3>
+                                    <input 
+                                        value={nicknameToUpdate}
+                                        onChange={e=>{setNicknameToUpdate(e.target.value)}}
+                                    />
+                                </div>
+                                <div className="email">
+                                    <h3>Email</h3>
+                                    <input 
+                                        value={emailToUpdate}
+                                        onChange={e=>{setEmailToUpdate(e.target.value)}}
+                                    />
+                                </div>
+                                <div className="password">
+                                    <h3>Password</h3>
+                                    <input
+                                        value={passwordToUpdate}
+                                        onChange={e=>{setPasswordToUpdate(e.target.value)}}
+                                    />
+                                </div>
+                                <div className="password_check">
+                                    <h3>Password Check</h3>
+                                    <input
+                                        value={passwordToVerify}
+                                        onChange={e=>{setPasswordToVerify(e.target.value)}}
+                                    />
+                                </div>
+                                </>
+                            }
                     </div>
                 </div>
                 <div className='sidebar_user user_info_2'>
