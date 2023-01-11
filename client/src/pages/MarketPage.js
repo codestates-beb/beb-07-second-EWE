@@ -8,7 +8,7 @@ import { mintNFT, mintNTF } from "../apis/nft";
 
 // components
 import NFTList from '../components/NFTList';
-import Footer from "../components/Footer";
+import Pagination from "../components/Pagination";
 
 // css
 import '../assets/css/market.css';
@@ -30,10 +30,6 @@ const MarketPage = ({nfts}) => {
 
     const [previewImage, setPreviewImage] = useState();
 
-    const[nftLimit, setNftLimit] = useState(4);
-    const[nftPage, setNftPage] = useState(1);
-    const nftOffset = (nftPage - 1) * nftLimit
-    let numNftPages = Math.ceil(nfts.length/nftLimit)
 
     const imageChangeHandler = (e)=>{
         const file = e.target.files[0];
@@ -72,7 +68,7 @@ const MarketPage = ({nfts}) => {
     }
 
     return(
-        <>
+        
         <div className='market'>
 
             <Link to='/market' className='market'>
@@ -151,44 +147,13 @@ const MarketPage = ({nfts}) => {
                 <div className="section_title">
                     <h1>NFTs</h1>
                 </div>
-                <NFTList
-                nftLimit={nftLimit}
-                nftOffset={nftOffset}
-                nfts={nfts}
+                {
+                <Pagination
+                    props={'nfts'}
+                    user={''}
                 />
-                <div className='pagination'>
-                    {/* <select 
-                        type = 'number'
-                        value={nftLimit}
-                        onChange={({target: {value}})=> setNftLimit(Number(value))}>
-                        <option value='4'>4</option>
-                        <option value='10'>10</option>
-                        <option value='15'>15</option>
-                        <option value='30'>30</option>
-                        <option value='100'>100</option>
-                    </select> */}
-                    <button onClick={()=> setNftPage( nftPage - 1 )} disabled = {nftPage === 1}>
-                        <i className='fas fa-left-long'></i>
-                    </button>
-                        {Array(numNftPages)
-                        .fill()
-                        .map((_,i) => (
-                            <button
-                            className='pagination_num'
-                            key = {i + 1}
-                            onClick={()=>setNftPage( i + 1 )}
-                            aria-current = {nftPage !== i + 1 ? "page" : null}
-                            >
-                            { i + 1 }
-                            </button>
-                            ))
-                        }
-                        <button onClick={()=> setNftPage( nftPage + 1 )}      disabled = {nftPage === numNftPages}>
-                        <i className='fas fa-right-long'></i>
-                    </button>
-                </div>
-            </div>
-            
+                }    
+                </div>        
             <div className="footer">
                 <img className='post_button' src={require('../assets/image/bottom.png')}>
                 </img>
@@ -231,7 +196,7 @@ const MarketPage = ({nfts}) => {
 
 
         </div>
-        </>
+
     );
 }
 export default MarketPage;
