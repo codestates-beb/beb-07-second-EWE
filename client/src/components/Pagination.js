@@ -50,61 +50,58 @@ const Pagination = ({props,user}) => {
     }, [page])
 
     return(
-        <div>
-            {props==='posts'?
-            <div className='post_wrapper'>
-            {  
+        <div className='post_wrapper'>
+                <div className='pagination'>
+    
+    <select 
+        type = 'number'
+        value={limit}
+        onChange={({target: {value}})=> setLimit(Number(value))}>
+        <option value='5'>5</option>
+        <option value='10'>10</option>
+        <option value='15'>15</option>
+        <option value='30'>30</option>
+        <option value='100'>100</option>
+    </select>
+    <button onClick={()=> setPage( page - 1 )} disabled = {page === 1}>
+            <i className='fas fa-left-long'></i>
+    </button>            
+    {Array(numPages()).fill().map((_,i) => {
+
+    <button
+    className='pagination_num'
+    key = {i + 1}
+    onClick={()=>setPage( i + 1 )}
+    aria-current = {page !== i + 1 ? "page" : null}
+    >
+    {console.log(i)}
+    { i + 1 }
+    </button>
+    })}    
+    <button onClick={()=> setPage( page + 1 )} disabled = {page === numPages()}>
+            <i className='fas fa-right-long'></i>
+            </button>
+</div>
+
+        {props==='posts'?
+            
             props===null||pagination === null?<></>:
             
                 pagination.posts.map((post)=>{
                 return (<Post key={post.id} post={post} user={user}/>)
                 })
             
-            }
-            </div>
+            
             :
-            <div className='post_wrapper'>
-            {  
+
             props===null||pagination === null?<></>:
             
                 pagination.nfts.map((nft)=>{
                 return (<NFT key={nft.id} nft={nft} user={user}/>)
                 })
             
-            }
-            </div>            } 
+        } 
 
-        <div className='pagination'>
-    
-            <select 
-                type = 'number'
-                value={limit}
-                onChange={({target: {value}})=> setLimit(Number(value))}>
-                <option value='5'>5</option>
-                <option value='10'>10</option>
-                <option value='15'>15</option>
-                <option value='30'>30</option>
-                <option value='100'>100</option>
-            </select>
-            <button onClick={()=> setPage( page - 1 )} disabled = {page === 1}>
-                    <i className='fas fa-left-long'></i>
-            </button>            
-            {Array(numPages()).fill().map((_,i) => {
-
-            <button
-            className='pagination_num'
-            key = {i + 1}
-            onClick={()=>setPage( i + 1 )}
-            aria-current = {page !== i + 1 ? "page" : null}
-            >
-            {console.log(i)}
-            { i + 1 }
-            </button>
-            })}    
-            <button onClick={()=> setPage( page + 1 )} disabled = {page === numPages()}>
-                    <i className='fas fa-right-long'></i>
-                    </button>
-        </div>
         </div>
     );
 }
