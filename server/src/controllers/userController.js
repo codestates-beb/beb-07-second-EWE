@@ -150,19 +150,16 @@ module.exports = {
       const targetNFT = await nfts.findOne({ where: { token_id: newUser.id } });
       if (targetNFT) {
         console.log('welcome nft presented to user!');
-        await giveWelcomeNFT(address, newUser.id);
-        await targetNFT.update({
-          user_id: newUser.id,
-        });
+        giveWelcomeNFT(address, newUser.id);
       }
+      // below feature migrated to block listener
+      // const tokenBalance = await getTokenBalance(address);
+      // const etherBalance = await getEtherBalance(address);
 
-      const tokenBalance = await getTokenBalance(address);
-      const etherBalance = await getEtherBalance(address);
-
-      await newUser.update({
-        eth: etherBalance,
-        erc20: tokenBalance,
-      });
+      // await newUser.update({
+      //   eth: etherBalance,
+      //   erc20: tokenBalance,
+      // });
       return res.status(200).json(newUser);
     } catch (err) {
       console.error(err);
