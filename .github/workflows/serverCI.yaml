@@ -1,4 +1,4 @@
-name: Dockerize And Push To Docker Hub
+name: serverCI
 
 on:
   workflow_dispatch:
