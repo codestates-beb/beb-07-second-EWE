@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 const jwt = require('jsonwebtoken');
-const { users, nfts, posts, images } = require('../models');
+const { users, nfts, posts, images, sequelize } = require('../models');
 const { createAccount } = require('../chainUtils/accountUtils');
 const { getEtherBalance, useEtherFaucet } = require('../chainUtils/etherUtils');
 const {
@@ -57,16 +57,42 @@ module.exports = {
 
   getNfts: async (req, res) => {
     const { userId } = req.params;
-    const userNft = await nfts.findAll({
-      where: { user_id: userId },
-    });
+    const { offset, limit } = req.query;
     try {
+      // without query params
+      if (!offset || !limit) {
+        const userNft = await nfts.findAll({
+          where: { user_id: userId },
+        });
+        if (userNft === null) {
+          return res
+            .status(400)
+            .send({ data: null, message: 'No minted nft or invalid user' });
+        }
+        const userNftCounts = await nfts.findAll({
+          attributes: [
+            [sequelize.fn('COUNT', sequelize.col('id')), 'totalNum'],
+          ],
+          where: { user_id: userId },
+        });
+        return res.status(200).json({ nfts: userNft, totalNum: userNftCounts });
+      }
+      // with query params
+      const userNft = await nfts.findAll({
+        where: { user_id: userId },
+        offset: Number(offset),
+        limit: Number(limit),
+      });
       if (userNft === null) {
         return res
           .status(400)
           .send({ data: null, message: 'No minted nft or invalid user' });
       }
-      return res.status(200).json(userNft);
+      const userNftCounts = await nfts.findAll({
+        attributes: [[sequelize.fn('COUNT', sequelize.col('id')), 'totalNum']],
+        where: { user_id: userId },
+      });
+      return res.status(200).json({ nfts: userNft, totalNum: userNftCounts });
     } catch (err) {
       console.log(err);
       return res.status(500).send({ data: null, message: 'server error' });
@@ -74,32 +100,67 @@ module.exports = {
   },
 
   getPostsByUserId: async (req, res) => {
-    // 사진 관련해서 수정 필요
-    // const imgUrlPrefix = `http://${req.headers.host}/images/`;
-    // console.log(imgUrlPrefix);
     const { userId } = req.params;
-    const userPosts = await posts.findAll({
-      include: [
-        {
-          model: users,
-          attributes: ['id', 'wallet_account', 'nickname'],
-        },
-        {
-          model: images,
-          attributes: ['uri'],
-        },
-      ],
-      where: { user_id: userId },
-    });
-    // console.log(userPosts);
-
+    const { offset, limit } = req.query;
     try {
+      // without query params
+      if (!offset || !limit) {
+        const userPosts = await posts.findAll({
+          include: [
+            {
+              model: users,
+              attributes: ['id', 'wallet_account', 'nickname'],
+            },
+            {
+              model: images,
+              attributes: ['uri'],
+            },
+          ],
+          where: { user_id: userId },
+        });
+        if (userPosts === null) {
+          return res
+            .status(400)
+            .send({ data: null, message: 'No updated posts or invalid user' });
+        }
+        const userPostCounts = await posts.findAll({
+          attributes: [
+            [sequelize.fn('COUNT', sequelize.col('id')), 'totalNum']
+          ],
+          where: { user_id: userId },
+        });
+        return res
+          .status(200)
+          .json({ posts: userPosts, totalNum: userPostCounts[0] });
+      }
+      // with query params
+      const userPosts = await posts.findAll({
+        include: [
+          {
+            model: users,
+            attributes: ['id', 'wallet_account', 'nickname'],
+          },
+          {
+            model: images,
+            attributes: ['uri'],
+          },
+        ],
+        where: { user_id: userId },
+        offset: Number(offset),
+        limit: Number(limit),
+      });
       if (userPosts === null) {
         return res
           .status(400)
           .send({ data: null, message: 'No updated posts or invalid user' });
       }
-      return res.status(200).json(userPosts);
+      const userPostCounts = await posts.findAll({
+        attributes: [[sequelize.fn('COUNT', sequelize.col('id')), 'totalNum']],
+        where: { user_id: userId },
+      });
+      return res
+        .status(200)
+        .json({ posts: userPosts, totalNum: userPostCounts[0] });
     } catch (err) {
       console.log(err);
       return res.status(500).send({ data: null, message: 'server error' });
