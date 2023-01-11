@@ -61,7 +61,7 @@ const Header = ({user, liftUser}) => {
     }
 
     const tokenTransferButtonHandler = async ()=>{
-        const isSuccess = await transferToken(recepient, amount)
+        const isSuccess = await transferToken(recepient, amount, accessToken)
         if (isSuccess === true) console.log("success");
         else console.log("failed");
     }
@@ -226,7 +226,7 @@ const Header = ({user, liftUser}) => {
                             {/* <img src='{userImg}'></img> */}
                         </div>
                         <div className="userTab">
-                            <h3>{user.nickname}</h3>
+                            <h3>{user===null?"":user.nickname}</h3>
                             <Link to="/mypage">My Page</Link>
                             <Link to="/market">NFT Market</Link>
                             <Link to="/">ETH Faucet</Link>
