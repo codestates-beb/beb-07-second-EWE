@@ -13,6 +13,7 @@
     background-color: var(--white-color);
 }
 
+
 .market .pagination :hover{
     background-color: var(--white-color);
     border-radius: 20px;
@@ -230,12 +231,13 @@
 @media screen and (min-width: 700px){
 
 
-    .market .nft_wrapper{
+    .market .post_wrapper{
+        display: grid;
         grid-template-columns: repeat(auto-fill, minmax(50%, 1fr) );
     }
     .market .market_section{
-        margin: 10%;
-        width: 80%;
+        margin: 2.5%;
+        width: 95%;
     }
     .market {
         display: block;
@@ -251,7 +253,7 @@
         display: flex;
         justify-content: center;
     }
-
+    
 }
 @media screen and (min-width: 1250px){
         .market{
@@ -264,5 +266,17 @@
         margin: 1%;
         width: 45%;
     }
+    .market .post_wrapper{
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(50%, 1fr) );
+    }
+
+}
+@media screen and (min-width: 1450px){
+
+.market .post_wrapper{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(30%, 1fr) );
+}
 
 }

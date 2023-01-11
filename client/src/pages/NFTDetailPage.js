@@ -16,18 +16,7 @@ const NFTDetail = () =>{
     const [metadata, setMetadata] = useState(null);
     // const [isLoading, setIsLoading] = useState(true);
     // const [user, setUser] = useState(null);
-    const [nfts,setNfts] = useState([])
-    const[nftLimit, setNftLimit] = useState(10);
-    const[nftPage, setNftPage] = useState(1);
-    const nftOffset = (nftPage - 1) * nftLimit
-    let numNftPages = Math.ceil(nfts.length/nftLimit)
 
-    useEffect(()=>{
-        getNfts()
-            .then((result)=>{
-                setNfts(result)
-            })
-    },[]);
 
     useEffect(()=>{
         (async()=>{
@@ -64,7 +53,7 @@ const NFTDetail = () =>{
 
     return(
         <div className="nft_detail">
-            <Link to='/mint' className='mint'>
+            <Link to='/market' className='market'>
                 <img className='post_button' src={require('../assets/image/mint.png')}>
                 </img>
             </Link>
