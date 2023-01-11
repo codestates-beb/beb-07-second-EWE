@@ -41,9 +41,6 @@ const MainPage = ({user}) => {
                 </Link>
             </div>
             <div className='post_list'>
-            <div className='post_head'>
-                <h2>Popular Dishes</h2>
-            </div>
 
                 {
                 <Pagination
@@ -56,10 +53,9 @@ const MainPage = ({user}) => {
                 </img>
                 </Link>
 
-                <div className='nft_list'>
-                <div className='nft_head'>
-                    <h2>NFTs</h2>
-                </div>
+
+        </div>
+        <div className='nft_list'>
                 {
                 <Pagination
                     props={'nfts'}
@@ -67,8 +63,6 @@ const MainPage = ({user}) => {
                 />
                 }
             </div>
-        </div>
-
             <Footer/>
             <div className='under_footer'></div>
 
