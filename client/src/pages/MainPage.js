@@ -1,50 +1,11 @@
 import '../assets/css/main.css'
 import Footer from '../components/Footer'
-import PostList from '../components/PostList'
-import NFTList  from  '../components/NFTList'
 import Pagination from '../components/Pagination'
-import {postPagination} from '../apis/post'
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getNfts } from '../apis/nft';
-import { getPosts } from '../apis/post';
 
 const MainPage = ({user}) => {
-    const [posts, setPosts]=useState(null)
-    const[postLimit, setPostLimit] = useState(10);
-    const[postPage, setPostPage] = useState(1);
     const [responsibleToggle,SetResponsibleToggle] = useState(false)
-    const postOffset = (postPage - 1) * postLimit
-    let numPostPages =()=>{
-        if(posts!==null) return Math.ceil(posts.posts.totalNum/postLimit)
-    }
-    const[nfts,setNfts] = useState(null)
-    const[nftLimit, setNftLimit] = useState(10);
-    const[nftPage, setNftPage] = useState(1);
-    const nftOffset = (nftPage - 1) * nftLimit
-    let numNftPages =()=>{
-        if(nfts!==null) return Math.ceil(nfts.totalNum/nftLimit)
-    }
-    useEffect(()=>{
-        getPosts(postOffset,postLimit)
-            .then((result)=>{
-                setPosts(result.posts)
-
-            })
-    },[]);
-    useEffect(()=>{
-        getNfts(nftOffset,nftLimit)
-            .then((result)=>{
-                setNfts(result.nfts)
-                // console.log(result)
-                // console.log(result.totalNum)
-
-            })
-    },[]);
-    useEffect(()=>{
-    }, [posts])
-    useEffect(()=>{
-    }, [nfts])
 
     return(
         <div className='main'>

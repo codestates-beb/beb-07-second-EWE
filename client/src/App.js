@@ -31,7 +31,6 @@ import {localLoginUser, verifyUser} from './apis/user'
 
 const App =()=> {
   const [user, setUser] = useState(null);
-
   const accessToken = useSelector((state)=>state.auth.accessToken);
   const isLogin = useSelector((state)=>state.auth.isLogin);
   
@@ -45,6 +44,7 @@ const App =()=> {
     verifyUser()
     .then(result=>{
       setUser(result.data.user);
+
       dispatch(setAuth({accessToken: result.data.accessToken}));
     })
     .catch(err=>{return;})

@@ -2,6 +2,7 @@
     display: flex;
     background-color: var(--Secondary-color);
     padding-bottom: 80px;
+    width: 100%;
 
 }
 .mypage > .user_info{
