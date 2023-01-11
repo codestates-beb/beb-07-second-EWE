@@ -5,16 +5,17 @@ import NFT from '../components/NFT'
 
 const origin = "https://nodeauction.42msnsnsfoav6.ap-northeast-2.cs.amazonlightsail.com";
 
-export const getPagination = async(page, limit, assets)=>{
+export const getPagination = async(page, limit, assets, userId)=>{
     const paginationURL = (e)=>{
         if(e === 'nfts') return origin + "/nfts";
-        else if(e === 'posts') return origin + "/posts";
+        if(e === 'posts') return origin + "/posts";
+        if(e === 'nft') return origin + `/users/${userId}/nfts`;
+        if(e === 'post') return origin + `/users/${userId}/posts`;
     } 
     const offset = (page-1)*limit
     const pagination = await axios.get(paginationURL(assets)+ `/?offset= ${offset} &limit=${limit}`)
     .then(res=>res)
     .catch(err=>err);
-
     return pagination;
 }
 
@@ -23,31 +24,32 @@ const Pagination = ({props,user}) => {
     const [pagination, setPagination] = useState(null)
     const [page, setPage] = useState(1)
     const [limit, setLimit] = useState(10)
-    // console.log(props)
+    
     let numPages =()=>{
-        if(pagination!==null) {
-            // console.log(pagination.totalNum.totalNum)
-
-            return Math.ceil(pagination.totalNum.totalNum/limit)
+        if(pagination!==null && pagination!==undefined) {
+            let num = Math.ceil(pagination.totalNum.totalNum/limit)
+            if(!isNaN(num)) return num
         }
     }
-    console.log(numPages())
-    // console.log(pagination)
+
+
     useEffect(()=>{
-        getPagination(page,limit, props)
+        if(user!==null&&user!==undefined) {
+        getPagination(page,limit, props,user.id)
             .then((result)=>{
                 setPagination(result.data)
-                // console.log(result.data)
-                // console.log(page,limit)
             })
-    },[page,limit])
+        }
+    },[page,limit, props,user])
 
     // useEffect(()=>{
     // }, [pagination])
     // useEffect(()=>{
     // }, [limit])
-    useEffect( ()=>{
-    }, [page])
+    // useEffect( ()=>{
+    // }, [page])
+    // useEffect( ()=>{
+    // }, [user])
 
     return(
         <div className='post_wrapper'>
@@ -67,14 +69,12 @@ const Pagination = ({props,user}) => {
             <i className='fas fa-left-long'></i>
     </button>            
     {Array(numPages()).fill().map((_,i) => {
-
     <button
     className='pagination_num'
     key = {i + 1}
     onClick={()=>setPage( i + 1 )}
     aria-current = {page !== i + 1 ? "page" : null}
     >
-    {console.log(i)}
     { i + 1 }
     </button>
     })}    
@@ -83,24 +83,31 @@ const Pagination = ({props,user}) => {
             </button>
 </div>
 
-        {props==='posts'?
-            
-            props===null||pagination === null?<></>:
-            
+        {props==='posts'&&
+            (pagination!==undefined&&pagination !== null)?
                 pagination.posts.map((post)=>{
                 return (<Post key={post.id} post={post} user={user}/>)
-                })
-            
-            
-            :
-
-            props===null||pagination === null?<></>:
-            
+                }):<></>
+        }
+        { props==='nfts'&&
+            (pagination!==undefined&&pagination !== null)? 
                 pagination.nfts.map((nft)=>{
                 return (<NFT key={nft.id} nft={nft} user={user}/>)
-                })
-            
+                }):<></>
         } 
+        {props==='post'&&
+            (pagination!==undefined&&pagination !== null)?
+                pagination.posts.map((post)=>{
+                return (<Post key={post.id} post={post} user={user}/>)
+                }):<></>
+        }
+        { props==='nft'&&
+            (pagination!==undefined&&pagination !== null)? 
+                pagination.nfts.map((nft)=>{
+                return (<NFT key={nft.id} nft={nft} user={user}/>)
+                }):<></>
+        } 
+        
 
         </div>
     );

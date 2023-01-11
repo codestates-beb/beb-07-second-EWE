@@ -37,7 +37,6 @@ const MyPage = ({user}) => {
             </div>
             <div className='category wide'>
                 <Link to='/'>
-                {/* <h2>EWE</h2> */}
                 Eat Write Earn   Incentive Community : Get your token with Boasting your dishes! 
                 
                 
@@ -47,7 +46,7 @@ const MyPage = ({user}) => {
                 <h1 className='my_assets'>My Posts</h1>
             {
             <Pagination
-                props={'posts'}
+                props={'post'}
                 user={user}
             />
             }
@@ -61,7 +60,7 @@ const MyPage = ({user}) => {
             <h1 className='my_assets'>My NFTs</h1>
             {
             <Pagination
-                props={'posts'}
+                props={'nft'}
                 user={user}
             />
             }
