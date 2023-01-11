@@ -1,4 +1,4 @@
-const { users, nfts, posts, images } = require('../models');
+const { users, nfts, posts, sequelize } = require('../models');
 const {
   getCurrentTokenId,
   approveAllNFTToAdmin,
@@ -13,9 +13,16 @@ const { NFT_CA } = process.env;
 
 module.exports = {
   getAllNfts: async (req, res) => {
+    const { offset, limit } = req.query;
     try {
-      const allNfts = await nfts.findAll({});
-      return res.status(200).json(allNfts);
+      const allNfts = await nfts.findAll({
+        offset: Number(offset),
+        limit: Number(limit),
+      });
+      const nftCounts = await posts.findAll({
+        attributes: [[sequelize.fn('COUNT', sequelize.col('id')), 'totalNum']],
+      });
+      return res.status(200).json({ nfts: allNfts, totalNum: nftCounts[0] });
     } catch (err) {
       console.log(err);
       return res.status(500).send({ data: null, message: 'server error' });
