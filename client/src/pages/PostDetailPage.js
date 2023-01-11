@@ -1,6 +1,7 @@
 // modules
 import {useState, useEffect} from "react";
 import {useNavigate, Link} from "react-router-dom";
+import {useSelector} from "react-redux";
 import {useParams} from "react-router-dom";
 import {Swiper, SwiperSlide} from "swiper/react";
 import {Navigation} from "swiper";
@@ -11,7 +12,11 @@ import DetailGoogleMap from "../components/Map/DetailGoogleMap";
 import Dropdown from "../components/Dropdown";
 
 // apis
-import { getPostOne, increaseLike } from "../apis/post";
+import { 
+    getPostOne, 
+    increaseLike,
+    updatePost 
+} from "../apis/post";
 
 // css
 import "../assets/css/postdetail.css";
@@ -27,11 +32,31 @@ const PostDetailPage = () => {
     const navigator = useNavigate();
 
     const {postId} = useParams()
+
     const [post, setPost] = useState(null);
     const [user, setUser] = useState(null);
+    const [images, setImages] = useState(null);
+
+    const [updateMode, setUpdateMode] = useState(false);
+    const [titleToUpdate, setTitleToUpdate] = useState("");
+    const [contentToUpdate, setContentToUpdate] = useState("");
 
     const [isLike, setIsLike] = useState(false);
     const [isDropdownView, setIsDropdownView] = useState(false)
+
+    const postUpdateSubmitButtonHandler = async ()=>{
+        const data = {};
+        if (titleToUpdate.length > 0) data.title = titleToUpdate;
+        if (contentToUpdate.length> 0) data.content = contentToUpdate;
+
+        console.log(data);
+        const updateResult = await updatePost(data, post.id)
+        .then(result=>result)
+        .catch(err=>err)
+
+        if(!updateResult) return;
+        setPost(updateResult)
+    }
 
     const clickLikeHandler = async()=>{
         setIsLike(true);
@@ -64,7 +89,11 @@ const PostDetailPage = () => {
             if (result.status === 500) navigator("/404");
 
             setPost(result);
+            setImages(result.images);
             setUser(result.user);
+
+            setTitleToUpdate(result.title)
+            setContentToUpdate(result.content);
         })();
     }, []);
 
@@ -80,7 +109,7 @@ const PostDetailPage = () => {
                     slidesPerView={1}
                     navigation
                 >
-                    {post.images.map((image, idx)=>{
+                    {images.map((image, idx)=>{
                         return(
                             <SwiperSlide key={idx}>
                                 <div className="swiper_image_wrapper">
@@ -98,17 +127,46 @@ const PostDetailPage = () => {
                             <i className="fas fa-chevron-left"/>
                             <span>Back</span>
                         </div>
+                        {updateMode ?
+                        <div className="detail_edit">
+                            <button
+                                onClick={()=>{
+                                    setUpdateMode(false)
+                                    setIsDropdownView(false)
+                                }}
+                            >Cancel</button>
+                            <button 
+                                onClick={()=>{
+                                    postUpdateSubmitButtonHandler()
+                                    setUpdateMode(false); 
+                                    setIsDropdownView(false)
+                                }}
+                            >Submit</button>
+                        </div>
+                        :
                         <div className="btn ellipsis">
                             <i className="fas fa-ellipsis" onClick={toggleIsDropdownView}/>
                             <Dropdown isDropdownview={isDropdownView}>
-                                <div className="dropdown_content">Update</div>
+                                <div 
+                                    className="dropdown_content"
+                                    onClick={()=>{setUpdateMode(true)}}
+                                >Update</div>
                                 <div className="dropdown_content">Delete</div>
                             </Dropdown>
                         </div>
+                        }
                     </div>
                     <div className="detail_header">
                         <div className="detail_header_row">
-                            <h1 className="detail_title">{post.title}</h1>
+                            {updateMode? 
+                                <input 
+                                    className="detail_title detail_update" 
+                                    defaultValue={titleToUpdate}
+                                    onChange={e=>setTitleToUpdate(e.target.value)}
+                                ></input>
+                                :
+                                <h1 className="detail_title">{post.title}</h1>
+                            }
                             <p className="detail_postid"># {post.id}</p>
                         </div>
                         <div className="detail_header_row">
@@ -123,7 +181,15 @@ const PostDetailPage = () => {
                         </div>
                     </div>
                     <div className="detail_content_wrapper">
-                        <p className="detail_content">{post.content}</p>
+                        {updateMode? 
+                            <textarea 
+                                className="detail_content detail_update" 
+                                value={contentToUpdate}
+                                onChange={(e)=>{setContentToUpdate(e.target.value)}}
+                            >{contentToUpdate}</textarea>
+                            :
+                            <p className="detail_content">{post.content}</p>
+                        }
                         <div className="content_tail">
                             <div className="content_left">
                                 <div 
