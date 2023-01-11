@@ -127,11 +127,7 @@ module.exports = {
         post_id: newPost.id,
       });
       console.log(newImg);
-      await transferTokenToUser(user.wallet_account, POSTREWARD);
-      const newErc20 = await getTokenBalance(user.wallet_account);
-      await user.update({
-        erc20: newErc20,
-      });
+      transferTokenToUser(user.wallet_account, POSTREWARD);
       return res.status(200).send({ posts: newPost, images: newImg });
     } catch (err) {
       console.log(err);

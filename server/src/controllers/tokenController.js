@@ -56,22 +56,22 @@ module.exports = {
 
       // 3. web3 트랜스퍼 호출한다.
       // const spendApprovedToken = async (sender, recipient, amount) =>
-      await spendApprovedToken(
+      spendApprovedToken(
         sender.wallet_account,
         recipient.wallet_account,
         amount,
       );
-      // 4. db를 업데이트 한다.
-      const senderBalance = BigInt(sender.erc20) - BigInt(amount);
-      const recipientBalance = BigInt(recipient.erc20) + BigInt(amount);
-      await sender.update({
-        erc20: senderBalance.toString(),
-      });
-      await recipient.update({
-        erc20: recipientBalance.toString(),
-      });
-      console.log({ sender });
-      console.log({ recipient });
+      // 4. db를 업데이트 한다. - block listener로 이관
+      // const senderBalance = BigInt(sender.erc20) - BigInt(amount);
+      // const recipientBalance = BigInt(recipient.erc20) + BigInt(amount);
+      // await sender.update({
+      //   erc20: senderBalance.toString(),
+      // });
+      // await recipient.update({
+      //   erc20: recipientBalance.toString(),
+      // });
+      // console.log({ sender });
+      // console.log({ recipient });
       return res
         .status(200)
         .json({ status: 'ok', message: 'trasfer successful' });
