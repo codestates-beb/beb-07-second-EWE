@@ -66,12 +66,12 @@ const MyPage = ({user}) => {
                 <img className='post_button' src={require('../assets/image/post_2.png')}>
                 </img>
             </Link>
-            <Link to='/mint' className='mint'>
+            <Link to='/market' className='mint'>
                 <img className='post_button' src={require('../assets/image/mint.png')}>
                 </img>
             </Link>
-
-            <img className='post_button' src={require('../assets/image/bottom.png')}/>
+            <Link to='/' className='mint'>
+            <img className='post_button' src={require('../assets/image/main.png')}/></Link>
         </div>
     );
 }
