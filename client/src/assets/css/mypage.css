@@ -63,19 +63,6 @@
     color: var(--Primary-color);
 
 }
-.transaction{
-    padding: 5% 0;
-    text-align: center;
-    border: 1px solid var(--Primary-color);
-    color: var(--Primary-color);
-    border-radius: 10px;
-    transition: 0.5s;
-}
-.transaction:hover{
-    background-color:  var(--Primary-color);
-    color: var(--white-color);
-
-}
 
 @media screen and (max-width: 1024px){
     .mypage{
