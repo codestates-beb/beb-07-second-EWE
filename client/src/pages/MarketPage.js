@@ -5,6 +5,7 @@ import { useNavigate, Link } from 'react-router-dom';
 
 // apis
 import { mintNFT, getNftOne } from "../apis/nft";
+import { getUserBalance } from '../apis/user';
 
 // components
 import Pagination from "../components/Pagination";
@@ -12,7 +13,7 @@ import Pagination from "../components/Pagination";
 // css
 import '../assets/css/market.css';
 
-const MarketPage = ({user}) => {
+const MarketPage = ({user, liftUser}) => {
     const navigator = useNavigate();
 
     // User Global Variable
@@ -27,6 +28,8 @@ const MarketPage = ({user}) => {
 
     const [previewImage, setPreviewImage] = useState();
     const [responsibleToggle,SetResponsibleToggle] = useState(false)
+
+    const [isMintingFail, setIsMintingFail] = useState(false);
 
     const imageChangeHandler = (e)=>{
         const file = e.target.files[0];
@@ -46,8 +49,11 @@ const MarketPage = ({user}) => {
     }
 
     const mintButtonHandler = async ()=>{
-        console.log(name, description, image, category);
-        if (!name || !description || !image || !category) return;
+        if (!name || !description || !image || !category) 
+            return new Error("Invalid Input.");
+        console.log(user);
+        if (user.erc20 < 6670) 
+            return new Error("Not Enough Token");
 
         const metadata = {
             name, description, image, attributes:{category}
@@ -57,6 +63,10 @@ const MarketPage = ({user}) => {
 
         const tokenId = resultMint.data.tokenId;
         
+        setTimeout(async()=>{
+            const curBalance = await getUserBalance(user.id);
+            liftUser({...user, ...curBalance});
+        },2000);
 
         console.log(resultMint)
         navigator("/mypage");
