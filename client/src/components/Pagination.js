@@ -40,10 +40,6 @@ const Pagination = ({props,user}) => {
             }
         }
     }
-    // console.log(props)
-    // useEffect(()=>{
-    //     console.log(searchData)
-    // },[searchData])
 
     useEffect(()=>{
         if(user!==null&&user!==undefined&&searchData!==null&&searchData!==undefined) {
@@ -122,7 +118,6 @@ const Pagination = ({props,user}) => {
                 (pagination!==undefined&&pagination !== null)
                 ?
                     pagination.posts.map((post)=>{
-                        console.log(post)
                     return (<Post key={post.id} post={post} user={user} isLoading={isLoading}/>)
                     }):
                     <></>
