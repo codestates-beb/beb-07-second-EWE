@@ -54,9 +54,23 @@ const Header = ({user, liftUser}) => {
         setSidebarModalIsOpen(!sidebarModalIsOpen)
     }
     const handleCopyClipBoard = async (text) => {
-        try {
-            await navigator.clipboard.writeText(text);
-        } catch (e) {
+        if (window.navigator.clipboard){
+            try {
+                await navigator.clipboard.writeText(text);
+            } catch (err) {
+                console.log("copy failed", err);
+            }
+        } else {
+            const address = document.createElement("input");
+            address.value=user.wallet_account;
+            address.style.position="absolute";
+            address.style.left="-9999px";
+            document.body.appendChild(address);
+            address.select();
+            if (!document.execCommand("copy")){
+                console.log('copy failed');
+            }
+            address.remove();
         }
     };
 
@@ -89,7 +103,10 @@ const Header = ({user, liftUser}) => {
         try{
             const result = await localLoginUser({email, password})
             liftUser(result.data.user);
-            dispatch(setAuth({accessToken: result.data.accessToken}));
+            dispatch(setAuth({
+                accessToken: result.data.accessToken, 
+                userID: result.data.user.id
+            }));
             setLoginModalIsOpen(false);
         } catch{
             console.log("login failed");
@@ -103,7 +120,9 @@ const Header = ({user, liftUser}) => {
     }
 
     const loginEnterHandler= (e)=>{
-        if(e.key === "Enter") loginFunc(email, password);
+        if(e.key === "Enter") 
+        loginFunc(email, password);
+        closeLoginModal()
     }
 
     const logoutButtonHandler = async()=>{
@@ -189,11 +208,11 @@ const Header = ({user, liftUser}) => {
                                 </div>
                                 <div className="eth">
                                     <h3>Balance</h3>
-                                    {user===null?<div>0</div>:user.eth}ETH
+                                    {user===null?<div>0</div>:user.eth/1000000000000000000}ETH
                                 </div>
                                 <div className="erc20">
                                     <h3>Token</h3>
-                                    {user===null?<div>0</div>:user.erc20}
+                                    {user===null?<div>0</div>:user.erc20}EWE
                                 </div>
                                 </>
                             :
@@ -256,7 +275,8 @@ const Header = ({user, liftUser}) => {
                         </div>
                     </div>
                 </div>
-                <div className='sidebar_user user_info_3'>
+
+            <div className='sidebar_user user_info_3'>
                     <div className='nft_transfer'>
                         <h2>NFT Transfer</h2>
                         <div className="receivers_address">
@@ -275,21 +295,14 @@ const Header = ({user, liftUser}) => {
                         </div>
                     </div>
                 </div>
-            </div>
+                </div>
             </Modal>
             <div className="CI header_middle">
                 <div className='header_logo'>
                     <div className="logo" >
                         <Link to="/">
                         <img src={require('../assets/image/EWElogo_1.png')}></img>
-                        {/* <i className='fas fa-drumstick-bite ' 
-                        ></i></Link>
-                    </div>
-                    <div className="ICName">
-                        <Link to="/" className="bigName">
-                        <h1>EWE</h1></Link>
-                        <Link to="/" className="smallName">
-                        <h5>Eat Write Earn</h5> */}
+
                         </Link>
                     </div>
                 </div>

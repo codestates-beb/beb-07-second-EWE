@@ -39,27 +39,32 @@ const App =()=> {
   const liftUser = (user)=>{
     setUser(user);
   }
-
+  const dataCheck = (e)=>{
+    if(e!==null&&e!==undefined) return e
+  }
   useEffect(()=>{
     verifyUser()
     .then(result=>{
       setUser(result.data.user);
 
-      dispatch(setAuth({accessToken: result.data.accessToken}));
+      dispatch(setAuth({
+        accessToken: result.data.accessToken, 
+        userID: result.data.user.id
+      }));
     })
     .catch(err=>{return;})
   },[])
 
   return (
     <BrowserRouter>
-      <Header user = {user} liftUser={liftUser}/>
+      <Header user = {dataCheck(user)} liftUser={liftUser}/>
       <Routes>
-        <Route path='/' element={<MainPage  user = {user}/>}/>
+        <Route path='/' element={<MainPage  user = {dataCheck(user)}/>}/>
         <Route path='/market' element={<MarketPage
         />}/>
-        <Route path='/mypage'  element={<MyPage user = {user}/>}/>
+        <Route path='/mypage'  element={<MyPage user = {dataCheck(user)}/>}/>
         <Route path='/signup' element={<SignupPage/>}/>
-        <Route path='/write' element={<WritePage user = {user}/>}/>
+        <Route path='/write' element={<WritePage user = {dataCheck(user)}/>}/>
         <Route path='/post/:postId' element={<PostDetailPage/>}/>
         <Route path='/nft/:nftId' element={<NFTDetailPage/>}/>
         <Route path='/404' element={<NotFoundPage/>}/>

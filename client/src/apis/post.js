@@ -6,6 +6,7 @@ const getPostsURL = origin + "/posts";
 const getPostsByUserURL = origin + "/users"
 const getPostOneURL = origin + "/posts/"
 const createReviewURL = origin + "/posts";
+const updatePostURL = origin + "/posts/"
 const increaseLikeURL = origin
 
 // Test API Request
@@ -70,6 +71,16 @@ export const createReview = async(review, accessToken)=>{
     return createResult;
 }
 
+export const updatePost = async(data, postId)=>{
+    const requestURL = `${updatePostURL}${postId}/updatepost`;
+
+    const postUpdated = axios.put(requestURL, data)
+    .then(res=>res.data)
+    .catch(err=>err);
+
+    return postUpdated
+}
+
 export const increaseLike = async(postId)=>{
     const requestURL = `${origin}/posts/${postId}/likes`;
     const likeResult = await axios.post(requestURL)
@@ -78,3 +89,4 @@ export const increaseLike = async(postId)=>{
 
     return likeResult;
 }
+

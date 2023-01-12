@@ -7,7 +7,6 @@ import '../assets/image/loading.gif'
 const NFT = ({nft}) => {
     const [isLoading, setIsLoading] = useState(true)
     const [metadata, setMetadata] = useState(null);
-
     useEffect(()=>{
         getNftMetadata(nft.metadata)
         .then(metadata=>{
@@ -15,16 +14,11 @@ const NFT = ({nft}) => {
             setIsLoading(false);
         })
     }, [])
-    const handleCopyClipBoard = async (text) => {
-        try {
-            await navigator.clipboard.writeText(text);
-        } catch (e) {
-        }
-    };
+
 
     return(
         <Link 
-        to={'/nft/'+ nft.id }
+        to={'/nft/'+ nft.token_id}
         className="asset_container">
             <div>
                 <div className='user1'>

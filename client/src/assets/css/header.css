@@ -182,6 +182,23 @@ margin: auto;
 a{
     color: var(--black);
 }
+.user_info_1 .nickname,
+.user_info_1 .email,
+.user_info_1 .password,
+.user_info_1 .password_check{
+    margin: 2%;
+}
+.user_submit, .user_edit{
+    width: 50%;
+    height: 20px;
+    border: 1px solid var(--Primary-color);
+    border-radius: 20px;
+    color: var(--Primary-color);
+    background-color: var(--white-color);
+}
+.user_info_1, .user_info_2, .user_info_3{
+    
+}
 
 
 @media screen and (max-width: 1300px){

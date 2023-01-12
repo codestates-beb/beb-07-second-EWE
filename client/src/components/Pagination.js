@@ -24,14 +24,18 @@ const Pagination = ({props,user}) => {
     const [pagination, setPagination] = useState(null)
     const [page, setPage] = useState(1)
     const [limit, setLimit] = useState(10)
-
+    const [searchData, setSearchData] = useState('')
     let numPages =()=>{
         if(pagination!==null && pagination!==undefined) {
             let num = Math.ceil(pagination.totalNum.totalNum/limit)
-            if(!isNaN(num)) return num
+            if(!isNaN(num)) {
+                return num
+            }else{
+                return 1
+            }
         }
     }
-
+    console.log(searchData)
 
     useEffect(()=>{
         if(user!==null&&user!==undefined) {
@@ -56,19 +60,13 @@ const Pagination = ({props,user}) => {
 
 
 
-    // useEffect(() => {
-    //     async function ex() {
-    //     const A = await 비동기함수;
-    //     console.log(A);
-    //     }
-    //     ex();
-    //     }, [])
     return(
-        <div>
 
-                    
+        <div>            
             <div className='pagination'>
-
+                <div className="search_bar">
+                    <input onKeyUp={(e)=>{setSearchData(e.target.value)}}></input>
+                </div>
                 <select 
                     type = 'number'
                     value={limit}
@@ -99,33 +97,34 @@ const Pagination = ({props,user}) => {
                         </button>
             </div>
             <div className='post_wrapper'>
-            {props==='posts'&&
+
+            {props !== null&& props !== undefined&&props==='posts'&&
                 (pagination!==undefined&&pagination !== null)?
                     pagination.posts.map((post)=>{
                     return (<Post key={post.id} post={post} user={user}/>)
                     }):<></>
             }
-            {props==='nfts'&&
+            {props !== null&& props !== undefined&&props==='nfts'&&
                 (pagination!==undefined&&pagination !== null)? 
                     pagination.nfts.map((nft)=>{
                     return (<NFT key={nft.id} nft={nft} user={user}/>)
                     }):<></>
             } 
-            {props==='post'&&
+            {props !== null&& props !== undefined&&props==='post'&&
                 (pagination!==undefined&&pagination !== null)?
                     pagination.posts.map((post)=>{
                     return (<Post key={post.id} post={post} user={user}/>)
                     }):<></>
             }
-            { props==='nft'&&
+            {props !== null&& props !== undefined&& props==='nft'&&
                 (pagination!==undefined&&pagination !== null)? 
                     pagination.nfts.map((nft)=>{
                     return (<NFT key={nft.id} nft={nft} user={user}/>)
                     }):<></>
             } 
-        
             </div>
         </div>
+
     );
 }
 export default Pagination;

@@ -9,10 +9,11 @@ const MainPage = ({user}) => {
 
     return(
         <div className='main'>
-            <Link to='/write' className='write'>
-                <img className='post_button' src={require('../assets/image/post_1.png')}>
+            <Link to='/' className='write'>
+                <img className='post_button' src={require('../assets/image/main.png')}>
                 </img>
             </Link>
+
             <div className='category narrow'>
             <i className="fa-solid fa-caret-down" onClick={()=>{SetResponsibleToggle(!responsibleToggle)}}>
                 </i>
@@ -41,25 +42,22 @@ const MainPage = ({user}) => {
                 </Link>
             </div>
             <div className='post_list'>
-            <div className='post_head'>
-                <h2>Popular Dishes</h2>
-            </div>
-
+            <Link to='/write' className='write'>
+                <img className='post_button' src={require('../assets/image/post_1.png')}>
+                </img>
+            </Link>
                 {
                 <Pagination
                     props={'posts'}
                     user={user}
                 />
                 }
+            </div>
+            <div className='nft_list'>
                 <Link to='/market' className='market'>
                 <img className='post_button' src={require('../assets/image/mint.png')}>
                 </img>
                 </Link>
-
-                <div className='nft_list'>
-                <div className='nft_head'>
-                    <h2>NFTs</h2>
-                </div>
                 {
                 <Pagination
                     props={'nfts'}
@@ -67,11 +65,7 @@ const MainPage = ({user}) => {
                 />
                 }
             </div>
-        </div>
-
             <Footer/>
-            <div className='under_footer'></div>
-
         </div>
     );
 }

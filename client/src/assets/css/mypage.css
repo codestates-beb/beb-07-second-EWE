@@ -1,5 +1,5 @@
 .mypage{
-    
+    background-color: var(--Secondary-color);
 }
 
 .mypage > .user_info{
@@ -9,23 +9,7 @@
     background-color: var(--white-color);
 }
 
-.mypage > .pagination select{
-    margin: 15%;
-    padding: auto;
-    width: 70%;
 
-}
-.mypage .pagination_button .pagination_num{
-    color : var(--gray-dark-color);
-    text-align: center;
-    
-}
-.mypage .pagination_num:hover{
-    color : var(--Primary-color);
-    transition: 0.3s;
-    transform: scale(1.2);
-    
-}
 
 .nickname, .email, .eth, .erc20,.receivers_address, .amount,.wallet_account{
     margin: 2%;
@@ -70,6 +54,7 @@
 
 }
 .my_assets{
+    padding-top: 20px;
     color: var(--white-color);
     text-align: center;
     transition: 0.3s;
@@ -118,26 +103,6 @@
     }
     .token_transfer{
         margin-top: 0%;
-    }
-    .mypage > .pagination{
-        padding: 2% 1%;
-        align-items: center;
-    
-    }
-    .mypage > .pagination select{
-        display: none;
-    
-    }
-    .pagination_button{
-        display: flex;
-        margin: 2%;
-        justify-content: space-around;
-    }
-    .pagination_button button{
-        width: 20px;
-    }
-    .pagination .pagination_num{
-        margin: 2%;
     }
     
 }

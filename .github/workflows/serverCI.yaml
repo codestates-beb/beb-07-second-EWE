@@ -31,9 +31,11 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
           
-      - name: debug
-        run: ls -al
-        
+      - name: Set env for Docker versioning
+        run: |
+          GIT_HASH=$(git rev-parse --short "${{ GITHUB.SHA }}")
+          echo "GIT_HASH=${GIT_HASH}" >> $GITHUB_ENV
+
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
@@ -41,4 +43,4 @@ jobs:
           file: ${{ env.working-directory }}/Dockerfile
           platforms: linux/amd64
           push: true
-          tags: snowdelver/eweapi:latest
+          tags: snowdelver/eweapi:${{ env.GIT_HASH }}

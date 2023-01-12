@@ -27,6 +27,7 @@
 }
 
 .market .market_section{
+    margin: 5%;
     padding: 1rem;
     width: 45%;
     align-items: center;
@@ -42,7 +43,7 @@
 }
 
 .market_section .mint_section {
-    margin: 3%;
+    margin: 5%;
     border-radius: 1rem;
     overflow:hidden;
     height: 100;

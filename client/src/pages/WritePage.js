@@ -159,6 +159,10 @@ const WritePage = ({user}) => {
                     <button className="btn_submit" onClick={submitBtnHandler}>Submit</button>
                 </div>
             </div>
+            <Link to='/mypage'>
+                <img className='post_button' src={require('../assets/image/mypage.png')} >
+                </img>
+            </Link>
             <Link to='/'>
                 <img className='post_button' src={require('../assets/image/bottom.png')} >
                 </img>
