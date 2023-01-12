@@ -17,7 +17,7 @@ export const emailFormat=(value)=>{
 }
 
 export const nicknameFormat= (value)=>{
-    return 8 <= value.length && value.length <= 32;
+    return 2 <= value.length && value.length <= 20;
 }
 
 export const pwFormatLength = (value)=>{
