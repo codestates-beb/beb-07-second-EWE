@@ -146,7 +146,10 @@ const Header = ({user, liftUser}) => {
 
         try{
             const result = await logoutUser(accessToken);
-            if (result.status === "ok") dispatch(resetAuth());
+            if (result.status === "ok") {
+                dispatch(resetAuth())
+                liftUser(null);
+            };
         }catch{
             console.log("logout failed");
         }
