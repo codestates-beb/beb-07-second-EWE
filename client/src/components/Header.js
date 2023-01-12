@@ -21,8 +21,17 @@ import {setAuth, resetAuth } from "../feature/authSlice";
 import '../assets/css/header.css'
 import '../assets/css/modal.css'
 
+// utils
+import {
+    verifyPassword,
+    emailFormat,
+} from "../utils/validate";
+
 
 const Header = ({user, liftUser}) => {
+    // Navigator
+    const navigator = useNavigate();
+
     // Header State Var
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
@@ -46,12 +55,12 @@ const Header = ({user, liftUser}) => {
     const [passwordToUpdate, setPasswordToUpdate] = useState("");
     const [passwordToVerify, setPasswordToVerify] = useState("");
 
-
+    // Modal Handler
     const closeLoginModal=()=>{
-        setLoginModalIsOpen(!loginModalIsOpen)
+        setLoginModalIsOpen(false)
     }
     const closeSidebarModal=()=>{
-        setSidebarModalIsOpen(!sidebarModalIsOpen)
+        setSidebarModalIsOpen(false)
     }
     const handleCopyClipBoard = async (text) => {
         if (window.navigator.clipboard){
@@ -74,6 +83,13 @@ const Header = ({user, liftUser}) => {
         }
     };
 
+    const tokenTransferButtonHandler = async ()=>{
+        const isSuccess = await transferToken(recepient, amount, accessToken)
+        if (isSuccess === true) console.log("success");
+        else console.log("failed");
+    }
+
+    // Update Handler
     const userUpdateSubmitButtonHandler= async()=>{
         if (!isLogin) return;
 
@@ -99,6 +115,13 @@ const Header = ({user, liftUser}) => {
         setUpdateMode(false);
     }
 
+    const passwordToUpdateChangeHandler = (e)=>{
+        setPasswordToUpdate(e.target.value);
+        return verifyPassword(e.target.value);
+    }
+
+    // Login Handler
+
     const loginFunc = async()=>{
         try{
             const result = await localLoginUser({email, password})
@@ -108,21 +131,17 @@ const Header = ({user, liftUser}) => {
                 userID: result.data.user.id
             }));
             setLoginModalIsOpen(false);
-            closeLoginModal();
 
         } catch{
             console.log("login failed");
         }
     }
 
-    const tokenTransferButtonHandler = async ()=>{
-        const isSuccess = await transferToken(recepient, amount, accessToken)
-        if (isSuccess === true) console.log("success");
-        else console.log("failed");
-    }
-
     const loginEnterHandler= (e)=>{
-        if(e.key === "Enter")loginFunc(email, password);
+        if(e.key === "Enter"){
+            loginFunc(email, password);
+            setLoginModalIsOpen(false);
+        }
     }
 
     const logoutButtonHandler = async()=>{
@@ -130,7 +149,15 @@ const Header = ({user, liftUser}) => {
 
         try{
             const result = await logoutUser(accessToken);
-            if (result.status === "ok") dispatch(resetAuth());
+            if (result.status === "ok") {
+                liftUser({
+                    nickname:"Guest",
+                    eth: 0,
+                    erc20: 0,
+                });
+                dispatch(resetAuth());
+                navigator("/");
+            };
         }catch{
             console.log("logout failed");
         }
@@ -193,7 +220,7 @@ const Header = ({user, liftUser}) => {
                                 <>
                                 <div className="nickname">
                                     <h3>Nickname</h3>
-                                    {user===null?<div>Guest</div>:user.nickname}
+                                    {user===null?"Guest":user.nickname}
                                 </div>
                                 <div className="email">
                                     <h3>Email</h3>
@@ -321,7 +348,7 @@ const Header = ({user, liftUser}) => {
                             <Link to="/market">NFT Market</Link>
                             <Link to="/">ETH Faucet</Link>
                             <Link onClick={logoutButtonHandler}>Log Out</Link>
-                            <Link to="/">Secession</Link>
+                            {/* <Link to="/">Secession</Link> */}
                         </div>
                     </div>
                 </div>    
@@ -339,6 +366,8 @@ const Header = ({user, liftUser}) => {
                 style={{
                     overlay:{
                         position:'fixed',
+                        margin:'auto',
+                        padding:'auto',
                         top:0,
                         left:0,
                         right:0,
@@ -348,15 +377,17 @@ const Header = ({user, liftUser}) => {
                         
                     },
                     content:{
-                        width:'420px',
+                        minWidth:'360px',
+                        width:'30%',
+                        alignItems:'center',
                         height:'75%',
                         margin:'auto',
                         padding:'0px 3% 3% 3%',
                         position:"absolute",
-                        top:'40px',
-                        left:'40px',
-                        right:'40px',
-                        bottom:'40px',
+                        top:'40%',
+                        left:'0.5%',
+                        right:'0.5%',
+                        bottom:'40%',
                         border: '1px solid #ccc',
                         background:'#fff',
                         borderRadius: '30px',

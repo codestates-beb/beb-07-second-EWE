@@ -50,7 +50,7 @@ const createOrUpdateNFT = async (tokenId, ownerAddress) => {
         listed: false,
         creator: ADMIN_ADDRESS,
         txhash: null,
-        metadata: `${METADATA_PREFIX}${tokenId}.json`,
+        metadata: `${METADATA_PREFIX}/${tokenId}.json`,
         user_id: nftOwner.id,
       });
     }

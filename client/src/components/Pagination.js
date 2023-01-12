@@ -2,37 +2,34 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Post from '../components/Post'
 import NFT from '../components/NFT'
-
+import '../assets/css/pagenation.css'
 const origin = "https://nodeauction.42msnsnsfoav6.ap-northeast-2.cs.amazonlightsail.com";
 
-export const getPagination = async(page, limit, assets, userId)=>{
+export const getPagination = async(page, limit, assets, userId, searchData)=>{
     const paginationURL = (e)=>{
-        if(e === 'nfts') return origin + "/nfts";
-        if(e === 'posts') return origin + "/posts";
-        if(e === 'nft') return origin + `/users/${userId}/nfts`;
-        if(e === 'post') return origin + `/users/${userId}/posts`;
+        if(e === 'nfts') return origin + "/nfts/?";
+        if(e === 'posts') return origin + `/posts/findposts/?search=`+searchData+`&`;
+        if(e === 'nft') return origin + `/users/${userId}/nfts/?`;
+        if(e === 'post') return origin + `/users/${userId}/posts/?`;
     } 
     const offset = (page-1)*limit
-    const pagination = await axios.get(paginationURL(assets)+ `/?offset= ${offset} &limit=${limit}`)
+    const pagination = await axios.get(paginationURL(assets)+`offset=${offset}&limit=${limit}`)
     .then(res=>res)
     .catch(err=>err);
-    return pagination;
+
+    return pagination
+
 }
 
-// export const putFilteredPagination = async() => {
-//     const paginationURL = (e)=>{
-//         if(e === 'nfts') return origin + "/nfts";
-//         if(e === 'posts') return origin + "/posts";
-//         if(e === 'nft') return origin + `/users/${userId}/nfts`;
-//         if(e === 'post') return origin + `/users/${userId}/posts`;
-//     } 
 
-// }
 const Pagination = ({props,user}) => {
     const [pagination, setPagination] = useState(null)
     const [page, setPage] = useState(1)
     const [limit, setLimit] = useState(10)
     const [searchData, setSearchData] = useState('')
+    const [isLoading, setIsLoading] = useState(true)
+    
+
     let numPages =()=>{
         if(pagination!==null && pagination!==undefined) {
             let num = Math.ceil(pagination.totalNum.totalNum/limit)
@@ -43,39 +40,38 @@ const Pagination = ({props,user}) => {
             }
         }
     }
+
     useEffect(()=>{
-        console.log(searchData)
-    },[searchData])
-    useEffect(()=>{
-        if(user!==null&&user!==undefined) {
-        getPagination(page,limit, props,user.id)
-            .then((result)=>{
-                setPagination(result.data)
+        if(user!==null&&user!==undefined&&searchData!==null&&searchData!==undefined) {
+            setIsLoading(true)
+            getPagination(page,limit, props,user.id,searchData)
+                .then((result)=>{
+                    setPagination(result.data)
+                    setIsLoading(false)
             })
-        }else if(user===null||user===undefined){
-        getPagination(page,limit, props,null)
-            .then((result)=>{
-                setPagination(result.data)
+        }else if((user===null||user===undefined)&&(searchData===null||searchData===undefined)){
+            setIsLoading(true)
+            getPagination(page,limit, props,null,' ')
+                .then((result)=>{
+                    setPagination(result.data)
+                    setIsLoading(false)
             })    
         }
-    },[page,limit, props,user])
+    },[page,limit, props,user.id, searchData])
 
 
-    useEffect(()=>{
-        const numMapping =(e) => {
-        }
-        numMapping()
-    },[])
+    // useEffect(()=>{
+    //     const numMapping =(e) => {
+    //     }
+    //     numMapping()
+    // },[])
 
 
 
     return(
 
-        <div>            
+        <div>
             <div className='pagination'>
-                <div className="search_bar">
-                    <input onChange={(e)=>{setSearchData(e.target.value)}}></input>
-                </div>
                 <select 
                     type = 'number'
                     value={limit}
@@ -86,6 +82,17 @@ const Pagination = ({props,user}) => {
                     <option value='30'>30</option>
                     <option value='100'>100</option>
                 </select>
+                
+    
+                {props==='posts'?
+                <div className="search_bar" >
+                <i className='fas fa-search'></i>
+                <input 
+                    onChange={(e)=>{setSearchData(e.target.value)}}
+                    placeholder='  Search Your Place!'
+                ></input></div>
+                :<></>}
+
                 <button onClick={()=> setPage( page - 1 )} disabled = {page === 1}>
                         <i className='fas fa-left-long'></i>
                         
@@ -108,27 +115,29 @@ const Pagination = ({props,user}) => {
             <div className='post_wrapper'>
 
             {props !== null&& props !== undefined&&props==='posts'&&
-                (pagination!==undefined&&pagination !== null)?
+                (pagination!==undefined&&pagination !== null)
+                ?
                     pagination.posts.map((post)=>{
-                    return (<Post key={post.id} post={post} user={user}/>)
-                    }):<></>
+                    return (<Post key={post.id} post={post} user={user} isLoading={isLoading}/>)
+                    }):
+                    <></>
             }
             {props !== null&& props !== undefined&&props==='nfts'&&
                 (pagination!==undefined&&pagination !== null)? 
                     pagination.nfts.map((nft)=>{
-                    return (<NFT key={nft.id} nft={nft} user={user}/>)
+                    return (<NFT key={nft.id} nft={nft} user={user} isLoading={isLoading}/>)
                     }):<></>
             } 
             {props !== null&& props !== undefined&&props==='post'&&
                 (pagination!==undefined&&pagination !== null)?
                     pagination.posts.map((post)=>{
-                    return (<Post key={post.id} post={post} user={user}/>)
+                    return (<Post key={post.id} post={post} user={user} isLoading={isLoading}/>)
                     }):<></>
             }
             {props !== null&& props !== undefined&& props==='nft'&&
                 (pagination!==undefined&&pagination !== null)? 
                     pagination.nfts.map((nft)=>{
-                    return (<NFT key={nft.id} nft={nft} user={user}/>)
+                    return (<NFT key={nft.id} nft={nft} user={user} isLoading={isLoading}/>)
                     }):<></>
             } 
             </div>
