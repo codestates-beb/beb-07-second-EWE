@@ -4,13 +4,7 @@ import { useState, useEffect } from 'react'
 import '../assets/image/loading.gif'
 const Post = ({post}) => {
     // const [isLoading, setIsLoading] = useState(true)
-    // useEffect(()=>{
-    //     getNftMetadata(nft.metadata)
-    //     .then(metadata=>{
-    //         setMetadata(metadata);
-    //         setIsLoading(false);
-    //     })
-    // }, [])
+
     const numCount = (num) =>{
         if(num<=1000){
             return ' ' + num + ' '

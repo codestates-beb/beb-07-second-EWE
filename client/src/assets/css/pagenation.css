@@ -1,22 +1,28 @@
 
 
-.pagination div i{
-    transform: scale(1);
-    transition: 0.5s;
-    color: var(--white-color);
+.pagination{
+    max-width: 720px;
+    width: 80%;
+    align-items: center;
+    justify-content: center;
+}
+.pagination button{ 
+    width: 80px;
 
 }
-.pagination div i:hover{
-    transform: scale(1.3);
-    color: var(--Primary-color);
-}
-.pagination_num{
-    color : var(--gray-dark-color);
-    transition: 0.3s;
+.search_bar{
+    width: 100%;
+    align-items: center;
 
 }
-.pagination_num:hover{
-    color : var(--Primary-color);
-    transform: scale(1.1);
-    
+.search_bar input{
+    margin: 1%;
+    width: 100%;
+    height: 30px;
+    border: 1px solid var(--Primary-color);
+    border-radius: 20px;
+}
+.search_bar_hide{
+    width: 0;
+
 }
