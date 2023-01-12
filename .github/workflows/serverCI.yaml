@@ -14,7 +14,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       working-directory: ./server
-      git_hash: $(git rev-parse --short "$GITHUB_SHA")
 
     steps:
       - name: Checkout
@@ -32,8 +31,8 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
           
-      - name: debug
-        run: ls -al
+      - name: Set env for Docker versioning
+        run: git_hash=$(git rev-parse --short "$GITHUB_SHA")
         
       - name: Build and push
         uses: docker/build-push-action@v3
