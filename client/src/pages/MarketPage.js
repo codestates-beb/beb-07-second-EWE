@@ -180,7 +180,7 @@ const MarketPage = ({nfts,user}) => {
                 }    
                 </div>        
             <div className="footer">
-                <img className='post_button' src={require('../assets/image/bottom.png')}>
+                <img className='post_button' src={require('../assets/image/main.png')}>
                 </img>
                 <div className="team">
 
