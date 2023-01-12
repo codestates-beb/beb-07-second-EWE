@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import {Link } from 'react-router-dom'
 // apis
 import {createReview} from "../apis/post";
+import { getUserBalance } from "../apis/user";
 
 //components
 // import KakaoMap from "../components/Map/KakaoMap";
@@ -29,7 +30,7 @@ const Slide = ({image})=>{
     )
 }
 
-const WritePage = ({user}) => {
+const WritePage = ({user, liftUser}) => {
     const navigator = useNavigate();
 
     const isLogin = useSelector((state)=>state.auth.isLogin);
@@ -84,6 +85,8 @@ const WritePage = ({user}) => {
         const createReviewResult = await createReview(review, accessToken);
 
         if (createReviewResult.status=== 200) {
+            const userBalance =  await getUserBalance(user.id);
+            setTimeout(liftUser({...user, ...userBalance}), 2000);
             navigator("/");
         } else {
             console.log(createReviewResult);

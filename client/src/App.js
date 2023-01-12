@@ -39,9 +39,11 @@ const App =()=> {
   const liftUser = (user)=>{
     setUser(user);
   }
+  
   const dataCheck = (e)=>{
     if(e!==null&&e!==undefined) return e
   }
+
   useEffect(()=>{
     verifyUser()
     .then(result=>{
@@ -64,8 +66,8 @@ const App =()=> {
         />}/>
         <Route path='/mypage'  element={<MyPage user = {dataCheck(user)}/>}/>
         <Route path='/signup' element={<SignupPage/>}/>
-        <Route path='/write' element={<WritePage user = {dataCheck(user)}/>}/>
-        <Route path='/post/:postId' element={<PostDetailPage/>}/>
+        <Route path='/write' element={<WritePage user = {dataCheck(user)} liftUser={liftUser}/>}/>
+        <Route path='/post/:postId' element={<PostDetailPage user = {dataCheck(user)}/>}/>
         <Route path='/nft/:nftId' element={<NFTDetailPage/>}/>
         <Route path='/404' element={<NotFoundPage/>}/>
       </Routes>
