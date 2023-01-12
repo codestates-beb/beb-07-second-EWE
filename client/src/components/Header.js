@@ -29,6 +29,9 @@ import {
 
 
 const Header = ({user, liftUser}) => {
+    // Navigator
+    const navigator = useNavigate();
+
     // Header State Var
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
@@ -54,10 +57,10 @@ const Header = ({user, liftUser}) => {
 
     // Modal Handler
     const closeLoginModal=()=>{
-        setLoginModalIsOpen(!loginModalIsOpen)
+        setLoginModalIsOpen(false)
     }
     const closeSidebarModal=()=>{
-        setSidebarModalIsOpen(!sidebarModalIsOpen)
+        setSidebarModalIsOpen(false)
     }
     const handleCopyClipBoard = async (text) => {
         if (window.navigator.clipboard){
@@ -134,13 +137,10 @@ const Header = ({user, liftUser}) => {
         }
     }
 
-    
-
     const loginEnterHandler= (e)=>{
         if(e.key === "Enter"){
             loginFunc(email, password);
-            closeLoginModal();
-
+            setLoginModalIsOpen(false);
         }
     }
 
@@ -150,8 +150,13 @@ const Header = ({user, liftUser}) => {
         try{
             const result = await logoutUser(accessToken);
             if (result.status === "ok") {
-                dispatch(resetAuth())
-                liftUser(null);
+                liftUser({
+                    nickname:"Guest",
+                    eth: 0,
+                    erc20: 0,
+                });
+                dispatch(resetAuth());
+                navigator("/");
             };
         }catch{
             console.log("logout failed");
@@ -215,7 +220,7 @@ const Header = ({user, liftUser}) => {
                                 <>
                                 <div className="nickname">
                                     <h3>Nickname</h3>
-                                    {user===null?<div>Guest</div>:user.nickname}
+                                    {user===null?"Guest":user.nickname}
                                 </div>
                                 <div className="email">
                                     <h3>Email</h3>
