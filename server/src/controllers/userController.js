@@ -17,7 +17,7 @@ const {
   getMyNFTBalance,
 } = require('../chainUtils/nftUtils');
 
-const WELCOMETOKEN = '10000000000000000';
+const WELCOMETOKEN = '10000';
 
 module.exports = {
   getUserinfo: async (req, res) => {
@@ -125,7 +125,7 @@ module.exports = {
         }
         const userPostCounts = await posts.findAll({
           attributes: [
-            [sequelize.fn('COUNT', sequelize.col('id')), 'totalNum']
+            [sequelize.fn('COUNT', sequelize.col('id')), 'totalNum'],
           ],
           where: { user_id: userId },
         });

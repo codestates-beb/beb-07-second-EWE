@@ -78,15 +78,6 @@ const approveTokenToAdmin = async (ownerPK, amount) => {
 
 const spendApprovedToken = async (sender, recipient, amount) => {
   const adminAccount = web3Http.eth.accounts.privateKeyToAccount(ADMIN_PK);
-  // try {
-  //   const result = await tokenContract.methods
-  //     .transferFrom(sender, recipient, amount)
-  //     .send({ from: adminAccount.address });
-  //   return result;
-  // } catch (err) {
-  //   console.error(err);
-  //   return false;
-  // }
   try {
     const bytedata = await tokenContract.methods
       .transferFrom(sender, recipient, amount)

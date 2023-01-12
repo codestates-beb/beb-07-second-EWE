@@ -7,7 +7,8 @@ const {
 
 const { Op } = Sequelize;
 
-const POSTREWARD = '10000000000000000';
+const POSTREWARD = '5000';
+
 module.exports = {
   getAllposts: async (req, res) => {
     const { offset, limit } = req.query;
