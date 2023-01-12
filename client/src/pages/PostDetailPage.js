@@ -87,6 +87,7 @@ const PostDetailPage = () => {
             const result = await getPostOne(postId);
 
             if (result.status === 500) navigator("/404");
+            console.log(result.status);
 
             setPost(result);
             setImages(result.images);
