@@ -30,7 +30,8 @@ import {
 } from "../utils/style";
 
 const SignupPage = ({liftUser}) => {
-    const navigator = useNavigate();
+    // Navigator
+    const navi = useNavigate();
     const dispatch = useDispatch();
 
     const [email, setEmail] = useState('')
@@ -64,12 +65,13 @@ const SignupPage = ({liftUser}) => {
             console.log(result);
 
             liftUser(result.data.user);
+
             dispatch(setAuth({
                 accessToken: result.data.accessToken,
                 userID: result.data.user.id
             }));
             
-            navigator("/");
+            navi("/");
         } else{
             setIsSignUpError(true); 
             return new Error("No User Created");
