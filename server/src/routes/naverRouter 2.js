@@ -115,7 +115,6 @@ router.get('/callback', function (req, res) {
                 maxAge: 60 * 60,
                 httpOnly: true,
               });
-
               return res.status(200).json({
                 data: { accessToken, user: newUser },
                 message: 'accessToken issued',
