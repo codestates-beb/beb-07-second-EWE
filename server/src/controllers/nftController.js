@@ -1,4 +1,4 @@
-const { users, nfts, posts, sequelize } = require('../models');
+const { users, nfts, sequelize } = require('../models');
 const {
   getCurrentTokenId,
   approveAllNFTToAdmin,
@@ -8,8 +8,6 @@ const {
 const { approveTokenToAdmin } = require('../chainUtils/tokenUtils');
 
 const { s3 } = require('../routes/multer');
-
-const { NFT_CA } = process.env;
 
 module.exports = {
   getAllNfts: async (req, res) => {
@@ -82,10 +80,9 @@ module.exports = {
       // 2. 로그인된 정보를 바탕으로 nft를 민팅한다.
       const newTokenId = parseInt(await getCurrentTokenId(), 10) + 1; // tokenId 기준으로 이미지를 업로드 해야한다.
       // 2-1 nft는 admin에서 거래가능해야되므로 approve for all 도 호출해야한다.
-      await approveTokenToAdmin(user.wallet_pk, '10000000000000000');
+      await approveTokenToAdmin(user.wallet_pk);
       await mintNFT(user.wallet_account); // mint는 항상 admin 계정에서 수행된 후 유저 계정으로 전송해준다
-      await approveAllNFTToAdmin(user.wallet_pk);
-      // TODO: add token transfer logic, and db should be updated accordingly
+      approveAllNFTToAdmin(user.wallet_pk); // this can be asynchronous
 
       // 3. nft 민팅이 성공하면 body에 들어간 내용을 바탕으로 metadata json을 구성한다.
       const { name, description, attributes } = req.body;
@@ -111,17 +108,7 @@ module.exports = {
         })
         .promise();
       console.log('metadata to s3 upload result', result);
-      // 5. 민팅이 완료되면 nft 테이블을 업데이트 한다. - block listener로 기능 이관
-      // const newNFT = await nfts.create({
-      //   contract_address: NFT_CA,
-      //   token_id: newTokenId,
-      //   price: 1,
-      //   listed: false,
-      //   creator: user.wallet_account,
-      //   txhash: null,
-      //   metadata: `https://ewe-metadata.s3.ap-northeast-2.amazonaws.com/${newTokenId}.json`,
-      //   user_id: user.id,
-      // });
+
       return res.status(201).json({
         status: 'ok',
         message: 'new nft created',
@@ -133,7 +120,7 @@ module.exports = {
     }
   },
 
-  transferNFT: async (req, res, next) => {
+  transferNFT: async (req, res) => {
     return res.status(200).json({ message: 'under construction' });
   },
 };

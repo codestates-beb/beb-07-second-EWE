@@ -4,24 +4,17 @@ const express = require('express');
 const router = express.Router();
 const request = require('request');
 const jwt = require('jsonwebtoken');
-const { users, nfts, posts, images } = require('../models');
+const { users, nfts } = require('../models');
 const { createAccount } = require('../chainUtils/accountUtils');
-const { getEtherBalance, useEtherFaucet } = require('../chainUtils/etherUtils');
+const { useEtherFaucet } = require('../chainUtils/etherUtils');
 const {
-  getTokenBalance,
   transferTokenToUser,
   approveTokenToAdmin,
-  spendApprovedToken,
 } = require('../chainUtils/tokenUtils');
 
-const {
-  getCurrentTokenId,
-  giveWelcomeNFT,
-  getNFTOwner,
-  getMyNFTBalance,
-} = require('../chainUtils/nftUtils');
+const { giveWelcomeNFT } = require('../chainUtils/nftUtils');
 
-const WELCOMETOKEN = '10000000000000000';
+const { WELCOMETOKEN } = process.env;
 
 const client_id = process.env.NAVER_ID;
 const client_secret = process.env.NAVER_SECRET;

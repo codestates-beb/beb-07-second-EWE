@@ -4,7 +4,7 @@
 const { web3Socket, nftContract, tokenContract } = require('./chainUtils');
 const { nfts, users } = require('./models');
 
-const { NFT_CA, ADMIN_ADDRESS, METADATA_PREFIX } = process.env;
+const { NFT_CA, METADATA_PREFIX } = process.env;
 
 const updateTokenBalance = async (address, amount) => {
   try {
