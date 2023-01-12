@@ -1,10 +1,10 @@
 // modules
-import { useState, useEffec } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 
 // apis
-import { mintNFT } from "../apis/nft";
+import { mintNFT, getNftOne } from "../apis/nft";
 
 // components
 import Pagination from "../components/Pagination";
@@ -12,14 +12,12 @@ import Pagination from "../components/Pagination";
 // css
 import '../assets/css/market.css';
 
-const MarketPage = ({nfts,user}) => {
+const MarketPage = ({user}) => {
     const navigator = useNavigate();
 
     // User Global Variable
     const isLogin = useSelector((state)=>state.auth.isLogin);
     const accessToken = useSelector((state)=>state.auth.accessToken);
-
-    if (isLogin === false) navigator(-1);
 
     // Minting State Variable
     const [name, setName] = useState("");
@@ -56,7 +54,12 @@ const MarketPage = ({nfts,user}) => {
         }
 
         const resultMint = await mintNFT(metadata, accessToken);
+
+        const tokenId = resultMint.data.tokenId;
+        
+
         console.log(resultMint)
+        navigator("/mypage");
     }
 
     const resetButtonHandler = ()=>{
@@ -65,6 +68,10 @@ const MarketPage = ({nfts,user}) => {
         setImage(null);
         setPreviewImage(null);
     }
+
+    useEffect(()=>{
+        if(!isLogin) navigator("/");
+    }, [])
 
     return(
         
