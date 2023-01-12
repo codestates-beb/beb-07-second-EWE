@@ -78,7 +78,7 @@ const Header = ({user, liftUser}) => {
     const handleCopyClipBoard = async (text) => {
         if (window.navigator.clipboard){
             try {
-                await navigator.clipboard.writeText(text);
+                await window.navigator.clipboard.writeText(text);
             } catch (err) {
                 console.log("copy failed", err);
             }

@@ -73,13 +73,13 @@ const PostDetailPage = ({user}) => {
     const clickAddressHandler = async()=>{
         if (window.navigator.clipboard){
             try{
-                await window.navigator.clipboard.writeText(writer.wsetWriter)
+                await window.navigator.clipboard.writeText(writer.wallet_account);
             } catch(err) {
                 console.log("copy failed", err);
             }
         } else {
             const address = document.createElement("input");
-            address.value=writer.wsetWriter;
+            address.value=writer.wallet_account;
             address.style.position="absolute";
             address.style.left="-9999px";
             document.body.appendChild(address);
