@@ -66,9 +66,9 @@ const NFTDetail = () =>{
                         <h1>{(metadata===null||metadata===undefined)||
                             (metadata.name===null||metadata.name===undefined)
                         ?<></>:metadata.name}</h1>
-                        <h1>{(nft===null||nft===undefined)||
+                        <h3>{(nft===null||nft===undefined)||
                             (nft.token_id===null||nft.token_id===undefined)
-                        ?<></>:'#'+nft.token_id}</h1>
+                        ?<></>:'#'+nft.token_id}</h3>
                     </div>
                     
                     <div className="nft_image_body">
@@ -97,9 +97,9 @@ const NFTDetail = () =>{
                                 <h2>{(metadata===null||metadata===undefined)||
                                     (metadata.attributes[0]===null||metadata.attributes[0]===undefined)||(metadata.attributes[0].trait_type===null||metadata.attributes[0]. trait_type===undefined)
                         ?<></>:metadata.attributes[0].trait_type}</h2>
-                                <h3>{(metadata===null||metadata===undefined)||
+                                <h5>{(metadata===null||metadata===undefined)||
                                     (metadata.attributes[0]===null||metadata.attributes[0]===undefined)||
-                                    (metadata.attributes[0].value===null||metadata.attributes[0].value===undefined)?<></>:metadata.attributes[0].value}</h3>
+                                    (metadata.attributes[0].value===null||metadata.attributes[0].value===undefined)?<></>:metadata.attributes[0].value}</h5>
                         </div>
                     </div>
                     <div className="date">
