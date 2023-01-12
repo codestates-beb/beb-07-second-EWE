@@ -43,9 +43,10 @@ export const getNftsByUser = async(offset, limit, userId)=>{
 export const getNftOne = async (id)=>{
     const requestURL = getNftOneURL + id;
     const nft = await axios.get(requestURL)
-    .then(res=>res.data)
-    .catch(console.log);
-
+    .then(res=>{
+        if (res.status === 200) return res.data
+    })
+    .catch(err=>err.response);
     return nft
 }
 
@@ -55,7 +56,7 @@ export const getNftMetadata = async (getNftMetadataURL)=>{
     })
     
     .then(res=>res.data)
-    .catch(console.log);
+    .catch(err=>err.response);
     return metadata
 }
 
