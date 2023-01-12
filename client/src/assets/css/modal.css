@@ -163,6 +163,16 @@
     border-radius: 10px;
     transition: 0.5s;
 }
+
+.transaction .transfering_img {
+    width: 20px;
+    height: 20px;
+}
+
+.transaction.transfering:hover {
+    cursor: not-allowed;
+}
+
 .transaction_complete{
     margin-top: 10px;
     width: 90%;
@@ -174,8 +184,9 @@
 .transaction:hover{
     background-color:  var(--Primary-color);
     color: var(--white-color);
-
+    cursor: pointer;
 }
+
 .transaction_complete:active{
     background-color: rgb(61, 214, 82);
     border-radius: 10px;
