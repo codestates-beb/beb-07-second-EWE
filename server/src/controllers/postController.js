@@ -139,7 +139,21 @@ module.exports = {
     const { postId } = req.params;
     let { title, location, content, store_name } = req.body;
     try {
+      const { email, nickname } = req.decoded;
+      const user = await users.findOne({
+        where: {
+          email,
+          nickname,
+        },
+      });
       const currentPost = await posts.findOne({ where: { id: postId } });
+
+      if (user.id !== currentPost.user_id) {
+        return res
+          .status(403)
+          .json({ data: null, message: 'No authorized user to update' });
+      }
+
       if (!title) title = currentPost.title;
       if (!location) location = currentPost.location;
       if (!content) content = currentPost.content;
@@ -170,6 +184,17 @@ module.exports = {
       where: { id: postId },
     });
     try {
+      const { email, nickname } = req.decoded;
+      const user = await users.findOne({
+        where: {
+          email,
+          nickname,
+        },
+      });
+      if (!user) {
+        return res.status(403).json({ data: null, message: 'no such user' });
+      }
+
       if (!ifExists) {
         return res
           .status(400)
