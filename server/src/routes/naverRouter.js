@@ -3,6 +3,7 @@ const express = require('express');
 
 const router = express.Router();
 const request = require('request');
+const jwt = require('jsonwebtoken');
 const { users, nfts, posts, images } = require('../models');
 const { createAccount } = require('../chainUtils/accountUtils');
 const { getEtherBalance, useEtherFaucet } = require('../chainUtils/etherUtils');
@@ -25,7 +26,9 @@ const WELCOMETOKEN = '10000000000000000';
 const client_id = process.env.NAVER_ID;
 const client_secret = process.env.NAVER_SECRET;
 let state = 'RANDOM_STATE';
-const redirectURI = encodeURI('http://localhost:5050/naver/callback');
+const redirectURI = encodeURI(
+  'https://nodeauction.42msnsnsfoav6.ap-northeast-2.cs.amazonlightsail.com/naver/callback',
+); // 로컬에서 확인할때는 'http://localhost:5050/naver/callback' 로 변경!
 let api_url = '';
 
 router.get('/login', function (req, res) {
@@ -52,7 +55,8 @@ router.get('/callback', function (req, res, next) {
   request.get(options, function (error, response, body) {
     if (!error && response.statusCode === 200) {
       accessToken = JSON.parse(body).access_token;
-      refreshToken = JSON.parse(body).refresh_token;
+      // refreshToken = JSON.parse(body).refresh_token;
+      console.log({ naver: accessToken });
       request.get(
         {
           url: 'https://openapi.naver.com/v1/nid/me',
@@ -65,57 +69,64 @@ router.get('/callback', function (req, res, next) {
             const { nickname } = body2.response;
             const joinedUser = await users.findOne({ where: { email } });
             try {
-              if (
-                joinedUser !== null &&
-                joinedUser.login_provider === 'naver'
-              ) {
-                // DB에 존재하는 이메일일 경우 유저 정보를 DB에서 가져온다.
-                // DB에 존재하지 않으면, 회원가입을 실시한다.
-                // 유저객체를 가져와서, 자체 jwt토큰을 생성하고, 응답에 accessToken, 쿠키에 sameSite 적용된 refreshToken을 보내준다.
-                console.log(refreshToken);
-                res.cookie('refreshToken', refreshToken, {
-                  sameSite: 'none',
-                  secure: true,
-                  maxAge: 60 * 60 * 1000, // ms 1hr
-                  httpOnly: true,
+              if (!joinedUser) {
+                // DB에 존재하지 않을 경우 회원가입 진행 (password 는 null)
+                const { address, privateKey } = await createAccount(); // web3 call
+                const newUser = await users.create({
+                  email,
+                  wallet_account: address,
+                  eth: 0,
+                  login_provider: 'naver',
+                  nickname,
+                  erc20: 0,
+                  wallet_pk: privateKey,
                 });
-                console.log('already joined');
-                return res.status(200).json({
-                  data: { accessToken, user: joinedUser },
-                  message: 'accessToken issued',
+                useEtherFaucet(address);
+                transferTokenToUser(address, WELCOMETOKEN);
+                approveTokenToAdmin(address, WELCOMETOKEN);
+                const targetNFT = await nfts.findOne({
+                  where: { token_id: newUser.id },
                 });
+                if (targetNFT) {
+                  console.log('welcome nft presented to user!');
+                  giveWelcomeNFT(address, newUser.id);
+                }
               }
-              // DB에 존재하지 않을 경우 회원가입 진행 (password 는 null)
-              const { address, privateKey } = await createAccount(); // web3 call
-              const newUser = await users.create({
-                email,
-                wallet_account: address,
-                eth: 0,
-                login_provider: 'naver',
-                nickname,
-                erc20: 0,
-                wallet_pk: privateKey,
-              });
-              useEtherFaucet(address);
-              transferTokenToUser(address, WELCOMETOKEN);
-              approveTokenToAdmin(address, WELCOMETOKEN);
-              const targetNFT = await nfts.findOne({
-                where: { token_id: newUser.id },
-              });
-              if (targetNFT) {
-                console.log('welcome nft presented to user!');
-                giveWelcomeNFT(address, newUser.id);
-              }
+              // DB에 존재하는 이메일일 경우 유저 정보를 DB에서 가져온다.
+              // 유저객체를 가져와서, 자체 jwt토큰을 생성하고, 응답에 accessToken, 쿠키에 sameSite 적용된 refreshToken을 보내준다.
+              accessToken = jwt.sign(
+                {
+                  email,
+                  nickname,
+                },
+                process.env.JWT_SECRET,
+                {
+                  expiresIn: '30m',
+                  issuer: 'EWE api server',
+                },
+              );
 
+              refreshToken = jwt.sign(
+                {
+                  email,
+                  nickname,
+                },
+                process.env.JWT_SECRET,
+                {
+                  expiresIn: '60m',
+                  issuer: 'EWE api server',
+                },
+              );
+              console.log({ refreshToken });
               res.cookie('refreshToken', refreshToken, {
                 sameSite: 'none',
                 secure: true,
-                maxAge: 60 * 60 * 1000,
+                maxAge: 60 * 60 * 1000, // ms 1hr
                 httpOnly: true,
               });
-
+              const currentUser = await users.findOne({ where: { email } });
               return res.status(200).json({
-                data: { accessToken, user: newUser },
+                data: { accessToken, user: currentUser },
                 message: 'accessToken issued',
               });
             } catch (error1) {
@@ -136,23 +147,6 @@ router.get('/callback', function (req, res, next) {
   });
 });
 
-router.get('/newAccessToken', async (req, res, next) => {
-  const { refreshToken } = req.cookies;
-  if (!refreshToken) {
-    return res
-      .status(404)
-      .json({ data: null, message: 'no refresh token in cookie' });
-  }
-  try {
-    await request.get(
-      `https://nid.naver.com/oauth2.0/token?grant_type=refresh_token&client_id=${client_id}&client_secret=${client_secret}&refresh_token=${refreshToken}`,
-    );
-    // 유저 데이터 조회 후 유저 데이터와 함께 갱신된 토큰 전송
-  } catch (err) {
-    console.log(err);
-    return next(err);
-  }
-});
 // 배포 https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=VxWHtOzH3cIGqBItpTdY&client_secret=V2vruDLVGa&access_token={accessToken}&service_provider=NAVER
 // 로컬 https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=G8M4m6BnEwXW_4MuPXjv&client_secret=_hhYGsrqAs&access_token={accessToken}&service_provider=NAVER
 
