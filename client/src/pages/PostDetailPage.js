@@ -253,7 +253,7 @@ const PostDetailPage = ({user}) => {
                 </div>
             </div>
             <Link to='/write' className='write'>
-                <img className='post_button' src={require('../assets/image/post_2.png')}>
+                <img className='post_button' src={require('../assets/image/main.png')}>
                 </img>
             </Link>
             </>

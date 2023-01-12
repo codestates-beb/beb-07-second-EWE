@@ -100,7 +100,9 @@ padding: 1%;
     justify-content: space-between;
 
 }
-
+.nft_creator{
+    
+}
 .nft_detail .date, .nft_detail_numbers,.nft_creator{
     display: flex;
     justify-content: space-around;

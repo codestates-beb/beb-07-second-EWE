@@ -117,11 +117,12 @@ router.get('/callback', function (req, res, next) {
                 maxAge: 60 * 60 * 1000, // ms 1hr
                 httpOnly: true,
               });
-              const currentUser = await users.findOne({ where: { email } });
-              return res.status(200).json({
-                data: { accessToken, user: currentUser },
-                message: 'accessToken issued',
-              });
+              // const currentUser = await users.findOne({ where: { email } });
+              // return res.status(200).json({
+              //   data: { accessToken, user: currentUser },
+              //   message: 'accessToken issued',
+              // });
+              return res.redirect('https://d3t5y0jgzx6lw2.cloudfront.net/');
             } catch (error1) {
               console.log(error1);
               next(error1);

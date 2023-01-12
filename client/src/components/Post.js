@@ -22,7 +22,7 @@ const Post = ({post, isLoading}) => {
                     <div className="user_img">
                         <i className='fas fa-utensils '></i>
                     </div>
-                    <div className="post_title"><h5>{post.title === undefined ||post.title === null ?<></>:post.title.length>13?post.title.slice(0,12)+'...':post.title}</h5>
+                    <div className="post_title"><h5>{post.title === undefined ||post.title === null ?<></>:post.title.length>13?post.title.slice(0,11)+'...':post.title}</h5>
                     <div className='location'><h6>{post.store_name === undefined ||post.store_name === null ?<></>:post.store_name}</h6></div>
                     </div>
                     <div className="post_num"><h4>#{post.id === undefined ||post.id === null ?<></>:post.id}</h4></div>
