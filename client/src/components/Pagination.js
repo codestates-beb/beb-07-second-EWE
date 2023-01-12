@@ -24,7 +24,7 @@ const Pagination = ({props,user}) => {
     const [pagination, setPagination] = useState(null)
     const [page, setPage] = useState(1)
     const [limit, setLimit] = useState(10)
-
+    const [searchData, setSearchData] = useState('')
     let numPages =()=>{
         if(pagination!==null && pagination!==undefined) {
             let num = Math.ceil(pagination.totalNum.totalNum/limit)
@@ -35,7 +35,7 @@ const Pagination = ({props,user}) => {
             }
         }
     }
-
+    console.log(searchData)
 
     useEffect(()=>{
         if(user!==null&&user!==undefined) {
@@ -64,7 +64,9 @@ const Pagination = ({props,user}) => {
 
         <div>            
             <div className='pagination'>
-
+                <div className="search_bar">
+                    <input onKeyUp={(e)=>{setSearchData(e.target.value)}}></input>
+                </div>
                 <select 
                     type = 'number'
                     value={limit}

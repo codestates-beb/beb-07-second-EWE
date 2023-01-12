@@ -120,7 +120,9 @@ const Header = ({user, liftUser}) => {
     }
 
     const loginEnterHandler= (e)=>{
-        if(e.key === "Enter") loginFunc(email, password);
+        if(e.key === "Enter") 
+        loginFunc(email, password);
+        closeLoginModal()
     }
 
     const logoutButtonHandler = async()=>{
@@ -300,14 +302,7 @@ const Header = ({user, liftUser}) => {
                     <div className="logo" >
                         <Link to="/">
                         <img src={require('../assets/image/EWElogo_1.png')}></img>
-                        {/* <i className='fas fa-drumstick-bite ' 
-                        ></i></Link>
-                    </div>
-                    <div className="ICName">
-                        <Link to="/" className="bigName">
-                        <h1>EWE</h1></Link>
-                        <Link to="/" className="smallName">
-                        <h5>Eat Write Earn</h5> */}
+
                         </Link>
                     </div>
                 </div>
