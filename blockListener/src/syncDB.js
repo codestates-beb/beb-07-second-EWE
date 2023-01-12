@@ -8,7 +8,7 @@ const {
 } = require('./chainUtils');
 const { nfts, users } = require('./models');
 
-const { NFT_CA, METADATA_PREFIX } = process.env;
+const { NFT_CA, ADMIN_ADDRESS, METADATA_PREFIX } = process.env;
 
 const getCurrentTokenId = async () => {
   const currentTokenId = await nftContractHttp.methods.getTokenId().call();
@@ -56,7 +56,7 @@ const syncOrCreateNFTData = async (tokenId) => {
         token_id: tokenId,
         price: 6670,
         listed: false,
-        creator: ownerAddress,
+        creator: ADMIN_ADDRESS,
         txhash: null,
         metadata: `${METADATA_PREFIX}${tokenId}.json`,
         user_id: nftOwner.id,
