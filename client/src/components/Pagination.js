@@ -19,7 +19,15 @@ export const getPagination = async(page, limit, assets, userId)=>{
     return pagination;
 }
 
+// export const putFilteredPagination = async() => {
+//     const paginationURL = (e)=>{
+//         if(e === 'nfts') return origin + "/nfts";
+//         if(e === 'posts') return origin + "/posts";
+//         if(e === 'nft') return origin + `/users/${userId}/nfts`;
+//         if(e === 'post') return origin + `/users/${userId}/posts`;
+//     } 
 
+// }
 const Pagination = ({props,user}) => {
     const [pagination, setPagination] = useState(null)
     const [page, setPage] = useState(1)
@@ -35,8 +43,9 @@ const Pagination = ({props,user}) => {
             }
         }
     }
-    console.log(searchData)
-
+    useEffect(()=>{
+        console.log(searchData)
+    },[searchData])
     useEffect(()=>{
         if(user!==null&&user!==undefined) {
         getPagination(page,limit, props,user.id)
@@ -65,7 +74,7 @@ const Pagination = ({props,user}) => {
         <div>            
             <div className='pagination'>
                 <div className="search_bar">
-                    <input onKeyUp={(e)=>{setSearchData(e.target.value)}}></input>
+                    <input onChange={(e)=>{setSearchData(e.target.value)}}></input>
                 </div>
                 <select 
                     type = 'number'

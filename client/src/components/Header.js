@@ -120,9 +120,10 @@ const Header = ({user, liftUser}) => {
     }
 
     const loginEnterHandler= (e)=>{
-        if(e.key === "Enter") 
-        loginFunc(email, password);
-        closeLoginModal()
+        if(e.key === "Enter"){
+            loginFunc(email, password);
+            closeLoginModal();
+        }
     }
 
     const logoutButtonHandler = async()=>{
