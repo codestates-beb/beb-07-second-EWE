@@ -91,11 +91,11 @@ const Header = ({user, liftUser}) => {
 
     // Update Handler
     const userUpdateSubmitButtonHandler= async()=>{
-        if (!isLogin) return;
+        if (!isLogin) return false;
 
         const userInfoToUpdate = {}
         if (passwordToUpdate.length > 0){
-            if(passwordToUpdate !== passwordToVerify) return;
+            if(passwordToUpdate !== passwordToVerify) return false;
             userInfoToUpdate.password = passwordToUpdate;
         }
 
@@ -130,18 +130,17 @@ const Header = ({user, liftUser}) => {
                 accessToken: result.data.accessToken, 
                 userID: result.data.user.id
             }));
-            setLoginModalIsOpen(false);
-
+            setEmail("");
+            setPassword("");
+            return true;
         } catch{
-            console.log("login failed");
+            return false;
         }
     }
 
-    const loginEnterHandler= (e)=>{
-        if(e.key === "Enter"){
-            loginFunc(email, password);
-            setLoginModalIsOpen(false);
-        }
+    const loginEnterHandler= async(e)=>{
+        if(e.key === "Enter" && await loginFunc()) setLoginModalIsOpen(false);
+        else return false;
     }
 
     const logoutButtonHandler = async()=>{
@@ -162,9 +161,15 @@ const Header = ({user, liftUser}) => {
             console.log("logout failed");
         }
     }
+
     const socialLoginHandler = async()=>{
         await naverLoginUser();
     }
+
+    useEffect(()=>{
+        if(loginModalIsOpen) document.body.style= 'overflow: hidden';
+        else document.body.style = 'overflow: unset';
+    },[loginModalIsOpen])
 
     return(
         <header>
@@ -355,9 +360,7 @@ const Header = ({user, liftUser}) => {
                 :
                 <div className="userMenu">
                     <div className="Login">
-                        <Link
-                        onClick={()=>setLoginModalIsOpen(!loginModalIsOpen)}
-                        >
+                        <Link onClick={()=>setLoginModalIsOpen(true)}>
                         <h4>Login</h4>
                         </Link>
                         <Modal 
@@ -398,7 +401,7 @@ const Header = ({user, liftUser}) => {
                 >
                 <div className='login_modal'>  
                     <i className="fas fa-xmark" onClick={()=>closeLoginModal()}></i>
-                    <div className="hide">{ loginModalIsOpen===true? document.body.style= 'overflow: hidden':document.body.style = 'overflow: auto'}</div>        
+                    <div className="hide"></div>
                     <img className='login_modal_CI'src={require('../assets/image/EWElogo_1.png')} alt='home'></img>
                     <h1>Login</h1>
                     <h5 className="welcome">[Welcome to EWE]</h5>
@@ -407,7 +410,7 @@ const Header = ({user, liftUser}) => {
                             <h2>Email</h2>
                             <input 
                                 onChange={(e)=>{setEmail(e.target.value)}}
-                                onKeyUp={loginEnterHandler}
+                                onKeyDown={loginEnterHandler}
                             />
                         </div>
                         <div className='login_user_info'>
@@ -415,7 +418,7 @@ const Header = ({user, liftUser}) => {
                             <input 
                                 type="password" 
                                 onChange={(e)=>{setPassword(e.target.value)}}
-                                onKeyUp={loginEnterHandler}
+                                onKeyDown={loginEnterHandler}
                             />
                         </div>
                     </div>
