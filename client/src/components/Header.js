@@ -321,7 +321,7 @@ const Header = ({user, liftUser}) => {
                             <Link to="/market">NFT Market</Link>
                             <Link to="/">ETH Faucet</Link>
                             <Link onClick={logoutButtonHandler}>Log Out</Link>
-                            <Link to="/">Secession</Link>
+                            {/* <Link to="/">Secession</Link> */}
                         </div>
                     </div>
                 </div>    
