@@ -15,7 +15,9 @@ const Footer = () => {
                 <div className="team">
 
                     <img className='logo'src={require('../assets/image/EWElogo.png')}></img>
-
+                    <h5>윤수빈 프론트엔드, 디자인</h5>
+                    <h5>yunsubin481@gmail.com</h5>
+                    <a className='blog' href='https://velog.io/@nft_sb'><h6>Welcome to my Blog</h6></a>
                     <br/>
                     <h5>강두훈 프론트엔드, 디자인</h5>
                     <h5>eclip6@ajou.ac.kr</h5>
@@ -29,9 +31,7 @@ const Footer = () => {
                     <a className='blog' href='https://www.notion.so/
                     7eb68268711f40619020318efcaeca0c'><h6>Welcome to my Blog</h6></a>
                     <br/> 
-                    <h5>윤수빈 프론트엔드, 디자인</h5>
-                    <h5>yunsubin481@gmail.com</h5>
-                    <a className='blog' href='https://velog.io/@nft_sb'><h6>Welcome to my Blog</h6></a>
+
 
                     <a className="blog" href="https://github.com/codestates-beb/beb-07-second-EWE/tree/main">
                     <br/>

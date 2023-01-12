@@ -40,23 +40,21 @@ const Pagination = ({props,user}) => {
             }
         }
     }
-
     useEffect(()=>{
+        setIsLoading(true)
         if(user!==null&&user!==undefined&&searchData!==null&&searchData!==undefined) {
-            setIsLoading(true)
             getPagination(page,limit, props,user.id,searchData)
                 .then((result)=>{
                     setPagination(result.data)
-                    setIsLoading(false)
+                    setTimeout(()=>{setIsLoading(false)},1500)
             })
         }else if((user===null||user===undefined)&&(searchData===null||searchData===undefined)){
             setIsLoading(true)
             getPagination(page,limit, props,null,' ')
                 .then((result)=>{
                     setPagination(result.data)
-                    setIsLoading(false)
-            })    
-        }
+                    setTimeout(()=>{setIsLoading(false)},1500)
+            })}
     },[page,limit, props,user.id, searchData])
 
     useEffect(()=>{
