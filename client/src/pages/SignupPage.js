@@ -57,21 +57,24 @@ const SignupPage = ({user ,liftUser}) => {
         const signupResult = await localSignupUser(userInfo);
         console.log(signupResult);
         if (signupResult.status === 200){
-            
-            const {email, password} = signupResult.data;
+            try{
+                const {email, password} = signupResult.data;
 
-            const result = await localLoginUser({email, password}) ;
+                const result = await localLoginUser({email, password}) ;
 
-            console.log(result);
+                console.log(result);
 
-            liftUser(result.data.user);
+                liftUser(result.data.user);
 
-            dispatch(setAuth({
-                accessToken: result.data.accessToken,
-                userID: result.data.user.id
-            }));
-            
-            navi("/");
+                dispatch(setAuth({
+                    accessToken: result.data.accessToken,
+                    userID: result.data.user.id
+                }));
+                
+                navi("/");
+            } catch(e){
+                console.log(e);
+            }
         } else{
             setIsSignUpError(true); 
             return new Error("No User Created");
