@@ -148,9 +148,12 @@ input:focus{
 }
 .buttons .sign_up_button:hover{
     background-color: var(--Primary-color) ;
-
-
 }
+
+.buttons .sign_up_button:active{
+    filter: brightness(0.5);
+}
+
 .buttons button{
     display: flex;
     width: 100%;
