@@ -65,7 +65,7 @@ const App =()=> {
         <Route path='/market' element={<MarketPage
         />}/>
         <Route path='/mypage'  element={<MyPage user = {dataCheck(user)}/>}/>
-        <Route path='/signup' element={<SignupPage/>}/>
+        <Route path='/signup' element={<SignupPage user = {dataCheck(user)} liftUser={liftUser}/>}/>
         <Route path='/write' element={<WritePage user = {dataCheck(user)} liftUser={liftUser}/>}/>
         <Route path='/post/:postId' element={<PostDetailPage user = {dataCheck(user)}/>}/>
         <Route path='/nft/:nftId' element={<NFTDetailPage/>}/>
