@@ -54,6 +54,8 @@ const Header = ({user, liftUser}) => {
     // Token Transfer State Var
     const [recepient, setRecepient] = useState("");
     const [amount, setAmount] = useState("")
+    const [isTransfering, setIsTransfering] = useState(false);
+    const [isTransferFail, setIsTransferFail] = useState(false);
 
     // Update Mode
     const [updateMode, setUpdateMode] = useState(false);
@@ -95,13 +97,24 @@ const Header = ({user, liftUser}) => {
     };
 
     const tokenTransferButtonHandler = async ()=>{
+        setIsTransfering(true);
         const isSuccess = await transferToken(recepient, amount, accessToken)
         if (isSuccess === true) {
             console.log("success");
-            const userBalance = getUserBalance(user.id);
-            liftUser({...user, ...userBalance});
+            setTimeout(async()=>{
+                const userBalance = await getUserBalance(user.id);
+                liftUser({...user, ...userBalance});
+                setIsTransfering(false);
+            }, 1000);
         }
-        else console.log("failed");
+        else {
+            console.log("failed")
+            setIsTransferFail(true);
+            setIsTransfering(false);
+            setTimeout(()=>{
+                setIsTransferFail(false);
+            },2000)
+        };
     }
 
     // Update Handler
@@ -322,7 +335,10 @@ const Header = ({user, liftUser}) => {
                         <h2>Token Transfer</h2>
                         <div className="receivers_address">
                             <h4>Receiver's Address</h4>
-                            <input onChange={e=>{setRecepient(e.target.value)}}/>
+                            <input 
+                                value={recepient}
+                                onChange={e=>{setRecepient(e.target.value)}}
+                            />
                         </div>
                         <div className="amount">
                             <h4>Amount</h4>
@@ -335,20 +351,21 @@ const Header = ({user, liftUser}) => {
                                 value={amount}
                             />
                         </div>
-                        <div 
-                            className='transaction'onClick={tokenTransferButtonHandler}
+                        {isTransfering? 
+                            <div className="transaction transfering">
+                                <img className="transfering_img" src="/img/loading.gif" />
+                            </div>
+                        : 
+                            <div 
+                                className='transaction'onClick={tokenTransferButtonHandler}
                             >
-                            <h2>Transaction</h2>
-                        </div>
-
+                                <h2>{isTransferFail? "Fail" : "Transaction"}</h2>
+                            </div>
+                        }
                     </div>
                     
                 </div>
                 <div className='sidebar_user user_info_2'>
-
-                <div className='transaction_complete'>
-                    <h4>Complete</h4>
-                </div>
                 </div>
                 </div>
             </Modal>

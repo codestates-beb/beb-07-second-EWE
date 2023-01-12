@@ -62,8 +62,7 @@ const App =()=> {
       <Header user = {dataCheck(user)} liftUser={liftUser}/>
       <Routes>
         <Route path='/' element={<MainPage  user = {dataCheck(user)}/>}/>
-        <Route path='/market' element={<MarketPage
-        />}/>
+        <Route path='/market' element={<MarketPage/>}/>
         <Route path='/mypage'  element={<MyPage user = {dataCheck(user)}/>}/>
         <Route path='/signup' element={<SignupPage user = {dataCheck(user)} liftUser={liftUser}/>}/>
         <Route path='/write' element={<WritePage user = {dataCheck(user)} liftUser={liftUser}/>}/>
