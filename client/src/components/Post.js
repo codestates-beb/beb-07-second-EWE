@@ -14,7 +14,6 @@ const Post = ({post, isLoading}) => {
             return ' ' + Math.floor(num/10000) +' M '
         }
     }
-    console.log(post)
     return(
         <Link to={'/post/'+ post.id } className="asset_container">
             <div>
@@ -38,7 +37,7 @@ const Post = ({post, isLoading}) => {
             </div>
             <div className="image" >
                 <img src = {
-                    isLoading? '../assets/image/loading.gif': post.images === undefined ||post.images === null 
+                    isLoading?require('../assets/image/loading.gif'): post.images === undefined ||post.images === null 
                     ?require('../assets/image/unnamed.png'):post.images[0].uri}  alt="food"></img>
             </div>
             <div className='post_bottom'>
