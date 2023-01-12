@@ -230,26 +230,26 @@ const Header = ({user, liftUser}) => {
                                 <>
                                 <div className="nickname">
                                     <h3>Nickname</h3>
-                                    {user===null?"Guest":user.nickname}
+                                    {user.nickname===null||user.nickname===undefined?"Guest":user.nickname}
                                 </div>
                                 <div className="email">
                                     <h3>Email</h3>
-                                    {user===null?<div>-</div>:user.email}
+                                    {user.email===null||user.email===undefined?<div>-</div>:user.email}
                                 </div>
                                 <div className="wallet_account">
                                     <h3>Wallet Account</h3>
                                     <div className='account'>
-                                        <p>{user===null?<div>-</div>:user.wallet_account}</p>
-                                        <button onClick={() => {handleCopyClipBoard(user.wallet_account)}}>copy</button>
+                                        <p>{user===null||user.nickname===undefined?<div>-</div>:user.wallet_account}</p>
+                                        <button onClick={() => {handleCopyClipBoard(user.wallet_account===null||user.wallet_account===undefined?<div>-</div>:user.wallet_account)}}>copy</button>
                                     </div>
                                 </div>
                                 <div className="eth">
                                     <h3>Balance</h3>
-                                    {user===null?<div>0</div>:user.eth/1000000000000000000}ETH
+                                    {user.eth===null||user.nickname.eth===undefined?<div>0</div>:user.eth/1000000000000000000}ETH
                                 </div>
                                 <div className="erc20">
                                     <h3>Token</h3>
-                                    {user===null?<div>0</div>:user.erc20}EWE
+                                    {user.erc20===null||user.nickname.erc20===undefined?<div>0</div>:user.erc20}EWE
                                 </div>
                                 </>
                             :
