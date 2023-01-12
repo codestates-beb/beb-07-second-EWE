@@ -41,4 +41,4 @@ jobs:
           file: ${{ env.working-directory }}/Dockerfile
           platforms: linux/amd64
           push: true
-          tags: snowdelver/eweapi:latest
+          tags: snowdelver/eweapi:${{ github.sha }}
