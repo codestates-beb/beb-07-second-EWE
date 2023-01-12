@@ -85,8 +85,10 @@ const WritePage = ({user, liftUser}) => {
         const createReviewResult = await createReview(review, accessToken);
 
         if (createReviewResult.status=== 200) {
-            const userBalance =  await getUserBalance(user.id);
-            setTimeout(liftUser({...user, ...userBalance}), 2000);
+            setTimeout(async()=>{
+                const userBalance = await getUserBalance(user.id);
+                liftUser({...user, ...userBalance})
+            }, 2000);
             navigator("/");
         } else {
             console.log(createReviewResult);

@@ -71,10 +71,16 @@ export const createReview = async(review, accessToken)=>{
     return createResult;
 }
 
-export const updatePost = async(data, postId)=>{
+export const updatePost = async(data, postId, accessToken)=>{
+    if (!accessToken) return new Error("Invalid Reuest");
+
     const requestURL = `${updatePostURL}${postId}/updatepost`;
 
-    const postUpdated = axios.put(requestURL, data)
+    const postUpdated = axios.put(requestURL, data, {
+        headers: {
+            Authorization: accessToken,
+        }
+    })
     .then(res=>res.data)
     .catch(err=>err);
 
