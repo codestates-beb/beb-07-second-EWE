@@ -190,7 +190,7 @@ contract EWENFT is ERC721URIStorage, Ownable {
   uint256 public nftPrice;
 
   constructor() ERC721('EWENFT', 'EWENFT') {
-    nftPrice = 1;
+    nftPrice = 6670;
     baseTokenURI = 'https://ewe-metadata.s3.ap-northeast-2.amazonaws.com/';
   }
 

@@ -2,22 +2,15 @@
 const jwt = require('jsonwebtoken');
 const { users, nfts, posts, images, sequelize } = require('../models');
 const { createAccount } = require('../chainUtils/accountUtils');
-const { getEtherBalance, useEtherFaucet } = require('../chainUtils/etherUtils');
+const { useEtherFaucet } = require('../chainUtils/etherUtils');
 const {
-  getTokenBalance,
   transferTokenToUser,
   approveTokenToAdmin,
-  spendApprovedToken,
 } = require('../chainUtils/tokenUtils');
 
-const {
-  getCurrentTokenId,
-  giveWelcomeNFT,
-  getNFTOwner,
-  getMyNFTBalance,
-} = require('../chainUtils/nftUtils');
+const { giveWelcomeNFT } = require('../chainUtils/nftUtils');
 
-const WELCOMETOKEN = '10000000000000000';
+const { WELCOMETOKEN } = process.env;
 
 module.exports = {
   getUserinfo: async (req, res) => {
@@ -125,7 +118,7 @@ module.exports = {
         }
         const userPostCounts = await posts.findAll({
           attributes: [
-            [sequelize.fn('COUNT', sequelize.col('id')), 'totalNum']
+            [sequelize.fn('COUNT', sequelize.col('id')), 'totalNum'],
           ],
           where: { user_id: userId },
         });

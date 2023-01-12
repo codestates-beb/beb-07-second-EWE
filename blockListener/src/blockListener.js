@@ -43,11 +43,12 @@ const createOrUpdateNFT = async (tokenId, ownerAddress) => {
       });
     } else {
       const newNFT = await nfts.create({
+        id: tokenId,
         contract_address: NFT_CA,
         token_id: tokenId,
         price: 1,
         listed: false,
-        creator: ownerAddress,
+        creator: ADMIN_ADDRESS,
         txhash: null,
         metadata: `${METADATA_PREFIX}${tokenId}.json`,
         user_id: nftOwner.id,

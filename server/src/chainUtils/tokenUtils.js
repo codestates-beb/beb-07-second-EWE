@@ -1,14 +1,7 @@
 const { tokenContract, web3Http } = require('./index');
 
-const {
-  ADMIN_ADDRESS,
-  ADMIN_PK,
-  TOKEN_CA,
-  USER_ADDRESS,
-  USER_PK,
-  GAS,
-  GASPRICE,
-} = process.env;
+const { ADMIN_ADDRESS, ADMIN_PK, TOKEN_CA, USER_ADDRESS, GAS, GASPRICE } =
+  process.env;
 
 const signAndSendTx = async (account, tx) => {
   try {
@@ -54,12 +47,13 @@ const transferTokenToUser = async (to, amount) => {
   }
 };
 
-const approveTokenToAdmin = async (ownerPK, amount) => {
+const approveTokenToAdmin = async (ownerPK) => {
   try {
     const userAccount = web3Http.eth.accounts.privateKeyToAccount(ownerPK);
+    const userTokenBalance = await getTokenBalance(userAccount);
     const adminAccount = web3Http.eth.accounts.privateKeyToAccount(ADMIN_PK);
     const bytedata = await tokenContract.methods
-      .approve(adminAccount.address, amount)
+      .approve(adminAccount.address, userTokenBalance)
       .encodeABI();
     const tx = {
       spender: adminAccount.address,
@@ -78,15 +72,6 @@ const approveTokenToAdmin = async (ownerPK, amount) => {
 
 const spendApprovedToken = async (sender, recipient, amount) => {
   const adminAccount = web3Http.eth.accounts.privateKeyToAccount(ADMIN_PK);
-  // try {
-  //   const result = await tokenContract.methods
-  //     .transferFrom(sender, recipient, amount)
-  //     .send({ from: adminAccount.address });
-  //   return result;
-  // } catch (err) {
-  //   console.error(err);
-  //   return false;
-  // }
   try {
     const bytedata = await tokenContract.methods
       .transferFrom(sender, recipient, amount)
@@ -124,7 +109,7 @@ const initialTest = async () => {
   console.log('admin', await getTokenBalance(ADMIN_ADDRESS));
 
   await transferTokenToUser(USER_ADDRESS, '100000000'); // admin transfer token to user
-  await approveTokenToAdmin(USER_ADDRESS, '50000000'); // user approve amount to admin
+  await approveTokenToAdmin(USER_ADDRESS); // user approve amount to admin
   console.log('admin', await getTokenBalance(ADMIN_ADDRESS));
   console.log('user1', await getTokenBalance(USER_ADDRESS));
 

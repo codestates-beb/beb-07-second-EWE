@@ -1,22 +1,7 @@
 const { nftContract, web3Http } = require('./index');
-const {
-  getTokenBalance,
-  transferTokenToUser,
-  approveTokenToAdmin,
-  spendApprovedToken,
-} = require('./tokenUtils');
+const { getTokenBalance, approveTokenToAdmin } = require('./tokenUtils');
 
-const {
-  ADMIN_ADDRESS,
-  ADMIN_PK,
-  TOKEN_CA,
-  WELCOMETOKEN,
-  NFT_CA,
-  USER_ADDRESS,
-  USER_PK,
-  GAS,
-  GASPRICE,
-} = process.env;
+const { ADMIN_PK, NFT_CA, USER_ADDRESS, USER_PK, GAS, GASPRICE } = process.env;
 
 const signAndSendTx = async (account, tx) => {
   try {
@@ -186,9 +171,7 @@ const mintTest = async () => {
   const targetAddr = '0xF226b85eC59807932939501165Dff24Ebf419A35';
   const targetPK =
     '0xacada6a3ec939deffeb87c41f194b35b42f372526905ada9bae4ad43da884de2';
-  console.log(await getTokenBalance(targetAddr));
-  // console.log(await transferTokenToUser(targetAddr, WELCOMETOKEN));
-  await approveTokenToAdmin(targetPK, WELCOMETOKEN);
+  await approveTokenToAdmin(targetPK);
   console.log(await getCurrentTokenId());
   await mintNFT(targetAddr);
   console.log('------------ after mint --------');
