@@ -65,10 +65,23 @@ const PostDetailPage = () => {
     }
 
     const clickAddressHandler = async()=>{
-        try{
-            await window.navigator.clipboard.writeText(user.wallet_account)
-        } catch(err) {
-            console.log("copy failed", err);
+        if (window.navigator.clipboard){
+            try{
+                await window.navigator.clipboard.writeText(user.wallet_account)
+            } catch(err) {
+                console.log("copy failed", err);
+            }
+        } else {
+            const address = document.createElement("input");
+            address.value=user.wallet_account;
+            address.style.position="absolute";
+            address.style.left="-9999px";
+            document.body.appendChild(address);
+            address.select();
+            if (!document.execCommand("copy")){
+                console.log('copy failed');
+            }
+            address.remove();
         }
     }
 
