@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 // apis
 import { 
+    getUser,
     localLoginUser,
     logoutUser,
     naverLoginUser,
@@ -26,8 +27,14 @@ import '../assets/css/modal.css'
 import {
     verifyPassword,
     emailFormat,
+    nicknameFormat,
+    passwordDoubleCheck,
 } from "../utils/validate";
 
+import {
+    successStyle,
+    failStyle,
+} from "../utils/style";
 
 const Header = ({user, liftUser}) => {
     // Navigator
@@ -51,10 +58,13 @@ const Header = ({user, liftUser}) => {
     // Update Mode
     const [updateMode, setUpdateMode] = useState(false);
 
-    const [emailToUpdate, setEmailToUpdate] = useState("");
     const [nicknameToUpdate, setNicknameToUpdate] = useState("");
     const [passwordToUpdate, setPasswordToUpdate] = useState("");
     const [passwordToVerify, setPasswordToVerify] = useState("");
+
+    const [isValidNickname, setIsValidNickname] = useState(false);
+    const [isValidPassword, setIsValidPassword] = useState(false);
+    const [isValidPasswordVerify, setIsValidPasswordVerify] = useState(false);
 
     // Modal Handler
     const closeLoginModal=()=>{
@@ -95,23 +105,22 @@ const Header = ({user, liftUser}) => {
     }
 
     // Update Handler
-    const userUpdateSubmitButtonHandler= async()=>{
-        if (!isLogin) return false;
+    const userUpdateEditButtonHandler = ()=>{
+        if(isLogin) setUpdateMode(true);
+        else return;
+    }
 
+    const userUpdateSubmitButtonHandler= async()=>{
         const userInfoToUpdate = {}
-        if (passwordToUpdate.length > 0){
+        if ( verifyPassword(passwordToUpdate) ){
             if(passwordToUpdate !== passwordToVerify) return false;
             userInfoToUpdate.password = passwordToUpdate;
         }
 
-        if (emailToUpdate.length > 0){
-            userInfoToUpdate.email = emailToUpdate;
-        }
-
-        if (nicknameToUpdate.length > 0)
+        if ( nicknameFormat(nicknameToUpdate) )
             userInfoToUpdate.nickname = nicknameToUpdate;
 
-        const userUpdated = await updateUser(userInfoToUpdate, user.id)
+        const userUpdated = await updateUser(userInfoToUpdate, user.id, accessToken)
         .then(result=>result)
         .catch(err=>err);
 
@@ -120,9 +129,25 @@ const Header = ({user, liftUser}) => {
         setUpdateMode(false);
     }
 
-    const passwordToUpdateChangeHandler = (e)=>{
+    const passwordVerifyChangeHandler = (e)=>{
+        if(passwordDoubleCheck(passwordToUpdate, e.target.value)) setIsValidPasswordVerify(true);
+        else setIsValidPasswordVerify(false);
+
+        setPasswordToVerify(e.target.value);
+    }
+
+    const nicknameChangeHandler = (e)=>{
+        if(nicknameFormat(e.target.value)) setIsValidNickname(true);
+        else setIsValidNickname(false);
+
+        setNicknameToUpdate(e.target.value);
+    }
+
+    const passwordChangeHandler = (e)=>{
+        if(verifyPassword(e.target.value)) setIsValidPassword(true);
+        else setIsValidPassword(false);
+
         setPasswordToUpdate(e.target.value);
-        return verifyPassword(e.target.value);
     }
 
     // Login Handler
@@ -167,14 +192,22 @@ const Header = ({user, liftUser}) => {
         }
     }
 
-    const socialLoginHandler = async()=>{
-        await naverLoginUser();
-    }
-
     useEffect(()=>{
         if(loginModalIsOpen) document.body.style= 'overflow: hidden';
         else document.body.style = 'overflow: unset';
     },[loginModalIsOpen])
+
+    useEffect(()=>{
+        if(updateMode) {
+            getUser(user.id)
+            .then(user=>{
+                const {nickname, password} = user;
+                setNicknameToUpdate(nickname); setIsValidNickname(true);
+                setPasswordToUpdate(password); setIsValidPassword(true);
+                setPasswordToVerify(password); setIsValidPasswordVerify(true);
+            })
+        }
+    }, [updateMode])
 
     return(
         <header>
@@ -220,7 +253,7 @@ const Header = ({user, liftUser}) => {
                         {updateMode ?
                             <button className="user_submit" onClick={userUpdateSubmitButtonHandler}>Submit</button>
                             :
-                            <button className="user_edit" onClick={()=>{setUpdateMode(true)}}>Edit</button>
+                            <button className="user_edit" onClick={userUpdateEditButtonHandler}>Edit</button>
                         }
                     </div>
                     <div className='user_info'>
@@ -254,32 +287,30 @@ const Header = ({user, liftUser}) => {
                                 </>
                             :
                                 <>
-                                <div className="nickname">
+                                <div className="nickname update">
                                     <h3>Nickname</h3>
                                     <input 
                                         value={nicknameToUpdate}
-                                        onChange={e=>{setNicknameToUpdate(e.target.value)}}
+                                        onChange={nicknameChangeHandler}
+                                        style={isValidNickname? successStyle : failStyle}
                                     />
                                 </div>
-                                <div className="email">
-                                    <h3>Email</h3>
-                                    <input 
-                                        value={emailToUpdate}
-                                        onChange={e=>{setEmailToUpdate(e.target.value)}}
-                                    />
-                                </div>
-                                <div className="password">
+                                <div className="password update">
                                     <h3>Password</h3>
                                     <input
                                         value={passwordToUpdate}
-                                        onChange={e=>{setPasswordToUpdate(e.target.value)}}
+                                        onChange={passwordChangeHandler}
+                                        type="password"
+                                        style={isValidPassword? successStyle : failStyle}
                                     />
                                 </div>
-                                <div className="password_check">
+                                <div className="password_check update">
                                     <h3>Password Check</h3>
                                     <input
                                         value={passwordToVerify}
-                                        onChange={e=>{setPasswordToVerify(e.target.value)}}
+                                        onChange={passwordVerifyChangeHandler}
+                                        type="password"
+                                        style={isValidPasswordVerify? successStyle : failStyle}
                                     />
                                 </div>
                                 </>
