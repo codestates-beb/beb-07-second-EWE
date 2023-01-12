@@ -33,10 +33,12 @@ const PostDetailPage = () => {
 
     const {postId} = useParams()
 
+    // Post Detail Page
     const [post, setPost] = useState(null);
     const [user, setUser] = useState(null);
     const [images, setImages] = useState(null);
 
+    // Update Mode
     const [updateMode, setUpdateMode] = useState(false);
     const [titleToUpdate, setTitleToUpdate] = useState("");
     const [contentToUpdate, setContentToUpdate] = useState("");
@@ -65,10 +67,23 @@ const PostDetailPage = () => {
     }
 
     const clickAddressHandler = async()=>{
-        try{
-            await window.navigator.clipboard.writeText(user.wallet_account)
-        } catch(err) {
-            console.log("copy failed", err);
+        if (window.navigator.clipboard){
+            try{
+                await window.navigator.clipboard.writeText(user.wallet_account)
+            } catch(err) {
+                console.log("copy failed", err);
+            }
+        } else {
+            const address = document.createElement("input");
+            address.value=user.wallet_account;
+            address.style.position="absolute";
+            address.style.left="-9999px";
+            document.body.appendChild(address);
+            address.select();
+            if (!document.execCommand("copy")){
+                console.log('copy failed');
+            }
+            address.remove();
         }
     }
 
@@ -87,6 +102,7 @@ const PostDetailPage = () => {
             const result = await getPostOne(postId);
 
             if (result.status === 500) navigator("/404");
+            console.log(result.status);
 
             setPost(result);
             setImages(result.images);
