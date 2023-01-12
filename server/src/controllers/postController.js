@@ -246,6 +246,16 @@ module.exports = {
     try {
       if (!offset || !limit) {
         const filteredPosts = await posts.findAll({
+          include: [
+            {
+              model: users,
+              attributes: ['id', 'wallet_account', 'nickname'],
+            },
+            {
+              model: images,
+              attributes: ['uri'],
+            },
+          ],
           where: {
             [Op.or]: [
               { title: { [Op.like]: `%${search}%` } },
@@ -257,6 +267,16 @@ module.exports = {
         return res.status(200).json({ posts: filteredPosts, totalNum });
       }
       const filteredPosts = await posts.findAll({
+        include: [
+          {
+            model: users,
+            attributes: ['id', 'wallet_account', 'nickname'],
+          },
+          {
+            model: images,
+            attributes: ['uri'],
+          },
+        ],
         where: {
           [Op.or]: [
             { title: { [Op.like]: `%${search}%` } },
