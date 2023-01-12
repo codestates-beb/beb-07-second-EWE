@@ -9,6 +9,7 @@ const naverLoginURL = origin + "/naver/login"
 const localLoginURL = origin + "/users/login";
 const logoutURL = origin + "/users/logout"
 const verifyUserURL = origin + "/users/newAccessToken";
+const updateUserURL = origin + "/users/"
 
 // Test API Request
 export const getUser = async(userId)=>{
@@ -70,4 +71,12 @@ export const localSignupUser = async(userInfo)=>{
     return resultSignup;
 }
 
+export const updateUser = async(userInfo, userId)=>{
+    const requestURL = `${updateUserURL}${userId}/updateuser`;
 
+    const userUpdated = await axios.put(requestURL, userInfo)
+    .then(result=>result.data)
+    .then(err=>err);
+
+    return userUpdated;
+}

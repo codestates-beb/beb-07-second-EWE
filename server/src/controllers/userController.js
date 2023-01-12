@@ -1,23 +1,16 @@
 /* eslint-disable camelcase */
 const jwt = require('jsonwebtoken');
-const { users, nfts, posts, images } = require('../models');
+const { users, nfts, posts, images, sequelize } = require('../models');
 const { createAccount } = require('../chainUtils/accountUtils');
-const { getEtherBalance, useEtherFaucet } = require('../chainUtils/etherUtils');
+const { useEtherFaucet } = require('../chainUtils/etherUtils');
 const {
-  getTokenBalance,
   transferTokenToUser,
   approveTokenToAdmin,
-  spendApprovedToken,
 } = require('../chainUtils/tokenUtils');
 
-const {
-  getCurrentTokenId,
-  giveWelcomeNFT,
-  getNFTOwner,
-  getMyNFTBalance,
-} = require('../chainUtils/nftUtils');
+const { giveWelcomeNFT } = require('../chainUtils/nftUtils');
 
-const WELCOMETOKEN = '10000000000000000';
+const { WELCOMETOKEN } = process.env;
 
 module.exports = {
   getUserinfo: async (req, res) => {
@@ -57,16 +50,42 @@ module.exports = {
 
   getNfts: async (req, res) => {
     const { userId } = req.params;
-    const userNft = await nfts.findAll({
-      where: { user_id: userId },
-    });
+    const { offset, limit } = req.query;
     try {
+      // without query params
+      if (!offset || !limit) {
+        const userNft = await nfts.findAll({
+          where: { user_id: userId },
+        });
+        if (userNft === null) {
+          return res
+            .status(400)
+            .send({ data: null, message: 'No minted nft or invalid user' });
+        }
+        const userNftCounts = await nfts.findAll({
+          attributes: [
+            [sequelize.fn('COUNT', sequelize.col('id')), 'totalNum'],
+          ],
+          where: { user_id: userId },
+        });
+        return res.status(200).json({ nfts: userNft, totalNum: userNftCounts });
+      }
+      // with query params
+      const userNft = await nfts.findAll({
+        where: { user_id: userId },
+        offset: Number(offset),
+        limit: Number(limit),
+      });
       if (userNft === null) {
         return res
           .status(400)
           .send({ data: null, message: 'No minted nft or invalid user' });
       }
-      return res.status(200).json(userNft);
+      const userNftCounts = await nfts.findAll({
+        attributes: [[sequelize.fn('COUNT', sequelize.col('id')), 'totalNum']],
+        where: { user_id: userId },
+      });
+      return res.status(200).json({ nfts: userNft, totalNum: userNftCounts });
     } catch (err) {
       console.log(err);
       return res.status(500).send({ data: null, message: 'server error' });
@@ -74,32 +93,67 @@ module.exports = {
   },
 
   getPostsByUserId: async (req, res) => {
-    // 사진 관련해서 수정 필요
-    // const imgUrlPrefix = `http://${req.headers.host}/images/`;
-    // console.log(imgUrlPrefix);
     const { userId } = req.params;
-    const userPosts = await posts.findAll({
-      include: [
-        {
-          model: users,
-          attributes: ['id', 'wallet_account', 'nickname'],
-        },
-        {
-          model: images,
-          attributes: ['uri'],
-        },
-      ],
-      where: { user_id: userId },
-    });
-    // console.log(userPosts);
-
+    const { offset, limit } = req.query;
     try {
+      // without query params
+      if (!offset || !limit) {
+        const userPosts = await posts.findAll({
+          include: [
+            {
+              model: users,
+              attributes: ['id', 'wallet_account', 'nickname'],
+            },
+            {
+              model: images,
+              attributes: ['uri'],
+            },
+          ],
+          where: { user_id: userId },
+        });
+        if (userPosts === null) {
+          return res
+            .status(400)
+            .send({ data: null, message: 'No updated posts or invalid user' });
+        }
+        const userPostCounts = await posts.findAll({
+          attributes: [
+            [sequelize.fn('COUNT', sequelize.col('id')), 'totalNum'],
+          ],
+          where: { user_id: userId },
+        });
+        return res
+          .status(200)
+          .json({ posts: userPosts, totalNum: userPostCounts[0] });
+      }
+      // with query params
+      const userPosts = await posts.findAll({
+        include: [
+          {
+            model: users,
+            attributes: ['id', 'wallet_account', 'nickname'],
+          },
+          {
+            model: images,
+            attributes: ['uri'],
+          },
+        ],
+        where: { user_id: userId },
+        offset: Number(offset),
+        limit: Number(limit),
+      });
       if (userPosts === null) {
         return res
           .status(400)
           .send({ data: null, message: 'No updated posts or invalid user' });
       }
-      return res.status(200).json(userPosts);
+      const userPostCounts = await posts.findAll({
+        attributes: [[sequelize.fn('COUNT', sequelize.col('id')), 'totalNum']],
+        where: { user_id: userId },
+      });
+      return res
+        .status(200)
+        .json({ posts: userPosts, totalNum: userPostCounts[0] });
     } catch (err) {
       console.log(err);
       return res.status(500).send({ data: null, message: 'server error' });
@@ -150,19 +204,16 @@ module.exports = {
       const targetNFT = await nfts.findOne({ where: { token_id: newUser.id } });
       if (targetNFT) {
         console.log('welcome nft presented to user!');
-        await giveWelcomeNFT(address, newUser.id);
-        await targetNFT.update({
-          user_id: newUser.id,
-        });
+        giveWelcomeNFT(address, newUser.id);
       }
+      // below feature migrated to block listener
+      // const tokenBalance = await getTokenBalance(address);
+      // const etherBalance = await getEtherBalance(address);
 
-      const tokenBalance = await getTokenBalance(address);
-      const etherBalance = await getEtherBalance(address);
-
-      await newUser.update({
-        eth: etherBalance,
-        erc20: tokenBalance,
-      });
+      // await newUser.update({
+      //   eth: etherBalance,
+      //   erc20: tokenBalance,
+      // });
       return res.status(200).json(newUser);
     } catch (err) {
       console.error(err);
@@ -251,6 +302,7 @@ module.exports = {
       return next(err);
     }
   },
+
   my: async (req, res, next) => {
     try {
       if (!req.decoded) {
@@ -319,6 +371,32 @@ module.exports = {
       return res
         .status(200)
         .json({ data: { accessToken, user }, message: 'accessToken issued' });
+    } catch (err) {
+      console.log(err);
+      return next(err);
+    }
+  },
+
+  updateUserinfo: async (req, res, next) => {
+    const { userId } = req.params;
+    try {
+      const currentUserinfo = await users.findOne({ where: { id: userId } });
+      if (currentUserinfo.login_provider === 'local') {
+        let { password, nickname } = req.body;
+        if (!password) password = currentUserinfo.password;
+        if (!nickname) nickname = currentUserinfo.nickname;
+        await users.update({ password, nickname }, { where: { id: userId } });
+        const updatedUserinfo = await users.findOne({ where: { id: userId } });
+        return res.status(200).json(updatedUserinfo);
+      }
+      if (currentUserinfo.login_provider === 'naver') {
+        let { nickname } = req.body;
+        if (!nickname) nickname = currentUserinfo.nickname;
+        await users.update({ nickname }, { where: { id: userId } });
+        const updatedUserinfo = await users.findOne({ where: { id: userId } });
+        return res.status(200).json(updatedUserinfo);
+      }
+      return res.status(400).send({ message: 'invalid user' });
     } catch (err) {
       console.log(err);
       return next(err);

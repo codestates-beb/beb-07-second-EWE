@@ -1,5 +1,5 @@
 # Logs
-combined.log
+**/combined.log
 error.log
 logs
 *.log
@@ -131,4 +131,3 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-Dockerfile

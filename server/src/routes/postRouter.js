@@ -6,6 +6,7 @@ const postController = require('../controllers/postController');
 const { verifyToken } = require('../middlewares/verifyToken');
 
 router.get('/', postController.getAllposts);
+router.get('/findposts', postController.searchPosts);
 router.get('/:postId', postController.getPostsByPostId);
 router.post(
   '/',
@@ -13,8 +14,9 @@ router.post(
   upload.single('image'),
   postController.createNewPost,
 );
-router.post('/:postId/delpost', postController.deletePosts);
-router.post('/:postId/delimg', postController.deleteImgs);
+router.put('/:postId/updatepost', verifyToken, postController.updatePost);
+router.post('/:postId/deletepost', verifyToken, postController.deletePosts);
+router.post('/:postId/deleteimg', postController.deleteImgs);
 router.put('/:postId/likes', postController.updateLikes);
 
 module.exports = router;

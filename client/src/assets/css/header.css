@@ -25,7 +25,6 @@ margin: auto;
 }
 .header_right{
     padding: auto;
-
     width: 33.33%;
 }
 .fa-bitcoin{
@@ -182,4 +181,69 @@ margin: auto;
 }
 a{
     color: var(--black);
+}
+.user_info_1 .nickname,
+.user_info_1 .email,
+.user_info_1 .password,
+.user_info_1 .password_check{
+    margin: 2%;
+}
+.user_submit, .user_edit{
+    width: 50%;
+    height: 20px;
+    border: 1px solid var(--Primary-color);
+    border-radius: 20px;
+    color: var(--Primary-color);
+    background-color: var(--white-color);
+}
+.user_info_1, .user_info_2, .user_info_3{
+    
+}
+
+
+@media screen and (max-width: 1300px){
+    .post_wrapper,.nft_wrapper{
+        grid-template-columns: repeat(auto-fill, minmax(30%, 1fr) );
+        }
+    
+}
+@media screen and (max-width: 1024px){
+
+    .footer .project{
+        left:50%;
+    }
+    .footer .team{
+        right: 50%;
+    }
+
+
+
+}
+@media screen and (max-width: 768px){
+    .header_right{
+        display: block;
+        padding: auto;
+        width: 33.33%;
+    }
+    .userMenu .signup{
+        margin: 0;
+        padding: 0;
+    }
+
+}
+@media screen and (max-width: 480px){
+    .post_wrapper,.nft_wrapper{
+        grid-template-columns: repeat(auto-fill, minmax(100%, 1fr) );
+        }
+    .post_button{
+        font-size: 80px;
+    }
+    .post_button:hover{
+        padding: 0;
+        margin: 0;
+        font-size: 120px;
+        color: var(--white-color);
+        transform: scale(1.01);
+        filter: brightness(1.05);
+    }    
 }

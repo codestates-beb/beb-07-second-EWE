@@ -1,6 +1,8 @@
 import '../assets/css/asset.css'
 import { Link } from 'react-router-dom'
-const Post = ({post}) => {
+import { useState, useEffect } from 'react'
+import '../assets/image/loading.gif'
+const Post = ({post, isLoading}) => {
     const numCount = (num) =>{
         if(num<=1000){
             return ' ' + num + ' '
@@ -14,7 +16,7 @@ const Post = ({post}) => {
         }
     }
     return(
-        <Link to={'/post/'+ post.id }className="asset_container">
+        <Link to={'/post/'+ post.id } className="asset_container">
             <div>
                 <div className='user1'>
                     <div className="user_img">
@@ -34,7 +36,10 @@ const Post = ({post}) => {
                 </div>
             </div>
             <div className="image" >
-                <img src = {post.images.length === 0 ?require('../assets/image/unnamed.png'):post.images[0].uri}  alt="food"></img>
+                <img src = {
+                    isLoading? '../assets/image/loading.gif':
+                    post === null || post === undefined || post.image === undefined ||post.image === null 
+                    ?require('../assets/image/unnamed.png'):post.images[0].uri}  alt="food"></img>
             </div>
             <div className='post_bottom'>
                 <div className="likes">

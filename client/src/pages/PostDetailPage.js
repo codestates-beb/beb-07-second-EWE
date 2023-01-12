@@ -1,6 +1,7 @@
 // modules
 import {useState, useEffect} from "react";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, Link} from "react-router-dom";
+import {useSelector} from "react-redux";
 import {useParams} from "react-router-dom";
 import {Swiper, SwiperSlide} from "swiper/react";
 import {Navigation} from "swiper";
@@ -11,7 +12,11 @@ import DetailGoogleMap from "../components/Map/DetailGoogleMap";
 import Dropdown from "../components/Dropdown";
 
 // apis
-import { getPostOne, increaseLike } from "../apis/post";
+import { 
+    getPostOne, 
+    increaseLike,
+    updatePost 
+} from "../apis/post";
 
 // css
 import "../assets/css/postdetail.css";
@@ -24,20 +29,62 @@ function convertDate(date){
 }
 
 const PostDetailPage = () => {
-    const navigator = useNavigate(-1);
+    const navigator = useNavigate();
 
     const {postId} = useParams()
+
+    // Post Detail Page
     const [post, setPost] = useState(null);
     const [user, setUser] = useState(null);
-    const [store, setStore] = useState("");
+    const [images, setImages] = useState(null);
+
+    // Update Mode
+    const [updateMode, setUpdateMode] = useState(false);
+    const [titleToUpdate, setTitleToUpdate] = useState("");
+    const [contentToUpdate, setContentToUpdate] = useState("");
 
     const [isLike, setIsLike] = useState(false);
     const [isDropdownView, setIsDropdownView] = useState(false)
+
+    const postUpdateSubmitButtonHandler = async ()=>{
+        const data = {};
+        if (titleToUpdate.length > 0) data.title = titleToUpdate;
+        if (contentToUpdate.length> 0) data.content = contentToUpdate;
+
+        console.log(data);
+        const updateResult = await updatePost(data, post.id)
+        .then(result=>result)
+        .catch(err=>err)
+
+        if(!updateResult) return;
+        setPost(updateResult)
+    }
 
     const clickLikeHandler = async()=>{
         setIsLike(true);
         const result = await increaseLike(postId);
         console.log(result);
+    }
+
+    const clickAddressHandler = async()=>{
+        if (window.navigator.clipboard){
+            try{
+                await window.navigator.clipboard.writeText(user.wallet_account)
+            } catch(err) {
+                console.log("copy failed", err);
+            }
+        } else {
+            const address = document.createElement("input");
+            address.value=user.wallet_account;
+            address.style.position="absolute";
+            address.style.left="-9999px";
+            document.body.appendChild(address);
+            address.select();
+            if (!document.execCommand("copy")){
+                console.log('copy failed');
+            }
+            address.remove();
+        }
     }
 
     const toggleLike = ()=>{
@@ -50,21 +97,25 @@ const PostDetailPage = () => {
         setIsDropdownView(!isDropdownView);
     }
 
-    const liftStore = (store)=>{
-        setStore(store);
-    }
-
     useEffect(()=>{
         (async()=>{
             const result = await getPostOne(postId);
 
+            if (result.status === 500) navigator("/404");
+            console.log(result.status);
+
             setPost(result);
+            setImages(result.images);
             setUser(result.user);
+
+            setTitleToUpdate(result.title)
+            setContentToUpdate(result.content);
         })();
     }, []);
 
     return(
         <div>
+
             {post? 
             <>
             <div className="detail_image_wrapper">
@@ -74,7 +125,7 @@ const PostDetailPage = () => {
                     slidesPerView={1}
                     navigation
                 >
-                    {post.images.map((image, idx)=>{
+                    {images.map((image, idx)=>{
                         return(
                             <SwiperSlide key={idx}>
                                 <div className="swiper_image_wrapper">
@@ -92,33 +143,69 @@ const PostDetailPage = () => {
                             <i className="fas fa-chevron-left"/>
                             <span>Back</span>
                         </div>
+                        {updateMode ?
+                        <div className="detail_edit">
+                            <button
+                                onClick={()=>{
+                                    setUpdateMode(false)
+                                    setIsDropdownView(false)
+                                }}
+                            >Cancel</button>
+                            <button 
+                                onClick={()=>{
+                                    postUpdateSubmitButtonHandler()
+                                    setUpdateMode(false); 
+                                    setIsDropdownView(false)
+                                }}
+                            >Submit</button>
+                        </div>
+                        :
                         <div className="btn ellipsis">
                             <i className="fas fa-ellipsis" onClick={toggleIsDropdownView}/>
                             <Dropdown isDropdownview={isDropdownView}>
-                                <div className="dropdown_content">수정</div>
-                                <div className="dropdown_content">삭제</div>
+                                <div 
+                                    className="dropdown_content"
+                                    onClick={()=>{setUpdateMode(true)}}
+                                >Update</div>
+                                <div className="dropdown_content">Delete</div>
                             </Dropdown>
                         </div>
+                        }
                     </div>
                     <div className="detail_header">
-                        <div className="detail_profile_wrapper">
-                            <div className="profile_frame">
-                                <img src="https://spnimage.edaily.co.kr/images/Photo/files/NP/S/2022/07/PS22072100041.jpg"/>
-                            </div>
+                        <div className="detail_header_row">
+                            {updateMode? 
+                                <input 
+                                    className="detail_title detail_update" 
+                                    defaultValue={titleToUpdate}
+                                    onChange={e=>setTitleToUpdate(e.target.value)}
+                                ></input>
+                                :
+                                <h1 className="detail_title">{post.title}</h1>
+                            }
+                            <p className="detail_postid"># {post.id}</p>
                         </div>
-                        <h1 className="detail_title">{post.title}</h1>
-                        <p className="detail_postid"># {post.id}</p>
-                        <p className="detail_data">
-                            <i className="fas fa-pen"/>
-                            <span>{user? user.nickname:""}</span>
-                            <span>|</span>
-                            <i className="fas fa-eye" />
-                            <span>{post.views}</span>
-                        </p>
-                        <p className="detail_date">{convertDate(post.createdAt)}</p>
+                        <div className="detail_header_row">
+                            <p className="detail_data">
+                                <i className="fas fa-pen"/>
+                                <span>{user? user.nickname:""}</span>
+                                <span>|</span>
+                                <i className="fas fa-eye" />
+                                <span>{post.views}</span>
+                            </p>
+                            <p className="detail_date">{convertDate(post.createdAt)}</p>
+                        </div>
                     </div>
                     <div className="detail_content_wrapper">
-                        <p className="detail_content">{post.content}</p>
+                        {updateMode? 
+                            <textarea 
+                                className="detail_content detail_update" 
+                                value={contentToUpdate}
+                                onChange={(e)=>{setContentToUpdate(e.target.value)}}
+                            >{contentToUpdate}</textarea>
+                            :
+                            <p className="detail_content">{post.content}</p>
+                        }
                         <div className="content_tail">
                             <div className="content_left">
                                 <div 
@@ -133,6 +220,17 @@ const PostDetailPage = () => {
                                     <span className="like_num">{post.likes}</span>
                                 </div>
                             </div>
+                            <div className="content_right">
+                                <div 
+                                    className="content_writer_wallet"
+                                    onClick={clickAddressHandler}
+                                >
+                                    <i className="fas fa-wallet"/>
+                                    <p className="content_writer_address">
+                                        { user.wallet_account }
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -143,11 +241,16 @@ const PostDetailPage = () => {
                     </div>
                     <div className="detail_map_wrapper">
                         <Wrapper apiKey={process.env.REACT_APP_GOOGLE_API_KEY} libraries={["places"]}>
-                            <DetailGoogleMap liftStore={liftStore}/>
+                            <DetailGoogleMap location={post.location}/>
                         </Wrapper>
                     </div>
+                    
                 </div>
             </div>
+            <Link to='/write' className='write'>
+                <img className='post_button' src={require('../assets/image/post_2.png')}>
+                </img>
+            </Link>
             </>
             :<></>}
         </div>

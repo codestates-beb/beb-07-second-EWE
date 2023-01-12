@@ -28,14 +28,9 @@ import NotFoundPage from './pages/NotFoundPage';
 
 // apis
 import {localLoginUser, verifyUser} from './apis/user'
-import {getPosts} from './apis/post'
-import {getNfts} from './apis/nft'
 
 const App =()=> {
-  const [posts, setPosts] = useState([])
-  const [nfts, setNfts] = useState([])
-  const [user, setUser] = useState(null);
-
+  const [user, setUser] = useState({nickname: "Guest"});
   const accessToken = useSelector((state)=>state.auth.accessToken);
   const isLogin = useSelector((state)=>state.auth.isLogin);
   
@@ -44,39 +39,32 @@ const App =()=> {
   const liftUser = (user)=>{
     setUser(user);
   }
-
-
+  const dataCheck = (e)=>{
+    if(e!==null&&e!==undefined) return e
+  }
   useEffect(()=>{
     verifyUser()
     .then(result=>{
       setUser(result.data.user);
-      dispatch(setAuth({accessToken: result.data.accessToken}));
+
+      dispatch(setAuth({
+        accessToken: result.data.accessToken, 
+        userID: result.data.user.id
+      }));
     })
     .catch(err=>{return;})
-
-    getPosts()
-      .then((result)=>{
-          setPosts(result)
-      })
-
-    getNfts()
-    .then((result)=>{
-        setNfts(result)
-    })
   },[])
 
   return (
     <BrowserRouter>
-      <Header user = {user} liftUser={liftUser}/>
+      <Header user = {dataCheck(user)} liftUser={liftUser}/>
       <Routes>
-        <Route path='/' element={<MainPage  user = {user} posts={posts}/>}/>
+        <Route path='/' element={<MainPage  user = {dataCheck(user)}/>}/>
         <Route path='/market' element={<MarketPage
-          nfts={nfts}
         />}/>
-        <Route path='/mypage'  element={<MyPage 
-        posts={posts} nfts={nfts} user = {user}/>}/>
+        <Route path='/mypage'  element={<MyPage user = {dataCheck(user)}/>}/>
         <Route path='/signup' element={<SignupPage/>}/>
-        <Route path='/write' element={<WritePage user = {user}/>}/>
+        <Route path='/write' element={<WritePage user = {dataCheck(user)}/>}/>
         <Route path='/post/:postId' element={<PostDetailPage/>}/>
         <Route path='/nft/:nftId' element={<NFTDetailPage/>}/>
         <Route path='/404' element={<NotFoundPage/>}/>

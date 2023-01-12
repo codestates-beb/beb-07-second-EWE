@@ -1,19 +1,18 @@
 // modules
-import { useState, useEffect } from 'react';
+import { useState, useEffec } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 // apis
-import { mintNFT, mintNTF } from "../apis/nft";
+import { mintNFT } from "../apis/nft";
 
 // components
-import NFTList from '../components/NFTList';
-import Footer from "../components/Footer";
+import Pagination from "../components/Pagination";
 
 // css
 import '../assets/css/market.css';
 
-const MarketPage = ({nfts}) => {
+const MarketPage = ({nfts,user}) => {
     const navigator = useNavigate();
 
     // User Global Variable
@@ -29,11 +28,7 @@ const MarketPage = ({nfts}) => {
     const [category, setCategory] = useState("korean");
 
     const [previewImage, setPreviewImage] = useState();
-
-    const[nftLimit, setNftLimit] = useState(10);
-    const[nftPage, setNftPage] = useState(1);
-    const nftOffset = (nftPage - 1) * nftLimit
-    let numNftPages = Math.ceil(nfts.length/nftLimit)
+    const [responsibleToggle,SetResponsibleToggle] = useState(false)
 
     const imageChangeHandler = (e)=>{
         const file = e.target.files[0];
@@ -72,8 +67,40 @@ const MarketPage = ({nfts}) => {
     }
 
     return(
-        <>
+        
         <div className='market'>
+
+            <Link to='/market' className='market'>
+                <img className='post_button' src={require('../assets/image/mint.png')}>
+                </img>
+            </Link>
+            <div className='category narrow'>
+            <i className="fa-solid fa-caret-down" onClick={()=>{SetResponsibleToggle(!responsibleToggle)}}>
+                </i>
+                {
+                responsibleToggle === false?
+                <></>
+                :<div className='toggle_category'>
+                    <div className='toggle_category_1'>
+                        <h2>{user===null || user===undefined ?
+                        'Guest' : user.nickname
+                            }</h2>
+                        <Link to="/mypage">My Page</Link>
+                        <Link to="/market">NFT Market</Link>
+                        <Link to="/">ETH Faucet</Link>
+                        <Link to="/">Log Out</Link>
+                        <Link to="/">Secession</Link>
+                    </div>
+                </div>
+                }
+
+
+            </div>
+            <div className='category wide'>
+                <Link to='/'>
+                Eat Write Earn   Incentive Community : Get your token with Boasting your dishes! 
+                </Link>
+            </div>
             <div className='market_section'>
                 <div className="section_title">
                     <h1>Minting</h1>
@@ -145,47 +172,56 @@ const MarketPage = ({nfts}) => {
                 <div className="section_title">
                     <h1>NFTs</h1>
                 </div>
-                <NFTList
-                nftLimit={nftLimit}
-                nftOffset={nftOffset}
-                nfts={nfts}
+                {
+                <Pagination
+                    props={'nfts'}
+                    user={''}
                 />
-                <div className='pagination'>
-                    <select 
-                        type = 'number'
-                        value={nftLimit}
-                        onChange={({target: {value}})=> setNftLimit(Number(value))}>
-                        <option value='5'>5</option>
-                        <option value='10'>10</option>
-                        <option value='15'>15</option>
-                        <option value='30'>30</option>
-                        <option value='100'>100</option>
-                    </select>
-                    <button onClick={()=> setNftPage( nftPage - 1 )} disabled = {nftPage === 1}>
-                        <i className='fas fa-left-long'></i>
-                    </button>
-                        {Array(numNftPages)
-                        .fill()
-                        .map((_,i) => (
-                            <button
-                            className='pagination_num'
-                            key = {i + 1}
-                            onClick={()=>setNftPage( i + 1 )}
-                            aria-current = {nftPage !== i + 1 ? "page" : null}
-                            >
-                            { i + 1 }
-                            </button>
-                            ))
-                        }
-                        <button onClick={()=> setNftPage( nftPage + 1 )}      disabled = {nftPage === numNftPages}>
-                        <i className='fas fa-right-long'></i>
-                    </button>
+                }    
+                </div>        
+            <div className="footer">
+                <img className='post_button' src={require('../assets/image/bottom.png')}>
+                </img>
+                <div className="team">
+
+                    <img className='logo'src={require('../assets/image/EWElogo.png')}></img>
+
+
+                    <br/>
+                    <h5>강두훈 프론트엔드, 디자인</h5>
+                    <h5>https://velog.io/@jejualrock</h5>
+                    <h5>eclip6@ajou.ac.kr</h5>
+                    <br/>                    <h5>김현태 백엔드, 스마트 컨트랙트</h5>
+                    <h5>https://velog.io/@atoye1</h5>
+                    <h5>hyuntae384@gmail.com</h5>
+                    <br/>  
+                    <h5>설동헌 백엔드, 스마트 컨트랙트</h5>
+                    <h5>https://www.notion.so/
+                    7eb68268711f40619020318efcaeca0c</h5>
+                    <h5>ssalssi1@gmail.com</h5>
+                    <br/> 
+                    <h5>윤수빈 프론트엔드, 디자인</h5>
+                    <h5>https://velog.io/@nft_sb</h5>
+                    <h5>yunsubin481@gmail.com</h5>
+                    <a className="github_repo" href="https://github.com/codestates-beb/beb-07-second-EWE/tree/main">
+                    <br/>
+                            <h5>github_repo</h5>
+                        </a>
+
+                </div>
+                <div className="project">
+
+                    <h5>Project EWE</h5>
+                    <h5>
+                        Intro
+                    </h5>
+                    <br/>
                 </div>
             </div>
-            
+
+
         </div>
-        <Footer/>
-        </>
+
     );
 }
 export default MarketPage;

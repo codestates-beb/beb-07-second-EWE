@@ -1,14 +1,39 @@
 /* eslint-disable camelcase */
-const { users, nfts, posts, images } = require('../models');
-const {
-  transferTokenToUser,
-  getTokenBalance,
-} = require('../chainUtils/tokenUtils');
+const { users, posts, images, sequelize, Sequelize } = require('../models');
+const { transferTokenToUser } = require('../chainUtils/tokenUtils');
 
-const POSTREWARD = '10000000000000000';
+const { Op } = Sequelize;
+
+const POSTREWARD = '5000';
+
 module.exports = {
   getAllposts: async (req, res) => {
+    const { offset, limit } = req.query;
     try {
+      // without query params
+      if (!offset || !limit) {
+        const allPosts = await posts.findAll({
+          include: [
+            {
+              model: users,
+              attributes: ['id', 'wallet_account', 'nickname'],
+            },
+            {
+              model: images,
+              attributes: ['uri'],
+            },
+          ],
+        });
+        const postCounts = await posts.findAll({
+          attributes: [
+            [sequelize.fn('COUNT', sequelize.col('id')), 'totalNum'],
+          ],
+        });
+        return res
+          .status(200)
+          .json({ posts: allPosts, totalNum: postCounts[0] });
+      }
+      // with query params
       const allPosts = await posts.findAll({
         include: [
           {
@@ -20,8 +45,13 @@ module.exports = {
             attributes: ['uri'],
           },
         ],
+        offset: Number(offset),
+        limit: Number(limit),
       });
-      return res.status(200).json(allPosts);
+      const postCounts = await posts.findAll({
+        attributes: [[sequelize.fn('COUNT', sequelize.col('id')), 'totalNum']],
+      });
+      return res.status(200).json({ posts: allPosts, totalNum: postCounts[0] });
     } catch (err) {
       console.log(err);
       return res.status(500).send({ data: null, message: 'server error' });
@@ -97,12 +127,36 @@ module.exports = {
         post_id: newPost.id,
       });
       console.log(newImg);
-      await transferTokenToUser(user.wallet_account, POSTREWARD);
-      const newErc20 = await getTokenBalance(user.wallet_account);
-      await user.update({
-        erc20: newErc20,
-      });
+      transferTokenToUser(user.wallet_account, POSTREWARD);
       return res.status(200).send({ posts: newPost, images: newImg });
+    } catch (err) {
+      console.log(err);
+      return next(err);
+    }
+  },
+
+  updatePost: async (req, res, next) => {
+    const { postId } = req.params;
+    let { title, location, content, store_name } = req.body;
+    try {
+      const currentPost = await posts.findOne({ where: { id: postId } });
+      if (!title) title = currentPost.title;
+      if (!location) location = currentPost.location;
+      if (!content) content = currentPost.content;
+      if (!store_name) store_name = currentPost.store_name;
+      await posts.update(
+        {
+          title,
+          location,
+          content,
+          store_name,
+        },
+        {
+          where: { id: postId },
+        },
+      );
+      const updatedPost = await posts.findOne({ where: { id: postId } });
+      return res.status(200).json(updatedPost);
     } catch (err) {
       console.log(err);
       return next(err);
@@ -121,11 +175,11 @@ module.exports = {
           .status(400)
           .send({ data: null, message: 'no according posts' });
       }
-      const deletePost = await posts.destroy({
-        where: { id: postId },
-      });
       const deleteImg = await images.destroy({
         where: { post_id: postId },
+      });
+      const deletePost = await posts.destroy({
+        where: { id: postId },
       });
       console.log(deletePost);
       console.log(deleteImg);
@@ -181,6 +235,67 @@ module.exports = {
         likes: targetIndex.likes + 1,
         message: 'successfully updated!',
       });
+    } catch (err) {
+      console.log(err);
+      return res.status(500).send({ data: null, message: 'server error' });
+    }
+  },
+
+  searchPosts: async (req, res) => {
+    const { search, offset, limit } = req.query;
+    try {
+      if (!offset || !limit) {
+        const filteredPosts = await posts.findAll({
+          include: [
+            {
+              model: users,
+              attributes: ['id', 'wallet_account', 'nickname'],
+            },
+            {
+              model: images,
+              attributes: ['uri'],
+            },
+          ],
+          where: {
+            [Op.or]: [
+              { title: { [Op.like]: `%${search}%` } },
+              { content: { [Op.like]: `%${search}%` } },
+            ],
+          },
+        });
+        const totalNum = filteredPosts.length;
+        return res.status(200).json({ posts: filteredPosts, totalNum });
+      }
+      const filteredPosts = await posts.findAll({
+        include: [
+          {
+            model: users,
+            attributes: ['id', 'wallet_account', 'nickname'],
+          },
+          {
+            model: images,
+            attributes: ['uri'],
+          },
+        ],
+        where: {
+          [Op.or]: [
+            { title: { [Op.like]: `%${search}%` } },
+            { content: { [Op.like]: `%${search}%` } },
+          ],
+        },
+        offset: Number(offset),
+        limit: Number(limit),
+      });
+      const filteredPostsWithoutLimit = await posts.findAll({
+        where: {
+          [Op.or]: [
+            { title: { [Op.like]: `%${search}%` } },
+            { content: { [Op.like]: `%${search}%` } },
+          ],
+        },
+      });
+      const totalNum = filteredPostsWithoutLimit.length;
+      return res.status(200).json({ posts: filteredPosts, totalNum });
     } catch (err) {
       console.log(err);
       return res.status(500).send({ data: null, message: 'server error' });
