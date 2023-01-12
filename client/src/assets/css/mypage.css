@@ -54,7 +54,7 @@
 
 }
 .my_assets{
-    margin-top: 20px;
+    padding-top: 20px;
     color: var(--white-color);
     text-align: center;
     transition: 0.3s;

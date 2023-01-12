@@ -28,7 +28,11 @@ const Pagination = ({props,user}) => {
     let numPages =()=>{
         if(pagination!==null && pagination!==undefined) {
             let num = Math.ceil(pagination.totalNum.totalNum/limit)
-            if(!isNaN(num)) return num
+            if(!isNaN(num)) {
+                return num
+            }else{
+                return 1
+            }
         }
     }
 
@@ -56,13 +60,6 @@ const Pagination = ({props,user}) => {
 
 
 
-    // useEffect(() => {
-    //     async function ex() {
-    //     const A = await 비동기함수;
-    //     console.log(A);
-    //     }
-    //     ex();
-    //     }, [])
     return(
         <div>
 
@@ -123,7 +120,6 @@ const Pagination = ({props,user}) => {
                     return (<NFT key={nft.id} nft={nft} user={user}/>)
                     }):<></>
             } 
-        
             </div>
         </div>
     );
