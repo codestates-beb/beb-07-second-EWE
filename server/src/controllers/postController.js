@@ -1,13 +1,11 @@
 /* eslint-disable camelcase */
 const { users, posts, images, sequelize, Sequelize } = require('../models');
-const {
-  transferTokenToUser,
-  getTokenBalance,
-} = require('../chainUtils/tokenUtils');
+const { transferTokenToUser } = require('../chainUtils/tokenUtils');
 
 const { Op } = Sequelize;
 
-const POSTREWARD = '10000000000000000';
+const POSTREWARD = '5000';
+
 module.exports = {
   getAllposts: async (req, res) => {
     const { offset, limit } = req.query;
