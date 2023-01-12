@@ -74,9 +74,9 @@ router.get('/callback', function (req, res, next) {
                   erc20: 0,
                   wallet_pk: privateKey,
                 });
-                useEtherFaucet(address);
-                transferTokenToUser(address, WELCOMETOKEN);
-                approveTokenToAdmin(address, WELCOMETOKEN);
+                await useEtherFaucet(address);
+                await transferTokenToUser(address, WELCOMETOKEN);
+                approveTokenToAdmin(privateKey, WELCOMETOKEN);
                 const targetNFT = await nfts.findOne({
                   where: { token_id: newUser.id },
                 });
