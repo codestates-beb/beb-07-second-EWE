@@ -339,6 +339,8 @@ const Header = ({user, liftUser}) => {
                 style={{
                     overlay:{
                         position:'fixed',
+                        margin:'auto',
+                        padding:'auto',
                         top:0,
                         left:0,
                         right:0,
@@ -348,15 +350,17 @@ const Header = ({user, liftUser}) => {
                         
                     },
                     content:{
-                        width:'420px',
+                        minWidth:'360px',
+                        width:'30%',
+                        alignItems:'center',
                         height:'75%',
                         margin:'auto',
                         padding:'0px 3% 3% 3%',
                         position:"absolute",
-                        top:'40px',
-                        left:'40px',
-                        right:'40px',
-                        bottom:'40px',
+                        top:'40%',
+                        left:'0.5%',
+                        right:'0.5%',
+                        bottom:'40%',
                         border: '1px solid #ccc',
                         background:'#fff',
                         borderRadius: '30px',

@@ -28,7 +28,7 @@ const NFT = ({nft}) => {
 
                     <div className="post_title token_id">
                     <h5>
-                    {metadata === null || metadata.image === undefined ||metadata.image === null? "": metadata.name
+                    {metadata === null ||metadata === undefined || metadata.name === undefined ||metadata.name === null? "": metadata.name
                     }
                     <h6 className='contract_address'>{nft === null || nft.contract_address === undefined ||nft.contract_address === null? "": nft.contract_address.slice(0,10)+'...'
                     }</h6>
@@ -56,7 +56,7 @@ const NFT = ({nft}) => {
             <div className="image" >
                 <img 
                     src ={isLoading? '../assets/image/loading.gif':
-                        metadata === null || metadata.image === undefined ||metadata.image === null 
+                        metadata === null || metadata === undefined || metadata.image === undefined ||metadata.image === null 
                         ? 'https://play-lh.googleusercontent.com/wQiHW5YgQhHmSR_60o9l2lypA9Vn2_hxH0l2X6Iin5lEGTbmfhrZnP8bKywoRGKkJl4' 
                         : metadata.image
                     }
