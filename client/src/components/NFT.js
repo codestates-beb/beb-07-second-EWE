@@ -15,12 +15,7 @@ const NFT = ({nft}) => {
             setIsLoading(false);
         })
     }, [])
-    const handleCopyClipBoard = async (text) => {
-        try {
-            await navigator.clipboard.writeText(text);
-        } catch (e) {
-        }
-    };
+
 
     return(
         <Link 

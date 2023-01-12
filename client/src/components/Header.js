@@ -92,7 +92,7 @@ const Header = ({user, liftUser}) => {
             dispatch(setAuth({
                 accessToken: result.data.accessToken, 
                 userID: result.data.user.id
-              }));
+            }));
             setLoginModalIsOpen(false);
         } catch{
             console.log("login failed");
@@ -259,7 +259,8 @@ const Header = ({user, liftUser}) => {
                         </div>
                     </div>
                 </div>
-                <div className='sidebar_user user_info_3'>
+
+            <div className='sidebar_user user_info_3'>
                     <div className='nft_transfer'>
                         <h2>NFT Transfer</h2>
                         <div className="receivers_address">
@@ -278,7 +279,7 @@ const Header = ({user, liftUser}) => {
                         </div>
                     </div>
                 </div>
-            </div>
+                </div>
             </Modal>
             <div className="CI header_middle">
                 <div className='header_logo'>

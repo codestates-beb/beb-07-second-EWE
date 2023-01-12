@@ -67,8 +67,8 @@ const PostDetailPage = () => {
     const clickAddressHandler = async()=>{
         try{
             await window.navigator.clipboard.writeText(user.wallet_account)
-        } catch(e) {
-            console.log("copy failed");
+        } catch(err) {
+            console.log("copy failed", err);
         }
     }
 
