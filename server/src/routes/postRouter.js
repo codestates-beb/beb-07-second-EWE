@@ -14,8 +14,8 @@ router.post(
   upload.single('image'),
   postController.createNewPost,
 );
-router.put('/:postId/updatepost', postController.updatePost);
-router.post('/:postId/deletepost', postController.deletePosts);
+router.put('/:postId/updatepost', verifyToken, postController.updatePost);
+router.post('/:postId/deletepost', verifyToken, postController.deletePosts);
 router.post('/:postId/deleteimg', postController.deleteImgs);
 router.put('/:postId/likes', postController.updateLikes);
 
