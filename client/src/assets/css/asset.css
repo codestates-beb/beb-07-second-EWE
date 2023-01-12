@@ -67,7 +67,7 @@
     font-size: var(--font-large);
 }
 .location{
-    font-size: small;
+    font-size: medium;
     color: var(--Primary-color);
 }
 .creator{
