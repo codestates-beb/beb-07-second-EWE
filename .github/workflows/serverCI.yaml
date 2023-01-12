@@ -14,6 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       working-directory: ./server
+      git_hash: $(git rev-parse --short "$GITHUB_SHA")
 
     steps:
       - name: Checkout
@@ -41,4 +42,4 @@ jobs:
           file: ${{ env.working-directory }}/Dockerfile
           platforms: linux/amd64
           push: true
-          tags: snowdelver/eweapi:${{ github.sha }}
+          tags: snowdelver/eweapi:${{ env.git_hash }}
