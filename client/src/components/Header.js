@@ -263,26 +263,26 @@ const Header = ({user, liftUser}) => {
                                 <>
                                 <div className="nickname">
                                     <h3>Nickname</h3>
-                                    {user===null?"Guest":user.nickname}
+                                    {user.nickname===null||user.nickname===undefined?"Guest":user.nickname}
                                 </div>
                                 <div className="email">
                                     <h3>Email</h3>
-                                    {user===null?<div>-</div>:user.email}
+                                    {user.email===null||user.email===undefined?<div>-</div>:user.email}
                                 </div>
                                 <div className="wallet_account">
                                     <h3>Wallet Account</h3>
                                     <div className='account'>
-                                        <p>{user===null?<div>-</div>:user.wallet_account}</p>
-                                        <button onClick={() => {handleCopyClipBoard(user.wallet_account)}}>copy</button>
+                                        <p>{user===null||user.nickname===undefined?<div>-</div>:user.wallet_account}</p>
+                                        <button onClick={() => {handleCopyClipBoard(user.wallet_account===null||user.wallet_account===undefined?<div>-</div>:user.wallet_account)}}>copy</button>
                                     </div>
                                 </div>
                                 <div className="eth">
                                     <h3>Balance</h3>
-                                    {user===null?<div>0</div>:user.eth/1000000000000000000}ETH
+                                    {user.eth===null||user.nickname.eth===undefined?<div>0 ETH</div>:user.eth/1000000000000000000+'ETH'}
                                 </div>
                                 <div className="erc20">
                                     <h3>Token</h3>
-                                    {user===null?<div>0</div>:user.erc20}EWE
+                                    {user.erc20===null||user.nickname.erc20===undefined?<div>0 EWE</div>:user.erc20+'EWE'}
                                 </div>
                                 </>
                             :
@@ -336,32 +336,19 @@ const Header = ({user, liftUser}) => {
                             />
                         </div>
                         <div 
-                            className='transaction'
-                            onClick={tokenTransferButtonHandler}
-                        >
+                            className='transaction'onClick={tokenTransferButtonHandler}
+                            >
                             <h2>Transaction</h2>
                         </div>
-                    </div>
-                </div>
 
-            <div className='sidebar_user user_info_3'>
-                    <div className='nft_transfer'>
-                        <h2>NFT Transfer</h2>
-                        <div className="receivers_address">
-                            <h4>Receiver's Address</h4>
-                            <input></input>
-                        </div>
-                        <div className="amount">
-                            <h4>Amount</h4>
-                            <input></input>
-                        </div>
-                        <div 
-                            className='transaction'
-                            
-                        >
-                            <h2>Transaction</h2>
-                        </div>
                     </div>
+                    
+                </div>
+                <div className='sidebar_user user_info_2'>
+
+                <div className='transaction_complete'>
+                    <h4>Complete</h4>
+                </div>
                 </div>
                 </div>
             </Modal>

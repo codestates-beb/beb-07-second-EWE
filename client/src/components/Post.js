@@ -1,7 +1,6 @@
 import '../assets/css/asset.css'
-import { Link } from 'react-router-dom'
-import { useState, useEffect } from 'react'
 import '../assets/image/loading.gif'
+import { Link } from 'react-router-dom'
 const Post = ({post, isLoading}) => {
     const numCount = (num) =>{
         if(num<=1000){
@@ -15,6 +14,7 @@ const Post = ({post, isLoading}) => {
             return ' ' + Math.floor(num/10000) +' M '
         }
     }
+    console.log(post)
     return(
         <Link to={'/post/'+ post.id } className="asset_container">
             <div>
@@ -22,8 +22,8 @@ const Post = ({post, isLoading}) => {
                     <div className="user_img">
                         <i className='fas fa-utensils '></i>
                     </div>
-                    <div className="post_title"><h5>{post.title === undefined ||post.title === null ?<></>:post.title}</h5>
-                    <div className='location'><h6>{post.location}</h6></div>
+                    <div className="post_title"><h5>{post.title === undefined ||post.title === null ?<></>:post.title.length>13?post.title.slice(0,12)+'...':post.title}</h5>
+                    <div className='location'><h6>{post.store_name === undefined ||post.store_name === null ?<></>:post.store_name}</h6></div>
                     </div>
                     <div className="post_num"><h4>#{post.id === undefined ||post.id === null ?<></>:post.id}</h4></div>
                 </div> 
