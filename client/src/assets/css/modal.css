@@ -25,7 +25,7 @@
     color: var(--Primary-color);
 }
 .login_modal_CI{
-    margin-top: 50px;
+    margin-top: 25%;
 }
 .login_modal .welcome{
     margin-bottom: 3%;
@@ -132,7 +132,7 @@
 
 }
 .create_your_account{
-    margin-top: 30px;
+    margin: 30px 0 10px 0;
 }
 
 .login_modal .fa-xmark{
