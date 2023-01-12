@@ -54,9 +54,23 @@ const Header = ({user, liftUser}) => {
         setSidebarModalIsOpen(!sidebarModalIsOpen)
     }
     const handleCopyClipBoard = async (text) => {
-        try {
-            await navigator.clipboard.writeText(text);
-        } catch (e) {
+        if (window.navigator.clipboard){
+            try {
+                await navigator.clipboard.writeText(text);
+            } catch (err) {
+                console.log("copy failed", err);
+            }
+        } else {
+            const address = document.createElement("input");
+            address.value=user.wallet_account;
+            address.style.position="absolute";
+            address.style.left="-9999px";
+            document.body.appendChild(address);
+            address.select();
+            if (!document.execCommand("copy")){
+                console.log('copy failed');
+            }
+            address.remove();
         }
     };
 

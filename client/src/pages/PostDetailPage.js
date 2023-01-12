@@ -33,10 +33,12 @@ const PostDetailPage = () => {
 
     const {postId} = useParams()
 
+    // Post Detail Page
     const [post, setPost] = useState(null);
     const [user, setUser] = useState(null);
     const [images, setImages] = useState(null);
 
+    // Update Mode
     const [updateMode, setUpdateMode] = useState(false);
     const [titleToUpdate, setTitleToUpdate] = useState("");
     const [contentToUpdate, setContentToUpdate] = useState("");
