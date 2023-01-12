@@ -59,14 +59,9 @@ const Pagination = ({props,user}) => {
         }
     },[page,limit, props,user.id, searchData])
 
-
-    // useEffect(()=>{
-    //     const numMapping =(e) => {
-    //     }
-    //     numMapping()
-    // },[])
-
-
+    useEffect(()=>{
+        setPage(1)
+    },[searchData])
 
     return(
 
