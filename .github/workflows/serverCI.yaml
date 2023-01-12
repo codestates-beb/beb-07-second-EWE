@@ -32,8 +32,10 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
           
       - name: Set env for Docker versioning
-        run: git_hash=$(git rev-parse --short "$GITHUB_SHA")
-        
+        run: |
+          git_hash=$(git rev-parse --short "${{ GITHUB.SHA }}")
+          echo $git_hash
+
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
