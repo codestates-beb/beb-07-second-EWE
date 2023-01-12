@@ -1,9 +1,6 @@
 /* eslint-disable camelcase */
 const { users, posts, images, sequelize, Sequelize } = require('../models');
-const {
-  transferTokenToUser,
-  getTokenBalance,
-} = require('../chainUtils/tokenUtils');
+const { transferTokenToUser } = require('../chainUtils/tokenUtils');
 
 const { Op } = Sequelize;
 

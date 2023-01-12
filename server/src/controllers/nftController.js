@@ -1,18 +1,13 @@
-const { users, nfts, posts, sequelize } = require('../models');
+const { users, nfts, sequelize } = require('../models');
 const {
   getCurrentTokenId,
   approveAllNFTToAdmin,
   mintNFT,
 } = require('../chainUtils/nftUtils');
 
-const {
-  getTokenBalance,
-  approveTokenToAdmin,
-} = require('../chainUtils/tokenUtils');
+const { approveTokenToAdmin } = require('../chainUtils/tokenUtils');
 
 const { s3 } = require('../routes/multer');
-
-const { NFT_CA } = process.env;
 
 module.exports = {
   getAllNfts: async (req, res) => {
@@ -85,8 +80,7 @@ module.exports = {
       // 2. 로그인된 정보를 바탕으로 nft를 민팅한다.
       const newTokenId = parseInt(await getCurrentTokenId(), 10) + 1; // tokenId 기준으로 이미지를 업로드 해야한다.
       // 2-1 nft는 admin에서 거래가능해야되므로 approve for all 도 호출해야한다.
-      const userTokenBalance = await getTokenBalance(user.wallet_account);
-      await approveTokenToAdmin(user.wallet_pk, userTokenBalance);
+      await approveTokenToAdmin(user.wallet_pk);
       await mintNFT(user.wallet_account); // mint는 항상 admin 계정에서 수행된 후 유저 계정으로 전송해준다
       approveAllNFTToAdmin(user.wallet_pk); // this can be asynchronous
 
@@ -126,7 +120,7 @@ module.exports = {
     }
   },
 
-  transferNFT: async (req, res, next) => {
+  transferNFT: async (req, res) => {
     return res.status(200).json({ message: 'under construction' });
   },
 };
