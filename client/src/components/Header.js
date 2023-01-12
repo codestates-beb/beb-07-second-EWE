@@ -21,6 +21,12 @@ import {setAuth, resetAuth } from "../feature/authSlice";
 import '../assets/css/header.css'
 import '../assets/css/modal.css'
 
+// utils
+import {
+    verifyPassword,
+    emailFormat,
+} from "../utils/validate";
+
 
 const Header = ({user, liftUser}) => {
     // Header State Var
@@ -46,7 +52,7 @@ const Header = ({user, liftUser}) => {
     const [passwordToUpdate, setPasswordToUpdate] = useState("");
     const [passwordToVerify, setPasswordToVerify] = useState("");
 
-
+    // Modal Handler
     const closeLoginModal=()=>{
         setLoginModalIsOpen(!loginModalIsOpen)
     }
@@ -74,6 +80,13 @@ const Header = ({user, liftUser}) => {
         }
     };
 
+    const tokenTransferButtonHandler = async ()=>{
+        const isSuccess = await transferToken(recepient, amount, accessToken)
+        if (isSuccess === true) console.log("success");
+        else console.log("failed");
+    }
+
+    // Update Handler
     const userUpdateSubmitButtonHandler= async()=>{
         if (!isLogin) return;
 
@@ -99,6 +112,13 @@ const Header = ({user, liftUser}) => {
         setUpdateMode(false);
     }
 
+    const passwordToUpdateChangeHandler = (e)=>{
+        setPasswordToUpdate(e.target.value);
+        return verifyPassword(e.target.value);
+    }
+
+    // Login Handler
+
     const loginFunc = async()=>{
         try{
             const result = await localLoginUser({email, password})
@@ -114,11 +134,7 @@ const Header = ({user, liftUser}) => {
         }
     }
 
-    const tokenTransferButtonHandler = async ()=>{
-        const isSuccess = await transferToken(recepient, amount, accessToken)
-        if (isSuccess === true) console.log("success");
-        else console.log("failed");
-    }
+    
 
     const loginEnterHandler= (e)=>{
         if(e.key === "Enter"){
@@ -133,7 +149,10 @@ const Header = ({user, liftUser}) => {
 
         try{
             const result = await logoutUser(accessToken);
-            if (result.status === "ok") dispatch(resetAuth());
+            if (result.status === "ok") {
+                dispatch(resetAuth())
+                liftUser(null);
+            };
         }catch{
             console.log("logout failed");
         }
