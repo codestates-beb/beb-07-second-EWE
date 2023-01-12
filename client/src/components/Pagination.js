@@ -27,6 +27,9 @@ const Pagination = ({props,user}) => {
     const [page, setPage] = useState(1)
     const [limit, setLimit] = useState(10)
     const [searchData, setSearchData] = useState('')
+    const [isLoading, setIsLoading] = useState(true)
+    
+
     let numPages =()=>{
         if(pagination!==null && pagination!==undefined) {
             let num = Math.ceil(pagination.totalNum.totalNum/limit)
@@ -44,15 +47,19 @@ const Pagination = ({props,user}) => {
 
     useEffect(()=>{
         if(user!==null&&user!==undefined&&searchData!==null&&searchData!==undefined) {
-        getPagination(page,limit, props,user.id,searchData)
-            .then((result)=>{
-                setPagination(result.data)
-                console.log(result.data)
+            setIsLoading(true)
+            getPagination(page,limit, props,user.id,searchData)
+                .then((result)=>{
+                    setPagination(result.data)
+                    console.log(result.data)
+                    setIsLoading(false)
             })
         }else if((user===null||user===undefined)&&(searchData===null||searchData===undefined)){
-        getPagination(page,limit, props,null,' ')
-            .then((result)=>{
-                setPagination(result.data)
+            setIsLoading(true)
+            getPagination(page,limit, props,null,' ')
+                .then((result)=>{
+                    setPagination(result.data)
+                    setIsLoading(false)
             })    
         }
     },[page,limit, props,user.id, searchData])
@@ -80,14 +87,17 @@ const Pagination = ({props,user}) => {
                     <option value='30'>30</option>
                     <option value='100'>100</option>
                 </select>
-                <div className="search_bar" >      
+                
+    
                 {props==='posts'?
+                <div className="search_bar" >
+                <i className='fas fa-search'></i>
                 <input 
                     onChange={(e)=>{setSearchData(e.target.value)}}
                     placeholder='  Search Your Place!'
-                ></input>
-                :<div  className="search_bar_hide"></div>}
-                </div> 
+                ></input></div>
+                :<></>}
+
                 <button onClick={()=> setPage( page - 1 )} disabled = {page === 1}>
                         <i className='fas fa-left-long'></i>
                         
@@ -115,26 +125,26 @@ const Pagination = ({props,user}) => {
                 (pagination.image!==undefined&&pagination.image!== null)
                 ?
                     pagination.posts.map((post)=>{
-                    return (<Post key={post.id} post={post} user={user}/>)
+                    return (<Post key={post.id} post={post} user={user} isLoading={isLoading}/>)
                     }):
                     <></>
             }
             {props !== null&& props !== undefined&&props==='nfts'&&
                 (pagination!==undefined&&pagination !== null)? 
                     pagination.nfts.map((nft)=>{
-                    return (<NFT key={nft.id} nft={nft} user={user}/>)
+                    return (<NFT key={nft.id} nft={nft} user={user} isLoading={isLoading}/>)
                     }):<></>
             } 
             {props !== null&& props !== undefined&&props==='post'&&
                 (pagination!==undefined&&pagination !== null)?
                     pagination.posts.map((post)=>{
-                    return (<Post key={post.id} post={post} user={user}/>)
+                    return (<Post key={post.id} post={post} user={user} isLoading={isLoading}/>)
                     }):<></>
             }
             {props !== null&& props !== undefined&& props==='nft'&&
                 (pagination!==undefined&&pagination !== null)? 
                     pagination.nfts.map((nft)=>{
-                    return (<NFT key={nft.id} nft={nft} user={user}/>)
+                    return (<NFT key={nft.id} nft={nft} user={user} isLoading={isLoading}/>)
                     }):<></>
             } 
             </div>
