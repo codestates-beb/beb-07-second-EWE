@@ -164,7 +164,7 @@ const WritePage = ({user}) => {
                 </img>
             </Link>
             <Link to='/'>
-                <img className='post_button' src={require('../assets/image/bottom.png')} >
+                <img className='post_button' src={require('../assets/image/main.png')} >
                 </img>
             </Link>
         </div>
