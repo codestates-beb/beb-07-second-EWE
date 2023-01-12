@@ -62,14 +62,7 @@ const MyPage = ({user}) => {
             />
             }
             </div>
-            <Link to='/write' className='mint'>
-                <img className='post_button' src={require('../assets/image/post_2.png')}>
-                </img>
-            </Link>
-            <Link to='/market' className='mint'>
-                <img className='post_button' src={require('../assets/image/mint.png')}>
-                </img>
-            </Link>
+
             <Link to='/' className='mint'>
             <img className='post_button' src={require('../assets/image/main.png')}/></Link>
         </div>
