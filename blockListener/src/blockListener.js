@@ -4,7 +4,7 @@
 const { web3Socket, nftContract, tokenContract } = require('./chainUtils');
 const { nfts, users } = require('./models');
 
-const { NFT_CA, METADATA_PREFIX } = process.env;
+const { NFT_CA, ADMIN_ADDRESS, METADATA_PREFIX } = process.env;
 
 const updateTokenBalance = async (address, amount) => {
   try {
@@ -43,13 +43,14 @@ const createOrUpdateNFT = async (tokenId, ownerAddress) => {
       });
     } else {
       const newNFT = await nfts.create({
+        id: tokenId,
         contract_address: NFT_CA,
         token_id: tokenId,
         price: 1,
         listed: false,
-        creator: ownerAddress,
+        creator: ADMIN_ADDRESS,
         txhash: null,
-        metadata: `${METADATA_PREFIX}${tokenId}.json`,
+        metadata: `${METADATA_PREFIX}/${tokenId}.json`,
         user_id: nftOwner.id,
       });
     }
