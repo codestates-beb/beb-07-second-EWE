@@ -6,10 +6,11 @@ import { Link, useNavigate } from 'react-router-dom';
 
 // apis
 import { 
-    localLoginUser, 
+    localLoginUser,
     logoutUser,
     naverLoginUser,
     updateUser,
+    getUserBalance,
 } from "../apis/user";
 
 import { transferToken } from "../apis/token";
@@ -85,7 +86,11 @@ const Header = ({user, liftUser}) => {
 
     const tokenTransferButtonHandler = async ()=>{
         const isSuccess = await transferToken(recepient, amount, accessToken)
-        if (isSuccess === true) console.log("success");
+        if (isSuccess === true) {
+            console.log("success");
+            const userBalance = getUserBalance(user.id);
+            liftUser({...user, ...userBalance});
+        }
         else console.log("failed");
     }
 
