@@ -208,11 +208,11 @@ const Header = ({user, liftUser}) => {
                                 </div>
                                 <div className="eth">
                                     <h3>Balance</h3>
-                                    {user===null?<div>0</div>:user.eth}ETH
+                                    {user===null?<div>0</div>:user.eth/1000000000000000000}ETH
                                 </div>
                                 <div className="erc20">
                                     <h3>Token</h3>
-                                    {user===null?<div>0</div>:user.erc20}
+                                    {user===null?<div>0</div>:user.erc20}EWE
                                 </div>
                                 </>
                             :
