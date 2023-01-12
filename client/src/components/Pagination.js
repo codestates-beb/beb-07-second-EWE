@@ -61,9 +61,8 @@ const Pagination = ({props,user}) => {
 
 
     return(
-        <div>
 
-                    
+        <div>            
             <div className='pagination'>
 
                 <select 
@@ -96,25 +95,26 @@ const Pagination = ({props,user}) => {
                         </button>
             </div>
             <div className='post_wrapper'>
-            {props==='posts'&&
+
+            {props !== null&& props !== undefined&&props==='posts'&&
                 (pagination!==undefined&&pagination !== null)?
                     pagination.posts.map((post)=>{
                     return (<Post key={post.id} post={post} user={user}/>)
                     }):<></>
             }
-            {props==='nfts'&&
+            {props !== null&& props !== undefined&&props==='nfts'&&
                 (pagination!==undefined&&pagination !== null)? 
                     pagination.nfts.map((nft)=>{
                     return (<NFT key={nft.id} nft={nft} user={user}/>)
                     }):<></>
             } 
-            {props==='post'&&
+            {props !== null&& props !== undefined&&props==='post'&&
                 (pagination!==undefined&&pagination !== null)?
                     pagination.posts.map((post)=>{
                     return (<Post key={post.id} post={post} user={user}/>)
                     }):<></>
             }
-            { props==='nft'&&
+            {props !== null&& props !== undefined&& props==='nft'&&
                 (pagination!==undefined&&pagination !== null)? 
                     pagination.nfts.map((nft)=>{
                     return (<NFT key={nft.id} nft={nft} user={user}/>)
@@ -122,6 +122,7 @@ const Pagination = ({props,user}) => {
             } 
             </div>
         </div>
+
     );
 }
 export default Pagination;
