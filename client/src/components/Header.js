@@ -108,7 +108,6 @@ const Header = ({user, liftUser}) => {
                 userID: result.data.user.id
             }));
             setLoginModalIsOpen(false);
-            closeLoginModal();
 
         } catch{
             console.log("login failed");
@@ -122,7 +121,11 @@ const Header = ({user, liftUser}) => {
     }
 
     const loginEnterHandler= (e)=>{
-        if(e.key === "Enter")loginFunc(email, password);
+        if(e.key === "Enter"){
+            loginFunc(email, password);
+            closeLoginModal();
+
+        }
     }
 
     const logoutButtonHandler = async()=>{
