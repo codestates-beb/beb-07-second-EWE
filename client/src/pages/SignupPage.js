@@ -54,11 +54,15 @@ const SignupPage = ({liftUser}) => {
         };
 
         const signupResult = await localSignupUser(userInfo);
-        
+        console.log(signupResult);
         if (signupResult.status === 200){
+            
             const {email, password} = signupResult.data;
 
-            const result = await localLoginUser({email, password});
+            const result = await localLoginUser({email, password}) ;
+
+            console.log(result);
+
             liftUser(result.data.user);
             dispatch(setAuth({
                 accessToken: result.data.accessToken,
