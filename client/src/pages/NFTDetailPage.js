@@ -69,12 +69,18 @@ const NFTDetail = () =>{
                 <div className="nft_info">
                     <div className="nft_name">
                         <h2>name</h2>
-                        <h1>{metadata===null||metadata===undefined?<></>:metadata.name}</h1>
+                        <h1>{(metadata===null||metadata===undefined)||
+                    (metadata.name===null||metadata.name===undefined)
+                        ?<></>:metadata.name}</h1>
                     </div>
                     <div className="nft_description">
                         <div className="nft_attributes">
-                            <h2>{metadata===null||metadata===undefined?<></>:metadata.attributes[0].trait_type}</h2>
-                            <h3>{metadata===null||metadata===undefined?<></>:metadata.attributes[0].value}</h3>
+                            <h2>{(metadata===null||metadata===undefined)||
+                    (metadata.attributes[0]===null||metadata.attributes[0]===undefined)||(metadata.attributes[0].trait_type===null||metadata.attributes[0]. trait_type===undefined)
+                    ?<></>:metadata.attributes[0].trait_type}</h2>
+                            <h3>{(metadata===null||metadata===undefined)||
+                    (metadata.attributes[0]===null||metadata.attributes[0]===undefined)||
+                    (metadata.attributes[0].value===null||metadata.attributes[0].value===undefined)?<></>:metadata.attributes[0].value}</h3>
                     </div>
                     <h2>description</h2>
                     <h5>{metadata===null||metadata===undefined?<></>:metadata.description}</h5>
