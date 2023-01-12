@@ -85,7 +85,7 @@ a{
     background-image: url('../image/category_1.png');
     display: flex;
     height: auto;
-    min-height: 30px;
+    min-height: 50px;
     width: 100%;
     font-size: var(--font-medium);
     color: var(--gray-light-color);
@@ -259,7 +259,9 @@ select{
     background-color: black;
     
 }
-
+.blog{
+    color: var(--Primary-color);
+}
 
 @media screen and (max-width: 1300px){
     .post_wrapper,.nft_wrapper{
