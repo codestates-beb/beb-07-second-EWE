@@ -45,7 +45,7 @@
     width: 100%;
 }
 .post_button{
-    margin-top: 20px;
+    margin-top: 0px;
     position: relative;;
     background-color: var(--onPrimary-color);
     width: 100%;
@@ -134,7 +134,7 @@
     display: none;
 }
 
-.post_list{
+.post_list, .nft_list{
     padding: 2% 2% 10% 2%;
     height: 100%;
     background-color: var(--Secondary-color);
@@ -142,22 +142,7 @@
     text-align: center;
 
 }
-.post_list:hover .post_head h2{
-    color: var(--Primary-color);
-    
-}
-.nft_list{
-    padding: 2% 5% 10% 5%;
 
-    height: 100%;
-    background-color: var(--Secondary-color);
-    align-items: center;
-    text-align: center;
-}
-.nft_list:hover .nft_head h2{
-    color: var(--Primary-color);
-    
-}
 .post_head h2,.nft_list h2{
     margin-left: 0.6%;
     color: var(--white-color);
