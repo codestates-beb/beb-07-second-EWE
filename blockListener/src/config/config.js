@@ -18,7 +18,7 @@ module.exports = {
     timezone: '+09:00',
     logging: false,
   },
-  production: {
+  production_test: {
     username: process.env.MYSQL_USERNAME,
     password: process.env.MYSQL_PASSWORD,
     database: 'ewe',
