@@ -6,10 +6,12 @@ import { Link, useNavigate } from 'react-router-dom';
 
 // apis
 import { 
-    localLoginUser, 
+    getUser,
+    localLoginUser,
     logoutUser,
     naverLoginUser,
     updateUser,
+    getUserBalance,
 } from "../apis/user";
 
 import { transferToken } from "../apis/token";
@@ -25,8 +27,14 @@ import '../assets/css/modal.css'
 import {
     verifyPassword,
     emailFormat,
+    nicknameFormat,
+    passwordDoubleCheck,
 } from "../utils/validate";
 
+import {
+    successStyle,
+    failStyle,
+} from "../utils/style";
 
 const Header = ({user, liftUser}) => {
     // Navigator
@@ -50,10 +58,13 @@ const Header = ({user, liftUser}) => {
     // Update Mode
     const [updateMode, setUpdateMode] = useState(false);
 
-    const [emailToUpdate, setEmailToUpdate] = useState("");
     const [nicknameToUpdate, setNicknameToUpdate] = useState("");
     const [passwordToUpdate, setPasswordToUpdate] = useState("");
     const [passwordToVerify, setPasswordToVerify] = useState("");
+
+    const [isValidNickname, setIsValidNickname] = useState(false);
+    const [isValidPassword, setIsValidPassword] = useState(false);
+    const [isValidPasswordVerify, setIsValidPasswordVerify] = useState(false);
 
     // Modal Handler
     const closeLoginModal=()=>{
@@ -85,28 +96,31 @@ const Header = ({user, liftUser}) => {
 
     const tokenTransferButtonHandler = async ()=>{
         const isSuccess = await transferToken(recepient, amount, accessToken)
-        if (isSuccess === true) console.log("success");
+        if (isSuccess === true) {
+            console.log("success");
+            const userBalance = getUserBalance(user.id);
+            liftUser({...user, ...userBalance});
+        }
         else console.log("failed");
     }
 
     // Update Handler
-    const userUpdateSubmitButtonHandler= async()=>{
-        if (!isLogin) return;
+    const userUpdateEditButtonHandler = ()=>{
+        if(isLogin) setUpdateMode(true);
+        else return;
+    }
 
+    const userUpdateSubmitButtonHandler= async()=>{
         const userInfoToUpdate = {}
-        if (passwordToUpdate.length > 0){
-            if(passwordToUpdate !== passwordToVerify) return;
+        if ( verifyPassword(passwordToUpdate) ){
+            if(passwordToUpdate !== passwordToVerify) return false;
             userInfoToUpdate.password = passwordToUpdate;
         }
 
-        if (emailToUpdate.length > 0){
-            userInfoToUpdate.email = emailToUpdate;
-        }
-
-        if (nicknameToUpdate.length > 0)
+        if ( nicknameFormat(nicknameToUpdate) )
             userInfoToUpdate.nickname = nicknameToUpdate;
 
-        const userUpdated = await updateUser(userInfoToUpdate, user.id)
+        const userUpdated = await updateUser(userInfoToUpdate, user.id, accessToken)
         .then(result=>result)
         .catch(err=>err);
 
@@ -115,9 +129,25 @@ const Header = ({user, liftUser}) => {
         setUpdateMode(false);
     }
 
-    const passwordToUpdateChangeHandler = (e)=>{
+    const passwordVerifyChangeHandler = (e)=>{
+        if(passwordDoubleCheck(passwordToUpdate, e.target.value)) setIsValidPasswordVerify(true);
+        else setIsValidPasswordVerify(false);
+
+        setPasswordToVerify(e.target.value);
+    }
+
+    const nicknameChangeHandler = (e)=>{
+        if(nicknameFormat(e.target.value)) setIsValidNickname(true);
+        else setIsValidNickname(false);
+
+        setNicknameToUpdate(e.target.value);
+    }
+
+    const passwordChangeHandler = (e)=>{
+        if(verifyPassword(e.target.value)) setIsValidPassword(true);
+        else setIsValidPassword(false);
+
         setPasswordToUpdate(e.target.value);
-        return verifyPassword(e.target.value);
     }
 
     // Login Handler
@@ -130,18 +160,17 @@ const Header = ({user, liftUser}) => {
                 accessToken: result.data.accessToken, 
                 userID: result.data.user.id
             }));
-            setLoginModalIsOpen(false);
-
+            setEmail("");
+            setPassword("");
+            return true;
         } catch{
-            console.log("login failed");
+            return false;
         }
     }
 
-    const loginEnterHandler= (e)=>{
-        if(e.key === "Enter"){
-            loginFunc(email, password);
-            setLoginModalIsOpen(false);
-        }
+    const loginEnterHandler= async(e)=>{
+        if(e.key === "Enter" && await loginFunc()) setLoginModalIsOpen(false);
+        else return false;
     }
 
     const logoutButtonHandler = async()=>{
@@ -162,9 +191,23 @@ const Header = ({user, liftUser}) => {
             console.log("logout failed");
         }
     }
-    const socialLoginHandler = async()=>{
-        await naverLoginUser();
-    }
+
+    useEffect(()=>{
+        if(loginModalIsOpen) document.body.style= 'overflow: hidden';
+        else document.body.style = 'overflow: unset';
+    },[loginModalIsOpen])
+
+    useEffect(()=>{
+        if(updateMode) {
+            getUser(user.id)
+            .then(user=>{
+                const {nickname, password} = user;
+                setNicknameToUpdate(nickname); setIsValidNickname(true);
+                setPasswordToUpdate(password); setIsValidPassword(true);
+                setPasswordToVerify(password); setIsValidPasswordVerify(true);
+            })
+        }
+    }, [updateMode])
 
     return(
         <header>
@@ -210,7 +253,7 @@ const Header = ({user, liftUser}) => {
                         {updateMode ?
                             <button className="user_submit" onClick={userUpdateSubmitButtonHandler}>Submit</button>
                             :
-                            <button className="user_edit" onClick={()=>{setUpdateMode(true)}}>Edit</button>
+                            <button className="user_edit" onClick={userUpdateEditButtonHandler}>Edit</button>
                         }
                     </div>
                     <div className='user_info'>
@@ -220,56 +263,54 @@ const Header = ({user, liftUser}) => {
                                 <>
                                 <div className="nickname">
                                     <h3>Nickname</h3>
-                                    {user===null?"Guest":user.nickname}
+                                    {user.nickname===null||user.nickname===undefined?"Guest":user.nickname}
                                 </div>
                                 <div className="email">
                                     <h3>Email</h3>
-                                    {user===null?<div>-</div>:user.email}
+                                    {user.email===null||user.email===undefined?<div>-</div>:user.email}
                                 </div>
                                 <div className="wallet_account">
                                     <h3>Wallet Account</h3>
                                     <div className='account'>
-                                        <p>{user===null?<div>-</div>:user.wallet_account}</p>
-                                        <button onClick={() => {handleCopyClipBoard(user.wallet_account)}}>copy</button>
+                                        <p>{user===null||user.nickname===undefined?<div>-</div>:user.wallet_account}</p>
+                                        <button onClick={() => {handleCopyClipBoard(user.wallet_account===null||user.wallet_account===undefined?<div>-</div>:user.wallet_account)}}>copy</button>
                                     </div>
                                 </div>
                                 <div className="eth">
                                     <h3>Balance</h3>
-                                    {user===null?<div>0</div>:user.eth/1000000000000000000}ETH
+                                    {user.eth===null||user.eth===undefined?<div>0 ETH</div>:user.eth/1000000000000000000+'ETH'}
                                 </div>
                                 <div className="erc20">
                                     <h3>Token</h3>
-                                    {user===null?<div>0</div>:user.erc20}EWE
+                                    {user.erc20===null||user.erc20===undefined?<div>0 EWE</div>:user.erc20+'EWE'}
                                 </div>
                                 </>
                             :
                                 <>
-                                <div className="nickname">
+                                <div className="nickname update">
                                     <h3>Nickname</h3>
                                     <input 
                                         value={nicknameToUpdate}
-                                        onChange={e=>{setNicknameToUpdate(e.target.value)}}
+                                        onChange={nicknameChangeHandler}
+                                        style={isValidNickname? successStyle : failStyle}
                                     />
                                 </div>
-                                <div className="email">
-                                    <h3>Email</h3>
-                                    <input 
-                                        value={emailToUpdate}
-                                        onChange={e=>{setEmailToUpdate(e.target.value)}}
-                                    />
-                                </div>
-                                <div className="password">
+                                <div className="password update">
                                     <h3>Password</h3>
                                     <input
                                         value={passwordToUpdate}
-                                        onChange={e=>{setPasswordToUpdate(e.target.value)}}
+                                        onChange={passwordChangeHandler}
+                                        type="password"
+                                        style={isValidPassword? successStyle : failStyle}
                                     />
                                 </div>
-                                <div className="password_check">
+                                <div className="password_check update">
                                     <h3>Password Check</h3>
                                     <input
                                         value={passwordToVerify}
-                                        onChange={e=>{setPasswordToVerify(e.target.value)}}
+                                        onChange={passwordVerifyChangeHandler}
+                                        type="password"
+                                        style={isValidPasswordVerify? successStyle : failStyle}
                                     />
                                 </div>
                                 </>
@@ -295,32 +336,19 @@ const Header = ({user, liftUser}) => {
                             />
                         </div>
                         <div 
-                            className='transaction'
-                            onClick={tokenTransferButtonHandler}
-                        >
+                            className='transaction'onClick={tokenTransferButtonHandler}
+                            >
                             <h2>Transaction</h2>
                         </div>
-                    </div>
-                </div>
 
-            <div className='sidebar_user user_info_3'>
-                    <div className='nft_transfer'>
-                        <h2>NFT Transfer</h2>
-                        <div className="receivers_address">
-                            <h4>Receiver's Address</h4>
-                            <input></input>
-                        </div>
-                        <div className="amount">
-                            <h4>Amount</h4>
-                            <input></input>
-                        </div>
-                        <div 
-                            className='transaction'
-                            
-                        >
-                            <h2>Transaction</h2>
-                        </div>
                     </div>
+                    
+                </div>
+                <div className='sidebar_user user_info_2'>
+
+                <div className='transaction_complete'>
+                    <h4>Complete</h4>
+                </div>
                 </div>
                 </div>
             </Modal>
@@ -355,9 +383,7 @@ const Header = ({user, liftUser}) => {
                 :
                 <div className="userMenu">
                     <div className="Login">
-                        <Link
-                        onClick={()=>setLoginModalIsOpen(!loginModalIsOpen)}
-                        >
+                        <Link onClick={()=>setLoginModalIsOpen(true)}>
                         <h4>Login</h4>
                         </Link>
                         <Modal 
@@ -398,7 +424,7 @@ const Header = ({user, liftUser}) => {
                 >
                 <div className='login_modal'>  
                     <i className="fas fa-xmark" onClick={()=>closeLoginModal()}></i>
-                    <div className="hide">{ loginModalIsOpen===true? document.body.style= 'overflow: hidden':document.body.style = 'overflow: auto'}</div>        
+                    <div className="hide"></div>
                     <img className='login_modal_CI'src={require('../assets/image/EWElogo_1.png')} alt='home'></img>
                     <h1>Login</h1>
                     <h5 className="welcome">[Welcome to EWE]</h5>
@@ -407,7 +433,7 @@ const Header = ({user, liftUser}) => {
                             <h2>Email</h2>
                             <input 
                                 onChange={(e)=>{setEmail(e.target.value)}}
-                                onKeyUp={loginEnterHandler}
+                                onKeyDown={loginEnterHandler}
                             />
                         </div>
                         <div className='login_user_info'>
@@ -415,7 +441,7 @@ const Header = ({user, liftUser}) => {
                             <input 
                                 type="password" 
                                 onChange={(e)=>{setPassword(e.target.value)}}
-                                onKeyUp={loginEnterHandler}
+                                onKeyDown={loginEnterHandler}
                             />
                         </div>
                     </div>

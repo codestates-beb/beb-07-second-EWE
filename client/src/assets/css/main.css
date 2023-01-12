@@ -18,7 +18,10 @@
     --Primary-Container-color: #asdf323;
     --onPrimary-Container-color: #asdf323;
 
-    --Secondary-color: #f2f2f2;
+    --success-color: #5cb85c;
+    --fail-color: #d9534f;
+
+    --Secondary-color: #ededed;
     --onSecondary-color: #000000;
     --Secondary-Container-color: #asdf323;
     --onSecondary-Container-color: #asdf323;
@@ -65,7 +68,6 @@
     right: 0;
     bottom: 0;
     max-width: 100%;
-    height: auto;
 }
 .post_button:hover{
     font-size: 140px;
@@ -73,12 +75,17 @@
     transform: scale(1.01);
     filter: brightness(1.05);
 }
-
+a{
+    color: black;
+}
+.mint{
+    height: 0;
+}
 .category{
     background-image: url('../image/category_1.png');
     display: flex;
     height: auto;
-    min-height: 30px;
+    min-height: 50px;
     width: 100%;
     font-size: var(--font-medium);
     color: var(--gray-light-color);
@@ -252,7 +259,9 @@ select{
     background-color: black;
     
 }
-
+.blog{
+    color: var(--Primary-color);
+}
 
 @media screen and (max-width: 1300px){
     .post_wrapper,.nft_wrapper{

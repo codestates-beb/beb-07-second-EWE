@@ -179,15 +179,18 @@ margin: auto;
 .fa-bitcoin:hover{
     color: var(--Primary-color);  
 }
-a{
-    color: var(--black);
-}
+
 .user_info_1 .nickname,
 .user_info_1 .email,
 .user_info_1 .password,
 .user_info_1 .password_check{
     margin: 2%;
 }
+
+.user_info_1 .update input{
+    outline: none;
+}
+
 .user_submit, .user_edit{
     width: 50%;
     height: 20px;
