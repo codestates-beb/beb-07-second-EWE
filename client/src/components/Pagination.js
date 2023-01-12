@@ -51,7 +51,6 @@ const Pagination = ({props,user}) => {
             getPagination(page,limit, props,user.id,searchData)
                 .then((result)=>{
                     setPagination(result.data)
-                    console.log(result.data)
                     setIsLoading(false)
             })
         }else if((user===null||user===undefined)&&(searchData===null||searchData===undefined)){
@@ -120,11 +119,10 @@ const Pagination = ({props,user}) => {
             <div className='post_wrapper'>
 
             {props !== null&& props !== undefined&&props==='posts'&&
-                (pagination!==undefined&&pagination !== null)&&
-                (pagination.user!==undefined&&pagination.user!== null)&&
-                (pagination.image!==undefined&&pagination.image!== null)
+                (pagination!==undefined&&pagination !== null)
                 ?
                     pagination.posts.map((post)=>{
+                        console.log(post)
                     return (<Post key={post.id} post={post} user={user} isLoading={isLoading}/>)
                     }):
                     <></>

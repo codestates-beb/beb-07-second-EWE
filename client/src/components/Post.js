@@ -22,23 +22,23 @@ const Post = ({post, isLoading}) => {
                     <div className="user_img">
                         <i className='fas fa-utensils '></i>
                     </div>
-                    <div className="post_title"><h5>{post.title}</h5>
+                    <div className="post_title"><h5>{post.title === undefined ||post.title === null ?<></>:post.title}</h5>
                     <div className='location'><h6>{post.location}</h6></div>
                     </div>
-                    <div className="post_num"><h4>#{post.id}</h4></div>
+                    <div className="post_num"><h4>#{post.id === undefined ||post.id === null ?<></>:post.id}</h4></div>
                 </div> 
                 <div className='user2'>
                     <div className="nickname"><h6>
-                    {post.user === null? 'null' : post.user.nickname}
+                    {post.user.nickname === undefined ||post.user.nickname === null ? 'null' : post.user.nickname}
                     </h6>
                     </div>
-                    <div className="createdAt" ><h6>{post.createdAt.slice(0,10)}</h6></div>
+                    <div className="createdAt" ><h6>{post.createdAt === undefined ||post.createdAt === null ?<></>:
+                        post.createdAt.slice(0,10)}</h6></div>
                 </div>
             </div>
             <div className="image" >
                 <img src = {
-                    isLoading? '../assets/image/loading.gif':
-                    post === null || post === undefined || post.image === undefined ||post.image === null 
+                    isLoading? '../assets/image/loading.gif': post.images === undefined ||post.images === null 
                     ?require('../assets/image/unnamed.png'):post.images[0].uri}  alt="food"></img>
             </div>
             <div className='post_bottom'>
