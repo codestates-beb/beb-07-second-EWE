@@ -128,7 +128,6 @@ const Header = ({user, liftUser}) => {
                 userID: result.data.user.id
             }));
             setLoginModalIsOpen(false);
-            closeLoginModal();
 
         } catch{
             console.log("login failed");
@@ -138,7 +137,11 @@ const Header = ({user, liftUser}) => {
     
 
     const loginEnterHandler= (e)=>{
-        if(e.key === "Enter")loginFunc(email, password);
+        if(e.key === "Enter"){
+            loginFunc(email, password);
+            closeLoginModal();
+
+        }
     }
 
     const logoutButtonHandler = async()=>{
@@ -340,7 +343,7 @@ const Header = ({user, liftUser}) => {
                             <Link to="/market">NFT Market</Link>
                             <Link to="/">ETH Faucet</Link>
                             <Link onClick={logoutButtonHandler}>Log Out</Link>
-                            <Link to="/">Secession</Link>
+                            {/* <Link to="/">Secession</Link> */}
                         </div>
                     </div>
                 </div>    

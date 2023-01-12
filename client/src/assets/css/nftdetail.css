@@ -25,14 +25,19 @@ margin: 1%;}
 .nft_detail_wrapper .nft_image{
     padding: 1%;
     border: 1px solid var(--gray-light-color);
+    border-radius: 20px;
     background-color: var(--prime-color);
 }
 .nft_detail_wrapper .nft_info{
     margin: 0 0 1% 1%;
+    padding: 30px 20px;
+    border: 1px solid var(--gray-light-color);
+    border-radius: 20px;
+    background-color: var(--prime-color);
+
 }
 .nft_detail_wrapper .nft_name{
 padding: 1%;
-border: 1px solid var(--gray-light-color);
 
     
 }
@@ -48,7 +53,9 @@ border: 1px solid var(--gray-light-color);
 }
 
 .nft_detail > .nft_wrapper{
+
 }
 
 .nft_image img{
+    max-width: 420px;
 }
