@@ -179,9 +179,7 @@ margin: auto;
 .fa-bitcoin:hover{
     color: var(--Primary-color);  
 }
-a{
-    color: var(--black);
-}
+
 .user_info_1 .nickname,
 .user_info_1 .email,
 .user_info_1 .password,

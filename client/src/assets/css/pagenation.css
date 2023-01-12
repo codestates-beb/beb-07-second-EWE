@@ -24,6 +24,7 @@
     height: 30px;
     border: 1px solid var(--Primary-color);
     border-radius: 20px;
+    text-align-last: center;
 }
 .search_bar_hide{
     width: 0;
