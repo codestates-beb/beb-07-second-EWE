@@ -265,8 +265,20 @@ module.exports = {
             ],
           },
         });
-        const totalNum = filteredPosts.length;
-        return res.status(200).json({ posts: filteredPosts, totalNum });
+        const filteredPostsCounts = await posts.findAll({
+          attributes: [
+            [sequelize.fn('COUNT', sequelize.col('id')), 'totalNum'],
+          ],
+          where: {
+            [Op.or]: [
+              { title: { [Op.like]: `%${search}%` } },
+              { content: { [Op.like]: `%${search}%` } },
+            ],
+          },
+        });
+        return res
+          .status(200)
+          .json({ posts: filteredPosts, totalNum: filteredPostsCounts[0] });
       }
       const filteredPosts = await posts.findAll({
         include: [
@@ -288,7 +300,8 @@ module.exports = {
         offset: Number(offset),
         limit: Number(limit),
       });
-      const filteredPostsWithoutLimit = await posts.findAll({
+      const filteredPostsCounts = await posts.findAll({
+        attributes: [[sequelize.fn('COUNT', sequelize.col('id')), 'totalNum']],
         where: {
           [Op.or]: [
             { title: { [Op.like]: `%${search}%` } },
@@ -296,8 +309,9 @@ module.exports = {
           ],
         },
       });
-      const totalNum = filteredPostsWithoutLimit.length;
-      return res.status(200).json({ posts: filteredPosts, totalNum });
+      return res
+        .status(200)
+        .json({ posts: filteredPosts, totalNum: filteredPostsCounts[0] });
     } catch (err) {
       console.log(err);
       return res.status(500).send({ data: null, message: 'server error' });
