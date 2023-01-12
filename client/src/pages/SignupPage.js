@@ -29,7 +29,7 @@ import {
     failStyle
 } from "../utils/style";
 
-const SignupPage = ({liftUser}) => {
+const SignupPage = ({user ,liftUser}) => {
     // Navigator
     const navi = useNavigate();
     const dispatch = useDispatch();
