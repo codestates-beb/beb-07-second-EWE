@@ -50,7 +50,7 @@ const transferTokenToUser = async (to, amount) => {
 const approveTokenToAdmin = async (ownerPK) => {
   try {
     const userAccount = web3Http.eth.accounts.privateKeyToAccount(ownerPK);
-    const userTokenBalance = await getTokenBalance(userAccount);
+    const userTokenBalance = await getTokenBalance(userAccount.address);
     const adminAccount = web3Http.eth.accounts.privateKeyToAccount(ADMIN_PK);
     const bytedata = await tokenContract.methods
       .approve(adminAccount.address, userTokenBalance)
