@@ -1,15 +1,19 @@
 ### beb-07-second-EWE
 # 시연 영상
 **[메인 & 리뷰]**
+
 ![main & detail](https://user-images.githubusercontent.com/18072469/212232769-147a14e0-e518-4bd4-905a-57391efe5be9.gif)
 
 **[리뷰 작성]**
+
 ![write](https://user-images.githubusercontent.com/18072469/212232855-61667ec7-c07a-4081-9083-9b0b0ca7ef81.gif)
 
 **[민팅]**
+
 ![minting](https://user-images.githubusercontent.com/18072469/212232957-5af32595-4071-44c1-8646-1daf641c592d.gif)
 
 **[반응형]**
+
 ![responsive](https://user-images.githubusercontent.com/18072469/212233077-6b3b3e85-e3b0-4694-8d3e-60025b77ec6d.gif)
 
 # 팀명 : EWE
