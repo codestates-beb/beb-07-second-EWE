@@ -32,11 +32,12 @@ const Pagination = ({props,user}) => {
 
     let numPages =()=>{
         if(pagination!==null && pagination!==undefined) {
+            console.log(pagination)
             let num = Math.ceil(pagination.totalNum.totalNum/limit)
-            if(!isNaN(num)) {
-                return num
+            if(props==='nft') {
+                return Math.ceil(pagination.totalNum[0].totalNum/limit)
             }else{
-                return 1
+                return num
             }
         }
     }
