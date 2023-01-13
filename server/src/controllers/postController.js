@@ -139,7 +139,21 @@ module.exports = {
     const { postId } = req.params;
     let { title, location, content, store_name } = req.body;
     try {
+      const { email, nickname } = req.decoded;
+      const user = await users.findOne({
+        where: {
+          email,
+          nickname,
+        },
+      });
       const currentPost = await posts.findOne({ where: { id: postId } });
+
+      if (user.id !== currentPost.user_id) {
+        return res
+          .status(403)
+          .json({ data: null, message: 'No authorized user to update' });
+      }
+
       if (!title) title = currentPost.title;
       if (!location) location = currentPost.location;
       if (!content) content = currentPost.content;
@@ -170,6 +184,17 @@ module.exports = {
       where: { id: postId },
     });
     try {
+      const { email, nickname } = req.decoded;
+      const user = await users.findOne({
+        where: {
+          email,
+          nickname,
+        },
+      });
+      if (!user) {
+        return res.status(403).json({ data: null, message: 'no such user' });
+      }
+
       if (!ifExists) {
         return res
           .status(400)
@@ -263,8 +288,20 @@ module.exports = {
             ],
           },
         });
-        const totalNum = filteredPosts.length;
-        return res.status(200).json({ posts: filteredPosts, totalNum });
+        const filteredPostsCounts = await posts.findAll({
+          attributes: [
+            [sequelize.fn('COUNT', sequelize.col('id')), 'totalNum'],
+          ],
+          where: {
+            [Op.or]: [
+              { title: { [Op.like]: `%${search}%` } },
+              { content: { [Op.like]: `%${search}%` } },
+            ],
+          },
+        });
+        return res
+          .status(200)
+          .json({ posts: filteredPosts, totalNum: filteredPostsCounts[0] });
       }
       const filteredPosts = await posts.findAll({
         include: [
@@ -286,7 +323,8 @@ module.exports = {
         offset: Number(offset),
         limit: Number(limit),
       });
-      const filteredPostsWithoutLimit = await posts.findAll({
+      const filteredPostsCounts = await posts.findAll({
+        attributes: [[sequelize.fn('COUNT', sequelize.col('id')), 'totalNum']],
         where: {
           [Op.or]: [
             { title: { [Op.like]: `%${search}%` } },
@@ -294,8 +332,9 @@ module.exports = {
           ],
         },
       });
-      const totalNum = filteredPostsWithoutLimit.length;
-      return res.status(200).json({ posts: filteredPosts, totalNum });
+      return res
+        .status(200)
+        .json({ posts: filteredPosts, totalNum: filteredPostsCounts[0] });
     } catch (err) {
       console.log(err);
       return res.status(500).send({ data: null, message: 'server error' });

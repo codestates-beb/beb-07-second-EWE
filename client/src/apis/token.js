@@ -13,7 +13,10 @@ export const transferToken = async(address, amount, accessToken)=>{
         }
     })
     .then(res=>res.data)
-    .catch(console.log);
+    .catch(err=>{
+        console.log(err)
+        return err;
+    });
 
     if(receipt.status === "ok") return true;
     else return false;

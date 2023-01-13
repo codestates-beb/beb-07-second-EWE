@@ -28,14 +28,18 @@ function convertDate(date){
     return parsingDate;
 }
 
-const PostDetailPage = () => {
+const PostDetailPage = ({user}) => {
     const navigator = useNavigate();
+
+    // Login Global State Var
+    const isLogin = useSelector((state)=>state.auth.isLogin);
+    const accessToken = useSelector((state)=>state.auth.accessToken);
 
     const {postId} = useParams()
 
     // Post Detail Page
     const [post, setPost] = useState(null);
-    const [user, setUser] = useState(null);
+    const [writer, setWriter] = useState(null);
     const [images, setImages] = useState(null);
 
     // Update Mode
@@ -49,13 +53,13 @@ const PostDetailPage = () => {
     const postUpdateSubmitButtonHandler = async ()=>{
         const data = {};
         if (titleToUpdate.length > 0) data.title = titleToUpdate;
-        if (contentToUpdate.length> 0) data.content = contentToUpdate;
+        if (contentToUpdate.length > 0) data.content = contentToUpdate;
 
-        console.log(data);
-        const updateResult = await updatePost(data, post.id)
+        const updateResult = await updatePost(data, post.id, accessToken)
         .then(result=>result)
         .catch(err=>err)
 
+        console.log(updateResult);
         if(!updateResult) return;
         setPost(updateResult)
     }
@@ -69,13 +73,13 @@ const PostDetailPage = () => {
     const clickAddressHandler = async()=>{
         if (window.navigator.clipboard){
             try{
-                await window.navigator.clipboard.writeText(user.wallet_account)
+                await window.navigator.clipboard.writeText(writer.wallet_account);
             } catch(err) {
                 console.log("copy failed", err);
             }
         } else {
             const address = document.createElement("input");
-            address.value=user.wallet_account;
+            address.value=writer.wallet_account;
             address.style.position="absolute";
             address.style.left="-9999px";
             document.body.appendChild(address);
@@ -102,12 +106,10 @@ const PostDetailPage = () => {
             const result = await getPostOne(postId);
 
             if (result.status === 500) navigator("/404");
-            console.log(result.status);
 
             setPost(result);
             setImages(result.images);
-            setUser(result.user);
-
+            setWriter(result.user);
             setTitleToUpdate(result.title)
             setContentToUpdate(result.content);
         })();
@@ -146,12 +148,14 @@ const PostDetailPage = () => {
                         {updateMode ?
                         <div className="detail_edit">
                             <button
+                                className="btn cancel_button"
                                 onClick={()=>{
                                     setUpdateMode(false)
                                     setIsDropdownView(false)
                                 }}
                             >Cancel</button>
-                            <button 
+                            <button
+                                className="btn submit_button" 
                                 onClick={()=>{
                                     postUpdateSubmitButtonHandler()
                                     setUpdateMode(false); 
@@ -159,7 +163,8 @@ const PostDetailPage = () => {
                                 }}
                             >Submit</button>
                         </div>
-                        :
+                        :<></>}
+                        {isLogin && writer.id === user.id && !updateMode ? 
                         <div className="btn ellipsis">
                             <i className="fas fa-ellipsis" onClick={toggleIsDropdownView}/>
                             <Dropdown isDropdownview={isDropdownView}>
@@ -170,7 +175,7 @@ const PostDetailPage = () => {
                                 <div className="dropdown_content">Delete</div>
                             </Dropdown>
                         </div>
-                        }
+                        :<></>}
                     </div>
                     <div className="detail_header">
                         <div className="detail_header_row">
@@ -188,7 +193,7 @@ const PostDetailPage = () => {
                         <div className="detail_header_row">
                             <p className="detail_data">
                                 <i className="fas fa-pen"/>
-                                <span>{user? user.nickname:""}</span>
+                                <span>{writer? writer.nickname:""}</span>
                                 <span>|</span>
                                 <i className="fas fa-eye" />
                                 <span>{post.views}</span>
@@ -227,7 +232,7 @@ const PostDetailPage = () => {
                                 >
                                     <i className="fas fa-wallet"/>
                                     <p className="content_writer_address">
-                                        { user.wallet_account }
+                                        {writer? writer.wallet_account:""}
                                     </p>
                                 </div>
                             </div>
@@ -248,7 +253,7 @@ const PostDetailPage = () => {
                 </div>
             </div>
             <Link to='/write' className='write'>
-                <img className='post_button' src={require('../assets/image/post_2.png')}>
+                <img className='post_button' src={require('../assets/image/main.png')}>
                 </img>
             </Link>
             </>

@@ -32,46 +32,35 @@ const Pagination = ({props,user}) => {
 
     let numPages =()=>{
         if(pagination!==null && pagination!==undefined) {
+            console.log(pagination)
             let num = Math.ceil(pagination.totalNum.totalNum/limit)
-            if(!isNaN(num)) {
-                return num
+            if(props==='nft') {
+                return Math.ceil(pagination.totalNum[0].totalNum/limit)
             }else{
-                return 1
+                return num
             }
         }
     }
-    // console.log(props)
-    // useEffect(()=>{
-    //     console.log(searchData)
-    // },[searchData])
-
     useEffect(()=>{
+        setIsLoading(true)
         if(user!==null&&user!==undefined&&searchData!==null&&searchData!==undefined) {
-            setIsLoading(true)
             getPagination(page,limit, props,user.id,searchData)
                 .then((result)=>{
                     setPagination(result.data)
-                    console.log(result.data)
-                    setIsLoading(false)
+                    setTimeout(()=>{setIsLoading(false)},1500)
             })
         }else if((user===null||user===undefined)&&(searchData===null||searchData===undefined)){
             setIsLoading(true)
             getPagination(page,limit, props,null,' ')
                 .then((result)=>{
                     setPagination(result.data)
-                    setIsLoading(false)
-            })    
-        }
+                    setTimeout(()=>{setIsLoading(false)},1500)
+            })}
     },[page,limit, props,user.id, searchData])
 
-
-    // useEffect(()=>{
-    //     const numMapping =(e) => {
-    //     }
-    //     numMapping()
-    // },[])
-
-
+    useEffect(()=>{
+        setPage(1)
+    },[searchData])
 
     return(
 
@@ -120,9 +109,7 @@ const Pagination = ({props,user}) => {
             <div className='post_wrapper'>
 
             {props !== null&& props !== undefined&&props==='posts'&&
-                (pagination!==undefined&&pagination !== null)&&
-                (pagination.user!==undefined&&pagination.user!== null)&&
-                (pagination.image!==undefined&&pagination.image!== null)
+                (pagination!==undefined&&pagination !== null)
                 ?
                     pagination.posts.map((post)=>{
                     return (<Post key={post.id} post={post} user={user} isLoading={isLoading}/>)
@@ -149,7 +136,6 @@ const Pagination = ({props,user}) => {
             } 
             </div>
         </div>
-
     );
 }
 export default Pagination;

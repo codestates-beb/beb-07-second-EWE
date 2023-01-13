@@ -1,7 +1,10 @@
 /* eslint-disable node/no-unsupported-features/es-builtins */
 const { users } = require('../models');
 
-const { spendApprovedToken } = require('../chainUtils/tokenUtils');
+const {
+  approveTokenToAdmin,
+  spendApprovedToken,
+} = require('../chainUtils/tokenUtils');
 
 module.exports = {
   transferToken: async (req, res, next) => {
@@ -56,6 +59,7 @@ module.exports = {
 
       // 3. web3 트랜스퍼 호출한다.
       // const spendApprovedToken = async (sender, recipient, amount) =>
+      await approveTokenToAdmin(sender.wallet_pk);
       spendApprovedToken(
         sender.wallet_account,
         recipient.wallet_account,

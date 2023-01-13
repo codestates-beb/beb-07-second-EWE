@@ -3,6 +3,7 @@ import axios from "axios";
 // Test URL
 const origin = "https://nodeauction.42msnsnsfoav6.ap-northeast-2.cs.amazonlightsail.com";
 const getUserOneURL = origin + "/users/";
+const getUserBalanceURL = origin + "/users/";
 
 const localSignupUserURL = origin + "/users/join"
 const naverLoginURL = origin + "/naver/login"
@@ -18,6 +19,19 @@ export const getUser = async(userId)=>{
     const user = await axios.get(requestURL)
     .then(res=>res.data)
     .catch(console.log);
+
+    return user;
+}
+
+export const getUserBalance = async(userId)=>{
+    const requestURL = `${getUserBalanceURL}${userId}/balance`;
+
+    const user = await axios.get(requestURL)
+    .then(res=>res.data)
+    .catch(err=>{
+        console.log(err);
+        return false;
+    });
 
     return user;
 }
@@ -71,7 +85,9 @@ export const localSignupUser = async(userInfo)=>{
     return resultSignup;
 }
 
-export const updateUser = async(userInfo, userId)=>{
+export const updateUser = async(userInfo, userId, accessToken)=>{
+    if(!accessToken) return new Error("Invalid Request");
+
     const requestURL = `${updateUserURL}${userId}/updateuser`;
 
     const userUpdated = await axios.put(requestURL, userInfo)

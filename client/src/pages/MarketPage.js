@@ -1,10 +1,11 @@
 // modules
-import { useState, useEffec } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 
 // apis
-import { mintNFT } from "../apis/nft";
+import { mintNFT, getNftOne } from "../apis/nft";
+import { getUserBalance } from '../apis/user';
 
 // components
 import Pagination from "../components/Pagination";
@@ -12,14 +13,12 @@ import Pagination from "../components/Pagination";
 // css
 import '../assets/css/market.css';
 
-const MarketPage = ({nfts,user}) => {
+const MarketPage = ({user, liftUser}) => {
     const navigator = useNavigate();
 
     // User Global Variable
     const isLogin = useSelector((state)=>state.auth.isLogin);
     const accessToken = useSelector((state)=>state.auth.accessToken);
-
-    if (isLogin === false) navigator(-1);
 
     // Minting State Variable
     const [name, setName] = useState("");
@@ -29,6 +28,8 @@ const MarketPage = ({nfts,user}) => {
 
     const [previewImage, setPreviewImage] = useState();
     const [responsibleToggle,SetResponsibleToggle] = useState(false)
+
+    const [isMintingFail, setIsMintingFail] = useState(false);
 
     const imageChangeHandler = (e)=>{
         const file = e.target.files[0];
@@ -48,15 +49,27 @@ const MarketPage = ({nfts,user}) => {
     }
 
     const mintButtonHandler = async ()=>{
-        console.log(name, description, image, category);
-        if (!name || !description || !image || !category) return;
+        if (!name || !description || !image || !category) 
+            return new Error("Invalid Input.");
+        console.log(user);
+        if (user.erc20 < 6670) 
+            return new Error("Not Enough Token");
 
         const metadata = {
             name, description, image, attributes:{category}
         }
 
         const resultMint = await mintNFT(metadata, accessToken);
+
+        const tokenId = resultMint.data.tokenId;
+        
+        setTimeout(async()=>{
+            const curBalance = await getUserBalance(user.id);
+            liftUser({...user, ...curBalance});
+        },2000);
+
         console.log(resultMint)
+        navigator("/mypage");
     }
 
     const resetButtonHandler = ()=>{
@@ -65,6 +78,10 @@ const MarketPage = ({nfts,user}) => {
         setImage(null);
         setPreviewImage(null);
     }
+
+    useEffect(()=>{
+        if(!isLogin) navigator("/");
+    }, [])
 
     return(
         
@@ -180,7 +197,7 @@ const MarketPage = ({nfts,user}) => {
                 }    
                 </div>        
             <div className="footer">
-                <img className='post_button' src={require('../assets/image/bottom.png')}>
+                <img className='post_button' src={require('../assets/image/main.png')}>
                 </img>
                 <div className="team">
 

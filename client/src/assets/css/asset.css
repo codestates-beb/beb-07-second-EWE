@@ -64,10 +64,10 @@
     height: 40px;
     text-align: center;
     overflow: hidden;
-    font-size: var(--font-large);
+    font-size: 23px;
 }
 .location{
-    font-size: small;
+    font-size: medium;
     color: var(--Primary-color);
 }
 .creator{

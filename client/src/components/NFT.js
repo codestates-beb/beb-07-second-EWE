@@ -4,14 +4,12 @@ import { getNftMetadata } from '../apis/nft';
 import { useState, useEffect } from 'react'
 import '../assets/image/loading.gif'
 
-const NFT = ({nft}) => {
-    const [isLoading, setIsLoading] = useState(true)
+const NFT = ({nft,isLoading}) => {
     const [metadata, setMetadata] = useState(null);
     useEffect(()=>{
         getNftMetadata(nft.metadata)
         .then(metadata=>{
             setMetadata(metadata);
-            setIsLoading(false);
         })
     }, [])
 
@@ -28,7 +26,7 @@ const NFT = ({nft}) => {
 
                     <div className="post_title token_id">
                     <h5>
-                    {metadata === null ||metadata === undefined || metadata.name === undefined ||metadata.name === null? "": metadata.name
+                    {metadata === null ||metadata === undefined || metadata.name === undefined ||metadata.name === null? "": metadata.name.length>13?metadata.name.slice(0,12)+'...':metadata.name
                     }
                     <h6 className='contract_address'>{nft === null || nft.contract_address === undefined ||nft.contract_address === null? "": nft.contract_address.slice(0,10)+'...'
                     }</h6>
@@ -55,9 +53,9 @@ const NFT = ({nft}) => {
             </div>
             <div className="image" >
                 <img 
-                    src ={isLoading? '../assets/image/loading.gif':
+                    src ={isLoading? require('../assets/image/loading.gif'):
                         metadata === null || metadata === undefined || metadata.image === undefined ||metadata.image === null 
-                        ? 'https://play-lh.googleusercontent.com/wQiHW5YgQhHmSR_60o9l2lypA9Vn2_hxH0l2X6Iin5lEGTbmfhrZnP8bKywoRGKkJl4' 
+                        ? require('../assets/image/unnamed.png')
                         : metadata.image
                     }
                     alt="food"    

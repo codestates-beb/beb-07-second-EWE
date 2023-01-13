@@ -41,9 +41,12 @@ const NFTDetail = () =>{
     }, [nftId]);
 
     useEffect(()=>{
+        console.log(nft)
+
     }, [nft])
 
     useEffect(()=>{
+        console.log(metadata)
     }, [metadata])
 
 
@@ -51,41 +54,74 @@ const NFTDetail = () =>{
 
 
     return(
-        <div className="nft_detail">
+        <div>
             <Link to='/market' className='market'>
                 <img className='post_button' src={require('../assets/image/mint.png')}>
                 </img>
             </Link>
-
+        <div className="nft_detail">
             <div className="nft_detail_wrapper">
                 <div className="nft_image">
-                    <h2>image</h2>
+                    <div className="nft_image_top">
+                        <h1>{(metadata===null||metadata===undefined)||
+                            (metadata.name===null||metadata.name===undefined)
+                        ?<></>:metadata.name}</h1>
+                        <h3>{(nft===null||nft===undefined)||
+                            (nft.token_id===null||nft.token_id===undefined)
+                        ?<></>:'#'+nft.token_id}</h3>
+                    </div>
+                    
+                    <div className="nft_image_body">
                     <img src={(metadata===null||metadata===undefined)||
                     (metadata.image===null||metadata.image===undefined)
                     ?<></>:
                     metadata.image
                     } alt='nft_image'/>
+                    </div>
                 </div>
                 <div className="nft_info">
-                    <div className="nft_name">
-                        <h2>name</h2>
-                        <h1>{(metadata===null||metadata===undefined)||
-                    (metadata.name===null||metadata.name===undefined)
-                        ?<></>:metadata.name}</h1>
+                    <div className="nft_creator">
+                        <h2>Creator</h2>
+                        <div className="nft_detail_user_info">
+                            <h5>{nft===null||nft===undefined?<></>:'ID  '+nft.user_id}</h5>
+                            <h5>{nft===null||nft===undefined?<></>:'Wallet '+nft.creator.slice(0,8)+'...'}</h5>
+                        </div>
+                    </div>
+                    <div className="nft_detail_numbers">
+
+                    <div className="nft_price">
+                        <h2>Price</h2>
+                        <h4>{nft===null||nft===undefined?<></>:nft.price+'EWE'}</h4>
+                    </div>
+                        <div className="nft_attributes">
+                                <h2>{(metadata===null||metadata===undefined)||
+                                    (metadata.attributes[0]===null||metadata.attributes[0]===undefined)||(metadata.attributes[0].trait_type===null||metadata.attributes[0]. trait_type===undefined)
+                        ?<></>:metadata.attributes[0].trait_type}</h2>
+                                <h5>{(metadata===null||metadata===undefined)||
+                                    (metadata.attributes[0]===null||metadata.attributes[0]===undefined)||
+                                    (metadata.attributes[0].value===null||metadata.attributes[0].value===undefined)?<></>:metadata.attributes[0].value}</h5>
+                        </div>
+                    </div>
+                    <div className="date">
+                        <div className="nft_created_at">
+                            <h2>Created At</h2>
+                            <h5>{nft===null||nft===undefined?<></>:nft.createdAt.slice(0,10)}</h5>
+                        </div>
+                        <div className="nft_updated_at">
+                            <h2>Updated At</h2>
+                            <h5>{nft===null||nft===undefined?<></>:nft.updatedAt.slice(0,10)}</h5>
+                        </div>
                     </div>
                     <div className="nft_description">
-                        <div className="nft_attributes">
-                            <h2>{(metadata===null||metadata===undefined)||
-                    (metadata.attributes[0]===null||metadata.attributes[0]===undefined)||(metadata.attributes[0].trait_type===null||metadata.attributes[0]. trait_type===undefined)
-                    ?<></>:metadata.attributes[0].trait_type}</h2>
-                            <h3>{(metadata===null||metadata===undefined)||
-                    (metadata.attributes[0]===null||metadata.attributes[0]===undefined)||
-                    (metadata.attributes[0].value===null||metadata.attributes[0].value===undefined)?<></>:metadata.attributes[0].value}</h3>
-                    </div>
                     <h2>description</h2>
+
                     <h5>{metadata===null||metadata===undefined?<></>:metadata.description}</h5>
+
+
                     </div>
+
                 </div>
+                
             </div>
             {
                 <Pagination
@@ -93,9 +129,9 @@ const NFTDetail = () =>{
                     user={''}
                 />
                 }  
-                
-            <img className='post_button' src={require('../assets/image/bottom.png')} onClick={()=>navigator(-1)}>
-                </img>
+            </div>
+            <Link to='/' className='mint'>
+            <img className='post_button' src={require('../assets/image/main.png')}/></Link>
         </div>
     )
 }

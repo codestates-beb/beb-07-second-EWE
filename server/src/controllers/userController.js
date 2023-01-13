@@ -198,7 +198,7 @@ module.exports = {
       // NOW it is synchronized logic
       await useEtherFaucet(address);
       await transferTokenToUser(address, WELCOMETOKEN);
-      await approveTokenToAdmin(address, WELCOMETOKEN);
+      await approveTokenToAdmin(privateKey, WELCOMETOKEN);
 
       // if pre-minted nft exists, user gets free nft
       const targetNFT = await nfts.findOne({ where: { token_id: newUser.id } });
@@ -380,9 +380,24 @@ module.exports = {
   updateUserinfo: async (req, res, next) => {
     const { userId } = req.params;
     try {
+      const { email } = req.decoded;
+      let { nickname } = req.decoded;
+      const user = await users.findOne({
+        where: {
+          email,
+          nickname,
+        },
+      });
+      if (user.id !== Number(userId)) {
+        return res
+          .status(403)
+          .json({ data: null, message: 'Not authorized user to update' });
+      }
+
       const currentUserinfo = await users.findOne({ where: { id: userId } });
       if (currentUserinfo.login_provider === 'local') {
-        let { password, nickname } = req.body;
+        let { password } = req.body;
+        nickname = req.body.nickname;
         if (!password) password = currentUserinfo.password;
         if (!nickname) nickname = currentUserinfo.nickname;
         await users.update({ password, nickname }, { where: { id: userId } });
@@ -390,7 +405,7 @@ module.exports = {
         return res.status(200).json(updatedUserinfo);
       }
       if (currentUserinfo.login_provider === 'naver') {
-        let { nickname } = req.body;
+        nickname = req.body.nickname;
         if (!nickname) nickname = currentUserinfo.nickname;
         await users.update({ nickname }, { where: { id: userId } });
         const updatedUserinfo = await users.findOne({ where: { id: userId } });

@@ -1,15 +1,38 @@
 //modules
 import { useState, useEffect } from 'react'
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 //apis
-import {localSignupUser} from "../apis/user"
+import {
+    localSignupUser,
+    localLoginUser,
+} from "../apis/user"
+
+//actions
+import { setAuth } from "../feature/authSlice";
 
 //css
 import '../assets/css/signup.css'
 
-const SignupPage = () => {
-    const navigator = useNavigate();
+// utils
+import {
+    emailFormat,
+    nicknameFormat,
+    pwFormatLength,
+    pwFormatLeastNum,
+    pwFormatUppercase,
+    pwFormatSpecial
+} from '../utils/validate';
+
+import {
+    failStyle
+} from "../utils/style";
+
+const SignupPage = ({user ,liftUser}) => {
+    // Navigator
+    const navi = useNavigate();
+    const dispatch = useDispatch();
 
     const [email, setEmail] = useState('')
     const [nickname, setNickname] = useState('')
@@ -18,44 +41,12 @@ const SignupPage = () => {
     const [isValidNickname, setIsValidNickname] = useState(false);
     const [isValidPassword, setIsValidPassword] = useState(false);
 
-    function emailFormat(value){
-        return value.includes('@'&&'.'); 
-    }
-    function nicknameFormat(value){
-        return 8 <= value.length && value.length <= 32;
-    }
-
-    function pwFormatLength(value){
-        return 8 <= value.length && value.length <= 32;
-    } 
-    
-    function pwFormatLeastNum(value){
-        if(value.match(/[0-9]/g)){
-            return true;
-        }else{
-            return false;
-        }
-    }
-    
-    function pwFormatUppercase(value){
-        if(value.match(/[A-Z]/g)){
-            return true;
-        }else{
-            return false;
-        }
-
-    }
-    
-    function pwFormatSpecial(value){
-        if(value.match(/[@#$%^&+!=]/g)){
-            return true;
-        }else{
-            return false;
-        }}
+    const [isSignUpError, setIsSignUpError] = useState(false);
+    const [isCheckTerm, setIsCheckTerm] = useState(false);
 
     const signupBtnHandler = async()=>{
         if(!isValidEmail || !isValidNickname || !isValidPassword)
-            return new Error("Invalid Info");
+            return console.log(new Error("Invalid Info"));
 
         const userInfo = { 
             email: email, 
@@ -64,11 +55,28 @@ const SignupPage = () => {
         };
 
         const signupResult = await localSignupUser(userInfo);
-        
+        console.log(signupResult);
         if (signupResult.status === 200){
-            console.log(signupResult.data)
-            navigator("/");
+            try{
+                const {email, password} = signupResult.data;
+
+                const result = await localLoginUser({email, password}) ;
+
+                console.log(result);
+
+                liftUser(result.data.user);
+
+                dispatch(setAuth({
+                    accessToken: result.data.accessToken,
+                    userID: result.data.user.id
+                }));
+                
+                navi("/");
+            } catch(e){
+                console.log(e);
+            }
         } else{
+            setIsSignUpError(true); 
             return new Error("No User Created");
         }
     }
@@ -128,7 +136,7 @@ const SignupPage = () => {
                 {setNickname(e.target.value)}}/>
                 <div>
                     {nickname.length>0 || nickname === ''?<></>:<div className="failure_message none_id "><h6>Enter Your Nickname</h6></div>}
-                    {nicknameFormat(nickname) || nickname === ''? <></>:<div className="failure_message"><h6>8 to 32 characters</h6></div>}
+                    {nicknameFormat(nickname) || nickname === ''? <></>:<div className="failure_message"><h6>2 to 20 characters</h6></div>}
                 </div>
             </div>
             <div className="pw">
@@ -176,7 +184,7 @@ const SignupPage = () => {
         </div>
         <div>
             <div className="terms_of_use">
-                <input type="checkbox" name="" value=""/>
+                <input type="checkbox" name="" onChange={e=>setIsCheckTerm(e.target.value)} value={isCheckTerm}/>
                 <h6>I agree to the</h6>
                 <a href="/"><h6>&#60;Terms of Use&#62;</h6></a>
             </div>
