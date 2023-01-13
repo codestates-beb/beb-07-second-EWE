@@ -135,7 +135,6 @@ const Pagination = ({props,user}) => {
             } 
             </div>
         </div>
-
     );
 }
 export default Pagination;
